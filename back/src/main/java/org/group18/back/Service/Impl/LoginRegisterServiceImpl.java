@@ -3,6 +3,7 @@ package org.group18.back.Service.Impl;
 import org.group18.back.Dao.TicketMapper;
 import org.group18.back.Dao.UserMapper;
 import org.group18.back.Entity.Ticket;
+import org.group18.back.Entity.TicketExample;
 import org.group18.back.Entity.User;
 import org.group18.back.Entity.UserExample;
 import org.group18.back.Service.LoginRegisterService;
@@ -22,7 +23,6 @@ public class LoginRegisterServiceImpl implements LoginRegisterService {
     UserMapper userMapper;
     @Autowired
     TicketMapper ticketMapper;
-
 
     @Override
     @Transactional//添加事事务注解，当发生异常情况时回退
@@ -79,8 +79,7 @@ public class LoginRegisterServiceImpl implements LoginRegisterService {
         }
 
         UserExample userExample = new UserExample();
-        UserExample.Criteria criteria2 = userExample.createCriteria();
-        criteria2.andEmailEqualTo(email);
+        userExample.createCriteria().andEmailEqualTo(email);
         List<User> userList = userMapper.selectByExample(userExample);
 
         if(userList.isEmpty()) {
@@ -95,7 +94,23 @@ public class LoginRegisterServiceImpl implements LoginRegisterService {
 
         String ticket = addLoginTicket(email);
         result.put("ticket", ticket);
-        return null;
+        return result;
+    }
+
+    @Override
+    public User judgeUserLoginStatus(String ticket) {
+        TicketExample ticketExample = new TicketExample();
+        ticketExample.createCriteria().andTicketEqualTo(ticket).andExpireDateGreaterThan(new Date(System.currentTimeMillis()));
+        List<Ticket> tickets = ticketMapper.selectByExample(ticketExample);
+        if(tickets.isEmpty()){
+            return null;
+        }
+        else {
+            UserExample userExample = new UserExample();
+            userExample.createCriteria().andEmailEqualTo(tickets.get(0).getUserEmail());
+            List<User> users = userMapper.selectByExample(userExample);
+            return users.get(0);
+        }
     }
 
     private String addLoginTicket(String userEmail){

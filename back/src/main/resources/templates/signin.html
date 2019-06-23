@@ -475,17 +475,21 @@
             <div class="page-container ptb-60">
                 <div class="container">
                     <section class="sign-area panel p-40">
-                        <h3 class="sign-title">Sign In <small>Or <a href="signup.html" class="color-green">Sign Up</a></small></h3>
+                        <h3 class="sign-title">Sign In <small>Or <a th:href="@{/signup_page}" class="color-green">Sign Up</a></small></h3>
+                        <div th:if="${isError}"><div class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>错误!</strong> <span th:text="${errorMsg}"></span>
+                        </div></div>
                         <div class="row row-rl-0">
                             <div class="col-sm-6 col-md-7 col-left">
-                                <form class="p-40" action="#" method="post">
+                                <form class="p-40" action="#" th:action="@{/signin}" th:object="${user}" method="post">
                                     <div class="form-group">
                                         <label class="sr-only">Email</label>
-                                        <input type="text" class="form-control input-lg" placeholder="Email">
+                                        <input th:field="*{email}" id="email" name="email" type="text" class="form-control input-lg" placeholder="Email">
                                     </div>
                                     <div class="form-group">
                                         <label class="sr-only">Password</label>
-                                        <input type="password" class="form-control input-lg" placeholder="Password">
+                                        <input th:field="*{passWord}" id="password" name="password" type="password" class="form-control input-lg" placeholder="Password">
                                     </div>
                                     <div class="form-group">
                                         <a href="#" class="forgot-pass-link color-green">Forget Youe Password ?</a>
