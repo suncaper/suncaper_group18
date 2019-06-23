@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.Cookie;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.*;
@@ -111,6 +112,24 @@ public class LoginRegisterServiceImpl implements LoginRegisterService {
             List<User> users = userMapper.selectByExample(userExample);
             return users.get(0);
         }
+    }
+
+    @Override
+    public User checkTicket(Cookie[] cookies) {
+        if(cookies != null){
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals("ticket")){
+                    if(cookie.getValue() == null) return null;
+                    //此时证明用户已有本网站的ticket，因此查询数据库获取用户信息
+                    User user = judgeUserLoginStatus(cookie.getValue());
+                    if(user == null) {
+                        return null;
+                    }
+                    else return user;//TODO：需要添加前端页面修改逻辑
+                }
+            }
+        }
+        return null;
     }
 
     private String addLoginTicket(String userEmail){

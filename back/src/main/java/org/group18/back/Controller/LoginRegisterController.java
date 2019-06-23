@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -29,46 +28,24 @@ public class LoginRegisterController {
     @RequestMapping("/signin_page")
     public String signinPage(Model model, HttpServletRequest request){
         //检查是否已经登陆
-        Cookie[] cookies =  request.getCookies();
-        if(cookies != null){
-            for(Cookie cookie : cookies){
-                if(cookie.getName().equals("ticket")){
-                    //此时证明用户已有本网站的ticket，因此查询数据库获取用户信息
-                    User user = loginRegisterService.judgeUserLoginStatus(cookie.getValue());
-                    if(user == null) {
-                        User user1 = new User();
-                        model.addAttribute("user", user1);
-                        return "signin";
-                    }
-                    else return "index";//TODO：需要添加前端页面修改逻辑
-                }
-            }
+        User user = loginRegisterService.checkTicket(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            return "signin";
         }
-        return "signin";
+        else return "index";
     }
 
     //注册请求
     @RequestMapping("/signup_page")
     public String signupPage(Model model, HttpServletRequest request){
         //检查是否已经登陆
-        Cookie[] cookies =  request.getCookies();
-        if(cookies != null){
-            for(Cookie cookie : cookies){
-                if(cookie.getName().equals("ticket")){
-                    //此时证明用户已有本网站的ticket，因此查询数据库获取用户信息
-                    User user = loginRegisterService.judgeUserLoginStatus(cookie.getValue());
-                    if(user == null) {
-                        User user1 = new User();
-                        model.addAttribute("user",user1);
-                        return "signup";
-                    }
-                    else return "index";//TODO：需要添加前端页面修改逻辑
-                }
-            }
+        User user = loginRegisterService.checkTicket(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            return "signup";
         }
-        User user2 = new User();
-        model.addAttribute("user",user2);
-        return "signup";
+        else return "index";
     }
 
     //注册
