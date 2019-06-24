@@ -148,9 +148,17 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="signin.html"><i class="fa fa-lock"></i>Sign In</a>
-                                </li>
-                                <li><a href="signup.html"><i class="fa fa-user"></i>Sign Up</a>
+                                <li th:if="${!isSignin}"><a th:href="@{/signin_page}"><i class="fa fa-lock"></i>Sign In</a></li>
+                                <li th:if="${!isSignin}"><a th:href="@{/signup_page}"><i class="fa fa-user"></i>Sign Up</a></li>
+                                <li th:if="${isSignin}">
+                                    <a href="#"><i class="fa fa-user"></i>你好,<span th:text="${user.getName()}"></span></a>
+                                    <ul>
+                                        <li><a href="#">我的信息</a></li>
+                                        <li><a href="#">我的购物车</a></li>
+                                        <li th:if="${!user.getIsSeller()}"><a href="#">申请店铺</a></li>
+                                        <li th:if="${user.getIsSeller()}"><a href="#">我的店铺</a></li>
+                                        <li><a th:href="@{/signout}">退出登陆</a></li>
+                                    </ul>
                                 </li>
                             </ul>
                         </div>
