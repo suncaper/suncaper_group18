@@ -143,9 +143,9 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="signin.html"><i class="fa fa-lock"></i>Sign In</a>
+                                <li><a th:href="@{/signin_page}"><i class="fa fa-lock"></i>Sign In</a>
                                 </li>
-                                <li><a href="signup.html"><i class="fa fa-user"></i>Sign Up</a>
+                                <li><a th:href="@{/signup_page}"><i class="fa fa-user"></i>Sign Up</a>
                                 </li>
                             </ul>
                         </div>
@@ -519,7 +519,7 @@
                                         <label class="color-mid" for="remember_social">Keep me signed in on this computer.</label>
                                     </div>
                                     <div class="text-center color-mid">
-                                        Already have an Account ? <a href="signin.html" class="color-green">Login</a>
+                                        Already have an Account ? <a th:href="@{/signin_page}" class="color-green">Login</a>
                                     </div>
                                 </div>
                             </div>

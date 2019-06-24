@@ -20,7 +20,17 @@ public class LoginRegisterController {
     LoginRegisterService loginRegisterService;
 
     @RequestMapping("/index")
-    public String index(){
+    public String index(Model model, HttpServletRequest request){
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+        }
+        else {
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+        }
         return "index";
     }
 
@@ -28,7 +38,7 @@ public class LoginRegisterController {
     @RequestMapping("/signin_page")
     public String signinPage(Model model, HttpServletRequest request){
         //检查是否已经登陆
-        User user = loginRegisterService.checkTicket(request.getCookies());
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if(user == null) {
             model.addAttribute("user", new User());
             return "signin";
@@ -40,12 +50,16 @@ public class LoginRegisterController {
     @RequestMapping("/signup_page")
     public String signupPage(Model model, HttpServletRequest request){
         //检查是否已经登陆
-        User user = loginRegisterService.checkTicket(request.getCookies());
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if(user == null) {
             model.addAttribute("user", new User());
             return "signup";
         }
-        else return "index";
+        else {
+            //设置登陆状态为false
+            model.addAttribute("isSignin", false);
+            return "index";
+        }
     }
 
     //注册
@@ -61,6 +75,8 @@ public class LoginRegisterController {
             Cookie cookie = new Cookie("ticket",result.get("ticket"));
             cookie.setPath("/");
             httpServletResponse.addCookie(cookie);
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", loginRegisterService.getUserInfoByTicket(result.get("ticket")));
             return "index";
         }
     }
@@ -78,6 +94,8 @@ public class LoginRegisterController {
             Cookie cookie = new Cookie("ticket",result.get("ticket"));
             cookie.setPath("/");
             httpServletResponse.addCookie(cookie);
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", loginRegisterService.getUserInfoByTicket(result.get("ticket")));
             return "index";
         }
     }
@@ -88,6 +106,8 @@ public class LoginRegisterController {
         Cookie cookie = new Cookie("ticket",null);
         cookie.setPath("/");
         httpServletResponse.addCookie(cookie);
+        model.addAttribute("user", new User());//设置User信息为空
+        model.addAttribute("isSignin", false);//设置登陆信息为false
         return "index";
     }
 }
