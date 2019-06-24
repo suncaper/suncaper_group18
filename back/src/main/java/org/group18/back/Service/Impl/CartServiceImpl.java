@@ -34,7 +34,7 @@ public class CartServiceImpl implements CartService{
             cart1.setUserUid(user_uid);
             cart1.setGoodsUid(goods_uid);
             cart1.setSpecificationUid(specification_uid);
-            cart1.setDate(new Date(System.currentTimeMillis()));
+            cart1.setCreateDate(new Date(System.currentTimeMillis()));
             cart1.setAmount(counts);
             cartMapper.insert(cart);
         }else{
