@@ -41,6 +41,7 @@ public class BolvvvServiceImpl implements BolvvvService {
             shopPageModel.setShopCategories(categoryList);
 
             //查找本店商品
+
             return null;
         }
     }
