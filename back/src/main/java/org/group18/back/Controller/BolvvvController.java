@@ -1,6 +1,7 @@
 package org.group18.back.Controller;
 
 import org.group18.back.Entity.User;
+import org.group18.back.Service.BolvvvService;
 import org.group18.back.Service.LoginRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 public class BolvvvController {
     @Autowired
     LoginRegisterService loginRegisterService;
+
+    @Autowired
+    BolvvvService bolvvvService;
 
     @RequestMapping("/shop")
     public String shop(Model model, @RequestParam("shopUid") String shopUid, HttpServletRequest request){
@@ -32,5 +36,10 @@ public class BolvvvController {
             return null;
         }
 
+    }
+
+    @RequestMapping("/testShop")
+    public void testShop(){
+        bolvvvService.getShopPageModel(1);
     }
 }

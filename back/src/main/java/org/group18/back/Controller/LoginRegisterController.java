@@ -78,7 +78,7 @@ public class LoginRegisterController {
     //注册
     @RequestMapping("/register")
     public String register(Model model, @ModelAttribute User user, HttpServletResponse httpServletResponse){
-        Map<String, String> result = loginRegisterService.register(user.getName(), user.getPassWord(), user.getEmail());
+        Map<String, String> result = loginRegisterService.register(user.getUserName(), user.getPassWord(), user.getEmail());
         if(!result.containsKey("ticket")){
             model.addAttribute("isError", true);
             model.addAttribute("errorMsg", result.get("msg"));
