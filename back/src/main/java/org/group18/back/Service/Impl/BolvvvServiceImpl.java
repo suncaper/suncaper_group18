@@ -3,10 +3,7 @@ package org.group18.back.Service.Impl;
 import org.group18.back.Dao.CategoryMapper;
 import org.group18.back.Dao.GoodsMapper;
 import org.group18.back.Dao.ShopMapper;
-import org.group18.back.Entity.Category;
-import org.group18.back.Entity.CategoryExample;
-import org.group18.back.Entity.Shop;
-import org.group18.back.Entity.ShopExample;
+import org.group18.back.Entity.*;
 import org.group18.back.Model.ShopPageModel;
 import org.group18.back.Service.BolvvvService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +38,24 @@ public class BolvvvServiceImpl implements BolvvvService {
             shopPageModel.setShopCategories(categoryList);
 
             //查找本店商品
-
-            return null;
+            GoodsExample goodsExample = new GoodsExample();
+            goodsExample.createCriteria().andSellerUidEqualTo(shop.getSellerUid());
+            List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
+            shopPageModel.setShopGoodsList(goodsList);
+            return shopPageModel;
         }
+    }
+
+    @Override
+    public List<Shop> getShopList(int pageSize, int page) {
+        ShopExample shopExample = new ShopExample();
+        shopExample.setStartRow((page-1)*pageSize);
+        shopExample.setPageSize(pageSize);
+        return shopMapper.selectByExample(shopExample);
+    }
+
+    @Override
+    public Integer getAllShopCount() {
+        return shopMapper.getAllShopCount();
     }
 }
