@@ -8,6 +8,6 @@ import java.util.Map;
 public interface LoginRegisterService {
     Map<String, String> register(String userName, String password, String email);
     Map<String, String> login(String email, String password);
-    User judgeUserLoginStatus(String ticket);
-    User checkTicket(Cookie[] cookies);
+    User getUserInfoByTicket(String ticket);
+    User checkLoginStatus(Cookie[] cookies);
 }

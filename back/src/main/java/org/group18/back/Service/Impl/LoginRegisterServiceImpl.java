@@ -99,7 +99,7 @@ public class LoginRegisterServiceImpl implements LoginRegisterService {
     }
 
     @Override
-    public User judgeUserLoginStatus(String ticket) {
+    public User getUserInfoByTicket(String ticket) {
         TicketExample ticketExample = new TicketExample();
         ticketExample.createCriteria().andTicketEqualTo(ticket).andExpireDateGreaterThan(new Date(System.currentTimeMillis()));
         List<Ticket> tickets = ticketMapper.selectByExample(ticketExample);
@@ -115,17 +115,18 @@ public class LoginRegisterServiceImpl implements LoginRegisterService {
     }
 
     @Override
-    public User checkTicket(Cookie[] cookies) {
+    public User checkLoginStatus(Cookie[] cookies) {
+        //有ticket并且能在数据库中查询到对应用户信息则返回信息，否则返回null
         if(cookies != null){
             for(Cookie cookie : cookies){
                 if(cookie.getName().equals("ticket")){
                     if(cookie.getValue() == null) return null;
                     //此时证明用户已有本网站的ticket，因此查询数据库获取用户信息
-                    User user = judgeUserLoginStatus(cookie.getValue());
+                    User user = getUserInfoByTicket(cookie.getValue());
                     if(user == null) {
                         return null;
                     }
-                    else return user;//TODO：需要添加前端页面修改逻辑
+                    else return user;
                 }
             }
         }
