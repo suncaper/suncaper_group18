@@ -18,10 +18,24 @@ import java.util.Map;
 public class MyInfoController {
 //    @Autowired
 //    MyInfoService
+
+    @Autowired
+    LoginRegisterService loginRegisterService;
     @RequestMapping("/myinfo")
-    public String wishlist()
+    public String wishlist(Model model, HttpServletRequest request)
     {
-        return "myinfo";
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+            return "signin";
+        }
+        else {
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+            return "myinfo";
+        }
     }
 
 }
