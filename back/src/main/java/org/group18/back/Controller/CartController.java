@@ -1,45 +1,73 @@
 package org.group18.back.Controller;
 
 import org.group18.back.Entity.Cart;
+import org.group18.back.Entity.User;
 import org.group18.back.Service.CartService;
+import org.group18.back.Service.LoginRegisterService;
 import org.json.JSONArray;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
 public class CartController {
 
+    @Autowired
+    LoginRegisterService loginRegisterService;
 
     @Resource
     private CartService cartService;
 
-    @RequestMapping(value = "/Cart")
-    public String cart(){
-        return "cart";
+//    @RequestMapping(value = "/Cart")
+//    public String cart(){
+//        return "cart";
+//    }
+
+    //获取用户购物车数据
+    @RequestMapping("/Cart")
+    public String cart(Model model, HttpServletRequest request){
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+            return "signin";
+        }
+        else {
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+            List<Cart> cartList = cartService.getCarts(user.getUid());
+            JSONArray jsonArray = new JSONArray(cartList);
+            String carts = jsonArray.toString();
+            return "cart";
+        }
     }
 
     //商品加入购物车
     @RequestMapping(value = "/addCart", method = RequestMethod.POST)
     @ResponseBody
-    public String addCart(String user_uid, int goods_uid, int specification_uid, int counts){
-        Cart cart = cartService.getCart(user_uid, specification_uid);
-        cartService.addAndUpdateCart(cart, user_uid, goods_uid, specification_uid, counts);
-        return "deal_single";
-    }
-
-    //获取用户购物车数据
-    @RequestMapping(value =  "/getCart", method = RequestMethod.POST)
-    @ResponseBody
-    public String getCart(String user_uid){
-        List<Cart> cartList = cartService.getCarts(user_uid);
-        JSONArray jsonArray = new JSONArray(cartList);
-        String carts = jsonArray.toString();
-        return "cart";
+    public String addCart(Model model, HttpServletRequest request, int specification_uid, int goods_uid, int counts){
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+            return "signin";
+        }
+        else {
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+            Cart cart = cartService.getCart(user.getUid(), specification_uid);
+            cartService.addAndUpdateCart(cart, user.getUid(), goods_uid, specification_uid, counts);
+            return "deal_single";
+        }
     }
 
     //删除商品

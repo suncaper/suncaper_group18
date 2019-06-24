@@ -3,7 +3,8 @@
 <!--[if IE 9 ]> <html lang="en" dir="ltr" class="no-js ie9"> <![endif]-->
 <!--[if IE 10 ]> <html lang="en" dir="ltr" class="no-js ie10"> <![endif]-->
 <!--[if (gt IE 10)|!(IE)]><!-->
-<html lang="en" dir="ltr" class="no-js" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" dir="ltr" class="no-js" xmlns:th="http://www.thymeleaf.org"
+      xmlns:font-size="http://www.w3.org/1999/xhtml">
 <!--<![endif]-->
 
 <head>
@@ -200,17 +201,11 @@
                                 </div>
                                 <div class="col-sm-4 t-xs-center t-md-right">
                                     <div class="header-cart">
-                                        <a href="cart.html">
+                                        <a th:href="@{/Cart}">
                                             <span class="icon lnr lnr-cart"></span>
                                             <div><span class="cart-number">0</span>
                                             </div>
                                             <span class="title">Cart</span>
-                                        </a>
-                                    </div>
-                                    <div class="header-wishlist ml-20">
-                                        <a href="wishlist.html">
-                                            <span class="icon lnr lnr-heart font-30"></span>
-                                            <span class="title">Wish List</span>
                                         </a>
                                     </div>
                                 </div>
@@ -261,7 +256,9 @@
                                             </td>
                                             <td>$235</td>
                                             <td>
+                                                <button type="submit" class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;">-</button>
                                                 <input class="quantity-label" type="number" value="02">
+                                                <button type="submit" class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;">+</button>
                                             </td>
                                             <td>
                                                 <div class="sub-total">$470</div>
@@ -286,7 +283,9 @@
                                             </td>
                                             <td>$235</td>
                                             <td>
+                                                <button type="submit" class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;">-</button>
                                                 <input class="quantity-label" type="number" value="02">
+                                                <button type="submit" class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;">+</button>
                                             </td>
                                             <td>
                                                 <div class="sub-total">$470</div>
@@ -311,7 +310,9 @@
                                             </td>
                                             <td>$235</td>
                                             <td>
+                                                <button type="submit" class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;">-</button>
                                                 <input class="quantity-label" type="number" value="02">
+                                                <button type="submit" class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;">+</button>
                                             </td>
                                             <td>
                                                 <div class="sub-total">$470</div>
@@ -336,7 +337,9 @@
                                             </td>
                                             <td>$235</td>
                                             <td>
+                                                <button type="submit" class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;">-</button>
                                                 <input class="quantity-label" type="number" value="02">
+                                                <button type="submit" class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;">+</button>
                                             </td>
                                             <td>
                                                 <div class="sub-total">$470</div>
