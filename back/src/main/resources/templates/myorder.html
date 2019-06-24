@@ -151,7 +151,7 @@
                                 <li th:if="${!isSignin}"><a th:href="@{/signin_page}"><i class="fa fa-lock"></i>Sign In</a></li>
                                 <li th:if="${!isSignin}"><a th:href="@{/signup_page}"><i class="fa fa-user"></i>Sign Up</a></li>
                                 <li th:if="${isSignin}">
-                                    <a href="#"><i class="fa fa-user"></i>你好,<span th:text="${user.getUserName()}"></span></a>
+                                    <a href="#"><i class="fa fa-user"></i>你好,<span th:text="${user.getName()}"></span></a>
                                     <ul>
                                         <li><a th:href="@{/myinfo}">我的信息</a></li>
                                         <li><a href="#">我的购物车</a></li>
@@ -202,7 +202,7 @@
                                 </div>
                                 <div class="col-sm-4 t-xs-center t-md-right">
                                     <div class="header-cart">
-                                        <a th:href="@{/Cart}">
+                                        <a href="cart.html">
                                             <span class="icon lnr lnr-cart"></span>
                                             <div><span class="cart-number">0</span>
                                             </div>
@@ -231,13 +231,13 @@
                         <div id="header-navbar" class="nav-collapse">
                             <ul class="nav-menu">
                                 <li>
-                                    <a th:href="@{/index}">首页</a>
+                                    <a th:href="index">首页</a>
                                 </li>
                                 <li class="active">
-                                    <a th:href="@{/myinfo}">我的信息</a>
+                                    <a th:href="myinfo">我的信息</a>
                                 </li>
                                 <li>
-                                    <a th:href="@{/myorder}">我的订单</a>
+                                    <a href="stores_01.html">我的订单</a>
                                 </li>
                                 <li>
                                     <a href="contact_us_01.html">我的足迹</a>
@@ -261,46 +261,41 @@
                     <section class="wishlist-area ptb-30">
                         <div class="container">
                             <div class="wishlist-wrapper">
-                                <h3 class="h-title mb-40 t-uppercase">我的信息</h3>
+                                <h3 class="h-title mb-40 t-uppercase">My Wishlist</h3>
                                 <table id="cart_list" class="wishlist">
                                     <tbody>
                                         <tr class="panel alert">
                                             <td class="col-sm-8 col-md-9">
-                                                <h5 class="h-title mb-40 t-uppercase">我的邮箱</h5>
+                                                <div class="media-left is-hidden-sm-down">
+                                                    <figure class="product-thumb">
+                                                        <img th:src="@{/images/cart/product_11.jpg}" alt="product">
+                                                    </figure>
+                                                </div>
                                                 <div class="media-body valign-middle">
-                                                    <h5><span th:text="${user.getEmail()}"></span></h5>
+                                                    <h5 class="title mb-5 t-uppercase"><a href="#">Diamond engagement ring</a></h5>
+                                                    <div class="rating mb-10">
+                                                        <span class="rating-stars rate-allow" data-rating="2">
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o star-active"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        	</span>
+                                                        <span class="rating-reviews">
+				                        		( <span class="rating-count">100</span> rates )
+                                                        </span>
+                                                    </div>
+                                                    <h4 class="price color-green"><span class="price-sale">$380.00</span>$340.00</h4>
+                                                    <button class="btn btn-rounded btn-sm mt-15 is-hidden-sm-up">Add To Cart</button>
                                                 </div>
                                             </td>
-                                        </tr>
-                                        <tr class="panel alert">
-                                            <td class="col-sm-8 col-md-9">
-                                                <h5 class="h-title mb-40 t-uppercase">收货地址</h5>
-                                                <table>
-                                                    <tr style="text-align:center">
-                                                        <th >序号</th>
-                                                        <th >省份</th>
-                                                        <th >城市</th>
-                                                        <th >详细地址</th>
-                                                    </tr>
-                                                    <tr th:each="user,userStat:${address}" th:class="${userStat.odd}? 'odd'">
-                                                        <td th:text="${userStat.count}"></td>
-                                                        <td th:text="${user.getProvince()}"></td>
-                                                        <td th:text="${user.getCity()}"></td>
-                                                        <td th:text="${user.getDetailAddress()}"></td>
-
-                                                        <td class="col-sm-3 col-md-2 is-hidden-xs-down">
-                                                            <a th:href="@{edit}">
-                                                            <button class="btn btn-rounded btn-sm">编辑</button>
-                                                            </a>
-                                                        </td>
-                                                        <td class="col-sm-1">
-                                                            <button type="button" class="close pr-xs-0 pr-sm-10">
-                                                                <i class="fa fa-trash-o"></i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
+                                            <td class="col-sm-3 col-md-2 is-hidden-xs-down">
+                                                <button class="btn btn-rounded btn-sm">Add To Cart</button>
+                                            </td>
+                                            <td class="col-sm-1">
+                                                <button type="button" class="close pr-xs-0 pr-sm-10" data-dismiss="alert" aria-hidden="true">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                         <tr class="panel alert">
