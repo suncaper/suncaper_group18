@@ -41,9 +41,14 @@ public class LoginRegisterController {
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if(user == null) {
             model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
             return "signin";
         }
-        else return "index";
+        else {
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+            return "index";
+        }
     }
 
     //注册请求
@@ -53,11 +58,13 @@ public class LoginRegisterController {
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if(user == null) {
             model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
             return "signup";
         }
         else {
             //设置登陆状态为false
-            model.addAttribute("isSignin", false);
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
             return "index";
         }
     }
@@ -69,6 +76,7 @@ public class LoginRegisterController {
         if(!result.containsKey("ticket")){
             model.addAttribute("isError", true);
             model.addAttribute("errorMsg", result.get("msg"));
+            model.addAttribute("isSignin", false);
             return "signup";
         }
         else {
@@ -88,6 +96,7 @@ public class LoginRegisterController {
         if(!result.containsKey("ticket")){
             model.addAttribute("isError", true);
             model.addAttribute("errorMsg", result.get("msg"));
+            model.addAttribute("isSignin", false);
             return "signin";
         }
         else {
