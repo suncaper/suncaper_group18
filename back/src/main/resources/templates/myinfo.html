@@ -275,7 +275,32 @@
                                         <tr class="panel alert">
                                             <td class="col-sm-8 col-md-9">
                                                 <h5 class="h-title mb-40 t-uppercase">收货地址</h5>
+                                                <table>
+                                                    <tr style="text-align:center">
+                                                        <th >序号</th>
+                                                        <th >省份</th>
+                                                        <th >城市</th>
+                                                        <th >详细地址</th>
+                                                    </tr>
+                                                    <tr th:each="user,userStat:${address}" th:class="${userStat.odd}? 'odd'">
+                                                        <td th:text="${userStat.count}"></td>
+                                                        <td th:text="${user.getProvince()}"></td>
+                                                        <td th:text="${user.getCity()}"></td>
+                                                        <td th:text="${user.getDetailAddress()}"></td>
 
+                                                        <td class="col-sm-3 col-md-2 is-hidden-xs-down">
+                                                            <a th:href="@{edit}">
+                                                            <button class="btn btn-rounded btn-sm">编辑</button>
+                                                            </a>
+                                                        </td>
+                                                        <td class="col-sm-1">
+                                                            <button type="button" class="close pr-xs-0 pr-sm-10">
+                                                                <i class="fa fa-trash-o"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
                                             </td>
                                         </tr>
                                         <tr class="panel alert">
