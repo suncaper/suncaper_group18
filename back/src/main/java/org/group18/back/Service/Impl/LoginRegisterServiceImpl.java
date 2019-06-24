@@ -52,7 +52,7 @@ public class LoginRegisterServiceImpl implements LoginRegisterService {
             return result;
         }
 
-        //注册新用户
+        //注册新用户-
         User user = new User();
         user.setUserName(userName);
         user.setEmail(email);
