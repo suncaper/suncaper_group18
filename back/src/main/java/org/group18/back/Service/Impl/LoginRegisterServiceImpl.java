@@ -36,7 +36,7 @@ public class LoginRegisterServiceImpl implements LoginRegisterService {
 
         UserExample userExample1 = new UserExample();
         UserExample.Criteria criteria1 = userExample1.createCriteria();
-        criteria1.andNameEqualTo(userName);
+        criteria1.andUserNameEqualTo(userName);
         List<User> userList1 = userMapper.selectByExample(userExample1);
         if(!userList1.isEmpty()){
             result.put("msg", "用户名已注册");
@@ -54,7 +54,7 @@ public class LoginRegisterServiceImpl implements LoginRegisterService {
 
         //注册新用户
         User user = new User();
-        user.setName(userName);
+        user.setUserName(userName);
         user.setEmail(email);
         user.setPassWord(MD5Utils.getMD5(password));
         user.setUid(getUserUid());
