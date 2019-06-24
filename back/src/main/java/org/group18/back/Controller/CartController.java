@@ -51,8 +51,7 @@ public class CartController {
     }
 
     //商品加入购物车
-    @RequestMapping(value = "/addCart", method = RequestMethod.POST)
-    @ResponseBody
+    @RequestMapping("/addCart")
     public String addCart(Model model, HttpServletRequest request, int specification_uid, int goods_uid, int counts){
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
