@@ -15,14 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @Controller
-public class MyInfoController {
+public class  MyInfoController {
 //    @Autowired
 //    MyInfoService
 
     @Autowired
     LoginRegisterService loginRegisterService;
     @RequestMapping("/myinfo")
-    public String wishlist(Model model, HttpServletRequest request)
+    public String myinfo(Model model, HttpServletRequest request)
     {
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
