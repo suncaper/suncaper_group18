@@ -39,6 +39,8 @@ public class BolvvvServiceImpl implements BolvvvService {
             //查找与店铺对应的商品种类
             List<Category> categoryList = categoryMapper.findCategoryByShopUid(shopUid);
             shopPageModel.setShopCategories(categoryList);
+
+            //查找本店商品
             return null;
         }
     }
