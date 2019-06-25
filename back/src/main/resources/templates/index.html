@@ -70,7 +70,7 @@
 
 <body id="body" class="wide-layout preloader-active">
 
-     
+     <a th:href="@{/store/getStoreList(page=1)}">点击查看店铺</a>
 
 
     <!--[if lt IE 9]>
@@ -200,7 +200,7 @@
                                 </div>
                                 <div class="col-sm-4 t-xs-center t-md-right">
                                     <div class="header-cart">
-                                        <a href="cart.html">
+                                        <a th:href="@{/Cart}">
                                             <span class="icon lnr lnr-cart"></span>
                                             <div><span class="cart-number">0</span>
                                             </div>

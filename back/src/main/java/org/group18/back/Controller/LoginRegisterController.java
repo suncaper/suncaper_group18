@@ -20,11 +20,6 @@ public class LoginRegisterController {
     @Autowired
     LoginRegisterService loginRegisterService;
 
-    @RequestMapping("/test")
-    public String test(){
-        return "404";
-    }
-
     @RequestMapping("/index")
     public String index(Model model, HttpServletRequest request){
         //检查是否已经登陆
