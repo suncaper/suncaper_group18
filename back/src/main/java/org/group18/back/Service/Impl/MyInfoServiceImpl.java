@@ -20,8 +20,7 @@ public class MyInfoServiceImpl implements MyInfoService {
 
     @Autowired
     UserAddressMapper useraddressMapper;
-    @Autowired
-    TicketMapper ticketMapper;
+    @Override
     public List<UserAddress> myaddress(String uid){
         UserAddressExample useraddressExample1 = new UserAddressExample();
         UserAddressExample.Criteria criteria1 = useraddressExample1.createCriteria();
@@ -29,5 +28,14 @@ public class MyInfoServiceImpl implements MyInfoService {
         List<UserAddress> result = useraddressMapper.selectByExample(useraddressExample1);
         return result;
     }
-
+    @Override
+    public Map<String, String> edit(UserAddress userAddress) {
+        Map<String, String> result = new HashMap<>();
+        UserAddressExample useraddressExample1 = new UserAddressExample();
+        UserAddressExample.Criteria criteria1 = useraddressExample1.createCriteria();
+        criteria1.andIdEqualTo(userAddress.getId());
+        useraddressMapper.updateByExampleSelective(userAddress,useraddressExample1);
+        result.put("msg","提交成功");
+        return result;
+    }
 }

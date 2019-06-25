@@ -6,9 +6,11 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import java.util.List;
+import java.util.Map;
 
 public interface MyInfoService {
     List<UserAddress> myaddress(String uid);
+    Map<String,String> edit(UserAddress userAddress);
 //    User judgeUserLoginStatus(String ticket);
 //    User checkTicket(Cookie[] cookies);
 }

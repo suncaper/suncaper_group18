@@ -1,6 +1,8 @@
 package org.group18.back.Controller;
 
 
+import org.apache.ibatis.annotations.Param;
+import org.group18.back.Dao.UserAddressMapper;
 import org.group18.back.Entity.User;
 import org.group18.back.Entity.UserAddress;
 import org.group18.back.Service.Impl.MyInfoServiceImpl;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.EditorKit;
 import java.util.List;
 import java.util.Map;
 
@@ -37,10 +40,31 @@ public class  MyInfoController {
         else {
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
+
+            //拉出用户UID对应的地址,放在result表中
             List<UserAddress> result = myInfoService.myaddress(user.getUid());
-            model.addAttribute("address", result);
+            if(result.isEmpty())
+            {//如果result表为空,则不作显示
+                model.addAttribute("isEmpty",true);
+            }
+            else
+            {
+                model.addAttribute("isEmpty",false);
+                model.addAttribute("address", result);
+            }
             return "myinfo";
         }
+    }
+    @RequestMapping("/address_edit")
+    public String edit(Model model, HttpServletRequest request,@Param("id")int id,@Param("province")String province,
+                       @Param("city")String city,@Param("detailAddress")String detailAddress){
+        UserAddress userAddress =new UserAddress();
+        userAddress.setId(id);
+        userAddress.setProvince(province);
+        userAddress.setCity(city);
+        userAddress.setDetailAddress(detailAddress);
+        Map result = myInfoService.edit(userAddress);
+        return"myinfo";
     }
 
 }
