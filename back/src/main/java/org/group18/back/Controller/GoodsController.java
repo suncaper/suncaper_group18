@@ -4,7 +4,7 @@ import org.group18.back.Entity.Cart;
 import org.group18.back.Entity.Goods;
 import org.group18.back.Entity.User;
 import org.group18.back.Service.CartService;
-import org.group18.back.Service.Impl.GoodsService;
+import org.group18.back.Service.GoodsService;
 import org.group18.back.Service.LoginRegisterService;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;

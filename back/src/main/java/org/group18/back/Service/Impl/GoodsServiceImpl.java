@@ -4,6 +4,7 @@ import org.group18.back.Dao.GoodsMapper;
 import org.group18.back.Dao.TicketMapper;
 import org.group18.back.Dao.UserMapper;
 import org.group18.back.Entity.*;
+import org.group18.back.Service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

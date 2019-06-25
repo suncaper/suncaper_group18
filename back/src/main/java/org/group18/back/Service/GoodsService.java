@@ -1,4 +1,4 @@
-package org.group18.back.Service.Impl;
+package org.group18.back.Service;
 
 
 import org.group18.back.Entity.Goods;

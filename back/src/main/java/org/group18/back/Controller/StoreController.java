@@ -41,7 +41,7 @@ public class StoreController {
         if(page == null) page = 1;//若未接受到页面请求，则设置为1
         //生成页面列表
         List<Integer> pagesNumberList = new ArrayList<>();
-        for(int i = 1; i <= storeService.getAllShopCount(); i++){
+        for(int i = 1; i <= (storeService.getAllShopCount()%pageSize==0?storeService.getAllShopCount()/pageSize:(storeService.getAllShopCount()/pageSize+1)); i++){
             pagesNumberList.add(i);
         }
         model.addAttribute("shopList", storeService.getShopList(pageSize, page));
@@ -58,31 +58,30 @@ public class StoreController {
         if(user == null) {
             model.addAttribute("user", new User());
             model.addAttribute("isSignin", false);
-            return "index";
         }
         else {
             model.addAttribute("user", user);
             model.addAttribute("isSignin", true);
-            //进行逻辑处理
-            //设置翻页
-            //设置每页显示数量为6
-            int pageSize = 6;
-            if(page == null) page = 1;//若未接受到页面请求，则设置为1
-            ShopPageModel shopPageModel = storeService.getShopPageModel(Integer.valueOf(shopUid), pageSize, page);
-            if(shopPageModel == null) return "404";
-            else {
-                //设置页面主要内容
-                model.addAttribute("shopPageModel",shopPageModel);
-                //生成页面列表
-                List<Integer> pagesNumberList = new ArrayList<>();
-                for(int i = 1; i <= shopPageModel.getShopGoodsList().size(); i++){
-                    pagesNumberList.add(i);
-                }
-                model.addAttribute("pageNumberList", pagesNumberList);
-                model.addAttribute("currentPage", page);
-                model.addAttribute("pageAmount", pagesNumberList.size());
-                return "store_single_01";
+        }
+        //进行逻辑处理
+        //设置翻页
+        //设置每页显示数量为6
+        int pageSize = 6;
+        if(page == null) page = 1;//若未接受到页面请求，则设置为1
+        ShopPageModel shopPageModel = storeService.getShopPageModel(Integer.valueOf(shopUid), pageSize, page);
+        if(shopPageModel == null) return "404";
+        else {
+            //设置页面主要内容
+            model.addAttribute("shopPageModel",shopPageModel);
+            //生成页面列表
+            List<Integer> pagesNumberList = new ArrayList<>();
+            for(int i = 1; i <= (shopPageModel.getShopGoodsList().size()%pageSize == 0?shopPageModel.getShopGoodsList().size()/pageSize:shopPageModel.getShopGoodsList().size()/pageSize+1); i++){
+                pagesNumberList.add(i);
             }
+            model.addAttribute("pageNumberList", pagesNumberList);
+            model.addAttribute("currentPage", page);
+            model.addAttribute("pageAmount", pagesNumberList.size());
+            return "store_single_01";
         }
 
     }
