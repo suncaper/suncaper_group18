@@ -2,6 +2,7 @@ package org.group18.back.Controller;
 
 import org.group18.back.Entity.Cart;
 import org.group18.back.Entity.User;
+import org.group18.back.Model.CartListModel;
 import org.group18.back.Service.CartService;
 import org.group18.back.Service.LoginRegisterService;
 import org.json.JSONArray;
@@ -10,10 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -24,11 +27,6 @@ public class CartController {
 
     @Resource
     private CartService cartService;
-
-//    @RequestMapping(value = "/Cart")
-//    public String cart(){
-//        return "cart";
-//    }
 
     //获取用户购物车数据
     @RequestMapping("/Cart")
@@ -43,9 +41,10 @@ public class CartController {
         else {
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
-            List<Cart> cartList = cartService.getCarts(user.getUid());
-            JSONArray jsonArray = new JSONArray(cartList);
-            String carts = jsonArray.toString();
+            List<CartListModel> cartList = cartService.getCarts(user.getUid());
+            model.addAttribute("cartList", cartList);
+            BigDecimal totalPrice = cartService.getTotalPrice(cartList);
+            model.addAttribute("totalPrice", totalPrice);
             return "cart";
         }
     }
@@ -70,28 +69,90 @@ public class CartController {
     }
 
     //删除商品
-    @RequestMapping(value = "/deleteCarts", method = RequestMethod.POST)
-    @ResponseBody
-    public String deleteCarts(String user_uid, int specification_uid){
-        cartService.deleteCart(user_uid, specification_uid);
-        return "cart";
+    @RequestMapping("/deleteCarts")
+    public String deleteCarts(Model model, HttpServletRequest request, @RequestParam("specification_uid") Integer specification_uid){
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+            return "signin";
+        }
+        else {
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+            cartService.deleteCart(user.getUid(), specification_uid);
+            List<CartListModel> cartList = cartService.getCarts(user.getUid());
+            model.addAttribute("cartList", cartList);
+            BigDecimal totalPrice = cartService.getTotalPrice(cartList);
+            model.addAttribute("totalPrice", totalPrice);
+            return  "cart";
+        }
     }
 
     //增加商品数量
-    @RequestMapping(value = "/increaseCarts", method = RequestMethod.POST)
-    @ResponseBody
-    public String incereaseCarts(String user_uid, int specification_uid){
-        Cart cart = cartService.getCart(user_uid, specification_uid);
-        cartService.increaseCart(cart, user_uid, specification_uid);
-        return  "cart";
+    @RequestMapping("/increaseCarts")
+    public String incereaseCarts(Model model, HttpServletRequest request, @RequestParam("specification_uid") Integer specification_uid){
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+            return "signin";
+        }
+        else {
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+            cartService.increaseCart(user.getUid(), specification_uid);
+            List<CartListModel> cartList = cartService.getCarts(user.getUid());
+            model.addAttribute("cartList", cartList);
+            BigDecimal totalPrice = cartService.getTotalPrice(cartList);
+            model.addAttribute("totalPrice", totalPrice);
+            return  "cart";
+        }
     }
 
     //减少商品数量
-    @RequestMapping(value = "/decreaseCarts", method = RequestMethod.POST)
-    @ResponseBody
-    public String decereaseCarts(String user_uid, int specification_uid){
-        Cart cart = cartService.getCart(user_uid, specification_uid);
-        cartService.decreaseCart(cart, user_uid, specification_uid);
-        return  "cart";
+    @RequestMapping("/decreaseCarts")
+    public String decereaseCarts(Model model, HttpServletRequest request, @RequestParam("specification_uid") Integer specification_uid){
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+            return "signin";
+        }
+        else {
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+            cartService.decreaseCart(user.getUid(), specification_uid);
+            List<CartListModel> cartList = cartService.getCarts(user.getUid());
+            model.addAttribute("cartList", cartList);
+            BigDecimal totalPrice = cartService.getTotalPrice(cartList);
+            model.addAttribute("totalPrice", totalPrice);
+            return  "cart";
+        }
+    }
+
+    @RequestMapping("/test")
+    public String cart(Model model, @RequestParam("number") int number, HttpServletRequest request){
+        System.out.println(number);
+
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+            return "signin";
+        }
+        else {
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+            List<CartListModel> cartList = cartService.getCarts(user.getUid());
+            model.addAttribute("cartList", cartList);
+            BigDecimal totalPrice = cartService.getTotalPrice(cartList);
+            model.addAttribute("totalPrice", totalPrice);
+            return "cart";
+        }
     }
 }
