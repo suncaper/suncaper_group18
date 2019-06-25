@@ -256,6 +256,7 @@
   <select id="findCategoryByShopUid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select t_category.* from t_category_shop,t_shop,t_category where t_category_shop.shop_uid = #{shopUid, jdbcType=INTEGER}
                                                             and t_category_shop.category_uid = t_category.uid
+                                                            and t_category_shop.shop_uid = t_shop.uid
   </select>
 
 </mapper>

@@ -112,6 +112,9 @@
     <if test="startRow != null and pageSize != null and pageSize != 0">
       limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
     </if>
+    <if test="startRow != null and pageSize != null and pageSize != 0">
+      limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+    </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--

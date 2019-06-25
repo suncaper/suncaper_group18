@@ -12,6 +12,15 @@ public class ShopPageModel {
     private Shop shopBaseInfo;//商店信息
     private List<Goods> shopGoodsList;//商店商品列表
     private List<Category> shopCategories;//商店种类列表
+    private int salesVolumeCount;//商品销售总数量
+
+    public int getSalesVolumeCount() {
+        return salesVolumeCount;
+    }
+
+    public void setSalesVolumeCount(int salesVolumeCount) {
+        this.salesVolumeCount = salesVolumeCount;
+    }
 
     public Shop getShopBaseInfo() {
         return shopBaseInfo;

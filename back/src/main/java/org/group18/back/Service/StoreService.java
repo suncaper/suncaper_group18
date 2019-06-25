@@ -5,8 +5,8 @@ import org.group18.back.Model.ShopPageModel;
 
 import java.util.List;
 
-public interface BolvvvService {
-    ShopPageModel getShopPageModel(Integer shopUid);
+public interface StoreService {
+    ShopPageModel getShopPageModel(Integer shopUid,int pageSize, int page);
     List<Shop> getShopList(int pageSize, int page);
     Integer getAllShopCount();
 }

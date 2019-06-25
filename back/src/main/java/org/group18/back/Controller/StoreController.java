@@ -2,7 +2,7 @@ package org.group18.back.Controller;
 
 import org.group18.back.Entity.User;
 import org.group18.back.Model.ShopPageModel;
-import org.group18.back.Service.BolvvvService;
+import org.group18.back.Service.StoreService;
 import org.group18.back.Service.LoginRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,13 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/bolvvv")
-public class BolvvvController {
+@RequestMapping("/store")
+public class StoreController {
     @Autowired
     LoginRegisterService loginRegisterService;
 
     @Autowired
-    BolvvvService bolvvvService;
+    StoreService storeService;
 
     @RequestMapping("/getStoreList")
     public String getStoreList(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page){
@@ -36,15 +36,15 @@ public class BolvvvController {
             model.addAttribute("isSignin", true);
         }
         //获取请求页数
-        //设置每页显示数量为10
-        int pageSize = 1;
+        //设置每页显示数量为20
+        int pageSize = 20;
         if(page == null) page = 1;//若未接受到页面请求，则设置为1
         //生成页面列表
         List<Integer> pagesNumberList = new ArrayList<>();
-        for(int i = 1; i <= bolvvvService.getAllShopCount(); i++){
+        for(int i = 1; i <= storeService.getAllShopCount(); i++){
             pagesNumberList.add(i);
         }
-        model.addAttribute("shopList", bolvvvService.getShopList(pageSize, page));
+        model.addAttribute("shopList", storeService.getShopList(pageSize, page));
         model.addAttribute("pageNumberList", pagesNumberList);
         model.addAttribute("currentPage", page);
         model.addAttribute("pageAmount", pagesNumberList.size());
@@ -52,7 +52,7 @@ public class BolvvvController {
     }
 
     @RequestMapping("/shop")
-    public String shop(Model model, @RequestParam("shopUid") String shopUid, HttpServletRequest request){
+    public String shop(Model model, @RequestParam("shopUid") String shopUid, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page){
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if(user == null) {
@@ -64,10 +64,23 @@ public class BolvvvController {
             model.addAttribute("user", user);
             model.addAttribute("isSignin", true);
             //进行逻辑处理
-            ShopPageModel shopPageModel = bolvvvService.getShopPageModel(Integer.valueOf(shopUid));
+            //设置翻页
+            //设置每页显示数量为6
+            int pageSize = 6;
+            if(page == null) page = 1;//若未接受到页面请求，则设置为1
+            ShopPageModel shopPageModel = storeService.getShopPageModel(Integer.valueOf(shopUid), pageSize, page);
             if(shopPageModel == null) return "404";
             else {
-                model.addAttribute(shopPageModel);
+                //设置页面主要内容
+                model.addAttribute("shopPageModel",shopPageModel);
+                //生成页面列表
+                List<Integer> pagesNumberList = new ArrayList<>();
+                for(int i = 1; i <= shopPageModel.getShopGoodsList().size(); i++){
+                    pagesNumberList.add(i);
+                }
+                model.addAttribute("pageNumberList", pagesNumberList);
+                model.addAttribute("currentPage", page);
+                model.addAttribute("pageAmount", pagesNumberList.size());
                 return "store_single_01";
             }
         }

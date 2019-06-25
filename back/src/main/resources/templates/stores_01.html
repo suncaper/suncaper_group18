@@ -237,7 +237,7 @@
                         <h3 class="mb-40 t-uppercase">View deals by stores</h3>
                         <div class="row row-rl-15 row-tb-15 t-center">
                             <div th:each="shop : ${shopList}" class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                                <a th:href="@{/bolvvv/shop(shopUid=${shop.getUid()})}" class="panel is-block">
+                                <a th:href="@{/store/shop(shopUid=${shop.getUid()})}" class="panel is-block">
                                     <div class="embed-responsive embed-responsive-4by3">
                                         <div class="store-logo">
                                             <img th:src="${shop.getImgUrl()}" alt="">
@@ -251,13 +251,13 @@
                             <nav>
                                 <!-- Page Pagination -->
                                 <ul class="page-pagination">
-                                    <li><a class="page-numbers previous" th:if="${currentPage} ne 1" th:href="@{/bolvvv/getStoreList(page=${currentPage}-1)}">Previous</a>
+                                    <li><a class="page-numbers previous" th:if="${currentPage} ne 1" th:href="@{/store/getStoreList(page=${currentPage}-1)}">Previous</a>
                                     </li>
                                     <li th:each="number:${pageNumberList}">
-                                        <a th:if="${number} ne ${currentPage}" th:text="${number}" th:href="@{/bolvvv/getStoreList(page=${number})}"></a>
+                                        <a class="page-numbers" th:if="${number} ne ${currentPage}" th:text="${number}" th:href="@{/store/getStoreList(page=${number})}"></a>
                                         <span th:if="${number} eq ${currentPage}" class="page-numbers current" th:text="${number}"></span>
                                     </li>
-                                    <li><a class="page-numbers next" th:if="${currentPage} ne ${pageAmount}" th:href="@{/bolvvv/getStoreList(page=${currentPage}+1)}">Next</a>
+                                    <li><a class="page-numbers next" th:if="${currentPage} ne ${pageAmount}" th:href="@{/store/getStoreList(page=${currentPage}+1)}">Next</a>
                                     </li>
                                 </ul>
                                 <!-- End Page Pagination -->
