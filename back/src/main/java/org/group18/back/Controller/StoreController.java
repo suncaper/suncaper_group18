@@ -83,6 +83,21 @@ public class StoreController {
             model.addAttribute("pageAmount", pagesNumberList.size());
             return "store_single_01";
         }
+    }
 
+    @RequestMapping("/test")
+    public String test(Model model, HttpServletRequest request){
+        System.out.println("执行此步");
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+        }
+        else {
+            model.addAttribute("user", user);
+            model.addAttribute("isSignin", true);
+        }
+        return "index";
     }
 }

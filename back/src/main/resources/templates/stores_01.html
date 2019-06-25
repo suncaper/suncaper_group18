@@ -257,7 +257,7 @@
                                         <a class="page-numbers" th:if="${number} ne ${currentPage}" th:text="${number}" th:href="@{/store/getStoreList(page=${number})}"></a>
                                         <span th:if="${number} eq ${currentPage}" class="page-numbers current" th:text="${number}"></span>
                                     </li>
-                                    <li><a class="page-numbers next" th:if="${currentPage} ne ${pageAmount}" th:href="@{/store/getStoreList(page=${currentPage}+1)}">Next</a>
+                                    <li><a class="page-numbers next" th:if="(${currentPage} ne ${pageAmount}) and (${currentPage} ne 1)" th:href="@{/store/getStoreList(page=${currentPage}+1)}">Next</a>
                                     </li>
                                 </ul>
                                 <!-- End Page Pagination -->
