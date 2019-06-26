@@ -39,8 +39,18 @@ public class CheckoutController {
             model.addAttribute("cartList", cartList);
             BigDecimal totalPrice = cartService.getTotalPrice(cartList);
             model.addAttribute("totalPrice", totalPrice);
-            List<UserAddress> userAddressList = checkoutService.getUserAddress(user.getUid());
+            Integer totalPoints = cartService.getTotalPoints(cartList);
+            model.addAttribute("totalPoints", totalPoints);
+            Integer totalAmount = cartService.getTotalAmount(cartList);
+            model.addAttribute("totalAmount", totalAmount);//购物车相关信息
+
+            List<UserAddress> userAddressList = checkoutService.getUserAddress(user.getUid());//收货信息
             model.addAttribute("userAddressList", userAddressList);
+            if(userAddressList.isEmpty())
+                model.addAttribute("isEmpty",true);
+            else
+                model.addAttribute("isEmpty",false);
+            
             return "checkout_billing";
         }
     }

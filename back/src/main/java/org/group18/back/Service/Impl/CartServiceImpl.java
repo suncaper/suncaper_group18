@@ -150,15 +150,25 @@ public class CartServiceImpl implements CartService{
     public BigDecimal getTotalPrice(List<CartListModel> cartList){
         BigDecimal totalPrice = new BigDecimal("0.0");
         for (Integer i = 0; i < cartList.size(); i++){
-            totalPrice = totalPrice.add(cartList.get(i).getDiscount_price().multiply(new BigDecimal(cartList.get(i).getAmount())));
-            System.out.println(i+":" +totalPrice);
+            if (!cartList.get(i).isIs_exchange())
+                totalPrice = totalPrice.add(cartList.get(i).getDiscount_price().multiply(new BigDecimal(cartList.get(i).getAmount())));
         }
         System.out.println(totalPrice);
         return totalPrice;
     }
 
     @Override
-    public List<Map<String, List<CartListModel>>> getShopCarts (List<CartListModel> cartListModels){
+    public Integer getTotalPoints(List<CartListModel> cartList){
+        Integer totalPoints = 0;
+        for (Integer i = 0; i < cartList.size(); i++){
+            if (cartList.get(i).isIs_exchange())
+                totalPoints = totalPoints + cartList.get(i).getPoints() * cartList.get(i).getAmount();
+        }
+        return totalPoints;
+    }
+
+    @Override
+    public Map<String, List<CartListModel>> getShopCarts (List<CartListModel> cartListModels){
         Map<String, List<CartListModel>> shopCartsMap = new HashMap<String, List<CartListModel>>();
         List<Map<String, List<CartListModel>>> shopCartsList = new ArrayList<>();
         for(Integer i = 0; i < cartListModels.size(); i++){
@@ -174,8 +184,15 @@ public class CartServiceImpl implements CartService{
                 shopCartsMap.put(shopName, cartListModels1);
             }
         }
-        shopCartsList.add(shopCartsMap);
-        System.out.println(shopCartsMap);
-        return shopCartsList;
+//        shopCartsList.add(shopCartsMap);
+//        System.out.println(shopCartsMap);
+        return shopCartsMap;
+    }
+    public Integer getTotalAmount(List<CartListModel> cartList){
+        Integer totalAmount = 0;
+        for (Integer i = 0; i < cartList.size(); i++){
+            totalAmount = totalAmount + cartList.get(i).getAmount();
+        }
+        return totalAmount;
     }
 }
