@@ -1,5 +1,6 @@
 package org.group18.back.Controller;
 
+import com.sun.javafx.collections.MappingChange;
 import org.group18.back.Entity.Cart;
 import org.group18.back.Entity.User;
 import org.group18.back.Model.CartListModel;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class CartController {
@@ -42,9 +45,14 @@ public class CartController {
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
             List<CartListModel> cartList = cartService.getCarts(user.getUid());
-            model.addAttribute("cartList", cartList);
             BigDecimal totalPrice = cartService.getTotalPrice(cartList);
             model.addAttribute("totalPrice", totalPrice);
+            Integer totalAmount = cartService.getTotalAmount(cartList);
+            model.addAttribute("totalAmount", totalAmount);
+            Integer totalPoints = cartService.getTotalPoints(cartList);
+            model.addAttribute("totalPoints", totalPoints);
+            Map<String, List<CartListModel>> shopCartList = cartService.getShopCarts(cartList);
+            model.addAttribute("shopCartList", shopCartList);
             return "cart";
         }
     }
@@ -83,9 +91,14 @@ public class CartController {
             model.addAttribute("user", user);
             cartService.deleteCart(user.getUid(), specification_uid);
             List<CartListModel> cartList = cartService.getCarts(user.getUid());
-            model.addAttribute("cartList", cartList);
             BigDecimal totalPrice = cartService.getTotalPrice(cartList);
             model.addAttribute("totalPrice", totalPrice);
+            Integer totalAmount = cartService.getTotalAmount(cartList);
+            model.addAttribute("totalAmount", totalAmount);
+            Integer totalPoints = cartService.getTotalPoints(cartList);
+            model.addAttribute("totalPoints", totalPoints);
+            Map<String, List<CartListModel>> shopCartList = cartService.getShopCarts(cartList);
+            model.addAttribute("shopCartList", shopCartList);
             return  "cart";
         }
     }
@@ -105,9 +118,14 @@ public class CartController {
             model.addAttribute("user", user);
             cartService.increaseCart(user.getUid(), specification_uid);
             List<CartListModel> cartList = cartService.getCarts(user.getUid());
-            model.addAttribute("cartList", cartList);
             BigDecimal totalPrice = cartService.getTotalPrice(cartList);
             model.addAttribute("totalPrice", totalPrice);
+            Integer totalAmount = cartService.getTotalAmount(cartList);
+            model.addAttribute("totalAmount", totalAmount);
+            Integer totalPoints = cartService.getTotalPoints(cartList);
+            model.addAttribute("totalPoints", totalPoints);
+            Map<String, List<CartListModel>> shopCartList = cartService.getShopCarts(cartList);
+            model.addAttribute("shopCartList", shopCartList);
             return  "cart";
         }
     }
@@ -127,9 +145,15 @@ public class CartController {
             model.addAttribute("user", user);
             cartService.decreaseCart(user.getUid(), specification_uid);
             List<CartListModel> cartList = cartService.getCarts(user.getUid());
-            model.addAttribute("cartList", cartList);
+
             BigDecimal totalPrice = cartService.getTotalPrice(cartList);
             model.addAttribute("totalPrice", totalPrice);
+            Integer totalPoints = cartService.getTotalPoints(cartList);
+            model.addAttribute("totalPoints", totalPoints);
+            Integer totalAmount = cartService.getTotalAmount(cartList);
+            model.addAttribute("totalAmount", totalAmount);
+            Map<String, List<CartListModel>> shopCartList = cartService.getShopCarts(cartList);
+            model.addAttribute("shopCartList", shopCartList);
             return  "cart";
         }
     }
@@ -149,9 +173,14 @@ public class CartController {
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
             List<CartListModel> cartList = cartService.getCarts(user.getUid());
-            model.addAttribute("cartList", cartList);
             BigDecimal totalPrice = cartService.getTotalPrice(cartList);
             model.addAttribute("totalPrice", totalPrice);
+            Integer totalPoints = cartService.getTotalPoints(cartList);
+            model.addAttribute("totalPoints", totalPoints);
+            Integer totalAmount = cartService.getTotalAmount(cartList);
+            model.addAttribute("totalAmount", totalAmount);
+            Map<String, List<CartListModel>> shopCartList = cartService.getShopCarts(cartList);
+            model.addAttribute("shopCartList", shopCartList);
             return "cart";
         }
     }

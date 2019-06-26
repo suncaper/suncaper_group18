@@ -152,7 +152,7 @@
                                     <a href="#"><i class="fa fa-user"></i>你好,<span th:text="${user.getUserName()}"></span></a>
                                     <ul>
                                         <li><a th:href="@{/myinfo}">我的信息</a></li>
-                                        <li><a href="#">我的购物车</a></li>
+                                        <li><a th:href="@{/Cart}">我的购物车</a></li>
                                         <li th:if="${!user.getIsSeller()}"><a href="#">申请店铺</a></li>
                                         <li th:if="${user.getIsSeller()}"><a href="#">我的店铺</a></li>
                                         <li><a th:href="@{/signout}">退出登陆</a></li>
@@ -202,15 +202,9 @@
                                     <div class="header-cart">
                                         <a th:href="@{/Cart}">
                                             <span class="icon lnr lnr-cart"></span>
-                                            <div><span class="cart-number">0</span>
+                                            <div><span class="cart-number" th:text="${totalAmount}"></span>
                                             </div>
                                             <span class="title">Cart</span>
-                                        </a>
-                                    </div>
-                                    <div class="header-wishlist ml-20">
-                                        <a href="wishlist.html">
-                                            <span class="icon lnr lnr-heart font-30"></span>
-                                            <span class="title">Wish List</span>
                                         </a>
                                     </div>
                                 </div>
@@ -238,78 +232,56 @@
 
                             <!-- Checkout Area -->
                             <section class="section checkout-area panel prl-30 pt-20 pb-40">
-                                <h2 class="h2 mb-20 h-title">Billing Information</h2>
-                                <form class="mb-30">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>First Name</label>
-                                                <input type="text" class="form-control" placeholder="Enter you First Name">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Second Name</label>
-                                                <input type="text" class="form-control" placeholder="Enter your Second Name">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Country</label>
-                                                <select class="form-control">
-                                                    <option>Select country</option>
-                                                    <option>England</option>
-                                                    <option>Germany</option>
-                                                    <option>France</option>
-                                                    <option>Spain</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>City / Town</label>
-                                                <select class="form-control">
-                                                    <option>Select city</option>
-                                                    <option>New York</option>
-                                                    <option>Paris</option>
-                                                    <option>Nairobi</option>
-                                                    <option>Cairo</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Phone Number</label>
-                                                <input type="text" class="form-control" placeholder="(XXX) - XXXX - XXX">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Postal Code</label>
-                                                <input type="text" class="form-control" placeholder="Enter Postal Code">
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Address Line 1</label>
-                                        <input type="text" class="form-control" placeholder="Enter your Address">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Address Line 2 <span class="color-mid">(Optional)</span>
-                                        </label>
-                                        <input type="text" class="form-control" placeholder="Enter your Address">
-                                    </div>
-                                </form>
+                                <h2 class="h2 mb-20 h-title">收货信息</h2>
+                                <tr class="panel alert">
+                                    <td class="col-sm-8 col-md-9">
+                                        <class="mb-40 t-uppercase"><span th:if="${isEmpty}"><h3 style="font-size: 15px" th:align="center">您还没有任何收货地址！请先添加</h3><h3></h3></span>
+                                        <table th:if="!${isEmpty}" class="table table-condensed">
+                                            <thead>
+                                            <tr>
+                                                <th>详细信息</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr class="panel alert" th:each="address:${userAddressList}">
+                                                <td class="col-sm-8 col-md-9">
+                                                    <div class="media-body valign-middle">
+                                                        <h5 class="title mb-5 t-uppercase"><a href="#" th:text="address">Diamond engagement ring</a></h5>
+                                                        <div class="rating mb-10">
+                                                                <span class="rating-stars rate-allow" data-rating="2">
+                                                                    <i class="fa fa-star-o"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                    <i class="fa fa-star-o star-active"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                </span>
+                                                            <span class="rating-reviews">
+                                                                    ( <span class="rating-count">100</span> rates )
+                                                                </span>
+                                                        </div>
+                                                        <h4 class="price color-green"><span class="price-sale">$380.00</span>$340.00</h4>
+                                                        <button class="btn btn-rounded btn-sm mt-15 is-hidden-sm-up">Add To Cart</button>
+                                                    </div>
+                                                </td>
+                                                <td class="col-sm-3 col-md-2 is-hidden-xs-down">
+                                                    <button class="btn btn-rounded btn-sm">Add To Cart</button>
+                                                </td>
+                                                <td class="col-sm-1">
+                                                    <button type="button" class="close pr-xs-0 pr-sm-10" data-dismiss="alert" aria-hidden="true">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
                                 <a href="checkout_payment.html" class="btn btn-lg btn-rounded mr-10">Continue</a>
-                                <a href="cart.html" class="btn btn-lg btn-warning btn-rounded">Cancel Order</a>
+                                <a th:href="@{/Cart}" class="btn btn-lg btn-warning btn-rounded">Cancel Order</a>
                             </section>
                             <!-- End Checkout Area -->
 
@@ -325,25 +297,30 @@
                                             <div class="widget-body">
                                                 <table class="table mb-15">
                                                     <tbody>
-                                                        <tr>
-                                                            <td class="color-mid">Total products</td>
-                                                            <td>$150.16</td>
+                                                        <tr class="panel t-uppercase">
+                                                            <td th:align="left">商品名称</td>
+                                                            <td th:align="right">数量</td>
+                                                            <td th:align="right">小计</td>
                                                         </tr>
-                                                        <tr>
-                                                            <td class="color-mid">Shipping</td>
-                                                            <td>$60.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="color-mid">Total tax</td>
-                                                            <td>$10.00</td>
+                                                        <tr th:each="cart:${cartList}">
+                                                            <td class="color-mid" th:text="${cart.goods_name}"></td>
+                                                            <td class="color-mid" th:text="${cart.amount}" th:align="right"></td>
+                                                            <td th:if="${!cart.is_exchange}" th:text="￥+${cart.discount_price}*${cart.amount}" th:align="right"></td>
+                                                            <td th:if="${cart.is_exchange}" th:text="积分：+${cart.points}*${cart.amount}" th:align="right"></td>
                                                         </tr>
                                                         <tr class="font-15">
-                                                            <td class="color-mid">Total</td>
-                                                            <td class="color-green">$220.16</td>
+                                                            <td class="color-mid" style="font-weight: 700;">总计</td>
+                                                            <td class="color-mid"></td>
+                                                            <td class="color-green" th:text="￥+${totalPrice}" th:align="right"></td>
+                                                        </tr>
+                                                        <tr class="font-15">
+                                                            <td class="color-mid"></td>
+                                                            <td class="color-mid"></td>
+                                                            <td class="color-green" th:text="积分：+${totalPoints}" th:align="right"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                                <a href="cart.html" class="btn btn-info btn-block btn-sm">Edit Cart</a>
+                                                <a th:href="@{/Cart}" class="btn btn-info btn-block btn-sm" style="font-size: 15px;">修改订单</a>
                                             </div>
                                         </div>
                                         <!-- End Recent Posts -->

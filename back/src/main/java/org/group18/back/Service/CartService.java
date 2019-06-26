@@ -17,4 +17,7 @@ public interface CartService {
     public boolean deleteCart(String user_uid, Integer goods_uid);
     public List<CartListModel> getCarts(String user_uid);
     public BigDecimal getTotalPrice(List<CartListModel> cartList);
+    public Integer getTotalAmount(List<CartListModel> cartList);
+    public Integer getTotalPoints(List<CartListModel> cartList);
+    public Map<String, List<CartListModel>> getShopCarts (List<CartListModel> cartListModels);
 }
