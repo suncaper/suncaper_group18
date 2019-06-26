@@ -81,7 +81,6 @@ public class  MyInfoController {
         return "myinfo";
     }
 
-
     @RequestMapping("/myorder")
     public String myOrder(Model model, HttpServletRequest request){
         //检查是否已经登陆
