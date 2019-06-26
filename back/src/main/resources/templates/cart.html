@@ -153,7 +153,7 @@
                                     <a href="#"><i class="fa fa-user"></i>你好,<span th:text="${user.getUserName()}"></span></a>
                                     <ul>
                                         <li><a th:href="@{/myinfo}">我的信息</a></li>
-                                        <li><a href="#">我的购物车</a></li>
+                                        <li><a th:href="@{/Cart}">我的购物车</a></li>
                                         <li th:if="${!user.getIsSeller()}"><a href="#">申请店铺</a></li>
                                         <li th:if="${user.getIsSeller()}"><a href="#">我的店铺</a></li>
                                         <li><a th:href="@{/signout}">退出登陆</a></li>
@@ -242,39 +242,60 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!--<ul>-->
-                                            <!--<li th:each="cart:${cartList}">-->
-                                                <!--<span th:text="${cart.goods_name}"></span>- -->
-                                                <!--<span th:text="${cart.specification_name}"></span>- -->
-                                                <!--<span th:text="${cart.discount_price}"></span>- -->
-                                                <!--<span th:text="${cart.amount}"></span>-->
-                                            <!--</li>-->
-                                        <!--</ul>-->
-                                        <tr class="panel alert" th:each="cart:${cartList}">
-                                            <td>
-                                                <div class="media-left is-hidden-sm-down">
-                                                    <figure class="product-thumb">
-                                                        <img th:src="${cart.img_url}" alt="product">
-                                                    </figure>
-                                                </div>
-                                                <div class="media-body valign-middle" >
-                                                    <h6 class="title mb-15 t-uppercase"><a href="#" th:text="${cart.goods_name}"></a></h6>
-                                                    <div class="type font-12">规格：<span class="t-uppercase" th:text="${cart.specification_name}"></span></div>
-                                                </div>
-                                            </td>
-                                            <td th:text="${cart.discount_price}"></td>
-                                            <td>
-                                                <a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/decreaseCarts(specification_uid=${cart.specification_uid})}">-</a>
-                                                <input class="quantity-label" type="number" th:value="${cart.amount}">
-                                                <a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/increaseCarts(specification_uid=${cart.specification_uid})}">+</a>
-                                            </td>
-                                            <td>
-                                                <div class="sub-total" th:text="${cart.discount_price}*${cart.amount}"></div>
-                                            </td>
-                                            <td>
-                                                <a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/deleteCarts(specification_uid=${cart.specification_uid})}">X</a>
-                                            </td>
-                                        </tr>
+                                        <table id="cart_list" class="cart-list mb-30" th:each="shop:${shopCartList}">
+                                            <tbody>
+                                                <tr class="panel alert" th:each="cart:${shop}">
+                                                    <td>
+                                                        <div class="media-left is-hidden-sm-down">
+                                                            <figure class="product-thumb">
+                                                                <img th:src="${cart.img_url}" alt="product">
+                                                            </figure>
+                                                        </div>
+                                                        <div class="media-body valign-middle" >
+                                                            <h6 class="title mb-15 t-uppercase"><a href="#" th:text="${cart.goods_name}"></a></h6>
+                                                            <div class="type font-12">规格：<span class="t-uppercase" th:text="${cart.specification_name}"></span></div>
+                                                        </div>
+                                                    </td>
+                                                    <td th:text="${cart.discount_price}"></td>
+                                                    <td>
+                                                        <a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/decreaseCarts(specification_uid=${cart.specification_uid})}">-</a>
+                                                        <input class="quantity-label" type="number" th:value="${cart.amount}">
+                                                        <a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/increaseCarts(specification_uid=${cart.specification_uid})}">+</a>
+                                                    </td>
+                                                    <td>
+                                                        <div class="sub-total" th:text="${cart.discount_price}*${cart.amount}"></div>
+                                                    </td>
+                                                    <td>
+                                                        <a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/deleteCarts(specification_uid=${cart.specification_uid})}">X</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--<tr class="panel alert" th:each="cart:${cartList}">-->
+                                            <!--<td>-->
+                                                <!--<div class="media-left is-hidden-sm-down">-->
+                                                    <!--<figure class="product-thumb">-->
+                                                        <!--<img th:src="${cart.img_url}" alt="product">-->
+                                                    <!--</figure>-->
+                                                <!--</div>-->
+                                                <!--<div class="media-body valign-middle" >-->
+                                                    <!--<h6 class="title mb-15 t-uppercase"><a href="#" th:text="${cart.goods_name}"></a></h6>-->
+                                                    <!--<div class="type font-12">规格：<span class="t-uppercase" th:text="${cart.specification_name}"></span></div>-->
+                                                <!--</div>-->
+                                            <!--</td>-->
+                                            <!--<td th:text="${cart.discount_price}"></td>-->
+                                            <!--<td>-->
+                                                <!--<a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/decreaseCarts(specification_uid=${cart.specification_uid})}">-</a>-->
+                                                <!--<input class="quantity-label" type="number" th:value="${cart.amount}">-->
+                                                <!--<a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/increaseCarts(specification_uid=${cart.specification_uid})}">+</a>-->
+                                            <!--</td>-->
+                                            <!--<td>-->
+                                                <!--<div class="sub-total" th:text="${cart.discount_price}*${cart.amount}"></div>-->
+                                            <!--</td>-->
+                                            <!--<td>-->
+                                                <!--<a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/deleteCarts(specification_uid=${cart.specification_uid})}">X</a>-->
+                                            <!--</td>-->
+                                        <!--</tr>-->
                                     </tbody>
                                 </table>
                                 <div class="cart-price">
@@ -290,7 +311,7 @@
                                         </li>
                                     </ul>
                                     <div class="t-right">
-                                        <a th:href="@{/checkout_method}" class="btn btn-rounded btn-lg">CHECKOUT</a>
+                                        <a class="btn btn-rounded btn-lg" th:href="@{/Checkout}">CHECKOUT</a>
                                     </div>
                                 </div>
                             </div>

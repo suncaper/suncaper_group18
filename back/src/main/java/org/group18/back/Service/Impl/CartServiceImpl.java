@@ -106,6 +106,7 @@ public class CartServiceImpl implements CartService{
         for (Integer i = 0; i < cartList.size(); i++){
             CartListModel cartListModel = new CartListModel();
             cartListModel.setAmount(cartList.get(i).getAmount());//数量
+//            System.out.println(cartList.get(i).getAmount());
             cartListModel.setUser_uid(cartList.get(i).getUserUid());//user_uid
             cartListModel.setSpecification_uid(cartList.get(i).getSpecificationUid());//specification_uid
 
@@ -115,13 +116,13 @@ public class CartServiceImpl implements CartService{
             criteria1.andUidEqualTo(cartList.get(i).getGoodsUid());
             List<Goods> goods = goodsMapper.selectByExample(goodsExample);
             cartListModel.setGoods_name(goods.get(0).getGoodsName());//商品名
-            System.out.println(goods.get(0).getGoodsName());
+//            System.out.println(goods.get(0).getGoodsName());
             cartListModel.setDiscount_price(goods.get(0).getDiscountPrice());//价格
-            System.out.println(goods.get(0).getDiscountPrice());
+//            System.out.println(goods.get(0).getDiscountPrice());
             cartListModel.setImg_url(goods.get(0).getImgUrl());//图片地址
-            System.out.println(goods.get(0).getImgUrl());
+//            System.out.println(goods.get(0).getImgUrl());
             cartListModel.setIs_exchange(goods.get(0).getIsExchange());//是否使用积分
-            System.out.println(goods.get(0).getIsExchange());
+//            System.out.println(goods.get(0).getIsExchange());
             cartListModel.setPoints(goods.get(0).getPoints());//积分价格
 
             //查shop表
@@ -130,7 +131,7 @@ public class CartServiceImpl implements CartService{
             criteria3.andSellerUidEqualTo(goods.get(0).getSellerUid());
             List<Shop> shops = shopMapper.selectByExample(shopExample);
             cartListModel.setShop_name(shops.get(0).getShopName());//商店名
-            System.out.println(shops.get(0).getShopName());
+//            System.out.println(shops.get(0).getShopName());
 
             //查goods_specification表
             GoodsSpecificationExample goodsSpecificationExample = new GoodsSpecificationExample();
@@ -138,7 +139,7 @@ public class CartServiceImpl implements CartService{
             criteria2.andUidEqualTo(cartList.get(0).getSpecificationUid());
             List<GoodsSpecification> goodsSpecifications = goodsSpecificationMapper.selectByExample(goodsSpecificationExample);
             cartListModel.setSpecification_name(goodsSpecifications.get(0).getSpecificationName());
-            System.out.println(goodsSpecifications.get(0).getSpecificationName());//规格名
+//            System.out.println(goodsSpecifications.get(0).getSpecificationName());//规格名
 
             cartListModels.add(cartListModel);
         }
@@ -147,11 +148,34 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public BigDecimal getTotalPrice(List<CartListModel> cartList){
-        BigDecimal totalPrice = new BigDecimal("0");
+        BigDecimal totalPrice = new BigDecimal("0.0");
         for (Integer i = 0; i < cartList.size(); i++){
-            totalPrice = totalPrice.add(cartList.get(i).getDiscount_price().multiply(new BigDecimal(cartList.get(0).getAmount())));
+            totalPrice = totalPrice.add(cartList.get(i).getDiscount_price().multiply(new BigDecimal(cartList.get(i).getAmount())));
+            System.out.println(i+":" +totalPrice);
         }
         System.out.println(totalPrice);
         return totalPrice;
+    }
+
+    @Override
+    public List<Map<String, List<CartListModel>>> getShopCarts (List<CartListModel> cartListModels){
+        Map<String, List<CartListModel>> shopCartsMap = new HashMap<String, List<CartListModel>>();
+        List<Map<String, List<CartListModel>>> shopCartsList = new ArrayList<>();
+        for(Integer i = 0; i < cartListModels.size(); i++){
+            String shopName = cartListModels.get(i).getShop_name();
+            List<CartListModel> cartListModels1 = new ArrayList<>();
+            System.out.println(shopName);
+            if(shopCartsMap.containsKey(cartListModels.get(i).getShop_name()) == false){
+                for(Integer j = 0; j < cartListModels.size(); j++){
+                    if (cartListModels.get(j).getShop_name().equals(shopName)){
+                        cartListModels1.add(cartListModels.get(j));
+                    }
+                }
+                shopCartsMap.put(shopName, cartListModels1);
+            }
+        }
+        shopCartsList.add(shopCartsMap);
+        System.out.println(shopCartsMap);
+        return shopCartsList;
     }
 }

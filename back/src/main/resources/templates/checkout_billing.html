@@ -152,7 +152,7 @@
                                     <a href="#"><i class="fa fa-user"></i>你好,<span th:text="${user.getUserName()}"></span></a>
                                     <ul>
                                         <li><a th:href="@{/myinfo}">我的信息</a></li>
-                                        <li><a href="#">我的购物车</a></li>
+                                        <li><a th:href="@{/Cart}">我的购物车</a></li>
                                         <li th:if="${!user.getIsSeller()}"><a href="#">申请店铺</a></li>
                                         <li th:if="${user.getIsSeller()}"><a href="#">我的店铺</a></li>
                                         <li><a th:href="@{/signout}">退出登陆</a></li>
@@ -207,12 +207,6 @@
                                             <span class="title">Cart</span>
                                         </a>
                                     </div>
-                                    <div class="header-wishlist ml-20">
-                                        <a href="wishlist.html">
-                                            <span class="icon lnr lnr-heart font-30"></span>
-                                            <span class="title">Wish List</span>
-                                        </a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -238,7 +232,7 @@
 
                             <!-- Checkout Area -->
                             <section class="section checkout-area panel prl-30 pt-20 pb-40">
-                                <h2 class="h2 mb-20 h-title">Billing Information</h2>
+                                <h2 class="h2 mb-20 h-title">收货信息</h2>
                                 <form class="mb-30">
                                     <div class="row">
                                         <div class="col-md-6">
@@ -309,7 +303,7 @@
                                     </div>
                                 </form>
                                 <a href="checkout_payment.html" class="btn btn-lg btn-rounded mr-10">Continue</a>
-                                <a href="cart.html" class="btn btn-lg btn-warning btn-rounded">Cancel Order</a>
+                                <a th:href="@{/Cart}" class="btn btn-lg btn-warning btn-rounded">Cancel Order</a>
                             </section>
                             <!-- End Checkout Area -->
 
@@ -325,25 +319,24 @@
                                             <div class="widget-body">
                                                 <table class="table mb-15">
                                                     <tbody>
-                                                        <tr>
-                                                            <td class="color-mid">Total products</td>
-                                                            <td>$150.16</td>
+                                                        <tr class="panel t-uppercase">
+                                                            <td>商品名称</td>
+                                                            <td>数量</td>
+                                                            <td>小计（￥）</td>
                                                         </tr>
-                                                        <tr>
-                                                            <td class="color-mid">Shipping</td>
-                                                            <td>$60.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="color-mid">Total tax</td>
-                                                            <td>$10.00</td>
+                                                        <tr th:each="cart:${cartList}">
+                                                            <td class="color-mid" th:text="${cart.goods_name}"></td>
+                                                            <td class="color-mid" th:text="${cart.amount}"></td>
+                                                            <td th:text="${cart.discount_price}*${cart.amount}"></td>
                                                         </tr>
                                                         <tr class="font-15">
-                                                            <td class="color-mid">Total</td>
-                                                            <td class="color-green">$220.16</td>
+                                                            <td class="color-mid">总计（￥）</td>
+                                                            <td class="color-mid"></td>
+                                                            <td class="color-green" th:text="${totalPrice}"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                                <a href="cart.html" class="btn btn-info btn-block btn-sm">Edit Cart</a>
+                                                <a th:href="@{/Cart}" class="btn btn-info btn-block btn-sm">Edit Cart</a>
                                             </div>
                                         </div>
                                         <!-- End Recent Posts -->
