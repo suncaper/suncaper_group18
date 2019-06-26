@@ -12,7 +12,7 @@
     <!-- ––––––––––––––––––––––––––––––––––––––––– -->
     <!-- META TAGS                                 -->
     <!-- ––––––––––––––––––––––––––––––––––––––––– -->
-    <meta charset="utf-8">1
+    <meta charset="utf-8">
     <!-- Always force latest IE rendering engine -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Mobile specific meta -->
@@ -70,11 +70,6 @@
 </head>
 
 <body id="body" class="wide-layout preloader-active">
-
-     
-
-
-
     <!--[if lt IE 9]>
         <p class="browserupgrade alert-error">
         	You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
@@ -271,9 +266,10 @@
                                                     <th style="font-size: 20px;">测试店铺</th>
                                                     <th></th>
                                                     <th></th>
+                                                    <th>订单状态</th>
                                                 </tr>
                                                 <tr class="panel alert">
-                                                    <td class="col-sm-8 col-md-9">
+                                                    <td class="col-sm-6 col-md-6">
                                                         <div class="media-left is-hidden-sm-down">
                                                             <figure class="product-thumb">
                                                                 <img th:src="@{/images/cart/product_11.jpg}" alt="product">
@@ -297,92 +293,23 @@
                                                             <button class="btn btn-rounded btn-sm mt-15 is-hidden-sm-up">Add To Cart</button>
                                                         </div>
                                                     </td>
-                                                    <td class="col-sm-3 col-md-2 is-hidden-xs-down">
-                                                        <button class="btn btn-rounded btn-sm">Add To Cart</button>
+                                                    <td class="col-sm-2 col-md-2">商品规格</td>
+                                                    <td class="col-sm-2 col-md-2 is-hidden-xs-down">
+                                                        <span style="font-size: 20px;">x5</span>
                                                     </td>
-                                                    <td class="col-sm-1">
-                                                        <button type="button" class="close pr-xs-0 pr-sm-10" data-dismiss="alert" aria-hidden="true">
-                                                            <i class="fa fa-trash-o"></i>
-                                                        </button>
+                                                    <td class="col-sm-2 col-md-2" >
+                                                        <span style="font-size:20px;">$1700</span>
                                                     </td>
                                                 </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <table id = "storeOrder2">
                                                 <tr>
-                                                    <th style="font-size: 20px;">测试店铺</th>
-                                                    <th></th>
-                                                    <th></th>
-                                                </tr>
-                                                <tr class="panel alert">
-                                                    <td class="col-sm-8 col-md-9">
-                                                        <div class="media-left is-hidden-sm-down">
-                                                            <figure class="product-thumb">
-                                                                <img th:src="@{/images/cart/product_11.jpg}" alt="product">
-                                                            </figure>
-                                                        </div>
-                                                        <div class="media-body valign-middle">
-                                                            <h5 class="title mb-5 t-uppercase"><a href="#">Diamond engagement ring</a></h5>
-                                                            <div class="rating mb-10">
-                                                                <span class="rating-stars rate-allow" data-rating="2">
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o star-active"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                </span>
-                                                                <span class="rating-reviews">
-                                                                    ( <span class="rating-count">100</span> rates )
-                                                                </span>
-                                                            </div>
-                                                            <h4 class="price color-green"><span class="price-sale">$380.00</span>$340.00</h4>
-                                                            <button class="btn btn-rounded btn-sm mt-15 is-hidden-sm-up">Add To Cart</button>
-                                                        </div>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td align="right">
+                                                        <button class="btn btn-rounded btn-sm mt-15">确认收货</button>
                                                     </td>
-                                                    <td class="col-sm-3 col-md-2 is-hidden-xs-down">
-                                                        <button class="btn btn-rounded btn-sm">Add To Cart</button>
-                                                    </td>
-                                                    <td class="col-sm-1">
-                                                        <button type="button" class="close pr-xs-0 pr-sm-10" data-dismiss="alert" aria-hidden="true">
-                                                            <i class="fa fa-trash-o"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr class="panel alert">
-                                                    <td class="col-sm-8 col-md-9">
-                                                        <div class="media-left is-hidden-sm-down">
-                                                            <figure class="product-thumb">
-                                                                <img th:src="@{/images/cart/product_11.jpg}" alt="product">
-                                                            </figure>
-                                                        </div>
-                                                        <div class="media-body valign-middle">
-                                                            <h5 class="title mb-5 t-uppercase"><a href="#">Diamond engagement ring</a></h5>
-                                                            <div class="rating mb-10">
-                                                                <span class="rating-stars rate-allow" data-rating="2">
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o star-active"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                </span>
-                                                                <span class="rating-reviews">
-                                                                    ( <span class="rating-count">100</span> rates )
-                                                                </span>
-                                                            </div>
-                                                            <h4 class="price color-green"><span class="price-sale">$380.00</span>$340.00</h4>
-                                                            <button class="btn btn-rounded btn-sm mt-15 is-hidden-sm-up">Add To Cart</button>
-                                                        </div>
-                                                    </td>
-                                                    <td class="col-sm-3 col-md-2 is-hidden-xs-down">
-                                                        <button class="btn btn-rounded btn-sm">Add To Cart</button>
-                                                    </td>
-                                                    <td class="col-sm-1">
-                                                        <button type="button" class="close pr-xs-0 pr-sm-10" data-dismiss="alert" aria-hidden="true">
-                                                            <i class="fa fa-trash-o"></i>
-                                                        </button>
+                                                    <td>
+                                                        <p>共5件商品</p>
+                                                        <p>总价：¥1000</p>
                                                     </td>
                                                 </tr>
                                             </table>
