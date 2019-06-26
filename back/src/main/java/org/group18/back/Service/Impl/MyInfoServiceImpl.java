@@ -70,8 +70,26 @@ public class MyInfoServiceImpl implements MyInfoService {
             shopExample.createCriteria().andSellerUidEqualTo(order.getSellerUid());
             orderPageModel.setShopBaseInfo(shopMapper.selectByExample(shopExample).get(0));
             //查询商品信息
-            orderPageModel.setGSY(getGoodsSpecificationY(order));
-            orderPageModel.setGSN(getGoodsSpecificationN(order));
+            List<GoodsSpecificationModel> goodsSpecificationModelsY = getGoodsSpecificationY(order);
+            List<GoodsSpecificationModel> goodsSpecificationModelsN = getGoodsSpecificationN(order);
+            orderPageModel.setGSY(goodsSpecificationModelsY);
+            orderPageModel.setGSN(goodsSpecificationModelsN);
+
+            //设置总共商品数量、总价、总积分
+            int totalAmount = 0, totalPoints = 0;
+            BigDecimal totalPrice = new BigDecimal(0);
+            for(GoodsSpecificationModel goodsSpecificationModel : goodsSpecificationModelsY){
+                totalAmount+=goodsSpecificationModel.getAmount();
+                totalPoints+=goodsSpecificationModel.getGoods().getPoints();
+            }
+            for(GoodsSpecificationModel goodsSpecificationModel : goodsSpecificationModelsN){
+                totalAmount+=goodsSpecificationModel.getAmount();
+                totalPrice = totalPrice.add(goodsSpecificationModel.getGoods().getDiscountPrice());
+            }
+            orderPageModel.setTotalAmount(totalAmount);
+            orderPageModel.setTotalPoints(totalPoints);
+            orderPageModel.setTotalPrice(totalPrice);
+            orderPageModelList.add(orderPageModel);
         }
         return orderPageModelList;
     }

@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.group18.back.Dao.UserAddressMapper;
 import org.group18.back.Entity.User;
 import org.group18.back.Entity.UserAddress;
+import org.group18.back.Model.OrderPageModel;
 import org.group18.back.Service.Impl.MyInfoServiceImpl;
 import org.group18.back.Service.LoginRegisterService;
 import org.group18.back.Service.MyInfoService;
@@ -105,7 +106,7 @@ public class  MyInfoController {
             model.addAttribute("isSignin", true);
 
             //获取请求页数
-            //设置每页显示数量为20
+            //设置每页显示数量为5
             int pageSize = 5;
             if(page == null) page = 1;//若未接受到页面请求，则设置为1
             //生成页面列表
@@ -114,10 +115,11 @@ public class  MyInfoController {
             for(int i = 1; i <= (count%pageSize==0?count/pageSize:(count/pageSize+1)); i++){
                 pagesNumberList.add(i);
             }
+            List<OrderPageModel> orderPageModels =  myInfoService.getOrderPageInfo(user.getUid(), pageSize, page);
             model.addAttribute("pageNumberList", pagesNumberList);
             model.addAttribute("currentPage", page);
             model.addAttribute("pageAmount", pagesNumberList.size());
-            model.addAttribute("orderPageList", myInfoService.getOrderPageInfo(user.getUid(), pageSize, page));
+            model.addAttribute("orderPageList", orderPageModels);
             return "myorder";
         }
     }
