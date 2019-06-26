@@ -107,7 +107,6 @@
     <div id="pageWrapper" class="page-wrapper">
         <!-- –––––––––––––––[ HEADER ]––––––––––––––– -->
         <header id="mainHeader" class="main-header">
-
             <!-- Top Bar -->
             <div class="top-bar bg-gray">
                 <div class="container">
@@ -246,6 +245,7 @@
                                     <a href="#">积分商城</a>
                                 </li>
                             </ul>
+                        </div>
                     </nav>
                 </div>
             </div>
@@ -275,7 +275,12 @@
                                         <tr class="panel alert">
                                             <td class="col-sm-8 col-md-9">
                                                 <h5 class="h-title mb-40 t-uppercase">收货地址</h5>
-                                                <class="mb-40 t-uppercase"><span th:if="${isEmpty}" ><h3>您还没有任何收货地址！</h3></span>
+                                                    <div th:if="${ifsuccess}"><div class="alert alert-safe alert-dismissible" role="alert">
+                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <strong>成功</strong> <span th:text="${msg}"></span>
+                                                    </div>
+                                                    </div>
+                                                <span th:if="${isEmpty}" ><th:if="${isEmpty}" h3 class="mb-40 t-uppercase">您还没有任何收货地址！</h3></span>
                                                 <table th:if="!${isEmpty}" class="table table-condensed">
                                                     <thead>
                                                         <tr>
@@ -289,56 +294,82 @@
                                                     </thead>
                                                     <tbody>
                                                      <div>
-                                                        <tr th:each="address,addressState:${addressList}">
-                                                        <td th:text="${address.getProvince()}"></td>
-                                                        <td th:text="${address.getCity()}"></td>
-                                                        <td th:text="${address.getDetailAddress()}"></td>
-                                                        <td class="col-sm-3 col-md-2 is-hidden-xs-down">
-                                                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">编辑</button>
-                                                        </td>
-                                                        <td>
-                                                            <!-- 模态框（Modal） -->
-                                                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                            <h4 class="modal-title" id="myModalLabel">地址编辑</h4>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <form class="form-horizontal" role="form" th:object="${addressList}" th:action="@{/address_edit}" method="post">
-                                                                                <div class="form-group">
-                                                                                    <label for="province" class="col-sm-2 control-label">省份</label>
-                                                                                    <div class="col-sm-10">
-                                                                                        <input type="text" class="form-control" id="province" th:field="${addressList[0].getProvince()}">
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="city" class="col-sm-2 control-label">城市</label>
-                                                                                    <div class="col-sm-10">
-                                                                                        <input type="text" class="form-control" id="city" th:field="${addressList[0].getCity()}">
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="detailAddress" class="col-sm-2 control-label">详细地址</label>
-                                                                                    <div class="col-sm-10">
-                                                                                        <input type="text" class="form-control" id="detailAddress" th:field="${addressList[0].getDetailAddress()}">
-                                                                                    </div>
-                                                                                </div>
-                                                                                <button type="submit" class="btn btn-block btn-lg">提交</button>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div><!-- /.modal-content -->
-                                                                </div><!-- /.modal -->
-                                                            </div>
-                                                        </td>
-                                                        <td class="col-sm-1">
-                                                            <a th:href="@{/delete}">
-                                                                <button type="button" class="close pr-xs-0 pr-sm-10">
-                                                                    <i class="fa fa-trash-o"></i>
+                                                        <tr th:each="address,addressStat:${address}">
+                                                            <td th:text="${addressStat.count}"></td>
+                                                            <td th:text="${address.getProvince()}"></td>
+                                                            <td th:text="${address.getCity()}"></td>
+                                                            <td th:text="${address.getDetailAddress()}"></td>
+                                                            <td class="col-sm-3 col-md-2 is-hidden-xs-down">
+                                                                <!-- 按钮触发模态框 -->
+                                                                <button class="btn btn-primary btn-sm" data-toggle="modal" type="button1"
+                                                                        th:onclick="getaddressinfo([[${address.getId()}]],[[${address.getProvince()}]],[[${address.getCity()}]],[[${address.getDetailAddress()}]])">
+                                                                    编辑
                                                                 </button>
-                                                            </a>
-                                                        </td>
+                                                                <!-- 模态框（Modal） -->
+                                                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                                <h4 class="modal-title" id="myModalLabel">编辑地址</h4>
+                                                                            </div>
+                                                                                <div class="modal-body">
+                                                                                    <input placeholder="id" class="form-control" type="text" id="a_province">
+                                                                                    <input placeholder="id" class="form-control" type="text" id="a_city">
+                                                                                    <input placeholder="id" class="form-control" type="text" id="a_detailAddress">
+                                                                                </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-primary" onclick="edit()" >提交更改</button>
+                                                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                                            </div>
+                                                                        </div><!-- /.modal-content -->
+                                                                    </div><!-- /.modal -->
+                                                                </div>
+                                                                <script>
+                                                                        var a_id;
+                                                                        var a_province;
+                                                                        var a_city;
+                                                                        var a_detailAddress;
+                                                                    function getaddressinfo(id,province,city,detailAddress) {
+                                                                        a_id = id;
+                                                                        a_province = province;
+                                                                        a_city = city;
+                                                                        a_detailAddress = detailAddress;
+                                                                        document.getElementById('a_province').value = province;
+                                                                        document.getElementById('a_city').value = city;
+                                                                        document.getElementById('a_detailAddress').value = detailAddress;
+                                                                        $('#myModal').modal('show');
+                                                                    }
+                                                                    function edit() {
+                                                                            var params = {
+                                                                                "id" :a_id,
+                                                                                "province":a_province,
+                                                                                "city":a_city,
+                                                                                "detailAddress":a_detailAddress
+                                                                            }
+                                                                            console.log("1");
+                                                                            // 此处可传入多个参数
+                                                                            $.ajax({
+                                                                                type: 'get',
+                                                                                url:  '/address_edit?id='+a_id+'&province='+a_province+'&city='+a_city+'&detailAddress='+a_detailAddress,
+                                                                                async: false,
+                                                                                success: function s(data) {
+                                                                                    console("success"+data);
+                                                                                },
+                                                                                error:function e(data){
+                                                                                    console.log("error"+data);
+                                                                                }
+                                                                            })
+                                                                        }
+                                                                </script>
+                                                            </td>
+                                                            <td class="col-sm-1">
+                                                                <a th:href="@{/delete}">
+                                                                    <button type="button" class="close pr-xs-0 pr-sm-10">
+                                                                        <i class="fa fa-trash-o"></i>
+                                                                    </button>
+                                                                </a>
+                                                            </td>
                                                         </tr>
                                                      </div>
                                                     </tbody>

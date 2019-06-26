@@ -59,28 +59,34 @@ public class  MyInfoController {
         }
     }
     @RequestMapping("/address_edit")
-    public String edit(Model model, HttpServletRequest request,@ModelAttribute(value = "address") UserAddress userAddress){
-        System.out.println(userAddress.getId()+userAddress.getCity()+userAddress.getCity()+userAddress.getDetailAddress());
+
+    public String edit(Model model, HttpServletRequest request,HttpServletResponse response, @RequestParam("id") String id, @RequestParam("province") String province, @RequestParam("city") String city, @RequestParam("detailAddress") String detailAddress){
         //检查是否已经登陆
+        System.out.println("asdasd"+id);
+
+
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if(user == null) {
             model.addAttribute("user", new User());
             model.addAttribute("isSignin", false);
+            return "signin";
         }
-        else {
-            model.addAttribute("user", user);
+        else{
             model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+
+
+            UserAddress userAddress = new UserAddress();
+            userAddress.setId(Integer.valueOf(id));
+            userAddress.setProvince(province);
+            userAddress.setCity(city);
+            userAddress.setDetailAddress(detailAddress);
+            Boolean result = myInfoService.edit(userAddress);
+
+            model.addAttribute("ifsuccess",result);
+            model.addAttribute("msg","提交成功");
+            return"myinfo";
         }
-//        UserAddress userAddress =new UserAddress();
-//        userAddress.setId(id);
-//        userAddress.setProvince(province);
-//        userAddress.setCity(city);
-//        userAddress.setDetailAddress(detailAddress);
-//        Map result = myInfoService.edit(userAddress);
-        List<UserAddress> result = myInfoService.myaddress(user.getUid());
-        model.addAttribute("isEmpty",false);
-        model.addAttribute("addressList", result);
-        return "myinfo";
     }
 
 

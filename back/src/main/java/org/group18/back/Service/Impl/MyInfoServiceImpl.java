@@ -42,13 +42,13 @@ public class MyInfoServiceImpl implements MyInfoService {
         return result;
     }
     @Override
-    public Map<String, String> edit(UserAddress userAddress) {
-        Map<String, String> result = new HashMap<>();
+    public Boolean edit(UserAddress userAddress) {
+        Boolean result = true;
         UserAddressExample useraddressExample1 = new UserAddressExample();
         UserAddressExample.Criteria criteria1 = useraddressExample1.createCriteria();
         criteria1.andIdEqualTo(userAddress.getId());
         useraddressMapper.updateByExampleSelective(userAddress,useraddressExample1);
-        result.put("msg","提交成功");
+        result = true;
         return result;
     }
 

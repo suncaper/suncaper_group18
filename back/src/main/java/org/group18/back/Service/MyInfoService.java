@@ -11,7 +11,7 @@ import java.util.Map;
 
 public interface MyInfoService {
     List<UserAddress> myaddress(String uid);
-    Map<String,String> edit(UserAddress userAddress);
+    Boolean edit(UserAddress userAddress);
 //    User judgeUserLoginStatus(String ticket);
 //    User checkTicket(Cookie[] cookies);
 
