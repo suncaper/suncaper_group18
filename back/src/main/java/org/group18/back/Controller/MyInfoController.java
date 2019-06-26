@@ -90,7 +90,6 @@ public class  MyInfoController {
         }
     }
 
-
     @RequestMapping("/myorder")
     public String myOrder(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page){
         //检查是否已经登陆

@@ -202,15 +202,9 @@
                                     <div class="header-cart">
                                         <a th:href="@{/Cart}">
                                             <span class="icon lnr lnr-cart"></span>
-                                            <div><span class="cart-number">0</span>
+                                            <div><span class="cart-number" th:text="${totalAmount}"></span>
                                             </div>
                                             <span class="title">Cart</span>
-                                        </a>
-                                    </div>
-                                    <div class="header-wishlist ml-20">
-                                        <a href="wishlist.html">
-                                            <span class="icon lnr lnr-heart font-30"></span>
-                                            <span class="title">Wish List</span>
                                         </a>
                                     </div>
                                 </div>
@@ -238,23 +232,23 @@
 
                             <!-- Checkout Area -->
                             <section class="section checkout-area panel prl-30 pt-20 pb-40">
-                                <h2 class="h3 mb-20 h-title">Checkout method</h2>
-                                <p class="mb-20">Dont have an account ? Pick one of the options below.</p>
+                                <h2 class="h3 mb-20 h-title">支付方式</h2>
                                 <div class="custom-radio mb-10">
                                     <input type="radio" name="checkout_method" id="sign_in">
-                                    <label class="color-mid" for="sign_in">Sign In</label>
+                                    <label class="color-mid" for="sign_in" style="font-size: 15px" th:text="账户余额支付"></label>
+                                    <h5 style="font-size: 12px" th:text="余额：+${balance}"></h5>
+                                    <h5 style="font-size: 12px" th:text="积分：+ ${points}"></h5>
                                 </div>
                                 <div class="custom-radio mb-10">
                                     <input type="radio" name="checkout_method" id="sign_up">
-                                    <label class="color-mid" for="sign_up">Create a New Account</label>
+                                    <label class="color-mid" for="sign_up" style="font-size: 15px">支付宝支付</label>
                                 </div>
                                 <div class="custom-radio mb-20">
                                     <input type="radio" name="checkout_method" id="as_guest">
-                                    <label class="color-mid" for="as_guest">Checkout as Guest</label>
+                                    <label class="color-mid" for="as_guest" style="font-size: 15px">微信支付</label>
                                 </div>
-                                <p class="mb-20">Register with us for a fast and easy checkout and easy access to your order history and status</p>
-                                <a href="checkout_billing.html" class="btn btn-lg btn-rounded mr-10">Continue</a>
-                                <a href="cart.html" class="btn btn-lg btn-warning btn-rounded">Cancel Order</a>
+                                <a href="checkout_billing.html" class="btn btn-lg btn-rounded mr-10">确认支付</a>
+                                <a th:href="@{/Cart}" class="btn btn-lg btn-warning btn-rounded">取消支付</a>
                             </section>
                             <!-- End Checkout Area -->
 
@@ -270,25 +264,30 @@
                                             <div class="widget-body">
                                                 <table class="table mb-15">
                                                     <tbody>
-                                                        <tr>
-                                                            <td class="color-mid">Total products</td>
-                                                            <td>$150.16</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="color-mid">Shipping</td>
-                                                            <td>$60.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="color-mid">Total tax</td>
-                                                            <td>$10.00</td>
-                                                        </tr>
-                                                        <tr class="font-15">
-                                                            <td class="color-mid">Total</td>
-                                                            <td class="color-green">$220.16</td>
-                                                        </tr>
+                                                    <tr class="panel t-uppercase">
+                                                        <td th:align="left">商品名称</td>
+                                                        <td th:align="right">数量</td>
+                                                        <td th:align="right">小计</td>
+                                                    </tr>
+                                                    <tr th:each="cart:${cartList}">
+                                                        <td class="color-mid" th:text="${cart.goods_name}"></td>
+                                                        <td class="color-mid" th:text="${cart.amount}" th:align="right"></td>
+                                                        <td th:if="${!cart.is_exchange}" th:text="￥+${cart.discount_price}*${cart.amount}" th:align="right"></td>
+                                                        <td th:if="${cart.is_exchange}" th:text="积分：+${cart.points}*${cart.amount}" th:align="right"></td>
+                                                    </tr>
+                                                    <tr class="font-15">
+                                                        <td class="color-mid" style="font-weight: 700;">总计</td>
+                                                        <td class="color-mid"></td>
+                                                        <td class="color-green" th:text="￥+${totalPrice}" th:align="right"></td>
+                                                    </tr>
+                                                    <tr class="font-15">
+                                                        <td class="color-mid"></td>
+                                                        <td class="color-mid"></td>
+                                                        <td class="color-green" th:text="积分：+${totalPoints}" th:align="right"></td>
+                                                    </tr>
                                                     </tbody>
                                                 </table>
-                                                <a href="cart.html" class="btn btn-info btn-block btn-sm">Edit Cart</a>
+                                                <a th:href="@{/Cart}" class="btn btn-info btn-block btn-sm" style="font-size: 15px;">修改订单</a>
                                             </div>
                                         </div>
                                         <!-- End Recent Posts -->
