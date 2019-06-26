@@ -50,21 +50,55 @@ public class  MyInfoController {
             else
             {
                 model.addAttribute("isEmpty",false);
-                model.addAttribute("address", result);
+                model.addAttribute("addressList", result);
+                model.addAttribute("editAddress", new UserAddress());
             }
             return "myinfo";
         }
     }
     @RequestMapping("/address_edit")
-    public String edit(Model model, HttpServletRequest request,@Param("id")int id,@Param("province")String province,
-                       @Param("city")String city,@Param("detailAddress")String detailAddress){
-        UserAddress userAddress =new UserAddress();
-        userAddress.setId(id);
-        userAddress.setProvince(province);
-        userAddress.setCity(city);
-        userAddress.setDetailAddress(detailAddress);
-        Map result = myInfoService.edit(userAddress);
-        return"myinfo";
+    public String edit(Model model, HttpServletRequest request,@ModelAttribute(value = "address") UserAddress userAddress){
+        System.out.println(userAddress.getId()+userAddress.getCity()+userAddress.getCity()+userAddress.getDetailAddress());
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+        }
+        else {
+            model.addAttribute("user", user);
+            model.addAttribute("isSignin", true);
+        }
+//        UserAddress userAddress =new UserAddress();
+//        userAddress.setId(id);
+//        userAddress.setProvince(province);
+//        userAddress.setCity(city);
+//        userAddress.setDetailAddress(detailAddress);
+//        Map result = myInfoService.edit(userAddress);
+        List<UserAddress> result = myInfoService.myaddress(user.getUid());
+        model.addAttribute("isEmpty",false);
+        model.addAttribute("addressList", result);
+        return "myinfo";
+    }
+
+
+    @RequestMapping("/myorder")
+    public String myOrder(Model model, HttpServletRequest request){
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+
+        }
+        else {
+            model.addAttribute("user", user);
+            model.addAttribute("isSignin", true);
+        }
+
+
+
+        return "myorder";
     }
 
 }
