@@ -316,6 +316,22 @@
                                         </td>
                                     </tr>
                                 </table>
+                                <div class="page-pagination text-center mt-30 p-10 panel">
+                                    <nav>
+                                        <!-- Page Pagination -->
+                                        <ul class="page-pagination">
+                                            <li><a class="page-numbers previous" th:if="${currentPage} ne 1" th:href="@{/myorder(page=${currentPage}-1)}">Previous</a>
+                                            </li>
+                                            <li th:each="number:${pageNumberList}">
+                                                <a class="page-numbers" th:if="${number} ne ${currentPage}" th:text="${number}" th:href="@{/myorder(page=${number})}"></a>
+                                                <span th:if="${number} eq ${currentPage}" class="page-numbers current" th:text="${number}"></span>
+                                            </li>
+                                            <li><a class="page-numbers next" th:if="(${currentPage} ne ${pageAmount}) and (${currentPage} ne 1)" th:href="@{/myorder(page=${currentPage}+1)}">Next</a>
+                                            </li>
+                                        </ul>
+                                        <!-- End Page Pagination -->
+                                    </nav>
+                                </div>
                             </div>
                         </div>
                     </section>

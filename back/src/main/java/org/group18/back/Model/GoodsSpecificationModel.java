@@ -7,6 +7,15 @@ public class GoodsSpecificationModel {
     private Goods goods;
     private GoodsSpecification goodsSpecification;
     private Boolean reviewState;//评论状态
+    private int amount;//购买的数量
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 
     public Goods getGoods() {
         return goods;
