@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 public interface CheckoutService {
-    public List<UserAddress> getUserAddress(String user_uid);
+    List<UserAddress> getUserAddress(String user_uid);
 }
