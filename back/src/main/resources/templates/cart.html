@@ -70,7 +70,7 @@
 </head>
 
 <body id="body" class="wide-layout preloader-active">
-     
+  <script></script>
 
 
 
@@ -171,7 +171,7 @@
                 <div class="container">
                     <div class="row row-rl-0 row-tb-20 row-md-cell">
                         <div class="brand col-md-3 t-xs-center t-md-left valign-middle">
-                            <a href="#" class="logo">
+                            <a th:href="@{/index}" class="logo">
                                 <img th:src="@{/images/logo.png}" alt="" width="250">
                             </a>
                         </div>
@@ -230,158 +230,67 @@
                     <div class="cart-area ptb-60">
                         <div class="container">
                             <div class="cart-wrapper">
-                                <h3 class="h-title mb-30 t-uppercase">My Cart</h3>
+                                <h3 class="h-title mb-30 t-uppercase">我的购物车</h3>
                                 <table id="cart_list" class="cart-list mb-30">
                                     <thead class="panel t-uppercase">
                                         <tr>
-                                            <th>Product name</th>
-                                            <th>Unit price</th>
-                                            <th>Quantity</th>
-                                            <th>Sub total</th>
+                                            <th>商品名称</th>
+                                            <th>单价（￥）</th>
+                                            <th>数量</th>
+                                            <th>总价（￥）</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="panel alert">
+                                        <!--<ul>-->
+                                            <!--<li th:each="cart:${cartList}">-->
+                                                <!--<span th:text="${cart.goods_name}"></span>- -->
+                                                <!--<span th:text="${cart.specification_name}"></span>- -->
+                                                <!--<span th:text="${cart.discount_price}"></span>- -->
+                                                <!--<span th:text="${cart.amount}"></span>-->
+                                            <!--</li>-->
+                                        <!--</ul>-->
+                                        <tr class="panel alert" th:each="cart:${cartList}">
                                             <td>
                                                 <div class="media-left is-hidden-sm-down">
                                                     <figure class="product-thumb">
-                                                        <img th:src="@{/images/cart/product_01.jpg}" alt="product">
+                                                        <img th:src="${cart.img_url}" alt="product">
                                                     </figure>
                                                 </div>
-                                                <div class="media-body valign-middle">
-                                                    <h6 class="title mb-15 t-uppercase"><a href="#">Diamond engagement ring</a></h6>
-                                                    <div class="type font-12"><span class="t-uppercase">Type : </span>Women's Cloths</div>
+                                                <div class="media-body valign-middle" >
+                                                    <h6 class="title mb-15 t-uppercase"><a href="#" th:text="${cart.goods_name}"></a></h6>
+                                                    <div class="type font-12">规格：<span class="t-uppercase" th:text="${cart.specification_name}"></span></div>
                                                 </div>
                                             </td>
-                                            <td>$235</td>
+                                            <td th:text="${cart.discount_price}"></td>
                                             <td>
-                                                <button type="submit" class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;">-</button>
-                                                <input class="quantity-label" type="number" value="02">
-                                                <button type="submit" class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;">+</button>
+                                                <a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/decreaseCarts(specification_uid=${cart.specification_uid})}">-</a>
+                                                <input class="quantity-label" type="number" th:value="${cart.amount}">
+                                                <a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/increaseCarts(specification_uid=${cart.specification_uid})}">+</a>
                                             </td>
                                             <td>
-                                                <div class="sub-total">$470</div>
+                                                <div class="sub-total" th:text="${cart.discount_price}*${cart.amount}"></div>
                                             </td>
                                             <td>
-                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                                                    <i class="fa fa-trash-o"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr class="panel alert">
-                                            <td>
-                                                <div class="media-left is-hidden-sm-down">
-                                                    <figure class="product-thumb">
-                                                        <img th:src="@{/images/cart/product_02.jpg}" alt="product">
-                                                    </figure>
-                                                </div>
-                                                <div class="media-body valign-middle">
-                                                    <h6 class="title mb-15 t-uppercase"><a href="#">Diamond engagement ring</a></h6>
-                                                    <div class="type font-12"><span class="t-uppercase">Type : </span>Women's Cloths</div>
-                                                </div>
-                                            </td>
-                                            <td>$235</td>
-                                            <td>
-                                                <button type="submit" class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;">-</button>
-                                                <input class="quantity-label" type="number" value="02">
-                                                <button type="submit" class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;">+</button>
-                                            </td>
-                                            <td>
-                                                <div class="sub-total">$470</div>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                                                    <i class="fa fa-trash-o"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr class="panel alert">
-                                            <td>
-                                                <div class="media-left is-hidden-sm-down">
-                                                    <figure class="product-thumb">
-                                                        <img th:src="@{/images/cart/product_03.jpg}" alt="product">
-                                                    </figure>
-                                                </div>
-                                                <div class="media-body valign-middle">
-                                                    <h6 class="title mb-15 t-uppercase"><a href="#">Diamond engagement ring</a></h6>
-                                                    <div class="type font-12"><span class="t-uppercase">Type : </span>Women's Cloths</div>
-                                                </div>
-                                            </td>
-                                            <td>$235</td>
-                                            <td>
-                                                <button type="submit" class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;">-</button>
-                                                <input class="quantity-label" type="number" value="02">
-                                                <button type="submit" class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;">+</button>
-                                            </td>
-                                            <td>
-                                                <div class="sub-total">$470</div>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                                                    <i class="fa fa-trash-o"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr class="panel alert">
-                                            <td>
-                                                <div class="media-left is-hidden-sm-down">
-                                                    <figure class="product-thumb">
-                                                        <img th:src="@{/images/cart/product_04.jpg}" alt="product">
-                                                    </figure>
-                                                </div>
-                                                <div class="media-body valign-middle">
-                                                    <h6 class="title mb-15 t-uppercase"><a href="#">Diamond engagement ring</a></h6>
-                                                    <div class="type font-12"><span class="t-uppercase">Type : </span>Women's Cloths</div>
-                                                </div>
-                                            </td>
-                                            <td>$235</td>
-                                            <td>
-                                                <button type="submit" class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;">-</button>
-                                                <input class="quantity-label" type="number" value="02">
-                                                <button type="submit" class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;">+</button>
-                                            </td>
-                                            <td>
-                                                <div class="sub-total">$470</div>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                                                    <i class="fa fa-trash-o"></i>
-                                                </button>
+                                                <a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/deleteCarts(specification_uid=${cart.specification_uid})}">X</a>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <div class="cart-price">
-                                    <h5 class="t-uppercase mb-20">Cart total</h5>
+                                    <h5 class="t-uppercase mb-20">总计</h5>
                                     <ul class="panel mb-20">
                                         <li>
                                             <div class="item-name">
-                                                Subtotal
+                                                <strong class="t-uppercase">总价</strong>
                                             </div>
                                             <div class="price">
-                                                $68.50
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item-name">
-                                                Shipping
-                                            </div>
-                                            <div class="price">
-                                                $68.50
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item-name">
-                                                <strong class="t-uppercase">Order total</strong>
-                                            </div>
-                                            <div class="price">
-                                                <span>$150.50</span>
+                                                <span th:text="${totalPrice}"></span>
                                             </div>
                                         </li>
                                     </ul>
                                     <div class="t-right">
-                                        <a href="checkout_method.html" class="btn btn-rounded btn-lg">CHECKOUT</a>
+                                        <a th:href="@{/checkout_method}" class="btn btn-rounded btn-lg">CHECKOUT</a>
                                     </div>
                                 </div>
                             </div>
