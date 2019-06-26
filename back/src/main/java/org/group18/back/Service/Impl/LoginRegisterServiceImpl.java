@@ -120,7 +120,7 @@ public class LoginRegisterServiceImpl implements LoginRegisterService {
         if(cookies != null){
             for(Cookie cookie : cookies){
                 if(cookie.getName().equals("ticket")){
-                    if(cookie.getValue() == null) return null;
+                    if(cookie.getValue() == null||cookie.getValue().isEmpty()) return null;
                     //此时证明用户已有本网站的ticket，因此查询数据库获取用户信息
                     User user = getUserInfoByTicket(cookie.getValue());
                     if(user == null) {
