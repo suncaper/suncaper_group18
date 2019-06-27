@@ -1,6 +1,5 @@
 package org.group18.back.Controller;
 
-import com.sun.javafx.collections.MappingChange;
 import org.group18.back.Entity.Cart;
 import org.group18.back.Entity.User;
 import org.group18.back.Model.CartListModel;

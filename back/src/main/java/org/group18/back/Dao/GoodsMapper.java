@@ -51,6 +51,7 @@ public interface GoodsMapper {
      * This method corresponds to the database table t_goods
      *
      * @mbg.generated Tue Jun 25 15:29:07 CST 2019
+     * @return
      */
     List<Goods> selectByExample(GoodsExample example);
 
