@@ -3,6 +3,7 @@ package org.group18.back.Service.Impl;
 import org.group18.back.Dao.*;
 import org.group18.back.Entity.*;
 import org.group18.back.Model.GoodsSpecificationModel;
+import org.group18.back.Model.MyInfoPageModel;
 import org.group18.back.Model.OrderPageModel;
 import org.group18.back.Service.MyInfoService;
 import org.group18.back.Utils.MD5Utils;
@@ -32,6 +33,8 @@ public class MyInfoServiceImpl implements MyInfoService {
     OrderGoodsSpecificationNMapper orderGoodsSpecificationNMapper;
     @Autowired
     GoodsSpecificationMapper goodsSpecificationMapper;
+    @Autowired
+    GoodsReviewMapper goodsReviewMapper;
 
     @Override
     public List<UserAddress> myaddress(String uid){
@@ -42,6 +45,7 @@ public class MyInfoServiceImpl implements MyInfoService {
         return result;
     }
     @Override
+    @Transactional
     public Boolean edit(UserAddress userAddress) {
         Boolean result = true;
         UserAddressExample useraddressExample1 = new UserAddressExample();
@@ -57,7 +61,7 @@ public class MyInfoServiceImpl implements MyInfoService {
         List<OrderPageModel> orderPageModelList = new ArrayList<>();
         //查询Order订单
         OrderExample orderExample = new OrderExample();
-        orderExample.createCriteria().andUserUidEqualTo(userUid);
+        orderExample.createCriteria().andUserUidEqualTo(userUid).andUserDeleteStateEqualTo(false);
         orderExample.setStartRow((page-1)*pageSize);
         orderExample.setPageSize(pageSize);
         List<Order> orderList = orderMapper.selectByExample(orderExample);
@@ -101,6 +105,52 @@ public class MyInfoServiceImpl implements MyInfoService {
         long count = orderMapper.countByExample(orderExample);
         return count;
     }
+
+    @Override
+    @Transactional
+    public void deleteUserOrder(Integer orderId) {
+        OrderExample orderExample = new OrderExample();
+        orderExample.createCriteria().andIdEqualTo(orderId);
+        Order order = orderMapper.selectByExample(orderExample).get(0);
+        order.setUserDeleteState(true);
+        orderMapper.updateByExampleSelective(order, orderExample);
+    }
+
+    @Override
+    @Transactional
+    public void reviewGoods(Integer goodsUid, Integer specificationUid, String userUid, String payWay, String review) {
+        GoodsReview goodsReview = new GoodsReview();
+        goodsReview.setCreateDate(new Date(System.currentTimeMillis()));
+        goodsReview.setGoodsLevel(5);
+        goodsReview.setGoodsSpecificationUid(specificationUid);
+        goodsReview.setGoodsUid(goodsUid);
+        goodsReview.setReview(review);
+        goodsReview.setUserUid(userUid);
+        goodsReviewMapper.insert(goodsReview);
+        if(payWay.equals("money")){
+            OrderGoodsSpecificationNExample orderGoodsSpecificationNExample = new OrderGoodsSpecificationNExample();
+            orderGoodsSpecificationNExample.createCriteria().andGoodsUidEqualTo(goodsUid).andSpecificationUidEqualTo(specificationUid);
+            OrderGoodsSpecificationN orderGoodsSpecificationN = orderGoodsSpecificationNMapper.selectByExample(orderGoodsSpecificationNExample).get(0);
+            orderGoodsSpecificationN.setReviewState(true);
+            orderGoodsSpecificationNMapper.updateByExampleSelective(orderGoodsSpecificationN, orderGoodsSpecificationNExample);
+        }
+        else {
+            OrderGoodsSpecificationYExample orderGoodsSpecificationYExample = new OrderGoodsSpecificationYExample();
+            orderGoodsSpecificationYExample.createCriteria().andGoodsUidEqualTo(goodsUid).andSpecificationUidEqualTo(specificationUid);
+            OrderGoodsSpecificationY orderGoodsSpecificationY = orderGoodsSpecificationYMapper.selectByExample(orderGoodsSpecificationYExample).get(0);
+            orderGoodsSpecificationY.setReviewState(true);
+            orderGoodsSpecificationYMapper.updateByExampleSelective(orderGoodsSpecificationY, orderGoodsSpecificationYExample);
+        }
+
+    }
+
+    @Override
+    public List<UserAddress> getUserAddressList(String userUid) {
+        UserAddressExample addressExample = new UserAddressExample();
+        addressExample.createCriteria().andUserUidEqualTo(userUid);
+        return useraddressMapper.selectByExample(addressExample);
+    }
+
 
     private List<GoodsSpecificationModel> getGoodsSpecificationY(Order order){
         List<GoodsSpecificationModel> goodsSpecificationModels = new ArrayList<>();
