@@ -233,22 +233,24 @@
                             <!-- Checkout Area -->
                             <section class="section checkout-area panel prl-30 pt-20 pb-40">
                                 <h2 class="h3 mb-20 h-title">支付方式</h2>
-                                <div class="custom-radio mb-10">
-                                    <input type="radio" name="checkout_method" id="sign_in">
-                                    <label class="color-mid" for="sign_in" style="font-size: 15px" th:text="账户余额支付"></label>
-                                    <h5 style="font-size: 12px" th:text="余额：+${balance}"></h5>
-                                    <h5 style="font-size: 12px" th:text="积分：+ ${points}"></h5>
-                                </div>
-                                <div class="custom-radio mb-10">
-                                    <input type="radio" name="checkout_method" id="sign_up">
-                                    <label class="color-mid" for="sign_up" style="font-size: 15px">支付宝支付</label>
-                                </div>
-                                <div class="custom-radio mb-20">
-                                    <input type="radio" name="checkout_method" id="as_guest">
-                                    <label class="color-mid" for="as_guest" style="font-size: 15px">微信支付</label>
-                                </div>
-                                <a href="checkout_billing.html" class="btn btn-lg btn-rounded mr-10">确认支付</a>
-                                <a th:href="@{/Cart}" class="btn btn-lg btn-warning btn-rounded">取消支付</a>
+                                <form method="post" th:action="@{/checkout_commit}">
+                                    <div class="custom-radio mb-10">
+                                        <input type="radio" name="checkout_method" id="sign_in" value="1">
+                                        <label class="color-mid" for="sign_in" style="font-size: 15px" th:text="账户余额支付"></label>
+                                        <h5 style="font-size: 12px" th:text="余额：+${balance}"></h5>
+                                        <h5 style="font-size: 12px" th:text="积分：+ ${points}"></h5>
+                                    </div>
+                                    <div class="custom-radio mb-10">
+                                        <input type="radio" name="checkout_method" id="sign_up" value="2">
+                                        <label class="color-mid" for="sign_up" style="font-size: 15px">支付宝支付</label>
+                                    </div>
+                                    <div class="custom-radio mb-20">
+                                        <input type="radio" name="checkout_method" id="as_guest" value="3">
+                                        <label class="color-mid" for="as_guest" style="font-size: 15px">微信支付</label>
+                                    </div>
+                                    <input type="submit" class="btn btn-lg btn-rounded mr-10">
+                                    <a th:href="@{/Cart}" class="btn btn-lg btn-warning btn-rounded">取消支付</a>
+                                </form>
                             </section>
                             <!-- End Checkout Area -->
 

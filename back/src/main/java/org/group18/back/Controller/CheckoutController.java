@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class CheckoutController {
@@ -26,6 +28,8 @@ public class CheckoutController {
     CheckoutService checkoutService;
     @Autowired
     MyInfoService myInfoService;
+
+    Integer addressId = 0;
 
     @RequestMapping("/Checkout")
     public String checkout(Model model, HttpServletRequest request) {
@@ -63,7 +67,7 @@ public class CheckoutController {
     }
 
     @RequestMapping("/checkout_method")
-    public String checkoutMethod(Model model, HttpServletRequest request) {
+    public String checkoutMethod(Model model, HttpServletRequest request, @RequestParam("address_id") Integer address_id) {
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if (user == null) {
@@ -83,12 +87,48 @@ public class CheckoutController {
             model.addAttribute("totalAmount", totalAmount);//购物车相关信息
             BigDecimal balance = checkoutService.getUserBalance(user.getUid());//账户余额
             model.addAttribute("balance", balance);
-            System.out.println(balance);
             Integer points = checkoutService.getUserPoints(user.getUid());//账户积分
             model.addAttribute("points", points);
-            System.out.println(points);
+            addressId = address_id;//存储地址信息
+            System.out.println(addressId);
             return "checkout_method";
         }
     }
 
+    @RequestMapping("/checkout_commit")
+    public String checkoutCommit(Model model, HttpServletRequest request){
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if (user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+            return "signin";
+        } else {
+            String checkout_method;
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+            List<CartListModel> cartList = cartService.getCarts(user.getUid());
+            model.addAttribute("cartList", cartList);
+            Map<String, List<CartListModel>> shopCartList = cartService.getShopCarts(cartList);
+            model.addAttribute("shopCartList", shopCartList);//商店-购物车信息
+            BigDecimal totalPrice = cartService.getTotalPrice(cartList);
+            model.addAttribute("totalPrice", totalPrice);//总价
+            Integer totalPoints = cartService.getTotalPoints(cartList);
+            model.addAttribute("totalPoints", totalPoints);//总积分
+            Integer totalAmount = cartService.getTotalAmount(cartList);
+            model.addAttribute("totalAmount", totalAmount);//购物车相关信息
+            BigDecimal balance = checkoutService.getUserBalance(user.getUid());
+            model.addAttribute("balance", balance);//账户余额
+            Integer points = checkoutService.getUserPoints(user.getUid());
+            model.addAttribute("points", points);//账户积分
+            model.addAttribute("address_id", addressId); //地址信息
+            Integer result = checkoutService.payment(user.getUid(), totalPrice, totalPoints, balance, points, request.getParameter("checkout_method"), shopCartList, cartList);
+            checkout_method = request.getParameter("checkout_method");
+            if (result != 2)
+                checkoutService.generateOrder(user.getUid(), request.getParameter("checkout_method"), shopCartList, addressId, result);
+            else
+                System.out.println(result);
+            return "myorder";
+        }
+    }
 }

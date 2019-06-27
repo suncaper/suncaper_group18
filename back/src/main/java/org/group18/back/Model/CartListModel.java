@@ -14,6 +14,24 @@ public class CartListModel {
     private String specification_name;
     private String user_uid;
     private Integer specification_uid;
+    private Integer goods_uid;
+    private BigDecimal price;
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Integer getGoods_uid() {
+        return goods_uid;
+    }
+
+    public void setGoods_uid(Integer goods_uid) {
+        this.goods_uid = goods_uid;
+    }
 
     public String getSpecification_name() {
         return specification_name;

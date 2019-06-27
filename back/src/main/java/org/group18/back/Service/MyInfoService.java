@@ -5,6 +5,7 @@ import org.group18.back.Entity.UserAddress;
 import org.group18.back.Entity.UserHistory;
 import org.group18.back.Entity.Goods;
 import org.group18.back.Model.HistroyGoodsModel;
+import org.group18.back.Model.MyInfoPageModel;
 import org.group18.back.Model.OrderPageModel;
 import org.springframework.stereotype.Service;
 
@@ -25,4 +26,7 @@ public interface MyInfoService {
 
     List<OrderPageModel> getOrderPageInfo(String userUid, int pageSize, int page);
     Long getUserOrderCount(String userUid);
+    void deleteUserOrder(Integer orderId);
+    void reviewGoods(Integer goodsUid, Integer specificationUid, String userUid, String payWay, String review);
+    List<UserAddress> getUserAddressList(String userUid);
 }

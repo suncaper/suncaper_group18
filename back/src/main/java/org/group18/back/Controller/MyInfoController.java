@@ -44,15 +44,15 @@ public class  MyInfoController {
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
 
-            //拉出用户UID对应的地址,放在result表中
-            List<UserAddress> result = myInfoService.myaddress(user.getUid());
-            if (result.isEmpty()) {//如果result表为空,则不作显示
-                model.addAttribute("isEmpty", true);
-            } else {
-                model.addAttribute("isEmpty", false);
-                model.addAttribute("addressList", result);
-                model.addAttribute("editAddress", new UserAddress());
+            List<UserAddress> userAddressList = myInfoService.getUserAddressList(user.getUid());
+            if(userAddressList == null || userAddressList.isEmpty()){
+                model.addAttribute("isAddressEmpty", true);
             }
+            else {
+                model.addAttribute("isAddressEmpty", false);
+
+            }
+            model.addAttribute("userAddressList", userAddressList);
             return "myinfo";
         }
     }
@@ -85,7 +85,6 @@ public class  MyInfoController {
             return "myinfo";
         }
     }
-
     @RequestMapping("/myorder")
     public String myOrder(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page) {
         //检查是否已经登陆
@@ -98,7 +97,6 @@ public class  MyInfoController {
         } else {
             model.addAttribute("user", user);
             model.addAttribute("isSignin", true);
-
             //获取请求页数
             //设置每页显示数量为5
             int pageSize = 5;
@@ -143,6 +141,20 @@ public class  MyInfoController {
             }
             return "myhistory";
         }
-
     }
+
+
+    @RequestMapping("/deleteMyOrder")
+    public String deleteMyOrder(HttpServletRequest request, @RequestParam("orderId") Integer orderId){
+        myInfoService.deleteUserOrder(orderId);
+        return "redirect:/myorder";
+    }
+
+    @RequestMapping("/reviewGoods")
+    public String reviewGoods(HttpServletRequest request, @RequestParam("goodsUid") Integer goodsUid, @RequestParam("specificationUid") Integer specificationUid,@RequestParam("review") String review, @RequestParam("payWay") String payWay){
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        myInfoService.reviewGoods(goodsUid,specificationUid, user.getUid(), payWay, review);
+        return "redirect:/myorder";
+    }
+
 }

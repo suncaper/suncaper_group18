@@ -231,56 +231,105 @@
                         <div class="container">
                             <div class="cart-wrapper">
                                 <h3 class="h-title mb-30 t-uppercase">我的购物车</h3>
-                                <table id="shopcart_list" class="cart-list mb-30">
-                                    <thead class="panel t-uppercase">
-                                        <tr style="font-size: 15px;">
-                                            <th th:width="570px" th:align="center">商品名称</th>
-                                            <th th:width="170px">单价</th>
-                                            <th th:width="170px">数量</th>
-                                            <th th:width="170px">总价</th>
-                                            <th th:width="30px"></th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                                <table id="shop_list" class="cart-list mb-30" th:each="shop:${shopCartList}">
+                                <!--<table id="shopcart_list" class="cart-list mb-30">-->
+                                    <!--<thead class="panel t-uppercase">-->
+                                        <!--<tr style="font-size: 15px;">-->
+                                            <!--<th th:width="570px" th:align="center">商品名称</th>-->
+                                            <!--<th th:width="170px">单价</th>-->
+                                            <!--<th th:width="170px">数量</th>-->
+                                            <!--<th th:width="170px">总价</th>-->
+                                            <!--<th th:width="30px"></th>-->
+                                        <!--</tr>-->
+                                    <!--</thead>-->
+                                <!--</table>-->
+                                <table id="cart_list" class="wishlist" th:each="shop:${shopCartList}">
                                     <tr>
-                                        <th style="font-size: 14px;" th:text="${shop.key}"></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                    <tbody>
-                                        <table id="cart_list" class="cart-list mb-30" th:each="cart:${shop.value}">
-                                            <tbody>
-                                                <tr class="panel alert">
-                                                    <td th:width="120px">
-                                                        <img th:src="${cart.img_url}" alt="product">
+                                        <td>
+                                            <table id = "storeOrder1">
+                                                <tr>
+                                                    <th style="font-size: 20px;"><i class="fa fa-home"></i>&nbsp;<span th:text="${shop.key}">店铺名</span></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                                <!--人名币购买样式-->
+                                                <tr class="panel alert" th:each="cart:${shop.value}">
+                                                    <td class="col-sm-6 col-md-6">
+                                                        <div class="media-left is-hidden-sm-down">
+                                                            <figure class="product-thumb">
+                                                                <img th:src="${cart.img_url}" alt="product">
+                                                            </figure>
+                                                        </div>
+                                                        <div class="media-body valign-middle" >
+                                                            <h5 class="title mb-5 t-uppercase"><a href="#" th:text="${cart.goods_name}">商品名字</a></h5>
+                                                            <h4 class="price color-green" th:if="${!cart.is_exchange}">
+                                                                <span class="price-sale" th:text=" '¥' +${cart.price}">原始价格</span>
+                                                                <span th:text=" '¥' +${cart.discount_price}">优惠价格/原始价格</span>
+                                                            </h4>
+                                                            <h4 class="price color-green" th:if="${cart.is_exchange}">
+                                                                <span class="price-sale" th:text=" '@' +${cart.points} + '（积分）'">原始价格</span>
+                                                                <span th:text=" '@' +${cart.points}+ '（积分）'">优惠价格/原始价格</span>
+                                                            </h4>
+                                                        </div>
                                                     </td>
-                                                    <td th:width="450px">
-                                                        <h6 class="title mb-15 t-uppercase"><a href="#" th:text="${cart.goods_name}"></a></h6>
-                                                        <div class="type font-12">规格：<span class="t-uppercase" th:text="${cart.specification_name}"></span></div>
-                                                    </td>
-                                                    <td th:if="${!cart.is_exchange}" th:text="￥+${cart.discount_price}"></td>
-                                                    <td th:if="${cart.is_exchange}" th:text="积分：+${cart.points}"></td>
-                                                    <td th:width="170px">
+                                                    <td class="col-sm-2 col-md-2" th:text="${cart.specification_name}">商品规格</td>
+                                                    <td class="col-sm-2 col-md-2 is-hidden-xs-down">
                                                         <a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/decreaseCarts(specification_uid=${cart.specification_uid})}">-</a>
-                                                        <input class="quantity-label" type="number" th:value="${cart.amount}">
+                                                        <span style="font-size: 20px;" th:text="'x'+${cart.amount}">数量</span>
                                                         <a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/increaseCarts(specification_uid=${cart.specification_uid})}">+</a>
                                                     </td>
-                                                    <td th:width="170px" th:if="${!cart.is_exchange}">
-                                                        <div class="sub-total" th:text="￥+${cart.discount_price}*${cart.amount}"></div>
+                                                    <td class="col-sm-2 col-md-2" th:if="${!cart.is_exchange}">
+                                                        <span style="font-size:20px;" th:text="'¥'+${cart.discount_price}*${cart.amount}">单件商品总价</span>
                                                     </td>
-                                                    <td th:width="170px" th:if="${cart.is_exchange}">
-                                                        <div class="sub-total" th:text="积分：+${cart.points}*${cart.amount}"></div>
+                                                    <td class="col-sm-2 col-md-2" th:if="${cart.is_exchange}">
+                                                        <span style="font-size:20px;" th:text="'@'+${cart.points}*${cart.amount} + '（积分）'">单件商品总价</span>
                                                     </td>
                                                     <td th:width="30px">
-                                                        <a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/deleteCarts(specification_uid=${cart.specification_uid})}">X</a>
+                                                        <a class="up" style="border: 0px;border-radius: 3px; background-color:indianred; color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/deleteCarts(specification_uid=${cart.specification_uid})}">X</a>
                                                     </td>
                                                 </tr>
-                                            </tbody>
-                                        </table>
-                                    </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
                                 </table>
+                                <!--<table id="shop_list" class="cart-list mb-30" th:each="shop:${shopCartList}">-->
+                                    <!--<tr>-->
+                                        <!--<th style="font-size: 14px;" th:text="${shop.key}"></th>-->
+                                        <!--<th></th>-->
+                                        <!--<th></th>-->
+                                        <!--<th></th>-->
+                                    <!--</tr>-->
+                                    <!--<tbody>-->
+                                        <!--<table id="cart_list" class="cart-list mb-30" th:each="cart:${shop.value}">-->
+                                            <!--<tbody>-->
+                                                <!--<tr class="panel alert">-->
+                                                    <!--<td th:width="120px">-->
+                                                        <!--<img th:src="${cart.img_url}" alt="product">-->
+                                                    <!--</td>-->
+                                                    <!--<td th:width="450px">-->
+                                                        <!--<h6 class="title mb-15 t-uppercase"><a href="#" th:text="${cart.goods_name}"></a></h6>-->
+                                                        <!--<div class="type font-12">规格：<span class="t-uppercase" th:text="${cart.specification_name}"></span></div>-->
+                                                    <!--</td>-->
+                                                    <!--<td th:if="${!cart.is_exchange}" th:text="￥+${cart.discount_price}"></td>-->
+                                                    <!--<td th:if="${cart.is_exchange}" th:text="积分：+${cart.points}"></td>-->
+                                                    <!--<td th:width="170px">-->
+                                                        <!--<a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/decreaseCarts(specification_uid=${cart.specification_uid})}">-</a>-->
+                                                        <!--<input class="quantity-label" type="number" th:value="${cart.amount}">-->
+                                                        <!--<a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/increaseCarts(specification_uid=${cart.specification_uid})}">+</a>-->
+                                                    <!--</td>-->
+                                                    <!--<td th:width="170px" th:if="${!cart.is_exchange}">-->
+                                                        <!--<div class="sub-total" th:text="￥+${cart.discount_price}*${cart.amount}"></div>-->
+                                                    <!--</td>-->
+                                                    <!--<td th:width="170px" th:if="${cart.is_exchange}">-->
+                                                        <!--<div class="sub-total" th:text="积分：+${cart.points}*${cart.amount}"></div>-->
+                                                    <!--</td>-->
+                                                    <!--<td th:width="30px">-->
+                                                        <!--<a class="up" style="border: 0px;border-radius: 3px; background-color:rgb(46, 216, 123); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/deleteCarts(specification_uid=${cart.specification_uid})}">X</a>-->
+                                                    <!--</td>-->
+                                                <!--</tr>-->
+                                            <!--</tbody>-->
+                                        <!--</table>-->
+                                    <!--</tbody>-->
+                                <!--</table>-->
                                 <div class="cart-price">
                                     <h5 class="t-uppercase mb-20">总计</h5>
                                     <ul class="panel mb-20">
