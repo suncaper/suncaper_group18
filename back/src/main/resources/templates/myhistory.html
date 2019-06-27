@@ -107,6 +107,7 @@
     <div id="pageWrapper" class="page-wrapper">
         <!-- –––––––––––––––[ HEADER ]––––––––––––––– -->
         <header id="mainHeader" class="main-header">
+
             <!-- Top Bar -->
             <div class="top-bar bg-gray">
                 <div class="container">
@@ -230,16 +231,16 @@
                         <div id="header-navbar" class="nav-collapse">
                             <ul class="nav-menu">
                                 <li>
-                                    <a th:href="@{/index}">首页</a>
+                                    <a th:href="index">首页</a>
+                                </li>
+                                <li>
+                                    <a th:href="myinfo">我的信息</a>
+                                </li>
+                                <li>
+                                    <a th:href="myorder">我的订单</a>
                                 </li>
                                 <li class="active">
-                                    <a th:href="@{/myinfo}">我的信息</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/myorder}">我的订单</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/myhistory}">我的足迹</a>
+                                    <a href="myhistory">我的足迹</a>
                                 </li>
                                 <li>
                                     <a href="#">积分商城</a>
@@ -261,119 +262,211 @@
                     <section class="wishlist-area ptb-30">
                         <div class="container">
                             <div class="wishlist-wrapper">
-                                <h3 class="h-title mb-40 t-uppercase">我的信息</h3>
+                                <h3 class="h-title mb-40 t-uppercase">我的足迹</h3>
                                 <table id="cart_list" class="wishlist">
                                     <tbody>
                                         <tr class="panel alert">
                                             <td class="col-sm-8 col-md-9">
-                                                <h5 class="h-title mb-40 t-uppercase">我的邮箱</h5>
-                                                <div class="media-body valign-middle">
-                                                    <h5><span th:text="${user.getEmail()}"></span></h5>
+                                                <div class="media-left is-hidden-sm-down">
+                                                    <figure class="product-thumb">
+                                                        <img th:src="@{/images/cart/product_11.jpg}" alt="product">
+                                                    </figure>
                                                 </div>
+                                                <div class="media-body valign-middle">
+                                                    <h5 class="title mb-5 t-uppercase"><a href="#">Diamond engagement ring</a></h5>
+                                                    <div class="rating mb-10">
+                                                        <span class="rating-stars rate-allow" data-rating="2">
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o star-active"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        	</span>
+                                                        <span class="rating-reviews">
+				                        		( <span class="rating-count">100</span> rates )
+                                                        </span>
+                                                    </div>
+                                                    <h4 class="price color-green"><span class="price-sale">$380.00</span>$340.00</h4>
+                                                    <button class="btn btn-rounded btn-sm mt-15 is-hidden-sm-up">Add To Cart</button>
+                                                </div>
+                                            </td>
+                                            <td class="col-sm-3 col-md-2 is-hidden-xs-down">
+                                                <button class="btn btn-rounded btn-sm">Add To Cart</button>
+                                            </td>
+                                            <td class="col-sm-1">
+                                                <button type="button" class="close pr-xs-0 pr-sm-10" data-dismiss="alert" aria-hidden="true">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                         <tr class="panel alert">
                                             <td class="col-sm-8 col-md-9">
-                                                <h5 class="h-title mb-40 t-uppercase">收货地址</h5>
-                                                    <div th:if="${ifsuccess}"><div class="alert alert-safe alert-dismissible" role="alert">
-                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <strong>成功</strong> <span th:text="${msg}"></span>
+                                                <div class="media-left is-hidden-sm-down">
+                                                    <figure class="product-thumb">
+                                                        <img th:src="@{/images/cart/product_12.jpg}" alt="product">
+                                                    </figure>
+                                                </div>
+                                                <div class="media-body valign-middle">
+                                                    <h5 class="title mb-5 t-uppercase"><a href="#">Diamond engagement ring</a></h5>
+                                                    <div class="rating mb-10">
+                                                        <span class="rating-stars rate-allow" data-rating="2">
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o star-active"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        	</span>
+                                                        <span class="rating-reviews">
+				                        		( <span class="rating-count">100</span> rates )
+                                                        </span>
                                                     </div>
+                                                    <h4 class="price color-green"><span class="price-sale">$380.00</span>$340.00</h4>
+                                                    <button class="btn btn-rounded btn-sm mt-15 is-hidden-sm-up">Add To Cart</button>
+                                                </div>
+                                            </td>
+                                            <td class="col-sm-3 col-md-2 is-hidden-xs-down">
+                                                <button class="btn btn-rounded btn-sm">Add To Cart</button>
+                                            </td>
+                                            <td class="col-sm-1">
+                                                <button type="button" class="close pr-xs-0 pr-sm-10" data-dismiss="alert" aria-hidden="true">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr class="panel alert">
+                                            <td class="col-sm-8 col-md-9">
+                                                <div class="media-left is-hidden-sm-down">
+                                                    <figure class="product-thumb">
+                                                        <img th:src="@{/images/cart/product_13.jpg}" alt="product">
+                                                    </figure>
+                                                </div>
+                                                <div class="media-body valign-middle">
+                                                    <h5 class="title mb-5 t-uppercase"><a href="#">Diamond engagement ring</a></h5>
+                                                    <div class="rating mb-10">
+                                                        <span class="rating-stars rate-allow" data-rating="2">
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o star-active"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        	</span>
+                                                        <span class="rating-reviews">
+				                        		( <span class="rating-count">100</span> rates )
+                                                        </span>
                                                     </div>
-                                                <span th:if="${isEmpty}" ><th:if="${isEmpty}" h3 class="mb-40 t-uppercase">您还没有任何收货地址！</h3></span>
-                                                <table th:if="!${isEmpty}" class="table table-condensed">
-                                                    <thead>
-                                                        <tr>
-                                                            <th >序号</th>
-                                                            <th >省份</th>
-                                                            <th >城市</th>
-                                                            <th >详细地址</th>
-                                                            <th></th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                     <div>
-                                                        <tr th:each="address,addressStat:${address}">
-                                                            <td th:text="${addressStat.count}"></td>
-                                                            <td th:text="${address.getProvince()}"></td>
-                                                            <td th:text="${address.getCity()}"></td>
-                                                            <td th:text="${address.getDetailAddress()}"></td>
-                                                            <td class="col-sm-3 col-md-2 is-hidden-xs-down">
-                                                                <!-- 按钮触发模态框 -->
-                                                                <button class="btn btn-primary btn-sm" data-toggle="modal" type="button1"
-                                                                        th:onclick="getaddressinfo([[${address.getId()}]],[[${address.getProvince()}]],[[${address.getCity()}]],[[${address.getDetailAddress()}]])">
-                                                                    编辑
-                                                                </button>
-                                                                <!-- 模态框（Modal） -->
-                                                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                                    <div class="modal-dialog">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                                <h4 class="modal-title" id="myModalLabel">编辑地址</h4>
-                                                                            </div>
-                                                                                <div class="modal-body">
-                                                                                    <input placeholder="id" class="form-control" type="text" id="a_province">
-                                                                                    <input placeholder="id" class="form-control" type="text" id="a_city">
-                                                                                    <input placeholder="id" class="form-control" type="text" id="a_detailAddress">
-                                                                                </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button" class="btn btn-primary" onclick="edit()" >提交更改</button>
-                                                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                                                            </div>
-                                                                        </div><!-- /.modal-content -->
-                                                                    </div><!-- /.modal -->
-                                                                </div>
-                                                                <script>
-                                                                        var a_id;
-                                                                        var a_province;
-                                                                        var a_city;
-                                                                        var a_detailAddress;
-                                                                    function getaddressinfo(id,province,city,detailAddress) {
-                                                                        a_id = id;
-                                                                        a_province = province;
-                                                                        a_city = city;
-                                                                        a_detailAddress = detailAddress;
-                                                                        document.getElementById('a_province').value = province;
-                                                                        document.getElementById('a_city').value = city;
-                                                                        document.getElementById('a_detailAddress').value = detailAddress;
-                                                                        $('#myModal').modal('show');
-                                                                    }
-                                                                    function edit() {
-                                                                            var params = {
-                                                                                "id" :a_id,
-                                                                                "province":a_province,
-                                                                                "city":a_city,
-                                                                                "detailAddress":a_detailAddress
-                                                                            }
-                                                                            console.log("1");
-                                                                            // 此处可传入多个参数
-                                                                            $.ajax({
-                                                                                type: 'get',
-                                                                                url:  '/address_edit?id='+a_id+'&province='+a_province+'&city='+a_city+'&detailAddress='+a_detailAddress,
-                                                                                async: false,
-                                                                                success: function s(data) {
-                                                                                    console("success"+data);
-                                                                                },
-                                                                                error:function e(data){
-                                                                                    console.log("error"+data);
-                                                                                }
-                                                                            })
-                                                                        }
-                                                                </script>
-                                                            </td>
-                                                            <td class="col-sm-1">
-                                                                <a th:href="@{/delete}">
-                                                                    <button type="button" class="close pr-xs-0 pr-sm-10">
-                                                                        <i class="fa fa-trash-o"></i>
-                                                                    </button>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                     </div>
-                                                    </tbody>
-                                                </table>
+                                                    <h4 class="price color-green"><span class="price-sale">$380.00</span>$340.00</h4>
+                                                    <button class="btn btn-rounded btn-sm mt-15 is-hidden-sm-up">Add To Cart</button>
+                                                </div>
+                                            </td>
+                                            <td class="col-sm-3 col-md-2 is-hidden-xs-down">
+                                                <button class="btn btn-rounded btn-sm">Add To Cart</button>
+                                            </td>
+                                            <td class="col-sm-1">
+                                                <button type="button" class="close pr-xs-0 pr-sm-10" data-dismiss="alert" aria-hidden="true">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr class="panel alert">
+                                            <td class="col-sm-8 col-md-9">
+                                                <div class="media-left is-hidden-sm-down">
+                                                    <figure class="product-thumb">
+                                                        <img th:src="@{/images/cart/product_14.jpg}" alt="product">
+                                                    </figure>
+                                                </div>
+                                                <div class="media-body valign-middle">
+                                                    <h5 class="title mb-5 t-uppercase"><a href="#">Diamond engagement ring</a></h5>
+                                                    <div class="rating mb-10">
+                                                        <span class="rating-stars rate-allow" data-rating="2">
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o star-active"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        	</span>
+                                                        <span class="rating-reviews">
+				                        		( <span class="rating-count">100</span> rates )
+                                                        </span>
+                                                    </div>
+                                                    <h4 class="price color-green"><span class="price-sale">$380.00</span>$340.00</h4>
+                                                    <button class="btn btn-rounded btn-sm mt-15 is-hidden-sm-up">Add To Cart</button>
+                                                </div>
+                                            </td>
+                                            <td class="col-sm-3 col-md-2 is-hidden-xs-down">
+                                                <button class="btn btn-rounded btn-sm">Add To Cart</button>
+                                            </td>
+                                            <td class="col-sm-1">
+                                                <button type="button" class="close pr-xs-0 pr-sm-10" data-dismiss="alert" aria-hidden="true">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr class="panel alert">
+                                            <td class="col-sm-8 col-md-9">
+                                                <div class="media-left is-hidden-sm-down">
+                                                    <figure class="product-thumb">
+                                                        <img th:src="@{/images/cart/product_15.jpg}" alt="product">
+                                                    </figure>
+                                                </div>
+                                                <div class="media-body valign-middle">
+                                                    <h5 class="title mb-5 t-uppercase"><a href="#">Diamond engagement ring</a></h5>
+                                                    <div class="rating mb-10">
+                                                        <span class="rating-stars rate-allow" data-rating="2">
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o star-active"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        	</span>
+                                                        <span class="rating-reviews">
+				                        		( <span class="rating-count">100</span> rates )
+                                                        </span>
+                                                    </div>
+                                                    <h4 class="price color-green"><span class="price-sale">$380.00</span>$340.00</h4>
+                                                    <button class="btn btn-rounded btn-sm mt-15 is-hidden-sm-up">Add To Cart</button>
+                                                </div>
+                                            </td>
+                                            <td class="col-sm-3 col-md-2 is-hidden-xs-down">
+                                                <button class="btn btn-rounded btn-sm">Add To Cart</button>
+                                            </td>
+                                            <td class="col-sm-1">
+                                                <button type="button" class="close pr-xs-0 pr-sm-10" data-dismiss="alert" aria-hidden="true">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr class="panel alert">
+                                            <td class="col-sm-8 col-md-9">
+                                                <div class="media-left is-hidden-sm-down">
+                                                    <figure class="product-thumb">
+                                                        <img th:src="@{/images/cart/product_16.jpg}" alt="product">
+                                                    </figure>
+                                                </div>
+                                                <div class="media-body valign-middle">
+                                                    <h5 class="title mb-5 t-uppercase"><a href="#">Diamond engagement ring</a></h5>
+                                                    <div class="rating mb-10">
+                                                        <span class="rating-stars rate-allow" data-rating="2">
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        		<i class="fa fa-star-o star-active"></i>
+				                        		<i class="fa fa-star-o"></i>
+				                        	</span>
+                                                        <span class="rating-reviews">
+				                        		( <span class="rating-count">100</span> rates )
+                                                        </span>
+                                                    </div>
+                                                    <h4 class="price color-green"><span class="price-sale">$380.00</span>$340.00</h4>
+                                                    <button class="btn btn-rounded btn-sm mt-15 is-hidden-sm-up">Add To Cart</button>
+                                                </div>
+                                            </td>
+                                            <td class="col-sm-3 col-md-2 is-hidden-xs-down">
+                                                <button class="btn btn-rounded btn-sm">Add To Cart</button>
+                                            </td>
+                                            <td class="col-sm-1">
+                                                <button type="button" class="close pr-xs-0 pr-sm-10" data-dismiss="alert" aria-hidden="true">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                     </tbody>

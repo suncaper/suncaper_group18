@@ -60,7 +60,6 @@ public class  MyInfoController {
         }
     }
     @RequestMapping("/address_edit")
-
     public String edit(Model model, HttpServletRequest request,HttpServletResponse response, @RequestParam("id") String id, @RequestParam("province") String province, @RequestParam("city") String city, @RequestParam("detailAddress") String detailAddress){
         //检查是否已经登陆
         System.out.println("asdasd"+id);
@@ -120,6 +119,23 @@ public class  MyInfoController {
             model.addAttribute("pageAmount", pagesNumberList.size());
             model.addAttribute("orderPageList", orderPageModels);
             return "myorder";
+        }
+    }
+    @RequestMapping("/myhistory")
+    public String myhistory(Model model, HttpServletRequest request)
+    {
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+            return "signin";
+        }
+        else {
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+
+            return "myhistory";
         }
     }
 
