@@ -1,15 +1,15 @@
 package org.group18.back.Service.Impl;
 
-import org.group18.back.Dao.GoodsMapper;
-import org.group18.back.Dao.TicketMapper;
-import org.group18.back.Dao.UserMapper;
+import org.group18.back.Dao.*;
 import org.group18.back.Entity.*;
+import org.group18.back.Model.CartListModel;
+import org.group18.back.Model.GoodsDeatilInfoModel;
 import org.group18.back.Service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class GoodsServiceImpl implements GoodsService {
@@ -22,8 +22,17 @@ public class GoodsServiceImpl implements GoodsService {
     @Autowired
     TicketMapper ticketMapper;
 
+    @Autowired
+    ShopMapper shopMapper;
+
+    @Autowired
+    CategoryMapper categoryMapper;
+
+    @Autowired
+    GoodsReviewMapper goodsReviewMapper;
+
     @Override
-    public Goods getReview(int goods_uid){
+    public Goods getGood(int goods_uid){
         GoodsExample goodsExample = new GoodsExample();
         GoodsExample.Criteria criteria = goodsExample.createCriteria();
         criteria.andUidEqualTo(goods_uid);
@@ -33,13 +42,41 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public List<Goods> getReviews(int goods_uid) {
-        GoodsExample goodsExample = new GoodsExample();
-        GoodsExample.Criteria criteria = goodsExample.createCriteria();
-        criteria.andUidEqualTo(goods_uid);
-        List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
-        return goodsList;
+    public GoodsDeatilInfoModel getGoods(int goods_uid, String sellerUid) {
+
+        GoodsDeatilInfoModel goodsDeatilInfoModel = new GoodsDeatilInfoModel();
+        ShopExample shopExample = new ShopExample();
+        shopExample.createCriteria().andSellerUidEqualTo(sellerUid);
+        goodsDeatilInfoModel.setShop(shopMapper.selectByExample(shopExample).get(0));
+
+        GoodsExample goodsExample1 = new GoodsExample();
+        goodsExample1.createCriteria().andUidEqualTo(goods_uid);
+        Goods goods = goodsMapper.selectByExample(goodsExample1).get(0);
+        goodsDeatilInfoModel.setGoods(goods);
+
+        GoodsReviewExample goodsReviewExample = new GoodsReviewExample();
+        GoodsReviewExample.Criteria criteria = goodsReviewExample.createCriteria();
+        criteria.andGoodsUidEqualTo(goods_uid);
+        GoodsReview goodsReview =goodsReviewMapper.selectByExample(goodsReviewExample).get(0);
+        goodsDeatilInfoModel.setGoodsReview(goodsReview);
+
+        List<Goods> goodsList = new ArrayList<>();
+        CategoryExample categoryExample = new CategoryExample();
+        categoryExample.createCriteria().andUidEqualTo(goods.getCategoryUid());
+        Category category = categoryMapper.selectByExample(categoryExample).get(0);
+        GoodsExample goodsExample2 = new GoodsExample();
+        goodsExample2.createCriteria().andCategoryUidEqualTo(category.getUid()).andSellerUidEqualTo(sellerUid);
+        goodsExample2.setOrderByClause("sales_volume desc");
+        goodsDeatilInfoModel.setRecommendGoods(goodsMapper.selectByExample(goodsExample2));
+
+        return goodsDeatilInfoModel;
     }
+
+
+
+
+
+
 
     public User judgeUserLoginStatus(String ticket) {
         TicketExample ticketExample = new TicketExample();
