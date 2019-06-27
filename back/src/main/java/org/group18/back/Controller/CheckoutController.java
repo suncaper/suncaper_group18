@@ -126,7 +126,8 @@ public class CheckoutController {
             checkout_method = request.getParameter("checkout_method");
             if (result != 2)
                 checkoutService.generateOrder(user.getUid(), request.getParameter("checkout_method"), shopCartList, addressId, result);
-
+            else
+                System.out.println(result);
             return "myorder";
         }
     }
