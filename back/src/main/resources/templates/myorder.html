@@ -228,17 +228,17 @@
                                 <li>
                                     <a th:href="index">首页</a>
                                 </li>
-                                <li class="active">
-                                    <a th:href="myinfo">我的信息</a>
+                                <li class="active" id="myInfo" onclick="toPage(this.id)">
+                                    <a>我的信息</a>
                                 </li>
-                                <li>
-                                    <a href="stores_01.html">我的订单</a>
+                                <li id="myOrder" onclick="toPage(this.id)">
+                                    <a>我的订单</a>
                                 </li>
-                                <li>
-                                    <a href="contact_us_01.html">我的足迹</a>
+                                <li id="myHistory" onclick="toPage(this.id)">
+                                    <a>我的足迹</a>
                                 </li>
-                                <li>
-                                    <a href="#">积分商城</a>
+                                <li id="pointsStore" onclick="toPage(this.id)">
+                                    <a>积分商城</a>
                                 </li>
                             </ul>
                         </div>
@@ -251,7 +251,7 @@
         <!-- –––––––––––––––[ HEADER ]––––––––––––––– -->
 
         <!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
-        <main id="mainContent" class="main-content">
+        <main id="mainContent" class="main-content" th:fragment="myOrderList">
             <div class="page-container ptb-20">
                 <div class="container">
                     <section class="wishlist-area ptb-30">
@@ -270,9 +270,9 @@
                                                     <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state01' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="未发货">订单状态</th>
                                                     <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state02' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="已发货">订单状态</th>
                                                     <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state03' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="已收货">订单状态</th>
-                                                    <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state04' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="申请退款">订单状态</th>
-                                                    <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state05' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="已退货">订单状态</th>
-                                                    <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state06' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="拒绝退货">订单状态</th>
+                                                    <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state04' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="退款中">订单状态</th>
+                                                    <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state05' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="已退款">订单状态</th>
+                                                    <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state06' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="拒绝退款">订单状态</th>
                                                 </tr>
                                                 <!--人名币购买样式-->
                                                 <tr th:if="${orderPage.getOrderInfo().getTypeUid()} eq 'type01'" class="panel alert" th:each="goodsInfo:${orderPage.getGSN()}">
@@ -346,10 +346,14 @@
                                                 </tr>
                                                 <tr>
                                                     <td></td>
-                                                    <td></td>
                                                     <td align="right">
                                                         <button th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state02'" class="btn btn-rounded btn-sm mt-15">确认收货</button>
                                                         <button th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state03'" class="btn btn-rounded btn-sm mt-15">点击评价</button>
+                                                    </td>
+                                                    <td align="right">
+                                                        <button th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state02'" style="background-color: yellowgreen" class="btn btn-rounded btn-sm mt-15">申请退款</button>
+                                                        <button th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state03'" style="background-color: red;" class="btn btn-rounded btn-sm mt-15" th:onclick="tryToDeleteOrder([[${orderPage.getOrderInfo().getId()}]])">删除订单</button>
+
                                                     </td>
                                                     <td>
                                                         <p th:text="'共'+${orderPage.getTotalAmount()}+'件商品'"></p>
@@ -378,15 +382,60 @@
                                         <!-- End Page Pagination -->
                                     </nav>
                                 </div>
+                                <!-- 删除订单模态框（Modal） -->
+                                <div class="modal fade" id="deleteOrderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                    &times;
+                                                </button>
+                                                <h4 class="modal-title" id="deleteOrderModalHead">
+                                                    删除订单
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                您确认要删除此订单吗？
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="cancelDeleteOrder()">关闭
+                                                </button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="confirmDeleteOrder()">
+                                                    提交更改
+                                                </button>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+                                </div>
+                                <!-- 结果返回模态框（Modal） -->
+                                <div class="modal fade" id="deleteOrderResultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                    &times;
+                                                </button>
+                                                <h4 class="modal-title" id="deleteOrderResultModalHead">
+                                                    删除结果
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p id="deleteOrderResult"></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+                                </div>
                             </div>
                         </div>
                     </section>
                 </div>
             </div>
-
-
         </main>
         <!-- –––––––––––––––[ END PAGE CONTENT ]––––––––––––––– -->
+
         <section class="footer-top-area pt-70 pb-30 pos-r bg-blue">
             <div class="container">
                 <div class="row row-tb-20">
@@ -547,6 +596,33 @@
     <!-- Custom Template JavaScript                   -->
     <!-- ––––––––––––––––––––––––––––––––––––––––– -->
     <script type="text/javascript" th:src="@{/js/main.js}"></script>
+
+    <!--自定义js代码-->
+    <script th:inline="javascript">
+        var activeNavButton = "myorder";document.getElementById(activeNavButton).className="active";//设置本页面的状态条为激活状态
+        function toPage(navButtonId) {
+            //修改导航栏激活状态
+            document.getElementById(activeNavButton).className = "";
+            document.getElementById(navButtonId).className = "active";
+            activeNavButton = navButtonId;
+        }
+        var deleteOrderId;
+        //此步进行要删除的订单编号绑定
+        function tryToDeleteOrder(orderId) {
+            // $("#deleteOrderModal").modal("show");
+            deleteOrderId = orderId;
+            $("#mainContent").load("/testFragment");
+        }
+        function cancelDeleteOrder() {
+            deleteOrderId = null;
+        }
+        //当用户点击确定时提交删除请求
+        function confirmDeleteOrder() {
+            // $("#deleteOrderResultModal").modal("show");
+            // document.getElementById("deleteOrderResult").innerText = "删除成功";
+            deleteOrderId = null;
+        }
+    </script>
 </body>
 
 </html>

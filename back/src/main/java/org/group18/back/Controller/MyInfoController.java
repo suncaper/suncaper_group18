@@ -103,7 +103,6 @@ public class  MyInfoController {
         else {
             model.addAttribute("user", user);
             model.addAttribute("isSignin", true);
-
             //获取请求页数
             //设置每页显示数量为5
             int pageSize = 5;
@@ -119,8 +118,31 @@ public class  MyInfoController {
             model.addAttribute("currentPage", page);
             model.addAttribute("pageAmount", pagesNumberList.size());
             model.addAttribute("orderPageList", orderPageModels);
-            return "myorder";
+            return "myOrder";
         }
+    }
+
+    @RequestMapping("/testFragment")
+    public String testFragment(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page){
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        //获取请求页数
+        //设置每页显示数量为5
+        int pageSize = 1;
+        if(page == null) page = 1;//若未接受到页面请求，则设置为1
+        //生成页面列表
+        List<Integer> pagesNumberList = new ArrayList<>();
+        long count = myInfoService.getUserOrderCount(user.getUid());
+        for(int i = 1; i <= (count%pageSize==0?count/pageSize:(count/pageSize+1)); i++){
+            pagesNumberList.add(i);
+        }
+        List<OrderPageModel> orderPageModels =  myInfoService.getOrderPageInfo(user.getUid(), pageSize, page);
+        model.addAttribute("pageNumberList", pagesNumberList);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageAmount", pagesNumberList.size());
+        model.addAttribute("orderPageList", orderPageModels);
+        System.out.println(orderPageModels.get(0).getShopBaseInfo().getShopName());
+        return "myOrder::myOrderList";
+
     }
 
 }
