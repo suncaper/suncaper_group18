@@ -144,7 +144,6 @@ public class CartController {
             model.addAttribute("user", user);
             cartService.decreaseCart(user.getUid(), specification_uid);
             List<CartListModel> cartList = cartService.getCarts(user.getUid());
-
             BigDecimal totalPrice = cartService.getTotalPrice(cartList);
             model.addAttribute("totalPrice", totalPrice);
             Integer totalPoints = cartService.getTotalPoints(cartList);
