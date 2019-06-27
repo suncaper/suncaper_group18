@@ -69,10 +69,6 @@
 </head>
 
 <body id="body" class="wide-layout preloader-active">
-
-     <a th:href="@{/store/getStoreList(page=1)}">点击查看店铺</a>
-
-
     <!--[if lt IE 9]>
         <p class="browserupgrade alert-error">
         	You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
@@ -120,6 +116,7 @@
                         </div>
                         <div class="col-sm-12 col-md-8">
                             <ul class="nav-top nav-top-right list-inline t-xs-center t-md-right">
+                                <li><a th:href="@{/store/getStoreList(page=1)}"><i class="fa fa-support"></i>点击查看店铺</a></li>
                                 <li>
                                     <a href="#"><i class="fa fa-flag-usa"></i>English <i class="fa fa-caret-down"></i></a>
                                     <ul>
