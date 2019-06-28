@@ -98,13 +98,13 @@ public class GoodsController {
     }*/
 
 
-    @RequestMapping(value = "/GoodsaddCart", method = RequestMethod.POST)
-    @ResponseBody
-    public String addCart(String user_uid, int goods_uid, int specification_uid, int counts){
-        Cart cart = cartService.getCart(user_uid, specification_uid);
-        cartService.addAndUpdateCart(cart, user_uid, goods_uid, specification_uid, counts);
-        return "goods";
-    }
+//    @RequestMapping(value = "/GoodsaddCart", method = RequestMethod.POST)
+//    @ResponseBody
+//    public String addCart(String user_uid, int goods_uid, int specification_uid, int counts){
+//        Cart cart = cartService.getCart(user_uid, specification_uid);
+//        cartService.addAndUpdateCart(cart, user_uid, goods_uid, specification_uid, counts);
+//        return "goods";
+//    }
 
 
 }

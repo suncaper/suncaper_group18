@@ -6,6 +6,7 @@ import org.group18.back.Model.CartListModel;
 import org.group18.back.Service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -22,14 +23,56 @@ public class CartServiceImpl implements CartService{
     private GoodsSpecificationMapper goodsSpecificationMapper;
 
     @Override
-    public Cart getCart(String user_uid, Integer specifiation_uid){
+    public List<CartListModel> getCart(String user_uid, Integer specifiation_uid){
+        List<CartListModel> cartListModels = new ArrayList<>();
         CartExample cartExample = new CartExample();
         CartExample.Criteria criteria = cartExample.createCriteria();
         criteria.andUserUidEqualTo(user_uid);
         criteria.andSpecificationUidEqualTo(specifiation_uid);
         List<Cart> cartList = cartMapper.selectByExample(cartExample);
-        Cart cart = cartList.get(0);
-        return cart;
+        for (Integer i = 0; i < cartList.size(); i++) {
+            CartListModel cartListModel = new CartListModel();
+            cartListModel.setAmount(cartList.get(i).getAmount());//数量
+//            System.out.println(cartList.get(i).getAmount());
+            cartListModel.setUser_uid(cartList.get(i).getUserUid());//user_uid
+            cartListModel.setSpecification_uid(cartList.get(i).getSpecificationUid());//specification_uid
+
+            //查Goods表
+            GoodsExample goodsExample = new GoodsExample();
+            GoodsExample.Criteria criteria1 = goodsExample.createCriteria();
+            criteria1.andUidEqualTo(cartList.get(i).getGoodsUid());
+            List<Goods> goods = goodsMapper.selectByExample(goodsExample);
+            cartListModel.setGoods_uid(goods.get(0).getUid());//商品uid
+            cartListModel.setGoods_name(goods.get(0).getGoodsName());//商品名
+//            System.out.println(goods.get(0).getGoodsName());
+            cartListModel.setDiscount_price(goods.get(0).getDiscountPrice());//优惠价格
+            cartListModel.setPrice(goods.get(0).getPrice());//价格
+//            System.out.println(goods.get(0).getDiscountPrice());
+            cartListModel.setImg_url(goods.get(0).getImgUrl());//图片地址
+//            System.out.println(goods.get(0).getImgUrl());
+            cartListModel.setIs_exchange(goods.get(0).getIsExchange());//是否使用积分
+//            System.out.println(goods.get(0).getIsExchange());
+            cartListModel.setPoints(goods.get(0).getPoints());//积分价格
+
+            //查shop表
+            ShopExample shopExample = new ShopExample();
+            ShopExample.Criteria criteria3 = shopExample.createCriteria();
+            criteria3.andSellerUidEqualTo(goods.get(0).getSellerUid());
+            List<Shop> shops = shopMapper.selectByExample(shopExample);
+            cartListModel.setShop_name(shops.get(0).getShopName());//商店名
+//            System.out.println(shops.get(0).getShopName());
+
+            //查goods_specification表
+            GoodsSpecificationExample goodsSpecificationExample = new GoodsSpecificationExample();
+            GoodsSpecificationExample.Criteria criteria2 = goodsSpecificationExample.createCriteria();
+            criteria2.andUidEqualTo(cartList.get(0).getSpecificationUid());
+            List<GoodsSpecification> goodsSpecifications = goodsSpecificationMapper.selectByExample(goodsSpecificationExample);
+            cartListModel.setSpecification_name(goodsSpecifications.get(0).getSpecificationName());
+//            System.out.println(goodsSpecifications.get(0).getSpecificationName());//规格名
+
+            cartListModels.add(cartListModel);
+        }
+        return cartListModels;
     }
 
     @Override
@@ -70,22 +113,16 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public void decreaseCart(String user_uid, Integer specification_uid) {
+        Map<String, String> result = new HashMap<>();
         CartExample cartExample = new CartExample();
         CartExample.Criteria criteria = cartExample.createCriteria();
         criteria.andUserUidEqualTo(user_uid);
         criteria.andSpecificationUidEqualTo(specification_uid);
         List<Cart> cartList = cartMapper.selectByExample(cartExample);
-        if (cartList.get(0).getAmount() - 1 < 1){
-//            result.put("msg", "已不能继续减少");
-//            return result;
-            return;
-        }
+
         cartList.get(0).setId(cartList.get(0).getId());
         cartList.get(0).setAmount(cartList.get(0).getAmount() - 1);
         cartMapper.updateByPrimaryKey(cartList.get(0));
-        return;
-//        result.put("msg", "已减少一件");
-//        return result;
     }
 
     @Override

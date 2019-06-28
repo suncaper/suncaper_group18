@@ -56,24 +56,24 @@ public class CartController {
         }
     }
 
-    //商品加入购物车
-    @RequestMapping("/addCart")
-    public String addCart(Model model, HttpServletRequest request, int specification_uid, int goods_uid, int counts){
-        //检查是否已经登陆
-        User user = loginRegisterService.checkLoginStatus(request.getCookies());
-        if(user == null) {
-            model.addAttribute("user", new User());
-            model.addAttribute("isSignin", false);
-            return "signin";
-        }
-        else {
-            model.addAttribute("isSignin", true);
-            model.addAttribute("user", user);
-            Cart cart = cartService.getCart(user.getUid(), specification_uid);
-            cartService.addAndUpdateCart(cart, user.getUid(), goods_uid, specification_uid, counts);
-            return "deal_single";
-        }
-    }
+//    //商品加入购物车
+//    @RequestMapping("/addCart")
+//    public String addCart(Model model, HttpServletRequest request, int specification_uid, int goods_uid, int counts){
+//        //检查是否已经登陆
+//        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+//        if(user == null) {
+//            model.addAttribute("user", new User());
+//            model.addAttribute("isSignin", false);
+//            return "signin";
+//        }
+//        else {
+//            model.addAttribute("isSignin", true);
+//            model.addAttribute("user", user);
+//            Cart cart = cartService.getCart(user.getUid(), specification_uid);
+//            cartService.addAndUpdateCart(cart, user.getUid(), goods_uid, specification_uid, counts);
+//            return "deal_single";
+//        }
+//    }
 
     //删除商品
     @RequestMapping("/deleteCarts")
