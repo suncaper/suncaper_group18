@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,7 @@ public class CheckoutController {
     MyInfoService myInfoService;
 
     Integer addressId = 0;
+    List<CartListModel> cartList = new ArrayList<>();
 
     @RequestMapping("/Checkout")
     public String checkout(Model model, HttpServletRequest request) {
@@ -42,7 +44,7 @@ public class CheckoutController {
         } else {
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
-            List<CartListModel> cartList = cartService.getCarts(user.getUid());
+            cartList = cartService.getCarts(user.getUid());
             model.addAttribute("cartList", cartList);
             BigDecimal totalPrice = cartService.getTotalPrice(cartList);
             model.addAttribute("totalPrice", totalPrice);
@@ -51,6 +53,41 @@ public class CheckoutController {
             Integer totalAmount = cartService.getTotalAmount(cartList);
             model.addAttribute("totalAmount", totalAmount);//购物车相关信息
 
+            List<UserAddress> result = myInfoService.myaddress(user.getUid());
+            if(result.isEmpty())
+            {//如果result表为空,则不作显示
+                model.addAttribute("isEmpty",true);
+            }
+            else
+            {
+                model.addAttribute("isEmpty",false);
+                model.addAttribute("addressList", result);
+                model.addAttribute("editAddress", new UserAddress());
+            }
+            return "checkout_billing";
+        }
+    }
+
+    @RequestMapping("/checkout_single")
+    public String checkout_single(Model model, HttpServletRequest request, @RequestParam("specification_uid") Integer specification_uid) {
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if (user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+            return "signin";
+        } else {
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+            //购物车相关信息
+            cartList = cartService.getCart(user.getUid(), specification_uid);
+            model.addAttribute("cartList", cartList);
+            BigDecimal totalPrice = cartService.getTotalPrice(cartList);
+            model.addAttribute("totalPrice", totalPrice);
+            Integer totalPoints = cartService.getTotalPoints(cartList);
+            model.addAttribute("totalPoints", totalPoints);
+            Integer totalAmount = cartService.getTotalAmount(cartList);
+            model.addAttribute("totalAmount", totalAmount);
             List<UserAddress> result = myInfoService.myaddress(user.getUid());
             if(result.isEmpty())
             {//如果result表为空,则不作显示
@@ -77,7 +114,7 @@ public class CheckoutController {
         } else {
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
-            List<CartListModel> cartList = cartService.getCarts(user.getUid());
+//            List<CartListModel> cartList = cartService.getCarts(user.getUid());
             model.addAttribute("cartList", cartList);
             BigDecimal totalPrice = cartService.getTotalPrice(cartList);
             model.addAttribute("totalPrice", totalPrice);
@@ -107,7 +144,7 @@ public class CheckoutController {
             String checkout_method;
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
-            List<CartListModel> cartList = cartService.getCarts(user.getUid());
+//            List<CartListModel> cartList = cartService.getCarts(user.getUid());
             model.addAttribute("cartList", cartList);
             Map<String, List<CartListModel>> shopCartList = cartService.getShopCarts(cartList);
             model.addAttribute("shopCartList", shopCartList);//商店-购物车信息

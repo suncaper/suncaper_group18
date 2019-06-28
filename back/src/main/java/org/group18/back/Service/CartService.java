@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Service
 public interface CartService {
-    public Cart getCart(String user_uid, Integer goods_uid);
+    public List<CartListModel> getCart(String user_uid, Integer goods_uid);
     public void addAndUpdateCart(Cart cart, String user_uid, Integer goods_uid, Integer specification_uid, Integer counts);
     public void increaseCart(String user_uid, Integer specification_uid);
     public void decreaseCart(String user_uid, Integer specification_uid);
