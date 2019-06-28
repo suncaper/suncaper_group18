@@ -100,6 +100,15 @@ public class CheckoutController {
                 model.addAttribute("addressList", result);
                 model.addAttribute("editAddress", new UserAddress());
             }
+            List<UserAddress> userAddressList = myInfoService.getUserAddressList(user.getUid());
+            if(userAddressList == null || userAddressList.isEmpty()){
+                model.addAttribute("isAddressEmpty", true);
+            }
+            else {
+                model.addAttribute("isAddressEmpty", false);
+
+            }
+            model.addAttribute("userAddressList", userAddressList);
             return "checkout_billing";
         }
     }
@@ -128,7 +137,6 @@ public class CheckoutController {
             Integer points = checkoutService.getUserPoints(user.getUid());//账户积分
             model.addAttribute("points", points);
             addressId = address_id;//存储地址信息
-            System.out.println(addressId);
             return "checkout_method";
         }
     }
@@ -189,5 +197,11 @@ public class CheckoutController {
                 return "cart";
             }
         }
+    }
+
+    @RequestMapping("/editAddress")
+    public String editUserAddress(UserAddress userAddress){
+        myInfoService.editUserAddress(userAddress);
+        return "redirect:/chekout_billing";
     }
 }
