@@ -1,6 +1,7 @@
 package org.group18.back.Entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class GoodsSpecification implements Serializable {
     /**
@@ -175,4 +176,7 @@ public class GoodsSpecification implements Serializable {
     public void setGoodsUid(Integer goodsUid) {
         this.goodsUid = goodsUid;
     }
+
+
+
 }

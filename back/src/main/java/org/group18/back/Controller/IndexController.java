@@ -1,27 +1,38 @@
 package org.group18.back.Controller;
 
-
+import org.group18.back.Entity.Goods;
 import org.group18.back.Entity.User;
+import org.group18.back.Model.GoodsDeatilInfoModel;
+import org.group18.back.Model.GoodsListModel;
+import org.group18.back.Service.CartService;
+import org.group18.back.Service.GoodsService;
+
 import org.group18.back.Service.LoginRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
-@Controller
-public class LoginRegisterController {
+public class IndexController {
     @Autowired
     LoginRegisterService loginRegisterService;
 
-    @RequestMapping("/index")
+    @Autowired
+    CartService cartService;
+
+    @Resource
+    private GoodsService goodsService;
+
+    @RequestMapping("/Index_test")
     public String index(Model model, HttpServletRequest request){
+        Integer goods_uid = 1;
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if(user == null) {
@@ -31,12 +42,20 @@ public class LoginRegisterController {
         else {
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
+
+            GoodsDeatilInfoModel goodsDeatilInfoModel = goodsService.getGoods(goods_uid);
+            model.addAttribute("shop",goodsDeatilInfoModel);
+            model.addAttribute("goodsReview",goodsDeatilInfoModel);
+            model.addAttribute("goods",goodsDeatilInfoModel);
+
+            List<Goods> recommendGoods = goodsDeatilInfoModel.getRecommendGoods();
+            model.addAttribute("recommendGoods",recommendGoods);
         }
         return "index";
     }
 
     //登陆请求
-    @RequestMapping("/signin_page")
+    @RequestMapping("/Signin_page")
     public String signinPage(Model model, HttpServletRequest request){
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
@@ -51,8 +70,11 @@ public class LoginRegisterController {
             return "index";
         }
     }
+
+
+
     //注册请求
-    @RequestMapping("/signup_page")
+    @RequestMapping("/Signup_page")
     public String signupPage(Model model, HttpServletRequest request){
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
@@ -70,7 +92,7 @@ public class LoginRegisterController {
     }
 
     //注册
-    @RequestMapping("/register")
+    @RequestMapping("/Register")
     public String register(Model model, @ModelAttribute User user, HttpServletResponse httpServletResponse){
         Map<String, String> result = loginRegisterService.register(user.getUserName(), user.getPassWord(), user.getEmail());
         if(!result.containsKey("ticket")){
@@ -90,7 +112,7 @@ public class LoginRegisterController {
     }
 
     //登陆
-    @RequestMapping("/signin")
+    @RequestMapping("/Signin")
     public String signin(Model model, @ModelAttribute User user, HttpServletResponse httpServletResponse){
         Map<String, String> result = loginRegisterService.login(user.getEmail(), user.getPassWord());
         if(!result.containsKey("ticket")){
@@ -110,7 +132,7 @@ public class LoginRegisterController {
     }
 
     //登出
-    @RequestMapping("/signout")
+    @RequestMapping("/Signout")
     public String signout(Model model, @ModelAttribute User user, HttpServletResponse httpServletResponse){
         Cookie cookie = new Cookie("ticket",null);
         cookie.setPath("/");

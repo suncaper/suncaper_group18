@@ -31,6 +31,9 @@ public class GoodsServiceImpl implements GoodsService {
     @Autowired
     GoodsReviewMapper goodsReviewMapper;
 
+    @Autowired
+    GoodsSpecificationMapper goodsSpecificationMapper;
+
     @Override
     public Goods getGood(int goods_uid){
         GoodsExample goodsExample = new GoodsExample();
@@ -42,32 +45,43 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public GoodsDeatilInfoModel getGoods(int goods_uid, String sellerUid) {
+    public GoodsDeatilInfoModel getGoods(int goods_uid) {
 
         GoodsDeatilInfoModel goodsDeatilInfoModel = new GoodsDeatilInfoModel();
-        ShopExample shopExample = new ShopExample();
-        shopExample.createCriteria().andSellerUidEqualTo(sellerUid);
-        goodsDeatilInfoModel.setShop(shopMapper.selectByExample(shopExample).get(0));
 
         GoodsExample goodsExample1 = new GoodsExample();
         goodsExample1.createCriteria().andUidEqualTo(goods_uid);
         Goods goods = goodsMapper.selectByExample(goodsExample1).get(0);
         goodsDeatilInfoModel.setGoods(goods);
 
+
+        ShopExample shopExample = new ShopExample();
+        shopExample.createCriteria().andSellerUidEqualTo(goods.getSellerUid());
+        goodsDeatilInfoModel.setShop(shopMapper.selectByExample(shopExample).get(0));
+
+
+
         GoodsReviewExample goodsReviewExample = new GoodsReviewExample();
         GoodsReviewExample.Criteria criteria = goodsReviewExample.createCriteria();
         criteria.andGoodsUidEqualTo(goods_uid);
-        GoodsReview goodsReview =goodsReviewMapper.selectByExample(goodsReviewExample).get(0);
-        goodsDeatilInfoModel.setGoodsReview(goodsReview);
+       /* List <GoodsReview> goodsReview =goodsReviewMapper.selectByExample(goodsReviewExample);
+        if ((goodsReview!=null))
+        {
+            goodsDeatilInfoModel.setGoodsReview(goodsReview.get(0));
+        }*/
 
-        List<Goods> goodsList = new ArrayList<>();
         CategoryExample categoryExample = new CategoryExample();
         categoryExample.createCriteria().andUidEqualTo(goods.getCategoryUid());
         Category category = categoryMapper.selectByExample(categoryExample).get(0);
         GoodsExample goodsExample2 = new GoodsExample();
-        goodsExample2.createCriteria().andCategoryUidEqualTo(category.getUid()).andSellerUidEqualTo(sellerUid);
+        goodsExample2.createCriteria().andCategoryUidEqualTo(category.getUid()).andSellerUidEqualTo(goods.getSellerUid());
         goodsExample2.setOrderByClause("sales_volume desc");
         goodsDeatilInfoModel.setRecommendGoods(goodsMapper.selectByExample(goodsExample2));
+
+        GoodsSpecificationExample goodsSpecificationExample = new GoodsSpecificationExample();
+        goodsSpecificationExample.createCriteria().andUidEqualTo(goods_uid);
+        goodsDeatilInfoModel.setGoodsSpecification(goodsSpecificationMapper.selectByExample(goodsSpecificationExample));
+
 
         return goodsDeatilInfoModel;
     }
