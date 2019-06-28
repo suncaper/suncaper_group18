@@ -75,13 +75,15 @@ public class CartServiceImpl implements CartService{
         criteria.andUserUidEqualTo(user_uid);
         criteria.andSpecificationUidEqualTo(specification_uid);
         List<Cart> cartList = cartMapper.selectByExample(cartExample);
-//        if (cartList.get(0).getAmount() - 1 < 1){
+        if (cartList.get(0).getAmount() - 1 < 1){
 //            result.put("msg", "已不能继续减少");
 //            return result;
-//        }
+            return;
+        }
         cartList.get(0).setId(cartList.get(0).getId());
         cartList.get(0).setAmount(cartList.get(0).getAmount() - 1);
         cartMapper.updateByPrimaryKey(cartList.get(0));
+        return;
 //        result.put("msg", "已减少一件");
 //        return result;
     }
@@ -115,9 +117,11 @@ public class CartServiceImpl implements CartService{
             GoodsExample.Criteria criteria1 = goodsExample.createCriteria();
             criteria1.andUidEqualTo(cartList.get(i).getGoodsUid());
             List<Goods> goods = goodsMapper.selectByExample(goodsExample);
+            cartListModel.setGoods_uid(goods.get(0).getUid());//商品uid
             cartListModel.setGoods_name(goods.get(0).getGoodsName());//商品名
 //            System.out.println(goods.get(0).getGoodsName());
-            cartListModel.setDiscount_price(goods.get(0).getDiscountPrice());//价格
+            cartListModel.setDiscount_price(goods.get(0).getDiscountPrice());//优惠价格
+            cartListModel.setPrice(goods.get(0).getPrice());//价格
 //            System.out.println(goods.get(0).getDiscountPrice());
             cartListModel.setImg_url(goods.get(0).getImgUrl());//图片地址
 //            System.out.println(goods.get(0).getImgUrl());

@@ -226,18 +226,18 @@
                         <div id="header-navbar" class="nav-collapse">
                             <ul class="nav-menu">
                                 <li>
-                                    <a th:href="index">首页</a>
+                                    <a th:href="@{/index}">首页</a>
                                 </li>
-                                <li class="active">
-                                    <a th:href="myinfo">我的信息</a>
+                                <li id="myInfoButton">
+                                    <a th:href="@{/myinfo}">我的信息</a>
                                 </li>
-                                <li>
-                                    <a href="stores_01.html">我的订单</a>
+                                <li class="active" id="myOrderButton">
+                                    <a th:href="@{/myorder}">我的订单</a>
                                 </li>
-                                <li>
-                                    <a href="contact_us_01.html">我的足迹</a>
+                                <li id="myHistoryButton">
+                                    <a th:href="@{/myhistory}">我的足迹</a>
                                 </li>
-                                <li>
+                                <li id="pointsStoreButton">
                                     <a href="#">积分商城</a>
                                 </li>
                             </ul>
@@ -251,7 +251,7 @@
         <!-- –––––––––––––––[ HEADER ]––––––––––––––– -->
 
         <!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
-        <main id="mainContent" class="main-content">
+        <main id="mainContent" class="main-content" th:fragment="myOrderList">
             <div class="page-container ptb-20">
                 <div class="container">
                     <section class="wishlist-area ptb-30">
@@ -263,16 +263,17 @@
                                         <td>
                                             <table id = "storeOrder1">
                                                 <tr>
-                                                    <th style="font-size: 20px;"><i class="fa fa-home"></i>&nbsp;<span th:text="${orderPage.getShopBaseInfo().getShopName()}">店铺名</span></th>
+                                                    <th style="font-size: 20px;"><i class="fa fa-home"></i>&nbsp;<a th:text="${orderPage.getShopBaseInfo().getShopName()}" th:href="@{/store/shop(shopUid=${orderPage.getShopBaseInfo().getUid()})}">店铺名</a></th>
                                                     <th></th>
                                                     <th></th>
                                                     <th th:if="!${orderPage.getOrderInfo().getIsPaid()}" th:text="未支付" style="font-size: 18px;"></th>
                                                     <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state01' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="未发货">订单状态</th>
                                                     <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state02' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="已发货">订单状态</th>
                                                     <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state03' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="已收货">订单状态</th>
-                                                    <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state04' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="申请退款">订单状态</th>
-                                                    <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state05' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="已退货">订单状态</th>
-                                                    <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state06' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="拒绝退货">订单状态</th>
+                                                    <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state04' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="退款中">订单状态</th>
+                                                    <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state05' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="已退款">订单状态</th>
+                                                    <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state06' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="拒绝退款">订单状态</th>
+                                                    <th></th>
                                                 </tr>
                                                 <!--人名币购买样式-->
                                                 <tr th:if="${orderPage.getOrderInfo().getTypeUid()} eq 'type01'" class="panel alert" th:each="goodsInfo:${orderPage.getGSN()}">
@@ -297,6 +298,10 @@
                                                     <td class="col-sm-2 col-md-2" >
                                                         <span style="font-size:20px;" th:text="'¥'+${goodsInfo.getAmount()} * ${goodsInfo.getGoods().getPrice()}">单件商品总价</span>
                                                     </td>
+                                                    <td>
+                                                        <button th:onclick="tryToReviewGoods([[${goodsInfo.getGoods().getUid()}]], [[${goodsInfo.getGoodsSpecification().getUid()}]], 'money')" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state03' and !${goodsInfo.getReviewState()}" class="btn btn-rounded btn-sm mt-15">评价商品</button>
+                                                        <p th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state03' and ${goodsInfo.getReviewState()}">已评价</p>
+                                                    </td>
                                                 </tr>
                                                 <!--积分购买样式-->
                                                 <tr th:if="${orderPage.getOrderInfo().getTypeUid()} eq 'type01'" class="panel alert" th:each="goodsInfo:${orderPage.getGSY()}">
@@ -319,6 +324,10 @@
                                                     </td>
                                                     <td class="col-sm-2 col-md-2" >
                                                         <span style="font-size:20px;" th:text="'@'+${goodsInfo.getAmount()} * ${goodsInfo.getGoods().getPoints()}+'积分'">单件商品总价</span>
+                                                    </td>
+                                                    <td>
+                                                        <button th:onclick="tryToReviewGoods([[${goodsInfo.getGoods().getUid()}]], [[${goodsInfo.getGoodsSpecification().getUid()}]], 'points')" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state03' and !${goodsInfo.getReviewState()}" class="btn btn-rounded btn-sm mt-15">评价商品</button>
+                                                        <p th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state03' and ${goodsInfo.getReviewState()}">已评价</p>
                                                     </td>
                                                 </tr>
                                                 <!-- 余额充值样式-->
@@ -343,13 +352,18 @@
                                                     <td class="col-sm-2 col-md-2" >
                                                         <span style="font-size:20px;" th:text="'¥'+${orderPage.getOrderInfo().getPrice()}">单件商品总价</span>
                                                     </td>
+                                                    <td></td>
                                                 </tr>
                                                 <tr>
                                                     <td></td>
                                                     <td></td>
                                                     <td align="right">
                                                         <button th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state02'" class="btn btn-rounded btn-sm mt-15">确认收货</button>
-                                                        <button th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state03'" class="btn btn-rounded btn-sm mt-15">点击评价</button>
+                                                    </td>
+                                                    <td align="right">
+                                                        <button th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state02'" style="background-color: yellowgreen" class="btn btn-rounded btn-sm mt-15">申请退款</button>
+                                                        <button th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state03'" style="background-color: red;" class="btn btn-rounded btn-sm mt-15" th:onclick="tryToDeleteOrder([[${orderPage.getOrderInfo().getId()}]])">删除订单</button>
+
                                                     </td>
                                                     <td>
                                                         <p th:text="'共'+${orderPage.getTotalAmount()}+'件商品'"></p>
@@ -378,15 +392,85 @@
                                         <!-- End Page Pagination -->
                                     </nav>
                                 </div>
+                                <!-- 删除订单模态框 -->
+                                <div class="modal fade" id="deleteOrderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="cancelReviewGoods()">
+                                                    &times;
+                                                </button>
+                                                <h4 class="modal-title" id="deleteOrderModalHead">
+                                                    删除订单
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                您确认要删除此订单吗？
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="cancelDeleteOrder()">关闭
+                                                </button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="confirmDeleteOrder()">
+                                                    提交更改
+                                                </button>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+                                </div>
+                                <!-- 请求结果返回模态框 -->
+                                <div class="modal fade" id="askResultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                    &times;
+                                                </button>
+                                                <h4 class="modal-title">
+                                                    请求结果
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p id="askResult"></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+                                </div>
+                                <!-- 评价模态框 -->
+                                <div class="modal fade" id="reviewOrderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="cancelReviewGoods()">
+                                                    &times;
+                                                </button>
+                                                <h4 class="modal-title" id="reviewgoodsModalHead">
+                                                    评价商品
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <input id="reviewInput">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="cancelReviewGoods()">关闭
+                                                </button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="confirmReview()">
+                                                    提交更改
+                                                </button>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+                                </div>
                             </div>
                         </div>
                     </section>
                 </div>
             </div>
-
-
         </main>
         <!-- –––––––––––––––[ END PAGE CONTENT ]––––––––––––––– -->
+
         <section class="footer-top-area pt-70 pb-30 pos-r bg-blue">
             <div class="container">
                 <div class="row row-tb-20">
@@ -547,6 +631,59 @@
     <!-- Custom Template JavaScript                   -->
     <!-- ––––––––––––––––––––––––––––––––––––––––– -->
     <script type="text/javascript" th:src="@{/js/main.js}"></script>
+
+    <!--自定义js代码-->
+    <script th:inline="javascript">
+
+        //删除请求
+        var deleteOrderId;
+        //此步进行要删除的订单编号绑定
+        function tryToDeleteOrder(orderId) {
+            $("#deleteOrderModal").modal("show");
+            deleteOrderId = orderId;
+        }
+        function cancelDeleteOrder() {
+            deleteOrderId = null;
+        }
+        //当用户点击确定时提交删除请求
+        function confirmDeleteOrder() {
+            $.get("/deleteMyOrder?orderId="+deleteOrderId);
+            $("#askResultModal").modal("show");
+            document.getElementById("askResult").innerText = "删除成功";
+            deleteOrderId = null;
+        }
+
+        //评价请求
+        var reviewGoodsId;
+        var reviewSpecificationId;
+        var reviewPayWay;
+        function tryToReviewGoods(goodsId, specificationId, payWay){
+            $("#reviewOrderModal").modal("show");
+            reviewGoodsId = goodsId;
+            reviewSpecificationId = specificationId;
+            reviewPayWay = payWay;
+        }
+        function cancelReviewGoods() {
+            reviewGoodsId= null;
+            reviewSpecificationId = null;
+            reviewPayWay = null;
+        }
+        function confirmReview() {
+            var review = document.getElementById("reviewInput").value;
+            //判断输入是否为空
+            var str = review.replace(/(^\s*)|(\s*$)/g, '');//把val首尾的空格去掉。
+            if (str == '' || str == undefined || str == null) {//输入框中输入空格也为空
+                alert("输入不能为空")
+            } else {
+                $.get("/reviewGoods?goodsUid="+reviewGoodsId+"&specificationUid="+reviewSpecificationId+"&review="+str+"&payWay="+reviewPayWay);
+                document.getElementById("askResult").innerText = "评价成功";
+                reviewGoodsId = null;
+                reviewSpecificationId = null;
+                reviewPayWay = null;
+                $("#askResultModal").modal("show");
+            }
+        }
+    </script>
 </body>
 
 </html>
