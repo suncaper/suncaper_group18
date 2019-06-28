@@ -75,13 +75,15 @@ public class CartServiceImpl implements CartService{
         criteria.andUserUidEqualTo(user_uid);
         criteria.andSpecificationUidEqualTo(specification_uid);
         List<Cart> cartList = cartMapper.selectByExample(cartExample);
-//        if (cartList.get(0).getAmount() - 1 < 1){
+        if (cartList.get(0).getAmount() - 1 < 1){
 //            result.put("msg", "已不能继续减少");
 //            return result;
-//        }
+            return;
+        }
         cartList.get(0).setId(cartList.get(0).getId());
         cartList.get(0).setAmount(cartList.get(0).getAmount() - 1);
         cartMapper.updateByPrimaryKey(cartList.get(0));
+        return;
 //        result.put("msg", "已减少一件");
 //        return result;
     }

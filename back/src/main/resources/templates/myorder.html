@@ -287,8 +287,8 @@
                                                         <div class="media-body valign-middle">
                                                             <h5 class="title mb-5 t-uppercase"><a href="#" th:text="${goodsInfo.getGoods().getGoodsName()}">商品名字</a></h5>
                                                             <h4 class="price color-green">
-                                                                <span class="price-sale" th:text=" ¥ +${goodsInfo.getGoods().getPrice()}" th:if="${goodsInfo.getGoods().getDiscountPrice()} lt ${goodsInfo.getGoods().getPrice()}">原始价格</span>
-                                                                <span th:text=" ¥ +${goodsInfo.getGoods().getDiscountPrice()}">优惠价格/原始价格</span>
+                                                                <span class="price-sale" th:text="'¥'+${goodsInfo.getGoods().getPrice()}" th:if="${goodsInfo.getGoods().getDiscountPrice()} lt ${goodsInfo.getGoods().getPrice()}">原始价格</span>
+                                                                <span th:text="'¥'+${goodsInfo.getGoods().getDiscountPrice()}">优惠价格/原始价格</span>
                                                             </h4>
                                                         </div>
                                                     </td>
