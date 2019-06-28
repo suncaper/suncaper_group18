@@ -167,7 +167,10 @@ public class CheckoutController {
             }
             else{
                 System.out.println(result);
-                return "myorder";
+                List<CartListModel> cartList = cartService.getCarts(user.getUid());
+                shopCartList = cartService.getShopCarts(cartList);
+                model.addAttribute("shopCartList", shopCartList);
+                return "cart";
             }
         }
     }
