@@ -202,8 +202,8 @@
                                     <div class="header-cart">
                                         <a th:href="@{/Cart}">
                                             <span class="icon lnr lnr-cart"></span>
-                                            <div><span class="cart-number">0</span>
-                                            </div>
+                                            <!--<div><span class="cart-number">0</span>-->
+                                            <!--</div>-->
                                             <span class="title">Cart</span>
                                         </a>
                                     </div>
@@ -416,7 +416,7 @@
                                         </li>
                                         <li><a href="faq.html">FAQ Page</a>
                                         </li>
-                                        <li><a href="cart.html">Cart Page</a>
+                                        <li><a th:href="@{/Cart}">Cart Page</a>
                                         </li>
                                         <li>
                                             <a href="checkout_method.html">Checkout</a>

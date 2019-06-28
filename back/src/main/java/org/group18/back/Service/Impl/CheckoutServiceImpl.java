@@ -124,6 +124,7 @@ public class CheckoutServiceImpl implements CheckoutService {
                         List<User> user = userMapper.selectByExample(userExample);
                         user.get(0).setUid(user.get(0).getUid());
                         user.get(0).setBalance(balance.subtract(totalPrice));//更新余额
+                        Integer addpoint = totalPrice.divide(new BigDecimal(0.01)).intValue();
                         user.get(0).setPoints(points - totalPoints);//更新积分
                         userMapper.updateByPrimaryKey(user.get(0));
                         return 1;//成功
