@@ -107,6 +107,7 @@
     <div id="pageWrapper" class="page-wrapper">
         <!-- –––––––––––––––[ HEADER ]––––––––––––––– -->
         <header id="mainHeader" class="main-header">
+
             <!-- Top Bar -->
             <div class="top-bar bg-gray">
                 <div class="container">
@@ -230,16 +231,16 @@
                         <div id="header-navbar" class="nav-collapse">
                             <ul class="nav-menu">
                                 <li>
-                                    <a th:href="@{/index}">首页</a>
+                                    <a th:href="index">首页</a>
+                                </li>
+                                <li>
+                                    <a th:href="myinfo">我的信息</a>
+                                </li>
+                                <li>
+                                    <a th:href="myorder">我的订单</a>
                                 </li>
                                 <li class="active">
-                                    <a th:href="@{/myinfo}">我的信息</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/myorder}">我的订单</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/myhistory}">我的足迹</a>
+                                    <a th:href="myhistory">我的足迹</a>
                                 </li>
                                 <li>
                                     <a href="#">积分商城</a>
@@ -256,83 +257,50 @@
 
         <!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
         <main id="mainContent" class="main-content">
-            <div class="page-container ptb-20">
+            <!-- Page Container -->
+            <div class="page-container ptb-60">
                 <div class="container">
-                    <section class="wishlist-area ptb-30">
-                        <div class="container">
-                            <div class="wishlist-wrapper">
-                                <h3 class="h-title mb-40 t-uppercase">我的信息</h3>
-                                <table id="cart_list" class="wishlist">
-                                    <tbody>
-                                        <tr class="panel alert">
-                                            <td class="col-sm-8 col-md-9">
-                                                <h5 class="h-title mb-40 t-uppercase">我的基本信息</h5>
-                                                <div class="media-body valign-middle">
-                                                    <table class="wishlist">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="col-sm-3 col-md-3">用户名</td>
-                                                            <td class="col-sm-3 col-md-3" th:text="${user.getUserName()}"></td>
-                                                            <td class="col-sm-3 col-md-3">邮箱</td>
-                                                            <td class="col-sm-3 col-md-3" th:text="${user.getEmail()}"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>余额</td>
-                                                            <td th:text="${user.getBalance()}">123</td>
-                                                            <td>积分</td>
-                                                            <td th:text="${user.getPoints()}">123</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td><button class="btn btn-rounded btn-sm mt-15">编辑个人信息</button></td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="panel alert">
-                                            <td class="col-sm-8 col-md-9">
-                                                <h5 class="h-title mb-40 t-uppercase">收货地址</h5>
-                                                <div class="media-body valign-middle" th:if="${isAddressEmpty}"><p>暂无收件地址！</p></div>
-                                                <div class="media-body valign-middle" th:if="${!isAddressEmpty}">
-                                                    <table class="table table-condensed">
-                                                        <tr>
-                                                            <th class="col-md-2">收货人</th>
-                                                            <th class="col-md-3">所在地区</th>
-                                                            <th class="col-md-3">详细地址</th>
-                                                            <th class="col-md-2">电话/手机</th>
-                                                            <th class="col-md-2">操作</th>
-                                                        </tr>
-                                                        <tr th:each="addressInfo:${userAddressList}">
-                                                            <td th:text="${addressInfo.getReceiverName()}">123213</td>
-                                                            <td th:text="${addressInfo.getProvince()}+${addressInfo.getCity()}">123213</td>
-                                                            <td th:text="${addressInfo.getDetailAddress()}">123213</td>
-                                                            <td th:text="${addressInfo.getReceiverPhone()}">123213</td>
-                                                            <td><a>删除</a>/<a>编辑</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td><button class="btn btn-rounded btn-sm mt-15">添加个人信息</button></td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                    <section class="stores-area stores-area-v1">
+                        <h3 class="mb-40 t-uppercase">浏览历史</h3>
+                        <li th:if="${isEmpty}"><h3>您还没有浏览过商品！</h3></li>
+                        <div th:if="${!isEmpty}" class="row row-rl-15 row-tb-15 t-center">
+                            <div th:each="each1:${list}">
+                                <p th:text="${#dates.format(each1.getDate(),'MM月dd日')}"></p>
+                                <div th:each="each2:${list.getGoodsList()}" class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                                    <a href="#" class="panel is-block">
+                                        <div class="embed-responsive embed-responsive-4by3">
+                                            <div class="store-logo">
+                                                <img th:src="${each2.getImgUrl()}" alt="">
+                                            </div>
+                                        </div>
+                                        <h6 class="store-name ptb-10" th:text="${each2.getGoodsName()}"></h6>
+                                        <h5 class="price-sale"th:text="${each2.getDiscountPrice()}"></h5>
+                                        <h5 class="price color-green"th:text="${each2.getPrice()}"></h5>
+                                        <!--<h4 class="price color-green"><span class="price-sale">$380.00</span>$340.00</h4>-->
+                                    </a>
+                                </div>
                             </div>
                         </div>
+                        <!--<div class="page-pagination text-center mt-30 p-10 panel">-->
+                            <!--<nav>-->
+                                <!--&lt;!&ndash; Page Pagination &ndash;&gt;-->
+                                <!--<ul class="page-pagination">-->
+                                    <!--<li><a class="page-numbers previous" th:if="${currentPage} ne 1" th:href="@{/store/getStoreList(page=${currentPage}-1)}">Previous</a>-->
+                                    <!--</li>-->
+                                    <!--<li th:each="number:${pageNumberList}">-->
+                                        <!--<a class="page-numbers" th:if="${number} ne ${currentPage}" th:text="${number}" th:href="@{/store/getStoreList(page=${number})}"></a>-->
+                                        <!--<span th:if="${number} eq ${currentPage}" class="page-numbers current" th:text="${number}"></span>-->
+                                    <!--</li>-->
+                                    <!--<li><a class="page-numbers next" th:if="(${currentPage} ne ${pageAmount}) and (${currentPage} ne 1)" th:href="@{/store/getStoreList(page=${currentPage}+1)}">Next</a>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                                <!--&lt;!&ndash; End Page Pagination &ndash;&gt;-->
+                            <!--</nav>-->
+                        <!--</div>-->
                     </section>
                 </div>
             </div>
-
-
+            <!-- End Page Container -->
         </main>
         <!-- –––––––––––––––[ END PAGE CONTENT ]––––––––––––––– -->
         <section class="footer-top-area pt-70 pb-30 pos-r bg-blue">
@@ -495,13 +463,6 @@
     <!-- Custom Template JavaScript                   -->
     <!-- ––––––––––––––––––––––––––––––––––––––––– -->
     <script type="text/javascript" th:src="@{/js/main.js}"></script>
-
-
-    <script>
-        //删除地址请求
-        var deleteAddressId;
-
-    </script>
 </body>
 
 </html>
