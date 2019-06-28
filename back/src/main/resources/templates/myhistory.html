@@ -265,7 +265,7 @@
                         <li th:if="${isEmpty}"><h3>您还没有浏览过商品！</h3></li>
                         <div th:if="${!isEmpty}" class="row row-rl-15 row-tb-15 t-center">
                             <div th:each="each1,each1Stat:${list}">
-                                <p th:text="${each1.getDate()}"></p>
+                                <p th:text="${#dates.format(each1.getDate(),'MM月dd日')}"></p>
                                 <div th:each="each2:${list.get(each1Stat.index).getGoodsList()}" class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
                                     <a href="#" class="panel is-block">
                                         <div class="embed-responsive embed-responsive-4by3">

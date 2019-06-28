@@ -157,10 +157,6 @@ public class MyInfoServiceImpl implements MyInfoService {
             }
 
         }
-        for(int i =0;i<histroyGoodsModelList.size();i++)
-        {
-            System.out.println(histroyGoodsModelList.get(i).getDate());
-        }
         return histroyGoodsModelList;
     }
 
