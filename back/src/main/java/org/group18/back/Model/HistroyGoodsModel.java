@@ -21,9 +21,6 @@ public class HistroyGoodsModel {
     }
 
     public Date getDate() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.set(Calendar.HOUR,0);
         return date;
     }
 

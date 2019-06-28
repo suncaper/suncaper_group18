@@ -98,33 +98,65 @@ public class MyInfoServiceImpl implements MyInfoService {
         }
 
         ArrayList<HistroyGoodsModel> histroyGoodsModelList = new ArrayList<HistroyGoodsModel>();
-        int j=0;
-        int size = userHistory2.size();
-        Date date1 = new Date();
-        Date date2 = new Date();
-        ArrayList<Goods> goodsinfo2 = new ArrayList<Goods>();
-        goodsinfo2.add(goodsinfo1.get(size-1));
-        HistroyGoodsModel temp = new HistroyGoodsModel();
-        histroyGoodsModelList.add(0,temp);
-        histroyGoodsModelList.get(0).setDate(userHistory2.get(size-1).getCreateDate());
-        for(int i=size-1;i>0;i--)
+        if(!(goodsinfo1.isEmpty()&&userHistory2.isEmpty()))
         {
-            date1 = userHistory2.get(i).getCreateDate();
-            date2 = userHistory2.get(i-1).getCreateDate();
-            if(isSameDate(date1,date2)==true)
+            int size = goodsinfo1.size();
+            if(size==userHistory2.size());
             {
-                goodsinfo2.add(goodsinfo1.get(i-1));
+                Date date1 = new Date();
+                Date date2 = new Date();
+                HistroyGoodsModel histroyGoodsModel=new HistroyGoodsModel();
+                ArrayList<Goods> goodsinfo2 = new ArrayList<>();
+                goodsinfo2.add(goodsinfo1.get(size-1));
+                histroyGoodsModel.setDate(userHistory2.get(size-1).getCreateDate());
+                for(int i = size -1;i>0;i--)
+                {
+                    date1=userHistory2.get(i).getCreateDate();
+                    date2=userHistory2.get(i-1).getCreateDate();
+                    if(isSameDate(date1,date2))
+                    {
+                        if(i==1)
+                        {
+                            ArrayList<Goods> tempGL = new ArrayList<>();//****************
+                            tempGL = goodsinfo1;                        //**解决list.add覆盖问题
+                            goodsinfo2.add(tempGL.get(i-1));            //****************
+                            histroyGoodsModel.setGoodsList(goodsinfo2);
+                            HistroyGoodsModel tempHGM = new HistroyGoodsModel();        //****************
+                            tempHGM.setDate(histroyGoodsModel.getDate());               //**解决list.add覆盖问题
+                            tempHGM.setGoodsList(histroyGoodsModel.getGoodsList());     //****************
+                            histroyGoodsModelList.add(tempHGM);
+                        }
+                        else
+                        {
+                            ArrayList<Goods> tempGL = new ArrayList<>();//****************
+                            tempGL = goodsinfo1;                        //**解决list.add覆盖问题
+                            goodsinfo2.add(tempGL.get(i-1));            //****************
+                        }
+                    }
+                    else
+                    {
+                        histroyGoodsModel.setGoodsList(goodsinfo2);
+                        HistroyGoodsModel tempHGM = new HistroyGoodsModel();        //****************
+                        tempHGM.setDate(histroyGoodsModel.getDate());               //**解决list.add覆盖问题
+                        tempHGM.setGoodsList(histroyGoodsModel.getGoodsList());     //****************
+                        histroyGoodsModelList.add(tempHGM);
+                        histroyGoodsModel.setDate(date2);
+                        goodsinfo2.clear();
+                        ArrayList<Goods> tempGL = new ArrayList<>();//****************
+                        tempGL = goodsinfo1;                        //**解决list.add覆盖问题
+                        goodsinfo2.add(tempGL.get(i-1));            //****************
+                        if(i==1)
+                        {
+                            HistroyGoodsModel tempHGM1 = new HistroyGoodsModel();        //****************
+                            tempHGM1.setDate(histroyGoodsModel.getDate());               //**解决list.add覆盖问题
+                            tempHGM1.setGoodsList(histroyGoodsModel.getGoodsList());     //****************
+                            histroyGoodsModelList.add(tempHGM1);
+                        }
+                    }
+                }
             }
-            else
-            {
-                histroyGoodsModelList.get(j).setGoodsList(goodsinfo2);
-                j++;
-                histroyGoodsModelList.get(j).setDate(date2);
-                goodsinfo2.clear();
-                goodsinfo2.add(goodsinfo1.get(i-1));
-            }
-        }
 
+        }
         return histroyGoodsModelList;
     }
 

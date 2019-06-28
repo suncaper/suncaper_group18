@@ -124,11 +124,14 @@ public class CheckoutController {
             model.addAttribute("address_id", addressId); //地址信息
             Integer result = checkoutService.payment(user.getUid(), totalPrice, totalPoints, balance, points, request.getParameter("checkout_method"), shopCartList, cartList);
             checkout_method = request.getParameter("checkout_method");
-            if (result != 2)
+            if (result != 2){
                 checkoutService.generateOrder(user.getUid(), request.getParameter("checkout_method"), shopCartList, addressId, result);
-            else
+                return "myorder";
+            }
+            else{
                 System.out.println(result);
-            return "myorder";
+                return "myorder";
+            }
         }
     }
 }
