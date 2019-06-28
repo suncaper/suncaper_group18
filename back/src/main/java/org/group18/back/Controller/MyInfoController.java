@@ -56,35 +56,6 @@ public class  MyInfoController {
             return "myinfo";
         }
     }
-
-    @RequestMapping("/address_edit")
-    public String edit(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam("id") String id, @RequestParam("province") String province, @RequestParam("city") String city, @RequestParam("detailAddress") String detailAddress) {
-        //检查是否已经登陆
-        System.out.println("asdasd" + id);
-
-
-        User user = loginRegisterService.checkLoginStatus(request.getCookies());
-        if (user == null) {
-            model.addAttribute("user", new User());
-            model.addAttribute("isSignin", false);
-            return "signin";
-        } else {
-            model.addAttribute("isSignin", true);
-            model.addAttribute("user", user);
-
-
-            UserAddress userAddress = new UserAddress();
-            userAddress.setId(Integer.valueOf(id));
-            userAddress.setProvince(province);
-            userAddress.setCity(city);
-            userAddress.setDetailAddress(detailAddress);
-            Boolean result = myInfoService.edit(userAddress);
-
-            model.addAttribute("ifsuccess", result);
-            model.addAttribute("msg", "提交成功");
-            return "myinfo";
-        }
-    }
     @RequestMapping("/myorder")
     public String myOrder(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page) {
         //检查是否已经登陆
@@ -155,6 +126,19 @@ public class  MyInfoController {
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         myInfoService.reviewGoods(goodsUid,specificationUid, user.getUid(), payWay, review);
         return "redirect:/myorder";
+    }
+
+    @RequestMapping("/deleteUserAddress")
+    public String deleteUserAddress(@RequestParam("addressId") Integer addressId){
+        //TODO:权限认证，核验用户id是否和请求ticket一致
+        myInfoService.deleteUserAddress(addressId);
+        return "redirect:/myinfo";
+    }
+
+    @RequestMapping("/editUserAddress")
+    public String editUserAddress(UserAddress userAddress){
+        myInfoService.editUserAddress(userAddress);
+        return "redirect:/myinfo";
     }
 
 }

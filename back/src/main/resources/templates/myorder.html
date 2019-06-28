@@ -226,30 +226,19 @@
                         <div id="header-navbar" class="nav-collapse">
                             <ul class="nav-menu">
                                 <li>
-                                    <a th:href="index">首页</a>
+                                    <a th:href="@{/index}">首页</a>
                                 </li>
-<<<<<<< HEAD
-                                <li>
-                                    <a th:href="myinfo">我的信息</a>
-                                </li>
-                                <li class="active">
-                                    <a th:href="myorder">我的订单</a>
-                                </li>
-                                <li>
-                                    <a href="myhistory">我的足迹</a>
-=======
                                 <li id="myInfoButton">
-                                    <a onclick="toMyInfoPage()">我的信息</a>
+                                    <a th:href="@{/myinfo}">我的信息</a>
                                 </li>
                                 <li class="active" id="myOrderButton">
-                                    <a onclick="toMyOrderPage()">我的订单</a>
+                                    <a th:href="@{/myorder}">我的订单</a>
                                 </li>
                                 <li id="myHistoryButton">
-                                    <a onclick="toMyHistoryPage()">我的足迹</a>
->>>>>>> 9cfd4a67cb323641cb93e2c13445be70c8499de6
+                                    <a th:href="@{/myhistory}">我的足迹</a>
                                 </li>
                                 <li id="pointsStoreButton">
-                                    <a onclick="toPointStore()">积分商城</a>
+                                    <a href="#">积分商城</a>
                                 </li>
                             </ul>
                         </div>

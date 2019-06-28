@@ -245,6 +245,18 @@ public class MyInfoServiceImpl implements MyInfoService {
         return useraddressMapper.selectByExample(addressExample);
     }
 
+    @Override
+    public void deleteUserAddress(Integer addressId) {
+        UserAddressExample userAddressExample = new UserAddressExample();
+        userAddressExample.createCriteria().andIdEqualTo(addressId);
+        useraddressMapper.deleteByExample(userAddressExample);
+    }
+
+    @Override
+    public void editUserAddress(UserAddress userAddress) {
+        useraddressMapper.updateByPrimaryKeySelective(userAddress);
+    }
+
 
     private List<GoodsSpecificationModel> getGoodsSpecificationY(Order order){
         List<GoodsSpecificationModel> goodsSpecificationModels = new ArrayList<>();
