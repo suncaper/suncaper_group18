@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- saved from url=(0047)http://www.templatesy.com/demo/423/single.html# -->
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -10,35 +10,41 @@
     <meta name="description"
           content="FRIDAY is a responsive multipurpose-ecommerce site template allows you to store coupons and promo codes from different brands and create store for deals, discounts, It can be used as coupon website such as groupon.com and also as online store">
 
-    <link rel="apple-touch-icon" th:href="http://www.templatesy.com/demo/617/assets/images/favicon/apple-touch-icon.png">
-    <link rel="icon" th:href="http://www.templatesy.com/demo/617/assets/images/favicon/favicon.ico">
-    <link th:th:href="@{images/css}" rel="stylesheet">
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet">
-    <link th:href="@{/css/linearicons.css}" rel="stylesheet">
-    <link th:href="@{/css/owl.carousel.min.css}" rel="stylesheet">
-    <link th:href="@{/css/owl.theme.min.css}" rel="stylesheet">
-    <link th:href="@{/css/base.css}" rel="stylesheet">
+    <link rel="apple-touch-icon" href="http://www.templatesy.com/demo/617/assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" href="http://www.templatesy.com/demo/617/assets/images/favicon/favicon.ico">
 
-    <link rel="stylesheet" th:href="@{/css/bootstrap_review.min.css}">
-    <link rel="stylesheet" th:href="@{/css/shortcodes.css}">
-    <link rel="stylesheet" th:href="@{/css/style_review.css}">
+    <link th:href="@{/DetailsGoods/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/DetailsGoods/font-awesome.min.css}" rel="stylesheet">
+    <link th:href="@{/DetailsGoods/linearicons.css}" rel="stylesheet">
+    <link th:href="@{/DetailsGoods/owl.carousel.min.css}" rel="stylesheet">
+    <link th:href="@{/DetailsGoods/owl.theme.min.css}" rel="stylesheet">
+    <link th:href="@{/DetailsGoods/base.css}" rel="stylesheet">
 
-    <link th:href="@{/css/style_index.css}" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/flexslider.css}" type="text/css" media="screen">
+    <link th:href="@{/DetailsGoods/SizeChoose.css}" rel="stylesheet">
+    <link th:href="@{/DetailsGoods/AmountChoose.css}" rel="stylesheet">
+    <link th:href="@{/DetailsGoods/MainPic.css}" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/DetailsGoods/bootstrap_review.min.css}">
+    <link rel="stylesheet" th:href="@{/DetailsGoods/shortcodes.css}">
+    <link rel="stylesheet" th:href="@{/DetailsGoods/style_review.css}">
+
+    <link th:href="@{/DetailsGoods/style_index.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/DetailsGoods/flexslider.css}" type="text/css" media="screen">
 
     <meta name="keywords" content="">
-    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" type="text/css" media="all">
-    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css" media="all">
-    <link th:href="@{/css/animate.min.css}" rel="stylesheet" type="text/css" media="all">
-    <link th:href="@{/css/menu.css}" rel="stylesheet" type="text/css" media="all">
-    <link th:href="@{/css/owl.carousel.css}" rel="stylesheet" type="text/css" media="all">
-    <link th:href="@{/css/font-awesome.css}" rel="stylesheet">
-    <script th:src="@{/js/jquery.min.js}"></script>
-    <script th:src="@{/js/owl.carousel.js}"></script>
-    <script th:src="@{/js/bootstrap.js}"></script>
-    <script defer="" th:src="@{/js/jquery.flexslider.js}"></script>
-    <link rel="stylesheet" th:href="@{/css/flexslider.css}" type="text/css" media="screen">
+    <link th:href="@{/DetailsGoods/bootstrap.css}" rel="stylesheet" type="text/css" media="all">
+    <link th:href="@{/DetailsGoods/style.css}" rel="stylesheet" type="text/css" media="all">
+    <link th:href="@{/DetailsGoods/animate.min.css}" rel="stylesheet" type="text/css" media="all">
+    <link th:href="@{/DetailsGoods/menu.css}" rel="stylesheet" type="text/css" media="all">
+    <link th:href="@{/DetailsGoods/owl.carousel.css}" rel="stylesheet" type="text/css" media="all">
+    <link th:href="@{/DetailsGoods/font-awesome.css}" rel="stylesheet">
+    <script th:src="@{/DetailsGoods/jquery.min.js}"></script>
+
+    <script th:src="@{/DetailsGoods/Amount1.js}"></script>
+    <script th:src="@{/DetailsGoods/Amount2.js}"></script>
+    <script th:src="@{/DetailsGoods/MainPic.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/DetailsGoods/flexslider.css}" type="text/css" media="screen">
     <script>
         // Can also be used with $(document).ready()
         $(window).load(function () {
@@ -48,13 +54,11 @@
             });
         });
     </script>
-    <script th:src="@{/js/imagezoom.js}"></script>
-    <link th:href="http://fonts.useso.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic"
+    <link href="http://fonts.useso.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic"
           rel="stylesheet" type="text/css">
-    <link th:href="http://fonts.useso.com/css?family=Lovers+Quarrel" rel="stylesheet" type="text/css">
-    <link th:href="http://fonts.useso.com/css?family=Offside" rel="stylesheet" type="text/css">
-    <link th:href="http://fonts.useso.com/css?family=Tangerine:400,700" rel="stylesheet" type="text/css">
-    <script th:src="@{/js/jquery-scrolltofixed-min.js}" type="text/javascript"></script>
+    <link href="http://fonts.useso.com/css?family=Lovers+Quarrel" rel="stylesheet" type="text/css">
+    <link href="http://fonts.useso.com/css?family=Offside" rel="stylesheet" type="text/css">
+    <link href="http://fonts.useso.com/css?family=Tangerine:400,700" rel="stylesheet" type="text/css">
     <script>
         $(document).ready(function () {
 
@@ -75,8 +79,7 @@
             });
         });
     </script>
-    <script type="text/javascript" th:src="@{/js/move-top.js}"></script>
-    <script type="text/javascript" th:src="@{/js/easing.js}"></script>
+
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
             $(".scroll").click(function (event) {
@@ -110,6 +113,104 @@
             }
         }
     </style>
+
+    <script type="text/javascript">
+        $(function(){
+            var $banner=$('.banner');
+            var $banner_ul=$('.banner-img');
+            var $btn=$('.banner-btn');
+            var $btn_a=$btn.find('a')
+            var v_width=$banner.width();
+
+            var page=1;
+
+            var timer=null;
+            var btnClass=null;
+
+            var page_count=$banner_ul.find('li').length;//把这个值赋给小圆点的个数
+
+            var banner_cir="<li class='selected' href='#'><a></a></li>";
+            for(var i=1;i<page_count;i++){
+                //动态添加小圆点
+                banner_cir+="<li><a href='#'></a></li>";
+            }
+            $('.banner-circle').append(banner_cir);
+
+            var cirLeft=$('.banner-circle').width()*(-0.5);
+            $('.banner-circle').css({'marginLeft':cirLeft});
+
+            $banner_ul.width(page_count*v_width);
+
+            function move(obj,classname){
+                //手动及自动播放
+                if(!$banner_ul.is(':animated')){
+                    if(classname=='prevBtn'){
+                        if(page==1){
+                            $banner_ul.animate({left:-v_width*(page_count-1)});
+                            page=page_count;
+                            cirMove();
+                        }
+                        else{
+                            $banner_ul.animate({left:'+='+v_width},"slow");
+                            page--;
+                            cirMove();
+                        }
+                    }
+                    else{
+                        if(page==page_count){
+                            $banner_ul.animate({left:0});
+                            page=1;
+                            cirMove();
+                        }
+                        else{
+                            $banner_ul.animate({left:'-='+v_width},"slow");
+                            page++;
+                            cirMove();
+                        }
+                    }
+                }
+            }
+
+            function cirMove(){
+                //检测page的值，使当前的page与selected的小圆点一致
+                $('.banner-circle li').eq(page-1).addClass('selected')
+                    .siblings().removeClass('selected');
+            }
+
+            $banner.mouseover(function(){
+                $btn.css({'display':'block'});
+                clearInterval(timer);
+            }).mouseout(function(){
+                $btn.css({'display':'none'});
+                clearInterval(timer);
+                timer=setInterval(move,3000);
+            }).trigger("mouseout");//激活自动播放
+
+            $btn_a.mouseover(function(){
+                //实现透明渐变，阻止冒泡
+                $(this).animate({opacity:0.6},'fast');
+                $btn.css({'display':'block'});
+                return false;
+            }).mouseleave(function(){
+                $(this).animate({opacity:0.3},'fast');
+                $btn.css({'display':'none'});
+                return false;
+            }).click(function(){
+                //手动点击清除计时器
+                btnClass=this.className;
+                clearInterval(timer);
+                timer=setInterval(move,3000);
+                move($(this),this.className);
+            });
+
+            $('.banner-circle li').live('click',function(){
+                var index=$('.banner-circle li').index(this);
+                $banner_ul.animate({left:-v_width*index},'slow');
+                page=index+1;
+                cirMove();
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -124,7 +225,7 @@
                     <div class="col-sm-12 col-md-4 is-hidden-sm-down">
                         <ul class="nav-top nav-top-left list-inline t-left">
                             <li>
-                                <a th:href="http://www.templatesy.com/demo/617/faq.html">
+                                <a href="http://www.templatesy.com/demo/617/faq.html">
                                     <i class="fa fa-support"></i>服务帮助</a>
                             </li>
                         </ul>
@@ -132,41 +233,41 @@
                     <div class="col-sm-12 col-md-8">
                         <ul class="nav-top nav-top-right list-inline t-xs-center t-md-right">
                             <li>
-                                <a th:href="http://www.templatesy.com/demo/617/#">
+                                <a href="http://www.templatesy.com/demo/617/#">
                                     <i class="fa fa-flag-usa"></i>简体中文
                                     <i class="fa fa-caret-down"></i>
                                 </a>
                                 <ul>
                                     <li>
-                                        <a th:href="http://www.templatesy.com/demo/617/#">
+                                        <a href="http://www.templatesy.com/demo/617/#">
                                             <i class="fa fa-flag-usa"></i>English</a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a th:href="http://www.templatesy.com/demo/617/#">
+                                <a href="http://www.templatesy.com/demo/617/#">
                                     <i class="fa fa-usd"></i>USD - US Dollar
                                     <i class="fa fa-caret-down"></i>
                                 </a>
                                 <ul>
                                     <li>
-                                        <a th:href="http://www.templatesy.com/demo/617/#">CNY - Chinese Yuan</a>
+                                        <a href="http://www.templatesy.com/demo/617/#">CNY - Chinese Yuan</a>
                                     </li>
                                     <li>
-                                        <a th:href="http://www.templatesy.com/demo/617/#">EUR - Euro</a>
+                                        <a href="http://www.templatesy.com/demo/617/#">EUR - Euro</a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a th:href="http://www.templatesy.com/demo/617/signin.html">
+                                <a href="http://www.templatesy.com/demo/617/signin.html">
                                     <i class="fa fa-lock"></i>登录</a>
                             </li>
                             <li>
-                                <a th:href="http://www.templatesy.com/demo/617/signup.html">
+                                <a href="http://www.templatesy.com/demo/617/signup.html">
                                     <i class="fa fa-user"></i>注册</a>
                             </li>
                             <li>
-                                <a th:href="http://www.templatesy.com/demo/617/cart.html">
+                                <a th:href="@{/Cart}">
                                     <i class="fa fa-cart-arrow-down"></i>购物车</a>
                             </li>
                         </ul>
@@ -175,7 +276,13 @@
             </div>
         </div>
     </header>
+    <div class="jay">
+        <a th:href="@{/index}"> 首页</a>》<a th:text="${goods.getGoods().getCategoryUid()}"></a>
+    </div>
 </div>
+
+
+
 <div class="products">
     <div class="container">
         <div class="single-page">
@@ -183,67 +290,115 @@
                 <div class="col-md-6 single-top-left">
                     <div class="flexslider">
 
-                        <div class="flex-viewport" style="overflow: hidden; position: relative;">
-                            <ul class="slides"
-                                style="width: 1000%; transition-duration: 0s; transform: translate3d(-358px, 0px, 0px);">
-                                <li th:attr="data-thumb=${images/s3.jpg}" class="clone" aria-hidden="true"
-                                    style="width: 358px; float: left; display: block;">
-                                    <div class="thumb-image"> <img th:src="${goods.getImgUrl()}" data-imagezoom="true"
-                                                                   class="img-responsive" alt="" draggable="false"> </div>
-                                </li>
-                                <li th:attr="data-thumb=${/images/s1.jpg}" class="flex-active-slide"
-                                    style="width: 358px; float: left; display: block;">
-                                    <div class="thumb-image detail_images"> <img th:src="@{/images/s1.jpg}"
-                                                                                 data-imagezoom="true" class="img-responsive" alt="" draggable="false">
-                                    </div>
-                                </li>
-                                <li th:attr="data-thumb=${/images/s2.jpg}" style="width: 358px; float: left; display: block;">
-                                    <div class="thumb-image"> <img th:src="@{/images/s2.jpg}" data-imagezoom="true"
-                                                                   class="img-responsive" alt="" draggable="false"> </div>
-                                </li>
-                                <li th:attr="data-thumb==${/images/s3.jpg}" style="width: 358px; float: left; display: block;">
-                                    <div class="thumb-image"> <img th:src="@{/images/s3.jpg}" data-imagezoom="true"
-                                                                   class="img-responsive" alt="" draggable="false"> </div>
-                                </li>
-                                <li th:attr="data-thumb=${/images/s1.jpg}" class="clone" aria-hidden="true"
-                                    style="width: 358px; float: left; display: block;">
-                                    <div class="thumb-image detail_images"> <img th:src="@{/images/s1.jpg}"
-                                                                                 data-imagezoom="true" class="img-responsive" alt="" draggable="false">
-                                    </div>
-                                </li>
+                        <div class="banner">
+                            <div class="banner-btn">
+                                <a href="javascript:;" class="prevBtn"><i></i></a>
+                                <a href="javascript:;" class="nextBtn"><i></i></a>
+                            </div>
+                            <ul class="banner-img">
+                                <li><a href="#"><img th:src="${goods.getGoods().getImgUrl()}"></a></li>
+                                <li><a href="#"><img th:src="${goods.getGoods().getImgUrl()}"></a></li>
+                                <li><a href="#"><img th:src="${goods.getGoods().getImgUrl()}"></a></li>
                             </ul>
+                            <ul class="banner-circle"></ul>
                         </div>
+
+<!--                        <div class="flex-viewport" style="overflow: hidden; position: relative;">-->
+<!--                            <ul class="slides"-->
+<!--                                style="width: 1000%; transition-duration: 0s; transform: translate3d(-358px, 0px, 0px);">-->
+<!--                                <li th:attr="data-thumb=${goods.getGoods().getImgUrl()}" class="clone" aria-hidden="true"-->
+<!--                                    style="width: 358px; float: left; display: block;">-->
+<!--                                    <div class="thumb-image"> <img th:src="${goods.getGoods().getImgUrl()}" data-imagezoom="true"-->
+<!--                                                                   class="img-responsive" alt="" draggable="false"> </div>-->
+<!--                                </li>-->
+<!--                                <li th:attr="data-thumb=${goods.getGoods().getImgUrl()}" class="flex-active-slide"&ndash;&gt;-->
+<!--                                    style="width: 358px; float: left; display: block;">&ndash;&gt;-->
+<!--                                    <div class="thumb-image detail_images"> <img th:src="${goods.getGoods().getImgUrl()}"-->
+<!--                                                                                 data-imagezoom="true" class="img-responsive" alt="" draggable="false">-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!--                                <li th:attr="data-thumb=${goods.getGoods().getImgUrl()}" style="width: 358px; float: left; display: block;">-->
+<!--                                    <div class="thumb-image"> <img th:src="${goods.getGoods().getImgUrl()}" data-imagezoom="true"-->
+<!--                                                                   class="img-responsive" alt="" draggable="false"> </div>-->
+<!--                                </li>-->
+<!--                                <li th:attr="data-thumb==${goods.getGoods().getImgUrl()}" style="width: 358px; float: left; display: block;">-->
+<!--                                    <div class="thumb-image"> <img th:src="${goods.getGoods().getImgUrl()}" data-imagezoom="true"-->
+<!--                                                                   class="img-responsive" alt="" draggable="false"> </div>-->
+<!--                                </li>-->
+<!--                                <li th:attr="data-thumb=${goods.getGoods().getImgUrl()}" class="clone" aria-hidden="true"-->
+<!--                                    style="width: 358px; float: left; display: block;">-->
+<!--                                    <div class="thumb-image detail_images"> <img th:src="${goods.getGoods().getImgUrl()}"-->
+<!--                                                                                 data-imagezoom="true" class="img-responsive" alt="" draggable="false"></div>-->
+<!--                                </li>-->
+<!--                           </ul>-->
+<!--                        </div>-->
                         <ol class="flex-control-nav flex-control-thumbs">
-                            <li><img th:src="@{/images/s1.jpg}" class="flex-active" draggable="false"></li>
-                            <li><img th:src="@{/images/s2.jpg}" draggable="false"></li>
-                            <li><img th:src="@{/images/s3.jpg}" draggable="false"></li>
+                            <li><img th:src="${goods.getGoods().getImgUrl()}" class="flex-active" draggable="false"></li>
+                            <li><img th:src="${goods.getGoods().getImgUrl()}" draggable="false"></li>
+                            <li><img th:src="${goods.getGoods().getImgUrl()}" draggable="false"></li>
                         </ol>
-                        <ul class="flex-direction-nav">
-                            <li class="flex-nav-prev"><a class="flex-prev"
-                                                         th:href="http://www.templatesy.com/demo/423/single.html#">Previous</a></li>
-                            <li class="flex-nav-next"><a class="flex-next"
-                                                         th:href="http://www.templatesy.com/demo/423/single.html#">Next</a></li>
-                        </ul>
                     </div>
                 </div>
                 <div class="col-md-6 single-top-right">
-                    <h3 class="item_name">Electric Snow Blower</h3>
-                    <p>Processing Time: Item will be shipped out within 2-3 working days. </p>
+                    <h3 class="item_name" th:text="${goods.getGoods().getGoodsName()} "></h3>
+<!--                    <p th:text="${goods.getGoodsReview().getReview()}"></p>-->
                     <div class="single-price">
                         <ul>
-                            <li>$540</li>
-                            <li><del>$600</del></li>
-                            <li><span class="w3off">10% OFF</span></li>
+                            <li><a th:text="${goods.getGoods().getDiscountPrice()}"></a> </li>
+                            <li><del><a th:text="${goods.getGoods().getPrice()}"></a> </del></li>
                         </ul>
                     </div>
-                    <p class="single-price-text">Fusce a egestas nibh, eget ornare erat. Proin placerat, urna et
-                        consequat efficitur, sem odio blandit enim, sit amet euismod turpis est mattis lectus.
-                        Vestibulum maximus quam et quam egestas imperdiet. In dignissim auctor viverra. </p>
-                    <form action="http://www.templatesy.com/demo/423/single.html#" method="post">
-                        <input type="hidden" name="cmd" value="_cart">
-                        <input type="hidden" name="add" value="1">
-                        <input type="hidden" name="w3ls_item" value="Snow Blower">
-                        <input type="hidden" name="amount" value="540.00">
+                    <p class="single-price-text" th:text="${goods.getGoods().getDescriptions()}">
+
+                    <div id="wrap">
+                        <div id="top">
+                            <p id='banben' th:each="goods:${specifiCation}">
+                                <font>规格:</font>
+                                <span th:text="${goods.getSpecificationName()}"></span>
+                                <span th:text="${goods.getSpecificationName()}"></span>
+                                <span th:text="${goods.getSpecificationName()}"></span>
+                            </p>
+                        </div>
+                    </div>
+
+            <script type="text/javascript">
+                var bSpan = document.getElementById('banben').getElementsByTagName('span');
+                var aSpan = document.getElementsByTagName('span');
+                var oModel = document.getElementById('model');
+                var oRom = document.getElementById('rom');
+                var oPrice = document.getElementById('price');
+
+                bSpan[0].className = 'on';
+
+
+                for (var i=0;i<aSpan.length;i++ )
+                {
+
+                    aSpan[i].onclick = function(){
+                        var siblings = this.parentNode.children;
+                        for (var j=0;j<siblings.length;j++ )
+                        {
+                            siblings[j].className = '';
+                        }
+                        this.className = 'on';
+
+                    };
+                };
+                </script>
+
+
+
+                    <font>数量</font>
+                   <input class="sdddq" id="inp"  > </input>
+
+
+<br>
+            <br>
+                    <form th:href="@{/GoodsAddCart}">
+<!--                        <input type="hidden" name="cmd" value="_cart">-->
+<!--                        <input type="hidden" name="add" value="1">-->
+<!--                        <input type="hidden" name="w3ls_item" value="Snow Blower">-->
+<!--                        <input type="hidden" name="amount" value="540.00">-->
                         <button type="submit" class="w3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i>
                             Add to cart</button>
                     </form>
@@ -276,16 +431,11 @@
                         <div class="owl-item" style="width: 285px;">
                             <div class="item">
                                 <div class="glry-w3agile-grids agileits">
-                                    <div class="new-tag">
-                                        <h6>20% <br> Off</h6>
-                                    </div>
-                                    <a th:href="http://www.templatesy.com/demo/423/products1.html"><img th:src="@{/f2.png}"
+                                    <a href="http://www.templatesy.com/demo/423/products1.html"><img th:src="${goods.getGoods().getDetailImgUrl()}"
                                                                                                      alt="img"></a>
                                     <div class="view-caption agileits-w3layouts">
-                                        <h4><a th:href="http://www.templatesy.com/demo/423/products1.html">Women
-                                            Sandal</a></h4>
-                                        <p>Lorem ipsum dolor sit amet consectetur</p>
-                                        <h5>$20</h5>
+                                        <h4><a href="http://www.templatesy.com/demo/423/products1.html" th:text="${goods.getGoods().getGoodsName()}"> </a></h4>
+                                        <h5 th:text="${goods.getGoods().getDiscountPrice()}"> </h5>
                                         <form action="http://www.templatesy.com/demo/423/single.html#"
                                               method="post">
                                             <input type="hidden" name="cmd" value="_cart">
@@ -302,13 +452,12 @@
                         <div class="owl-item" style="width: 285px;">
                             <div class="item">
                                 <div class="glry-w3agile-grids agileits">
-                                    <a th:href="http://www.templatesy.com/demo/423/products.html"><img th:src="@{/images/e4.png}"
+                                    <a href="http://www.templatesy.com/demo/423/products.html"><img th:src="${goods.getGoods().getDetailImgUrl()}"
                                                                                                     alt="img"></a>
                                     <div class="view-caption agileits-w3layouts">
-                                        <h4><a th:href="http://www.templatesy.com/demo/423/products.html">Digital
-                                            Camera</a></h4>
-                                        <p>Lorem ipsum dolor sit amet consectetur</p>
-                                        <h5>$80</h5>
+                                        <h4><a href="http://www.templatesy.com/demo/423/products.html" th:text="${goods.getGoods().getGoodsName()}">
+                                            </a></h4>
+                                        <h5 th:text="${goods.getGoods().getDiscountPrice()}"> </h5>
                                         <form action="http://www.templatesy.com/demo/423/single.html#"
                                               method="post">
                                             <input type="hidden" name="cmd" value="_cart">
@@ -328,13 +477,11 @@
                                     <div class="new-tag">
                                         <h6>New</h6>
                                     </div>
-                                    <a th:href="http://www.templatesy.com/demo/423/products4.html"><img th:src="@{/images/s1.png}"
+                                    <a href="http://www.templatesy.com/demo/423/products4.html"><img th:src="${goods.getGoods().getDetailImgUrl()}"
                                                                                                      alt="img"></a>
                                     <div class="view-caption agileits-w3layouts">
-                                        <h4><a th:href="http://www.templatesy.com/demo/423/products4.html">Roller
-                                            Skates</a></h4>
-                                        <p>Lorem ipsum dolor sit amet consectetur</p>
-                                        <h5>$180</h5>
+                                        <h4><a href="http://www.templatesy.com/demo/423/products4.html" th:text="${goods.getGoods().getGoodsName()}"> </a></h4>
+                                        <h5 th:text="${goods.getGoods().getDiscountPrice()}"> </h5>
                                         <form action="http://www.templatesy.com/demo/423/single.html#"
                                               method="post">
                                             <input type="hidden" name="cmd" value="_cart">
@@ -351,13 +498,12 @@
                         <div class="owl-item" style="width: 285px;">
                             <div class="item">
                                 <div class="glry-w3agile-grids agileits">
-                                    <a th:href="http://www.templatesy.com/demo/423/products1.html"><img th:src="@{/images/f1.png}"
+                                    <a href="http://www.templatesy.com/demo/423/products1.html"><img th:src="${goods.getGoods().getDetailImgUrl()}"
                                                                                                      alt="img"></a>
                                     <div class="view-caption agileits-w3layouts">
-                                        <h4><a th:href="http://www.templatesy.com/demo/423/products1.html">T Shirt</a>
+                                        <h4><a href="http://www.templatesy.com/demo/423/products1.html" th:text="${goods.getGoods().getGoodsName()}"> </a>
                                         </h4>
-                                        <p>Lorem ipsum dolor sit amet consectetur</p>
-                                        <h5>$10</h5>
+                                        <h5 th:text="${goods.getGoods().getDiscountPrice()}"> </h5>
                                         <form action="http://www.templatesy.com/demo/423/single.html#"
                                               method="post">
                                             <input type="hidden" name="cmd" value="_cart">
@@ -377,13 +523,11 @@
                                     <div class="new-tag">
                                         <h6>New</h6>
                                     </div>
-                                    <a th:href="http://www.templatesy.com/demo/423/products6.html"><img th:src="@{/images/p1.png}"
+                                    <a href="http://www.templatesy.com/demo/423/products6.html"><img th:src="${goods.getGoods().getDetailImgUrl()}"
                                                                                                      alt="img"></a>
                                     <div class="view-caption agileits-w3layouts">
-                                        <h4><a th:href="http://www.templatesy.com/demo/423/products6.html">Coffee
-                                            Mug</a></h4>
-                                        <p>Lorem ipsum dolor sit amet consectetur</p>
-                                        <h5>$14</h5>
+                                        <h4><a href="http://www.templatesy.com/demo/423/products6.html" th:text="${goods.getGoods().getGoodsName()}"> </a></h4>
+                                        <h5 th:text="${goods.getGoods().getDiscountPrice()}"> </h5>
                                         <form action="http://www.templatesy.com/demo/423/single.html#"
                                               method="post">
                                             <input type="hidden" name="cmd" value="_cart">
@@ -403,13 +547,11 @@
                                     <div class="new-tag">
                                         <h6>20% <br> Off</h6>
                                     </div>
-                                    <a th:href="http://www.templatesy.com/demo/423/products6.html"><img th:src="@{/images/p2.png}"
+                                    <a href="http://www.templatesy.com/demo/423/products6.html"><img th:src="${goods.getGoods().getDetailImgUrl()}"
                                                                                                      alt="img"></a>
                                     <div class="view-caption agileits-w3layouts">
-                                        <h4><a th:href="http://www.templatesy.com/demo/423/products6.html">Teddy
-                                            bear</a></h4>
-                                        <p>Lorem ipsum dolor sit amet consectetur</p>
-                                        <h5>$20</h5>
+                                        <h4><a href="http://www.templatesy.com/demo/423/products6.html" th:text="${goods.getGoods().getGoodsName()}"> </a></h4>
+                                        <h5 th:text="${goods.getGoods().getDiscountPrice()}"> </h5>
                                         <form action="http://www.templatesy.com/demo/423/single.html#"
                                               method="post">
                                             <input type="hidden" name="cmd" value="_cart">
@@ -426,13 +568,12 @@
                         <div class="owl-item" style="width: 285px;">
                             <div class="item">
                                 <div class="glry-w3agile-grids agileits">
-                                    <a th:href="http://www.templatesy.com/demo/423/products4.html"><img th:src="@{/images/s2.png}"
+                                    <a href="http://www.templatesy.com/demo/423/products4.html"><img th:src="${goods.getGoods().getDetailImgUrl()}"
                                                                                                      alt="img"></a>
                                     <div class="view-caption agileits-w3layouts">
-                                        <h4><a th:href="http://www.templatesy.com/demo/423/products4.html">Football</a>
+                                        <h4><a href="http://www.templatesy.com/demo/423/products4.html" th:text="${goods.getGoods().getGoodsName()}"> </a>
                                         </h4>
-                                        <p>Lorem ipsum dolor sit amet consectetur</p>
-                                        <h5>$70</h5>
+                                        <h5 th:text="${goods.getGoods().getDiscountPrice()}"> </h5>
                                         <form action="http://www.templatesy.com/demo/423/single.html#"
                                               method="post">
                                             <input type="hidden" name="cmd" value="_cart">
@@ -452,13 +593,11 @@
                                     <div class="new-tag">
                                         <h6>Sale</h6>
                                     </div>
-                                    <a th:href="http://www.templatesy.com/demo/423/products3.html"><img th:src="@{/images/h1.png}"
+                                    <a href="http://www.templatesy.com/demo/423/products3.html"><img th:src="${goods.getGoods().getDetailImgUrl()}"
                                                                                                      alt="img"></a>
                                     <div class="view-caption agileits-w3layouts">
-                                        <h4><a th:href="http://www.templatesy.com/demo/423/products3.html">Wall
-                                            Clock</a></h4>
-                                        <p>Lorem ipsum dolor sit amet consectetur</p>
-                                        <h5>$80</h5>
+                                        <h4><a href="http://www.templatesy.com/demo/423/products3.html" th:text="${goods.getGoods().getGoodsName()}"> </a></h4>
+                                        <h5 th:text="${goods.getGoods().getDiscountPrice()}"> </h5>
                                         <form action="http://www.templatesy.com/demo/423/single.html#"
                                               method="post">
                                             <input type="hidden" name="cmd" value="_cart">
@@ -490,6 +629,8 @@
                 </div>
             </div>
         </div>
+
+
         <div class="row">
             <main id="mainContent" class="main-content">
                 <div class="page-container ptb-60">
@@ -499,31 +640,33 @@
                                 <div class="section store-tabs-area">
                                     <div class="tabs tabs-v1">
                                         <ul class="nav nav-tabs panel" role="tablist">
-                                            <li role="presentation" class="">
-                                                <a th:href="http://www.templatesy.com/demo/617/store_single_01.html#deals"
+                                            <li role="presentation" class="active">
+                                                <a href="http://www.templatesy.com/demo/617/store_single_01.html#deals"
                                                    aria-controls="deals" role="tab" data-toggle="tab"
                                                    aria-expanded="false"><i
                                                         class="fa fa-comment mr-10"></i>宝贝详情</a>
                                             </li>
-                                            <li role="presentation" class="active">
-                                                <a th:href="http://www.templatesy.com/demo/617/store_single_01.html#reviews"
+                                            <li role="presentation" class="">
+<!-- href="http://www.templatesy.com/demo/617/store_single_01.html#reviews"                                               -->
+                                                <a th:href="${goods.getGoods().getUid()}"
                                                    aria-controls="reviews" role="tab" data-toggle="tab"
-                                                   aria-expanded="true"><i
+                                                   aria-expanded="true"
+                                                onclick=""><i
                                                         class="fa fa-user mr-10"></i>评价</a>
                                             </li>
                                         </ul>
                                         <div class="tab-content">
                                             <div role="tabpanel" class="tab-pane ptb-20" id="deals">
                                             </div>
-                                            <div role="tabpanel" class="tab-pane ptb-20 active"
-                                                 id="reviews">
+<!--                                            show Review -->
+                                            <div role="tabpanel" class="tab-pane ptb-20 " id="reviews">
                                                 <div class="posted-review panel p-30">
-                                                    <h3 class="h-title">16 Review</h3>
+<!--                                                    <h3 class="h-title" > Review</h3>-->
                                                     <div class="review-single pt-30">
                                                         <div class="media">
                                                             <div class="media-left">
                                                                 <img class="media-object mr-10 radius-4"
-                                                                     th:src="@{/images/avatar_01.jpg}" width="90" alt="">
+                                                                     th:src="${images/logo.png}" width="90" alt="">
                                                             </div>
                                                             <div class="media-body">
                                                                 <div class="review-wrapper clearfix">
@@ -742,21 +885,21 @@
                                                     <div class="page-pagination text-center mt-30 p-10 panel">
                                                         <nav>
                                                             <ul class="page-pagination">
-                                                                <li><a class="page-numbers previous" th:href="#">Previous</a>
+                                                                <li><a class="page-numbers previous" href="#">Previous</a>
                                                                 </li>
                                                                 <li><span class="page-numbers current">1</span>
                                                                 </li>
-                                                                <li><a th:href="#" class="page-numbers">2</a>
+                                                                <li><a href="#" class="page-numbers">2</a>
                                                                 </li>
-                                                                <li><a th:href="#" class="page-numbers">3</a>
+                                                                <li><a href="#" class="page-numbers">3</a>
                                                                 </li>
-                                                                <li><a th:href="#" class="page-numbers">4</a>
+                                                                <li><a href="#" class="page-numbers">4</a>
                                                                 </li>
                                                                 <li><span class="page-numbers dots">...</span>
                                                                 </li>
-                                                                <li><a th:href="#" class="page-numbers">20</a>
+                                                                <li><a href="#" class="page-numbers">20</a>
                                                                 </li>
-                                                                <li><a th:href="#" class="page-numbers next">Next</a>
+                                                                <li><a href="#" class="page-numbers next">Next</a>
                                                                 </li>
                                                             </ul>
                                                         </nav>
@@ -783,7 +926,7 @@
         <p>Copyright © 2016.Company name All rights reserved.</p>
     </div>
 </div>
-<script th:src="@{/js/minicart.js}"></script>
+
 <script>
     w3ls.render();
 
@@ -810,12 +953,13 @@
                 type="hidden" name="bn" value="sbmincart_AddToCart_WPS_US">
     </form>
 </div>
-<script th:src="@{/js/jquery.menu-aim.js}"> </script>
-<script th:src="@{/js/main.js}"></script>
-<script th:src="@{/js/jquery-1.12.4.min.js}"></script>
-<script th:src="@{/js/bootstrap_review.min.js}"></script>
 
-<a th:href="http://www.templatesy.com/demo/423/single.html#" id="toTop" style="display: none;"><span
+    <script th:src="@{/DetailsGoods/jquery-1.12.4.min.js}"></script>
+<script th:src="@{/DetailsGoods/bootstrap_review.min.js}"></script>
+
+
+
+<a href="http://www.templatesy.com/demo/423/single.html#" id="toTop" style="display: none;"><span
         id="toTopHover"></span>To Top</a>
 </body>
 

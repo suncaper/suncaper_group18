@@ -2,6 +2,7 @@ package org.group18.back.Model;
 
 import org.group18.back.Entity.Goods;
 import org.group18.back.Entity.GoodsReview;
+import org.group18.back.Entity.GoodsSpecification;
 import org.group18.back.Entity.Shop;
 
 import java.util.List;
@@ -11,7 +12,15 @@ public class GoodsDeatilInfoModel {
     private Shop shop;
     private GoodsReview goodsReview;
     private List<Goods> recommendGoods;
+    private List<GoodsSpecification> goodsSpecification;
 
+    public List<GoodsSpecification> getGoodsSpecification() {
+        return goodsSpecification;
+    }
+
+    public void setGoodsSpecification(List<GoodsSpecification> goodsSpecification) {
+        this.goodsSpecification = goodsSpecification;
+    }
 
     public List<Goods> getRecommendGoods() {
         return recommendGoods;

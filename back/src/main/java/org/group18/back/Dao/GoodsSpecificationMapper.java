@@ -1,9 +1,10 @@
 package org.group18.back.Dao;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.group18.back.Entity.GoodsSpecification;
 import org.group18.back.Entity.GoodsSpecificationExample;
+
+import java.util.List;
 
 public interface GoodsSpecificationMapper {
     /**
@@ -51,6 +52,7 @@ public interface GoodsSpecificationMapper {
      * This method corresponds to the database table t_goods_specification
      *
      * @mbg.generated Mon Jun 24 18:23:20 CST 2019
+     * @return
      */
     List<GoodsSpecification> selectByExample(GoodsSpecificationExample example);
 

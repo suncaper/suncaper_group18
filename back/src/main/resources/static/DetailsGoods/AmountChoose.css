@@ -1,0 +1,31 @@
+.sdddq {
+    font-family: "宋体";
+    font-size: 20px;
+    height: 50px;
+    width: 150px;
+
+
+}
+.lhj {
+    font-family: "宋体";
+    font-size: 60px;
+    height: 100px;
+    width: 350px;
+    line-height: 100px;
+    text-align: center;
+    float:left;
+}
+
+.sssd {
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: #999;
+    text-align: center;
+}
+.bgColor{
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#22000000', EndColorStr='#33FFFFFF');
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0.4) 100%, #FFFFFF 100%);
+}
+.bgColor1{
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#22FFFFFF', EndColorStr='#33000000');
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0.4) 100%, #FFFFFF 100%);}

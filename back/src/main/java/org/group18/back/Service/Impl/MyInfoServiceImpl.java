@@ -99,46 +99,60 @@ public class MyInfoServiceImpl implements MyInfoService {
         }
 
         ArrayList<HistroyGoodsModel> histroyGoodsModelList = new ArrayList<HistroyGoodsModel>();
-        HistroyGoodsModel tempHGM = new HistroyGoodsModel();
-        List<Goods> tempLG = new ArrayList<>();
-        int size = userHistory2.size();
-        for(int i = size-1;i>=0;i--)
+
+        if(!(goodsinfo1.isEmpty()&&userHistory2.isEmpty()))
         {
-            Date date1 = userHistory2.get(i).getCreateDate();
-            if(i == size -1)
+            int size = goodsinfo1.size();
+            HistroyGoodsModel tempHGM1 = new HistroyGoodsModel();
+            ArrayList<Goods> tempLG1 = new ArrayList<>();
+
+
+
+            for(int i = size-1;i>=0;i--)
             {
-                tempHGM.setDate(date1);
-                tempLG.add(goodsinfo1.get(i));
-            }
-            else {
-                Date date2 = userHistory2.get(i+1).getCreateDate();
-                if(isSameDate(date1,date2))
+                Date date1 = userHistory2.get(i).getCreateDate();
+                Goods tempG1 = goodsinfo1.get(i);
+                HistroyGoodsModel tempHGM2 = new HistroyGoodsModel();
+                if(i==size-1)
                 {
-                    tempLG.add(goodsinfo1.get(i));
-                    if(i==0)
-                    {
-                        tempHGM.setGoodsList(tempLG);
-                        HistroyGoodsModel tempHGM1 = tempHGM;
-                        histroyGoodsModelList.add(tempHGM1);
-                    }
+                    tempHGM1.setDate(date1);
+                    tempLG1.add(tempG1);
                 }
                 else
                 {
-                    tempHGM.setGoodsList(tempLG);
-                    HistroyGoodsModel tempHGM1 = tempHGM;
-                    histroyGoodsModelList.add(tempHGM1);
-                    tempLG.clear();
-                    tempLG.add(goodsinfo1.get(i));
-                }
-                if(i == 0)
-                {
-                    tempHGM.setGoodsList(tempLG);
-                    HistroyGoodsModel tempHGM1 = tempHGM;
-                    histroyGoodsModelList.add(tempHGM1);
+                    Date date2 = userHistory2.get(i+1).getCreateDate();
+                    if(isSameDate(date1,date2))
+                    {
+                        tempLG1.add(tempG1);
+                        if(i==0)
+                        {
+                            tempHGM1.setGoodsList(tempLG1);
+                            tempHGM2.setDate(tempHGM1.getDate());
+                            tempHGM2.setGoodsList(tempHGM1.getGoodsList());
+                            histroyGoodsModelList.add(tempHGM2);
+                        }
+                    }
+                    else
+                    {
+                        tempHGM1.setGoodsList(tempLG1);
+                        tempHGM2.setDate(tempHGM1.getDate());
+                        tempHGM2.setGoodsList(tempHGM1.getGoodsList());
+                        histroyGoodsModelList.add(tempHGM2);
+
+                        tempHGM1.setDate(date1);
+                        tempLG1.clear();
+                        tempLG1.add(tempG1);
+                        if(i==0)
+                        {
+                            tempHGM1.setGoodsList(tempLG1);
+                            tempHGM2.setDate(tempHGM1.getDate());
+                            tempHGM2.setGoodsList(tempHGM1.getGoodsList());
+                            histroyGoodsModelList.add(tempHGM2);
+                        }
+                    }
                 }
             }
         }
-
         return histroyGoodsModelList;
     }
 
@@ -257,6 +271,18 @@ public class MyInfoServiceImpl implements MyInfoService {
         UserAddressExample addressExample = new UserAddressExample();
         addressExample.createCriteria().andUserUidEqualTo(userUid);
         return useraddressMapper.selectByExample(addressExample);
+    }
+
+    @Override
+    public void deleteUserAddress(Integer addressId) {
+        UserAddressExample userAddressExample = new UserAddressExample();
+        userAddressExample.createCriteria().andIdEqualTo(addressId);
+        useraddressMapper.deleteByExample(userAddressExample);
+    }
+
+    @Override
+    public void editUserAddress(UserAddress userAddress) {
+        useraddressMapper.updateByPrimaryKeySelective(userAddress);
     }
 
 
