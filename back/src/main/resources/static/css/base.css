@@ -3713,6 +3713,16 @@ fieldset[disabled] .btn {
   line-height: 20px;
   border-radius: 3px;
 }
+
+.btn-group-upanddown > .btn,
+.btn-upanddown {
+  height: 30px;
+  padding: 5px 15px;
+  font-size: 50px;
+  line-height: 20px;
+  border-radius: 3px;
+}
+
 .btn.btn-link {
   padding-right: 0;
   padding-left: 0;
