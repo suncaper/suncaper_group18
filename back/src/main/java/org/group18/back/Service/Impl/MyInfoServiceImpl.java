@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.Cookie;
 import java.math.BigDecimal;
 import java.sql.Array;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -36,6 +37,8 @@ public class MyInfoServiceImpl implements MyInfoService {
     GoodsSpecificationMapper goodsSpecificationMapper;
     @Autowired
     UserHistoryMapper userHistoryMapper;
+    @Autowired
+    GoodsReviewMapper goodsReviewMapper;
 
     @Override
     public boolean isSameDate(Date date1, Date date2) {
@@ -57,106 +60,40 @@ public class MyInfoServiceImpl implements MyInfoService {
     }
 
     @Override
-    public  ArrayList<HistroyGoodsModel> getHistoryGoods(String uid) {
+    public  ArrayList<HistroyGoodsModel> getHistoryGoods(String uid){
+        ArrayList<HistroyGoodsModel> result = new ArrayList<>();
         UserHistoryExample userHistoryExample = new UserHistoryExample();
-        UserHistoryExample.Criteria criteria1 = userHistoryExample.createCriteria();
-        criteria1.andUserUidEqualTo(uid);
-        List<UserHistory> userHistory1 = userHistoryMapper.selectByExample(userHistoryExample);//从userhistory表中取出uid为当前用户的记录
-        ArrayList<UserHistory> userHistory2 = new ArrayList<UserHistory>();
-        for(int i=0;i<userHistory1.size();i++) //去掉uid重复的记录,并保留最新的createDate值
-        {
-            if(userHistory2.isEmpty())
-            {
-                userHistory2.add(userHistory1.get(i));
-            }
-            else
-            {
-                boolean addinto=true;
-                for(int j=0;j<userHistory2.size();j++)
-                {
-                    if(userHistory2.get(j).getGoodsUid()==userHistory1.get(i).getGoodsUid())
-                    {
-                        addinto=false;
-                        if(userHistory2.get(j).getCreateDate().before(userHistory1.get(i).getCreateDate()))
-                            userHistory2.get(j).setCreateDate(userHistory1.get(i).getCreateDate());//更新createDate
-                        break;
-                    }
-                }
-                if(addinto==true)
-                {
-                    userHistory2.add(userHistory1.get(i));
-                }
-            }
+        userHistoryExample.setOrderByClause("create_date desc");//降序排列
+        //查询最近30天的用户历史信息
+        Date test =  new Date(System.currentTimeMillis() - 30*24*60*60*1000);
+        userHistoryExample.or().andCreateDateGreaterThan(test).andUserUidEqualTo(uid);
+        List<UserHistory> userHistoryList =  userHistoryMapper.selectByExample(userHistoryExample);
+        //去除重复值（key为goodsUid）
+        HashMap<Integer,UserHistory> cleanUserHistoy = new HashMap<>();
+        for(UserHistory u : userHistoryList){
+            if(!cleanUserHistoy.containsKey(u.getGoodsUid())) cleanUserHistoy.put(u.getGoodsUid(), u);
         }
-
-        ArrayList<Goods> goodsinfo1 = new ArrayList<Goods>();
-        for(int i=0;i<userHistory2.size();i++)
-        {
+        //按天进行分类
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = sdf.format(new Date(System.currentTimeMillis()+1*24*60*60*1000));//初始化日期指针，提前一天，便于后面逻辑进行
+        for(Map.Entry<Integer,UserHistory> entry: cleanUserHistoy.entrySet()){
             GoodsExample goodsExample = new GoodsExample();
-            GoodsExample.Criteria criteria2 = goodsExample.createCriteria();
-            criteria2.andUidEqualTo(userHistory2.get(i).getGoodsUid());
-            goodsinfo1.addAll(goodsMapper.selectByExample(goodsExample));
-        }
-
-        ArrayList<HistroyGoodsModel> histroyGoodsModelList = new ArrayList<HistroyGoodsModel>();
-
-        if(!(goodsinfo1.isEmpty()&&userHistory2.isEmpty()))
-        {
-            int size = goodsinfo1.size();
-            HistroyGoodsModel tempHGM1 = new HistroyGoodsModel();
-            ArrayList<Goods> tempLG1 = new ArrayList<>();
-
-
-
-            for(int i = size-1;i>=0;i--)
-            {
-                Date date1 = userHistory2.get(i).getCreateDate();
-                Goods tempG1 = goodsinfo1.get(i);
-                HistroyGoodsModel tempHGM2 = new HistroyGoodsModel();
-                if(i==size-1)
-                {
-                    tempHGM1.setDate(date1);
-                    tempLG1.add(tempG1);
-                }
-                else
-                {
-                    Date date2 = userHistory2.get(i+1).getCreateDate();
-                    if(isSameDate(date1,date2))
-                    {
-                        tempLG1.add(tempG1);
-                        if(i==0)
-                        {
-                            tempHGM1.setGoodsList(tempLG1);
-                            tempHGM2.setDate(tempHGM1.getDate());
-                            tempHGM2.setGoodsList(tempHGM1.getGoodsList());
-                            histroyGoodsModelList.add(tempHGM2);
-                        }
-                    }
-                    else
-                    {
-                        tempHGM1.setGoodsList(tempLG1);
-                        tempHGM2.setDate(tempHGM1.getDate());
-                        tempHGM2.setGoodsList(tempHGM1.getGoodsList());
-                        histroyGoodsModelList.add(tempHGM2);
-
-                        tempHGM1.setDate(date1);
-                        tempLG1.clear();
-                        tempLG1.add(tempG1);
-                        if(i==0)
-                        {
-                            tempHGM1.setGoodsList(tempLG1);
-                            tempHGM2.setDate(tempHGM1.getDate());
-                            tempHGM2.setGoodsList(tempHGM1.getGoodsList());
-                            histroyGoodsModelList.add(tempHGM2);
-                        }
-                    }
-                }
+            goodsExample.or().andUidEqualTo(entry.getValue().getGoodsUid());
+            if(currentDate.equals(sdf.format(entry.getValue().getCreateDate()))){
+                result.get(result.size()-1).getGoodsList().add(goodsMapper.selectByExample(goodsExample).get(0));
+            }
+            else {
+                currentDate = sdf.format(entry.getValue().getCreateDate());//修改日期指针值
+                HistroyGoodsModel histroyGoodsModel = new HistroyGoodsModel();
+                histroyGoodsModel.setDate(entry.getValue().getCreateDate());
+                List<Goods> goodsList = new ArrayList<>();
+                goodsList.add(goodsMapper.selectByExample(goodsExample).get(0));
+                histroyGoodsModel.setGoodsList(goodsList);
+                result.add(histroyGoodsModel);
             }
         }
-        return histroyGoodsModelList;
+        return result;
     }
-
-    GoodsReviewMapper goodsReviewMapper;
 
     @Override
     public List<UserAddress> myaddress(String uid){

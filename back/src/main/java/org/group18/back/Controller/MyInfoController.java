@@ -142,4 +142,10 @@ public class  MyInfoController {
         return "redirect:/myinfo";
     }
 
+
+    @RequestMapping("/testHistoryAddress")
+    public String testHistoryAddress(@RequestParam("uid") String uid){
+        myInfoService.getHistoryGoods(uid);
+        return null;
+    }
 }
