@@ -239,10 +239,7 @@
                                                     <th></th>
                                                     <th></th>
                                                     <th></th>
-<<<<<<< HEAD
-=======
                                                     <th></th>
->>>>>>> 4448348b43f6e1d5a717d5aeee69933088eed885
                                                 </tr>
                                                 <tr class="panel alert" th:each="cart:${shop.value}">
                                                     <td class="col-sm-6 col-md-6">
@@ -265,12 +262,8 @@
                                                     </td>
                                                     <td class="col-sm-2 col-md-2" th:text="${cart.specification_name}">商品规格</td>
                                                     <td class="col-sm-2 col-md-2 is-hidden-xs-down">
-<<<<<<< HEAD
-                                                        <a class="btn btn-rounded btn-sm"  th:href="@{/decreaseCarts(specification_uid=${cart.specification_uid})}">-</a>
-=======
                                                         <a class="btn btn-rounded btn-sm"  th:if="${cart.amount} == 1" type="button" onclick="alert('已经不能继续减少!')">-</a>
                                                         <a class="btn btn-rounded btn-sm"  th:if="${cart.amount} != 1" th:href="@{/decreaseCarts(specification_uid=${cart.specification_uid})}">-</a>
->>>>>>> 4448348b43f6e1d5a717d5aeee69933088eed885
                                                         <span style="font-size: 20px;" th:text="'x'+${cart.amount}">数量</span>
                                                         <a class="btn btn-rounded btn-sm" th:href="@{/increaseCarts(specification_uid=${cart.specification_uid})}">+</a>
                                                     </td>
@@ -281,14 +274,10 @@
                                                         <span style="font-size:20px;" th:text="'@'+${cart.points}*${cart.amount} + '（积分）'">单件商品总价</span>
                                                     </td>
                                                     <td>
-<<<<<<< HEAD
-                                                        <a class="btn btn-rounded btn-sm" style="border: 0px;border-radius: 3px; background-color:indianred; color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/deleteCarts(specification_uid=${cart.specification_uid})}">x</a>
-=======
                                                         <a class="btn btn-rounded btn-sm" th:href="@{/checkout_single(specification_uid=${cart.specification_uid})}">下单</a>
                                                     </td>
                                                     <td>
                                                         <a class="btn btn-rounded btn-sm" style="border: 0px;border-radius: 3px; background-color: rgb(255,102,102); color: rgb(255,255,255);width: 30px; height: 30px;" th:href="@{/deleteCarts(specification_uid=${cart.specification_uid})}">x</a>
->>>>>>> 4448348b43f6e1d5a717d5aeee69933088eed885
                                                     </td>
                                                 </tr>
                                             </table>
