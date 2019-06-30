@@ -262,7 +262,7 @@
                         <div th:each="list1:${list}">
                             <header th:if="!${list1.getGoodsList().isEmpty()}" class="panel ptb-15 prl-20 pos-r mb-30">
                                 <h3 class="section-title font-18" th:text="${list1.getShop().getShopName()}"></h3>
-                                <a class="btn btn-o btn-xs pos-a right-10 pos-tb-center" href="#">进入店铺</a>
+                                <a class="btn btn-o btn-xs pos-a right-10 pos-tb-center" th:href="'store/getStoreList?page='+${list1.getShop().getUid()}">进入店铺</a>
                             </header>
                             <div class="row row-masnory row-tb-20">
                                 <div th:each="list2:${list1.getGoodsList()}" class="col-sm-6 col-lg-4">
