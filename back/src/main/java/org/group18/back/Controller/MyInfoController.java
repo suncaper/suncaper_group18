@@ -99,7 +99,6 @@ public class  MyInfoController {
         } else {
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
-
             //1从页面拿到查看天数days,然后拉取user_history表找对应uid且date.now-create_date<days的数据
             //2用得到的goods_uid去goods表中拉取数据。
             List<HistroyGoodsModel> historygoodslist = myInfoService.getHistoryGoods(user.getUid());
@@ -140,12 +139,5 @@ public class  MyInfoController {
     public String editUserAddress(UserAddress userAddress){
         myInfoService.editUserAddress(userAddress);
         return "redirect:/myinfo";
-    }
-
-
-    @RequestMapping("/testHistoryAddress")
-    public String testHistoryAddress(@RequestParam("uid") String uid){
-        myInfoService.getHistoryGoods(uid);
-        return null;
     }
 }

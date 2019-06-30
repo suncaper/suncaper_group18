@@ -21,9 +21,6 @@ public interface MyInfoService {
     ArrayList<HistroyGoodsModel> getHistoryGoods(String uid);
     boolean isSameDate(Date date1, Date date2);
     Boolean edit(UserAddress userAddress);
-//    User judgeUserLoginStatus(String ticket);
-//    User checkTicket(Cookie[] cookies);
-
     List<OrderPageModel> getOrderPageInfo(String userUid, int pageSize, int page);
     Long getUserOrderCount(String userUid);
     void deleteUserOrder(Integer orderId);

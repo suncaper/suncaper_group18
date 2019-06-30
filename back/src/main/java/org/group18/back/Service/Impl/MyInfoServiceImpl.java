@@ -16,6 +16,8 @@ import javax.servlet.http.Cookie;
 import java.math.BigDecimal;
 import java.sql.Array;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -64,33 +66,38 @@ public class MyInfoServiceImpl implements MyInfoService {
         ArrayList<HistroyGoodsModel> result = new ArrayList<>();
         UserHistoryExample userHistoryExample = new UserHistoryExample();
         userHistoryExample.setOrderByClause("create_date desc");//降序排列
-        //查询最近30天的用户历史信息
-        Date test =  new Date(System.currentTimeMillis() - 30*24*60*60*1000);
-        userHistoryExample.or().andCreateDateGreaterThan(test).andUserUidEqualTo(uid);
+        //查询最近10天的用户历史信息
+        userHistoryExample.or().andCreateDateGreaterThan(new Date(System.currentTimeMillis() - 10*24*60*60*1000)).andUserUidEqualTo(uid);
         List<UserHistory> userHistoryList =  userHistoryMapper.selectByExample(userHistoryExample);
         //去除重复值（key为goodsUid）
         HashMap<Integer,UserHistory> cleanUserHistoy = new HashMap<>();
-        for(UserHistory u : userHistoryList){
-            if(!cleanUserHistoy.containsKey(u.getGoodsUid())) cleanUserHistoy.put(u.getGoodsUid(), u);
-        }
         //按天进行分类
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String currentDate = sdf.format(new Date(System.currentTimeMillis()+1*24*60*60*1000));//初始化日期指针，提前一天，便于后面逻辑进行
-        for(Map.Entry<Integer,UserHistory> entry: cleanUserHistoy.entrySet()){
-            GoodsExample goodsExample = new GoodsExample();
-            goodsExample.or().andUidEqualTo(entry.getValue().getGoodsUid());
-            if(currentDate.equals(sdf.format(entry.getValue().getCreateDate()))){
-                result.get(result.size()-1).getGoodsList().add(goodsMapper.selectByExample(goodsExample).get(0));
+        HashMap<LocalDate, List<Goods>> tempResult = new HashMap<>();
+        for(UserHistory u : userHistoryList){
+            if(!cleanUserHistoy.containsKey(u.getGoodsUid())) {
+                LocalDate keyDate = u.getCreateDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                GoodsExample goodsExample = new GoodsExample();
+                goodsExample.or().andUidEqualTo(u.getGoodsUid());
+                Goods goods = goodsMapper.selectByExample(goodsExample).get(0);
+                if(!tempResult.containsKey(keyDate)){
+                    List<Goods> t = new ArrayList<>();
+                    t.add(goods);
+                    tempResult.put(u.getCreateDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), t);
+                }
+                else {
+                    tempResult.get(keyDate).add(goods);
+                }
+                cleanUserHistoy.put(u.getGoodsUid(), u);
             }
-            else {
-                currentDate = sdf.format(entry.getValue().getCreateDate());//修改日期指针值
-                HistroyGoodsModel histroyGoodsModel = new HistroyGoodsModel();
-                histroyGoodsModel.setDate(entry.getValue().getCreateDate());
-                List<Goods> goodsList = new ArrayList<>();
-                goodsList.add(goodsMapper.selectByExample(goodsExample).get(0));
-                histroyGoodsModel.setGoodsList(goodsList);
-                result.add(histroyGoodsModel);
-            }
+        }
+        //对天进行排序
+        List<HashMap.Entry<LocalDate, List<Goods>>> sort = new ArrayList<>(tempResult.entrySet());
+        Collections.sort(sort, Comparator.comparing(o -> o.getKey().toString()));
+        for(int i = sort.size()-1; i >=0; i--){
+            HistroyGoodsModel histroyGoodsModel = new HistroyGoodsModel();
+            histroyGoodsModel.setDate(Date.from(sort.get(i).getKey().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            histroyGoodsModel.setGoodsList(sort.get(i).getValue());
+            result.add(histroyGoodsModel);
         }
         return result;
     }

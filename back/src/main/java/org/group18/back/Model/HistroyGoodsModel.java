@@ -3,6 +3,7 @@ package org.group18.back.Model;
 import org.group18.back.Entity.Goods;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
