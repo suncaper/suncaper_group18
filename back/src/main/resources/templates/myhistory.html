@@ -244,7 +244,7 @@
                                     <a th:href="myhistory">我的足迹</a>
                                 </li>
                                 <li>
-                                    <a href="#">积分商城</a>
+                                    <a th:href="@{/points}">积分商城</a>
                                 </li>
                             </ul>
                         </div>
@@ -262,7 +262,7 @@
             <div class="page-container ptb-60">
                 <div class="container">
                     <section class="stores-area stores-area-v1">
-                        <h3 class="mb-40 t-uppercase">浏览历史</h3>
+                        <h3 class="h-title mb-40 t-uppercase">我的历史</h3>
                         <li th:if="${isEmpty}"><h3>您还没有浏览过商品！</h3></li>
                         <div th:if="${!isEmpty}" class="row row-rl-15 row-tb-15 t-center">
                             <div th:each="each1,each1Stat:${list}">
@@ -278,6 +278,7 @@
                                         <h5 class="price-sale"th:text="${each2.getDiscountPrice()}"></h5>
                                         <h5 class="price color-green"th:text="${each2.getPrice()}"></h5>
                                     </a>
+                                    <br>
                                 </div>
                             </div>
                         </div>
