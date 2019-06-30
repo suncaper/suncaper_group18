@@ -9,9 +9,11 @@ package org.group18.back.Controller;
         import org.group18.back.Entity.Goods;
         import org.group18.back.Model.HistroyGoodsModel;
         import org.group18.back.Model.OrderPageModel;
+        import org.group18.back.Model.PointsShopModel;
         import org.group18.back.Service.Impl.MyInfoServiceImpl;
         import org.group18.back.Service.LoginRegisterService;
         import org.group18.back.Service.MyInfoService;
+        import org.group18.back.Service.PointsService;
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.stereotype.Controller;
         import org.springframework.ui.Model;
@@ -24,10 +26,14 @@ package org.group18.back.Controller;
         import javax.servlet.http.HttpServletResponse;
         import javax.swing.text.EditorKit;
         import java.util.*;
+        import java.util.List;
 @Controller
 public class PointsController {
     @Autowired
     LoginRegisterService loginRegisterService;
+    @Autowired
+    PointsService pointsService;
+
     @RequestMapping("/points")
     public String myinfo(Model model, HttpServletRequest request) {
         //检查是否已经登陆
@@ -40,6 +46,9 @@ public class PointsController {
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
 
+
+            List<PointsShopModel> result = pointsService.getShopGoods();
+            model.addAttribute("list",result);
             return "points";
         }
     }
