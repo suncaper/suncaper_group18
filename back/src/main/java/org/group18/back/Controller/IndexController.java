@@ -42,6 +42,7 @@ public class IndexController {
     public String index(Model model, HttpServletRequest request){
         Integer goods_uid = 1;
         Integer category_uid = 1;
+        Integer shopUid = 1;
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if(user == null) {
@@ -64,6 +65,10 @@ public class IndexController {
 
         List<Category> categoryList = categoryService.getCategorys(category_uid);
         model.addAttribute("CategoryList",categoryList);
+
+        List<Goods> indexGoods = goodsService.getIndexGoods();
+        model.addAttribute("indexGoods",indexGoods);
+
         return "index";
     }
 

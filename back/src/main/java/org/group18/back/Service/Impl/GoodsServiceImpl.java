@@ -68,6 +68,7 @@ public class GoodsServiceImpl implements GoodsService {
         CategoryExample categoryExample = new CategoryExample();
         categoryExample.createCriteria().andUidEqualTo(goods.getCategoryUid());
         Category category = categoryMapper.selectByExample(categoryExample).get(0);
+
         GoodsExample goodsExample2 = new GoodsExample();
         goodsExample2.createCriteria().andCategoryUidEqualTo(category.getUid()).andSellerUidEqualTo(goods.getSellerUid());
         goodsExample2.setOrderByClause("sales_volume desc");
@@ -80,7 +81,7 @@ public class GoodsServiceImpl implements GoodsService {
 
         return goodsDeatilInfoModel;
     }
-
+@Override
     public void addCart(Cart cart, String user_uid, Integer goods_uid, Integer specification_uid, Integer counts){
         if (cart == null){    //购物车中没有此规格的商品
             Cart cart1 = new Cart();
@@ -99,10 +100,24 @@ public class GoodsServiceImpl implements GoodsService {
         }
     }
 
+    @Override
+    public List<Goods> getIndexGoods() {
+        Shop shop = new Shop();
+        Goods goods = new Goods();
+        List<Shop> ShopResult = shopMapper.selectAllShop();
+        for (int i=1;i<shopMapper.getAllShopCount();i++)
+        {
+            shop.setUid(ShopResult.get(i).getUid());
+            goods.setUid(ShopResult.get(i).getUid());
+        }
 
+        GoodsExample goodsExample = new GoodsExample();
+        goodsExample.createCriteria().andUidEqualTo(shop.getUid()).andUidEqualTo(goods.getUid());
+        goodsExample.setOrderByClause("sales_volume desc");
 
-
-
+        List<Goods> result = goodsMapper.selectByExample(goodsExample);
+        return result;
+    }
 
 
     public User judgeUserLoginStatus(String ticket) {

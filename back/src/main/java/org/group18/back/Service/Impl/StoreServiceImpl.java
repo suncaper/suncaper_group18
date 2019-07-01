@@ -67,4 +67,8 @@ public class StoreServiceImpl implements StoreService {
     public Integer getAllShopCount() {
         return shopMapper.getAllShopCount();
     }
+
+    public List<Shop> selectAllShop(){
+        return  shopMapper.selectAllShop();
+    }
 }
