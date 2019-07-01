@@ -34,15 +34,10 @@ public class GoodsServiceImpl implements GoodsService {
     @Autowired
     GoodsSpecificationMapper goodsSpecificationMapper;
 
-    @Override
-    public Goods getGood(int goods_uid){
-        GoodsExample goodsExample = new GoodsExample();
-        GoodsExample.Criteria criteria = goodsExample.createCriteria();
-        criteria.andUidEqualTo(goods_uid);
-        List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
-        Goods goods = goodsList.get(0);
-        return goods;
-    }
+    @Autowired
+    CartMapper cartMapper;
+
+
 
     @Override
     public GoodsDeatilInfoModel getGoods(int goods_uid) {
@@ -84,6 +79,24 @@ public class GoodsServiceImpl implements GoodsService {
 
 
         return goodsDeatilInfoModel;
+    }
+
+    public void addCart(Cart cart, String user_uid, Integer goods_uid, Integer specification_uid, Integer counts){
+        if (cart == null){    //购物车中没有此规格的商品
+            Cart cart1 = new Cart();
+            cart1.setUserUid(user_uid);
+            cart1.setGoodsUid(goods_uid);
+            cart1.setSpecificationUid(specification_uid);
+            cart1.setCreateDate(new Date(System.currentTimeMillis()));
+            cart1.setAmount(counts);
+            cartMapper.insert(cart);
+        }else{
+            cart.setAmount(cart.getAmount() + counts);
+            Cart cart1 = new Cart();
+            cart1.setId(cart.getId());
+            cart1.setAmount(cart.getAmount());
+            cartMapper.updateByPrimaryKey(cart1);
+        }
     }
 
 

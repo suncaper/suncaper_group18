@@ -215,9 +215,6 @@
 
 <body>
 
-<div class="container">
-    <div class="clearfix">
-    </div>
     <header id="mainHeader" class="main-header">
         <div class="top-bar bg-gray">
             <div class="container">
@@ -234,13 +231,13 @@
                         <ul class="nav-top nav-top-right list-inline t-xs-center t-md-right">
                             <li>
                                 <a href="http://www.templatesy.com/demo/617/#">
-                                    <i class="fa fa-flag-usa"></i>简体中文
+                                    <i class="fa fa-flag-usa"></i>English
                                     <i class="fa fa-caret-down"></i>
                                 </a>
                                 <ul>
                                     <li>
                                         <a href="http://www.templatesy.com/demo/617/#">
-                                            <i class="fa fa-flag-usa"></i>English</a>
+                                            <i class="fa fa-flag-usa"></i>简体中文</a>
                                     </li>
                                 </ul>
                             </li>
@@ -258,18 +255,20 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li>
-                                <a href="http://www.templatesy.com/demo/617/signin.html">
-                                    <i class="fa fa-lock"></i>登录</a>
+                            <li th:if="${!isSignin}"><a th:href="@{/signin_page}"><i class="fa fa-lock"></i>Sign In</a></li>
+                            <li th:if="${!isSignin}"><a th:href="@{/signup_page}"><i class="fa fa-user"></i>Sign Up</a></li>
+                            <li th:if="${!isSignin}"><a th:href="@{/Cart}"><i class="fa fa-opencart"></i> 购物车 </a> </li>
+                            <li th:if="${isSignin}">
+                                <a href="#"><i class="fa fa-user"></i>你好,<span th:text="${user.getUserName()}"></span></a>
+                                <ul>
+                                    <li><a th:href="@{/myinfo}">我的信息</a></li>
+                                    <li><a th:href="@{/Cart}">我的购物车</a></li>
+                                    <li th:if="${!user.getIsSeller()}"><a href="#">申请店铺</a></li>
+                                    <li th:if="${user.getIsSeller()}"><a href="#">我的店铺</a></li>
+                                    <li><a th:href="@{/signout}">退出登陆</a></li>
+                                </ul>
                             </li>
-                            <li>
-                                <a href="http://www.templatesy.com/demo/617/signup.html">
-                                    <i class="fa fa-user"></i>注册</a>
-                            </li>
-                            <li>
-                                <a href="http://www.templatesy.com/demo/617/cart.html">
-                                    <i class="fa fa-cart-arrow-down"></i>购物车</a>
-                            </li>
+
                         </ul>
                     </div>
                 </div>
@@ -279,9 +278,6 @@
     <div class="jay">
         <a th:href="@{/index}"> 首页</a>》<a th:text="${goods.getGoods().getCategoryUid()}"></a>
     </div>
-</div>
-
-
 
 <div class="products">
     <div class="container">
@@ -389,7 +385,11 @@
 
 
                     <font>数量</font>
-                   <input class="sdddq" id="inp"  > </input>
+                   <input class="sdddq" id="inp"> </input>
+            <script>
+                document
+            </script>
+
 
 
 <br>
