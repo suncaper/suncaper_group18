@@ -1,976 +1,728 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)http://www.templatesy.com/demo/423/single.html# -->
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--[if lt IE 9 ]> <html lang="en" dir="ltr" class="no-js ie-old"> <![endif]-->
+<!--[if IE 9 ]> <html lang="en" dir="ltr" class="no-js ie9"> <![endif]-->
+<!--[if IE 10 ]> <html lang="en" dir="ltr" class="no-js ie10"> <![endif]-->
+<!--[if (gt IE 10)|!(IE)]><!-->
+<html lang="en" dir="ltr" class="no-js" xmlns:th="http://www.thymeleaf.org">
+<!--<![endif]-->
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>商品</title>
+
+    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
+    <!-- META TAGS                                 -->
+    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <!-- Always force latest IE rendering engine -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Mobile specific meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <meta name="description"
-          content="FRIDAY is a responsive multipurpose-ecommerce site template allows you to store coupons and promo codes from different brands and create store for deals, discounts, It can be used as coupon website such as groupon.com and also as online store">
+    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
+    <!-- PAGE TITLE                                -->
+    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
+    <title>FRIDAY | Coupons, Deals, Discounts and Promo codes Template</title>
 
-    <link rel="apple-touch-icon" href="http://www.templatesy.com/demo/617/assets/images/favicon/apple-touch-icon.png">
-    <link rel="icon" href="http://www.templatesy.com/demo/617/assets/images/favicon/favicon.ico">
+    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
+    <!-- SEO METAS                                 -->
+    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="description" content="FRIDAY is a responsive multipurpose-ecommerce site template allows you to store coupons and promo codes from different brands and create store for deals, discounts, It can be used as coupon website such as groupon.com and also as online store">
+    <meta name="	black friday, coupon, coupon codes, coupon theme, coupons, deal news, deals, discounts, ecommerce, friday deals, groupon, promo codes, responsive, shop, store coupons">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="CODASTROID">
 
-    <link th:href="@{/DetailsGoods/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/DetailsGoods/font-awesome.min.css}" rel="stylesheet">
-    <link th:href="@{/DetailsGoods/linearicons.css}" rel="stylesheet">
-    <link th:href="@{/DetailsGoods/owl.carousel.min.css}" rel="stylesheet">
-    <link th:href="@{/DetailsGoods/owl.theme.min.css}" rel="stylesheet">
-    <link th:href="@{/DetailsGoods/base.css}" rel="stylesheet">
+    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
+    <!-- PAGE FAVICON                              -->
+    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="apple-touch-icon" th:href="@{/images/favicon/apple-touch-icon.png}">
+    <link rel="icon" th:href="@{/images/favicon/favicon.ico}">
 
-    <link th:href="@{/DetailsGoods/SizeChoose.css}" rel="stylesheet">
-    <link th:href="@{/DetailsGoods/AmountChoose.css}" rel="stylesheet">
-    <link th:href="@{/DetailsGoods/MainPic.css}" rel="stylesheet">
+    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
+    <!-- GOOGLE FONTS                              -->
+    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 
-    <link rel="stylesheet" th:href="@{/DetailsGoods/bootstrap_review.min.css}">
-    <link rel="stylesheet" th:href="@{/DetailsGoods/shortcodes.css}">
-    <link rel="stylesheet" th:href="@{/DetailsGoods/style_review.css}">
+    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
+    <!-- Include CSS Filess                        -->
+    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
 
-    <link th:href="@{/DetailsGoods/style_index.css}" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/DetailsGoods/flexslider.css}" type="text/css" media="screen">
+    <!-- Bootstrap -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 
-    <meta name="keywords" content="">
-    <link th:href="@{/DetailsGoods/bootstrap.css}" rel="stylesheet" type="text/css" media="all">
-    <link th:href="@{/DetailsGoods/style.css}" rel="stylesheet" type="text/css" media="all">
-    <link th:href="@{/DetailsGoods/animate.min.css}" rel="stylesheet" type="text/css" media="all">
-    <link th:href="@{/DetailsGoods/menu.css}" rel="stylesheet" type="text/css" media="all">
-    <link th:href="@{/DetailsGoods/owl.carousel.css}" rel="stylesheet" type="text/css" media="all">
-    <link th:href="@{/DetailsGoods/font-awesome.css}" rel="stylesheet">
-    <script th:src="@{/DetailsGoods/jquery.min.js}"></script>
+    <!-- Font Awesome -->
+    <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
 
-    <script th:src="@{/DetailsGoods/Amount1.js}"></script>
-    <script th:src="@{/DetailsGoods/Amount2.js}"></script>
-    <script th:src="@{/DetailsGoods/MainPic.js}"></script>
+    <!-- Linearicons -->
+    <link th:href="@{/vendors/linearicons/css/linearicons.css}" rel="stylesheet">
 
-    <link rel="stylesheet" th:href="@{/DetailsGoods/flexslider.css}" type="text/css" media="screen">
-    <script>
-        // Can also be used with $(document).ready()
-        $(window).load(function () {
-            $('.flexslider').flexslider({
-                animation: "slide",
-                controlNav: "thumbnails"
-            });
-        });
-    </script>
-    <link href="http://fonts.useso.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic"
-          rel="stylesheet" type="text/css">
-    <link href="http://fonts.useso.com/css?family=Lovers+Quarrel" rel="stylesheet" type="text/css">
-    <link href="http://fonts.useso.com/css?family=Offside" rel="stylesheet" type="text/css">
-    <link href="http://fonts.useso.com/css?family=Tangerine:400,700" rel="stylesheet" type="text/css">
-    <script>
-        $(document).ready(function () {
+    <!-- Owl Carousel -->
+    <link th:href="@{/vendors/owl-carousel/owl.carousel.min.css}" rel="stylesheet">
+    <link th:href="@{/vendors/owl-carousel/owl.theme.min.css}" rel="stylesheet">
 
-            // Dock the header to the top of the window when scrolled past the banner. This is the default behaviour.
+    <!-- Flex Slider -->
+    <link th:href="@{/vendors/flexslider/flexslider.css}" rel="stylesheet">
 
-            $('.header-two').scrollToFixed();
-            // previous summary up the page.
+    <!-- Template Stylesheet -->
+    <link th:href="@{/css/base.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 
-            var summaries = $('.summary');
-            summaries.each(function (i) {
-                var summary = $(summaries[i]);
-                var next = summaries[i + 1];
+    <link rel="stylesheet" th:href="@{/css/icon-fonts.css}"/>
+    <link rel="stylesheet" th:href="@{/css/shop.css}" type="text/css" media="all" />
+    <link rel="stylesheet" th:href="@{/css/demo-style.css}" type="text/css" media="all" />
+    <script th:src="@{/js/modernizr-3.2.0.base.js}"></script>
 
-                summary.scrollToFixed({
-                    marginTop: $('.header-two').outerHeight(true) + 10,
-                    zIndex: 999
-                });
-            });
-        });
-    </script>
-
-    <script type="text/javascript">
-        jQuery(document).ready(function ($) {
-            $(".scroll").click(function (event) {
-                event.preventDefault();
-                $('html,body').animate({
-                    scrollTop: $(this.hash).offset().top
-                }, 1000);
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            var defaults = {
-                containerID: 'toTop', // fading element id
-                containerHoverID: 'toTopHover', // fading element hover id
-                scrollSpeed: 1200,
-                easingType: 'linear'
-            };
-
-            $().UItoTop({
-                easingType: 'easeOutQuart'
-            });
-
-        });
-    </script>
-    <style>
-        @-webkit-keyframes marqueeAnimation-836580 {
-            100% {
-                margin-left: -1410px
-            }
-        }
-    </style>
-
-    <script type="text/javascript">
-        $(function(){
-            var $banner=$('.banner');
-            var $banner_ul=$('.banner-img');
-            var $btn=$('.banner-btn');
-            var $btn_a=$btn.find('a')
-            var v_width=$banner.width();
-
-            var page=1;
-
-            var timer=null;
-            var btnClass=null;
-
-            var page_count=$banner_ul.find('li').length;//把这个值赋给小圆点的个数
-
-            var banner_cir="<li class='selected' href='#'><a></a></li>";
-            for(var i=1;i<page_count;i++){
-                //动态添加小圆点
-                banner_cir+="<li><a href='#'></a></li>";
-            }
-            $('.banner-circle').append(banner_cir);
-
-            var cirLeft=$('.banner-circle').width()*(-0.5);
-            $('.banner-circle').css({'marginLeft':cirLeft});
-
-            $banner_ul.width(page_count*v_width);
-
-            function move(obj,classname){
-                //手动及自动播放
-                if(!$banner_ul.is(':animated')){
-                    if(classname=='prevBtn'){
-                        if(page==1){
-                            $banner_ul.animate({left:-v_width*(page_count-1)});
-                            page=page_count;
-                            cirMove();
-                        }
-                        else{
-                            $banner_ul.animate({left:'+='+v_width},"slow");
-                            page--;
-                            cirMove();
-                        }
-                    }
-                    else{
-                        if(page==page_count){
-                            $banner_ul.animate({left:0});
-                            page=1;
-                            cirMove();
-                        }
-                        else{
-                            $banner_ul.animate({left:'-='+v_width},"slow");
-                            page++;
-                            cirMove();
-                        }
-                    }
-                }
-            }
-
-            function cirMove(){
-                //检测page的值，使当前的page与selected的小圆点一致
-                $('.banner-circle li').eq(page-1).addClass('selected')
-                    .siblings().removeClass('selected');
-            }
-
-            $banner.mouseover(function(){
-                $btn.css({'display':'block'});
-                clearInterval(timer);
-            }).mouseout(function(){
-                $btn.css({'display':'none'});
-                clearInterval(timer);
-                timer=setInterval(move,3000);
-            }).trigger("mouseout");//激活自动播放
-
-            $btn_a.mouseover(function(){
-                //实现透明渐变，阻止冒泡
-                $(this).animate({opacity:0.6},'fast');
-                $btn.css({'display':'block'});
-                return false;
-            }).mouseleave(function(){
-                $(this).animate({opacity:0.3},'fast');
-                $btn.css({'display':'none'});
-                return false;
-            }).click(function(){
-                //手动点击清除计时器
-                btnClass=this.className;
-                clearInterval(timer);
-                timer=setInterval(move,3000);
-                move($(this),this.className);
-            });
-
-            $('.banner-circle li').live('click',function(){
-                var index=$('.banner-circle li').index(this);
-                $banner_ul.animate({left:-v_width*index},'slow');
-                page=index+1;
-                cirMove();
-            });
-        });
-    </script>
 </head>
 
-<body>
+<body id="body" class="wide-layout preloader-active site_full preloader3 menu_no_transparent classic_menu horizontal_menu light_header dark_sup_menu shopping-commerce shopping-commerce-page">
 
+
+
+
+<!--[if lt IE 9]>
+<p class="browserupgrade alert-error">
+    You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
+</p>
+<![endif]-->
+
+<noscript>
+    <div class="noscript alert-error">
+        For full functionality of this site it is necessary to enable JavaScript. Here are the <a href="http://www.enable-javascript.com/" target="_blank">
+        instructions how to enable JavaScript in your web browser</a>.
+    </div>
+</noscript>
+
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<!-- PRELOADER                                 -->
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<!-- Preloader -->
+<div id="preloader" class="preloader">
+    <div class="loader-cube">
+        <div class="loader-cube__item1 loader-cube__item"></div>
+        <div class="loader-cube__item2 loader-cube__item"></div>
+        <div class="loader-cube__item4 loader-cube__item"></div>
+        <div class="loader-cube__item3 loader-cube__item"></div>
+    </div>
+</div>
+<!-- End Preloader -->
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<!-- WRAPPER                                   -->
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<div id="pageWrapper" class="page-wrapper">
+    <!-- –––––––––––––––[ HEADER ]––––––––––––––– -->
     <header id="mainHeader" class="main-header">
+
+        <!-- Top Bar -->
         <div class="top-bar bg-gray">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 col-md-4 is-hidden-sm-down">
                         <ul class="nav-top nav-top-left list-inline t-left">
-                            <li>
-                                <a href="http://www.templatesy.com/demo/617/faq.html">
-                                    <i class="fa fa-support"></i>服务帮助</a>
+                            <li><a href="terms_conditions.html"><i class="fa fa-question-circle"></i>Discounts Guide</a>
+                            </li>
+                            <li><a href="faq.html"><i class="fa fa-support"></i>Customer Assistance</a>
                             </li>
                         </ul>
                     </div>
                     <div class="col-sm-12 col-md-8">
-                        <ul class="nav-top nav-top-right list-inline t-xs-center t-md-right">
-                            <li>
-                                <a href="http://www.templatesy.com/demo/617/#">
-                                    <i class="fa fa-flag-usa"></i>English
-                                    <i class="fa fa-caret-down"></i>
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a href="http://www.templatesy.com/demo/617/#">
-                                            <i class="fa fa-flag-usa"></i>简体中文</a>
-                                    </li>
-                                </ul>
+                        <ul class="nav-top nav-top-right list-inline  t-xs-center t-md-right ">
+                            <li th:if="${!isSignin}"><a th:href="@{/signin_page}"><i class="fa fa-lock"></i>登陆</a></li>
+                            <li th:if="${!isSignin}"><a th:href="@{/signup_page}"><i class="fa fa-user"></i>注册</a></li>
+                            <li th:if="${!user.getIsSeller()}">
+                                <a href="#"><i class="fa fa-usd"></i>申请店铺</a>
                             </li>
-                            <li>
-                                <a href="http://www.templatesy.com/demo/617/#">
-                                    <i class="fa fa-usd"></i>USD - US Dollar
-                                    <i class="fa fa-caret-down"></i>
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a href="http://www.templatesy.com/demo/617/#">CNY - Chinese Yuan</a>
-                                    </li>
-                                    <li>
-                                        <a href="http://www.templatesy.com/demo/617/#">EUR - Euro</a>
-                                    </li>
-                                </ul>
-                            </li>
-<<<<<<< HEAD
-                            <li th:if="${!isSignin}"><a th:href="@{/signin_page}"><i class="fa fa-lock"></i>Sign In</a></li>
-                            <li th:if="${!isSignin}"><a th:href="@{/signup_page}"><i class="fa fa-user"></i>Sign Up</a></li>
-                            <li th:if="${!isSignin}"><a th:href="@{/Cart}"><i class="fa fa-opencart"></i> 购物车 </a> </li>
                             <li th:if="${isSignin}">
-                                <a href="#"><i class="fa fa-user"></i>你好,<span th:text="${user.getUserName()}"></span></a>
-                                <ul>
-                                    <li><a th:href="@{/myinfo}">我的信息</a></li>
-                                    <li><a th:href="@{/Cart}">我的购物车</a></li>
-                                    <li th:if="${!user.getIsSeller()}"><a href="#">申请店铺</a></li>
-                                    <li th:if="${user.getIsSeller()}"><a href="#">我的店铺</a></li>
-                                    <li><a th:href="@{/signout}">退出登陆</a></li>
-                                </ul>
-=======
-                            <li>
-                                <a href="http://www.templatesy.com/demo/617/signin.html">
-                                    <i class="fa fa-lock"></i>登录</a>
+                                <span th:text="'你好，'+${user.getUserName()}"></span>
                             </li>
-                            <li>
-                                <a href="http://www.templatesy.com/demo/617/signup.html">
-                                    <i class="fa fa-user"></i>注册</a>
+                            <li th:if="${user.getIsSeller()} and ${isSignin}">
+                                <a href="#"><i class="fa fa-usd"></i>我的店铺</a>
                             </li>
-
-
+                            <li th:if="${isSignin}">
+                                <a th:href="@{/myinfo}"><i class="fa fa-user"></i>我的信息</a>
+                            </li>
+                            <li><a th:if="${isSignin}" th:href="@{/signout}">退出登陆</a></li>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-    </header>
-    <div class="jay">
-        <a th:href="@{/index}"> 首页</a>》<a th:text="${goods.getGoods().getCategoryUid()}"></a>
-    </div>
+        <!-- End Top Bar -->
 
-<div class="products">
-    <div class="container">
-        <div class="single-page">
-            <div class="single-page-row" id="detail-21">
-                <div class="col-md-6 single-top-left">
-                    <div class="flexslider">
+        <!-- Header Header -->
+        <div class="header-header bg-white">
 
-                        <div class="banner">
-                            <div class="banner-btn">
-                                <a href="javascript:;" class="prevBtn"><i></i></a>
-                                <a href="javascript:;" class="nextBtn"><i></i></a>
-                            </div>
-                            <ul class="banner-img">
-                                <li><a href="#"><img th:src="${goods.getGoods().getImgUrl()}"></a></li>
-                                <li><a href="#"><img th:src="${goods.getGoods().getImgUrl()}"></a></li>
-                                <li><a href="#"><img th:src="${goods.getGoods().getImgUrl()}"></a></li>
-                            </ul>
-                            <ul class="banner-circle"></ul>
-                        </div>
-
-<!--                        <div class="flex-viewport" style="overflow: hidden; position: relative;">-->
-<!--                            <ul class="slides"-->
-<!--                                style="width: 1000%; transition-duration: 0s; transform: translate3d(-358px, 0px, 0px);">-->
-<!--                                <li th:attr="data-thumb=${goods.getGoods().getImgUrl()}" class="clone" aria-hidden="true"-->
-<!--                                    style="width: 358px; float: left; display: block;">-->
-<!--                                    <div class="thumb-image"> <img th:src="${goods.getGoods().getImgUrl()}" data-imagezoom="true"-->
-<!--                                                                   class="img-responsive" alt="" draggable="false"> </div>-->
-<!--                                </li>-->
-<!--                                <li th:attr="data-thumb=${goods.getGoods().getImgUrl()}" class="flex-active-slide"&ndash;&gt;-->
-<!--                                    style="width: 358px; float: left; display: block;">&ndash;&gt;-->
-<!--                                    <div class="thumb-image detail_images"> <img th:src="${goods.getGoods().getImgUrl()}"-->
-<!--                                                                                 data-imagezoom="true" class="img-responsive" alt="" draggable="false">-->
-<!--                                    </div>-->
-<!--                                </li>-->
-<!--                                <li th:attr="data-thumb=${goods.getGoods().getImgUrl()}" style="width: 358px; float: left; display: block;">-->
-<!--                                    <div class="thumb-image"> <img th:src="${goods.getGoods().getImgUrl()}" data-imagezoom="true"-->
-<!--                                                                   class="img-responsive" alt="" draggable="false"> </div>-->
-<!--                                </li>-->
-<!--                                <li th:attr="data-thumb==${goods.getGoods().getImgUrl()}" style="width: 358px; float: left; display: block;">-->
-<!--                                    <div class="thumb-image"> <img th:src="${goods.getGoods().getImgUrl()}" data-imagezoom="true"-->
-<!--                                                                   class="img-responsive" alt="" draggable="false"> </div>-->
-<!--                                </li>-->
-<!--                                <li th:attr="data-thumb=${goods.getGoods().getImgUrl()}" class="clone" aria-hidden="true"-->
-<!--                                    style="width: 358px; float: left; display: block;">-->
-<!--                                    <div class="thumb-image detail_images"> <img th:src="${goods.getGoods().getImgUrl()}"-->
-<!--                                                                                 data-imagezoom="true" class="img-responsive" alt="" draggable="false"></div>-->
-<!--                                </li>-->
-<!--                           </ul>-->
-<!--                        </div>-->
-                        <ol class="flex-control-nav flex-control-thumbs">
-                            <li><img th:src="${goods.getGoods().getImgUrl()}" class="flex-active" draggable="false"></li>
-                            <li><img th:src="${goods.getGoods().getImgUrl()}" draggable="false"></li>
-                            <li><img th:src="${goods.getGoods().getImgUrl()}" draggable="false"></li>
-                        </ol>
+            <div class="container">
+                <div class="row row-rl-0 row-tb-20 row-md-cell">
+                    <div class="brand col-md-3 t-xs-center t-md-left valign-middle">
+                        <a th:href="@{/index}" class="logo">
+                            <img th:src="@{/images/logo.png}" alt="" width="250">
+                        </a>
                     </div>
-                </div>
-                <div class="col-md-6 single-top-right">
-                    <h3 class="item_name" th:text="${goods.getGoods().getGoodsName()} "></h3>
-<!--                    <p th:text="${goods.getGoodsReview().getReview()}"></p>-->
-                    <div class="single-price">
-                        <ul>
-                            <li><a th:text="${goods.getGoods().getDiscountPrice()}"></a> </li>
-                            <li><del><a th:text="${goods.getGoods().getPrice()}"></a> </del></li>
-                        </ul>
-                    </div>
-                    <p class="single-price-text" th:text="${goods.getGoods().getDescriptions()}">
-
-                    <div id="wrap">
-                        <div id="top">
-                            <p id='banben' th:each="goods:${specifiCation}">
-                                <font>规格:</font>
-                                <span th:text="${goods.getSpecificationName()}"></span>
-                                <span th:text="${goods.getSpecificationName()}"></span>
-                                <span th:text="${goods.getSpecificationName()}"></span>
-                            </p>
-                        </div>
-                    </div>
-
-            <script type="text/javascript">
-                var bSpan = document.getElementById('banben').getElementsByTagName('span');
-                var aSpan = document.getElementsByTagName('span');
-                var oModel = document.getElementById('model');
-                var oRom = document.getElementById('rom');
-                var oPrice = document.getElementById('price');
-
-                bSpan[0].className = 'on';
-
-
-                for (var i=0;i<aSpan.length;i++ )
-                {
-
-                    aSpan[i].onclick = function(){
-                        var siblings = this.parentNode.children;
-                        for (var j=0;j<siblings.length;j++ )
-                        {
-                            siblings[j].className = '';
-                        }
-                        this.className = 'on';
-
-                    };
-                };
-                </script>
-
-
-
-                    <font>数量</font>
-                   <input class="sdddq" id="inp"> </input>
-            <script>
-                document
-            </script>
-
-
-
-<br>
-            <br>
-                    <form th:href="@{/GoodsAddCart}">
-<!--                        <input type="hidden" name="cmd" value="_cart">-->
-<!--                        <input type="hidden" name="add" value="1">-->
-<!--                        <input type="hidden" name="w3ls_item" value="Snow Blower">-->
-<!--                        <input type="hidden" name="amount" value="540.00">-->
-                        <button type="submit" class="w3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i>
-                            Add to cart</button>
-                    </form>
-                </div>
-                <div class="clearfix"> </div>
-            </div>
-
-        </div>
-        <div class="recommend">
-            <h3 class="w3ls-title">Our Recommendations </h3>
-            <script>
-                $(document).ready(function () {
-                    $("#owl-demo5").owlCarousel({
-
-                        autoPlay: 3000, //Set AutoPlay to 3 seconds
-
-                        items: 4,
-                        itemsDesktop: [640, 5],
-                        itemsDesktopSmall: [414, 4],
-                        navigation: true
-
-                    });
-
-                });
-            </script>
-            <div id="owl-demo5" class="owl-carousel owl-theme" style="opacity: 1; display: block;">
-                <div class="owl-wrapper-outer">
-                    <div class="owl-wrapper"
-                         style="width: 4560px; left: 0px; display: block; transition: all 800ms ease 0s; transform: translate3d(-285px, 0px, 0px);">
-                        <div class="owl-item" style="width: 285px;">
-                            <div class="item">
-                                <div class="glry-w3agile-grids agileits">
-                                    <a href="http://www.templatesy.com/demo/423/products1.html"><img th:src="${goods.getGoods().getDetailImgUrl()}"
-                                                                                                     alt="img"></a>
-                                    <div class="view-caption agileits-w3layouts">
-                                        <h4><a href="http://www.templatesy.com/demo/423/products1.html" th:text="${goods.getGoods().getGoodsName()}"> </a></h4>
-                                        <h5 th:text="${goods.getGoods().getDiscountPrice()}"> </h5>
-                                        <form action="http://www.templatesy.com/demo/423/single.html#"
-                                              method="post">
-                                            <input type="hidden" name="cmd" value="_cart">
-                                            <input type="hidden" name="add" value="1">
-                                            <input type="hidden" name="w3ls_item" value="Women Sandal">
-                                            <input type="hidden" name="amount" value="20.00">
-                                            <button type="submit" class="w3ls-cart"><i class="fa fa-cart-plus"
-                                                                                       aria-hidden="true"></i> Add to cart</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="owl-item" style="width: 285px;">
-                            <div class="item">
-                                <div class="glry-w3agile-grids agileits">
-                                    <a href="http://www.templatesy.com/demo/423/products.html"><img th:src="${goods.getGoods().getDetailImgUrl()}"
-                                                                                                    alt="img"></a>
-                                    <div class="view-caption agileits-w3layouts">
-                                        <h4><a href="http://www.templatesy.com/demo/423/products.html" th:text="${goods.getGoods().getGoodsName()}">
-                                            </a></h4>
-                                        <h5 th:text="${goods.getGoods().getDiscountPrice()}"> </h5>
-                                        <form action="http://www.templatesy.com/demo/423/single.html#"
-                                              method="post">
-                                            <input type="hidden" name="cmd" value="_cart">
-                                            <input type="hidden" name="add" value="1">
-                                            <input type="hidden" name="w3ls_item" value="Digital Camera">
-                                            <input type="hidden" name="amount" value="100.00">
-                                            <button type="submit" class="w3ls-cart"><i class="fa fa-cart-plus"
-                                                                                       aria-hidden="true"></i> Add to cart</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="owl-item" style="width: 285px;">
-                            <div class="item">
-                                <div class="glry-w3agile-grids agileits">
-                                    <div class="new-tag">
-                                        <h6>New</h6>
-                                    </div>
-                                    <a href="http://www.templatesy.com/demo/423/products4.html"><img th:src="${goods.getGoods().getDetailImgUrl()}"
-                                                                                                     alt="img"></a>
-                                    <div class="view-caption agileits-w3layouts">
-                                        <h4><a href="http://www.templatesy.com/demo/423/products4.html" th:text="${goods.getGoods().getGoodsName()}"> </a></h4>
-                                        <h5 th:text="${goods.getGoods().getDiscountPrice()}"> </h5>
-                                        <form action="http://www.templatesy.com/demo/423/single.html#"
-                                              method="post">
-                                            <input type="hidden" name="cmd" value="_cart">
-                                            <input type="hidden" name="add" value="1">
-                                            <input type="hidden" name="w3ls_item" value="Roller Skates">
-                                            <input type="hidden" name="amount" value="180.00">
-                                            <button type="submit" class="w3ls-cart"><i class="fa fa-cart-plus"
-                                                                                       aria-hidden="true"></i> Add to cart</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="owl-item" style="width: 285px;">
-                            <div class="item">
-                                <div class="glry-w3agile-grids agileits">
-                                    <a href="http://www.templatesy.com/demo/423/products1.html"><img th:src="${goods.getGoods().getDetailImgUrl()}"
-                                                                                                     alt="img"></a>
-                                    <div class="view-caption agileits-w3layouts">
-                                        <h4><a href="http://www.templatesy.com/demo/423/products1.html" th:text="${goods.getGoods().getGoodsName()}"> </a>
-                                        </h4>
-                                        <h5 th:text="${goods.getGoods().getDiscountPrice()}"> </h5>
-                                        <form action="http://www.templatesy.com/demo/423/single.html#"
-                                              method="post">
-                                            <input type="hidden" name="cmd" value="_cart">
-                                            <input type="hidden" name="add" value="1">
-                                            <input type="hidden" name="w3ls_item" value="T Shirt">
-                                            <input type="hidden" name="amount" value="10.00">
-                                            <button type="submit" class="w3ls-cart"><i class="fa fa-cart-plus"
-                                                                                       aria-hidden="true"></i> Add to cart</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="owl-item" style="width: 285px;">
-                            <div class="item">
-                                <div class="glry-w3agile-grids agileits">
-                                    <div class="new-tag">
-                                        <h6>New</h6>
-                                    </div>
-                                    <a href="http://www.templatesy.com/demo/423/products6.html"><img th:src="${goods.getGoods().getDetailImgUrl()}"
-                                                                                                     alt="img"></a>
-                                    <div class="view-caption agileits-w3layouts">
-                                        <h4><a href="http://www.templatesy.com/demo/423/products6.html" th:text="${goods.getGoods().getGoodsName()}"> </a></h4>
-                                        <h5 th:text="${goods.getGoods().getDiscountPrice()}"> </h5>
-                                        <form action="http://www.templatesy.com/demo/423/single.html#"
-                                              method="post">
-                                            <input type="hidden" name="cmd" value="_cart">
-                                            <input type="hidden" name="add" value="1">
-                                            <input type="hidden" name="w3ls_item" value="Coffee Mug">
-                                            <input type="hidden" name="amount" value="14.00">
-                                            <button type="submit" class="w3ls-cart"><i class="fa fa-cart-plus"
-                                                                                       aria-hidden="true"></i> Add to cart</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="owl-item" style="width: 285px;">
-                            <div class="item">
-                                <div class="glry-w3agile-grids agileits">
-                                    <div class="new-tag">
-                                        <h6>20% <br> Off</h6>
-                                    </div>
-                                    <a href="http://www.templatesy.com/demo/423/products6.html"><img th:src="${goods.getGoods().getDetailImgUrl()}"
-                                                                                                     alt="img"></a>
-                                    <div class="view-caption agileits-w3layouts">
-                                        <h4><a href="http://www.templatesy.com/demo/423/products6.html" th:text="${goods.getGoods().getGoodsName()}"> </a></h4>
-                                        <h5 th:text="${goods.getGoods().getDiscountPrice()}"> </h5>
-                                        <form action="http://www.templatesy.com/demo/423/single.html#"
-                                              method="post">
-                                            <input type="hidden" name="cmd" value="_cart">
-                                            <input type="hidden" name="add" value="1">
-                                            <input type="hidden" name="w3ls_item" value="Teddy bear">
-                                            <input type="hidden" name="amount" value="20.00">
-                                            <button type="submit" class="w3ls-cart"><i class="fa fa-cart-plus"
-                                                                                       aria-hidden="true"></i> Add to cart</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="owl-item" style="width: 285px;">
-                            <div class="item">
-                                <div class="glry-w3agile-grids agileits">
-                                    <a href="http://www.templatesy.com/demo/423/products4.html"><img th:src="${goods.getGoods().getDetailImgUrl()}"
-                                                                                                     alt="img"></a>
-                                    <div class="view-caption agileits-w3layouts">
-                                        <h4><a href="http://www.templatesy.com/demo/423/products4.html" th:text="${goods.getGoods().getGoodsName()}"> </a>
-                                        </h4>
-                                        <h5 th:text="${goods.getGoods().getDiscountPrice()}"> </h5>
-                                        <form action="http://www.templatesy.com/demo/423/single.html#"
-                                              method="post">
-                                            <input type="hidden" name="cmd" value="_cart">
-                                            <input type="hidden" name="add" value="1">
-                                            <input type="hidden" name="w3ls_item" value="Football">
-                                            <input type="hidden" name="amount" value="70.00">
-                                            <button type="submit" class="w3ls-cart"><i class="fa fa-cart-plus"
-                                                                                       aria-hidden="true"></i> Add to cart</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="owl-item" style="width: 285px;">
-                            <div class="item">
-                                <div class="glry-w3agile-grids agileits">
-                                    <div class="new-tag">
-                                        <h6>Sale</h6>
-                                    </div>
-                                    <a href="http://www.templatesy.com/demo/423/products3.html"><img th:src="${goods.getGoods().getDetailImgUrl()}"
-                                                                                                     alt="img"></a>
-                                    <div class="view-caption agileits-w3layouts">
-                                        <h4><a href="http://www.templatesy.com/demo/423/products3.html" th:text="${goods.getGoods().getGoodsName()}"> </a></h4>
-                                        <h5 th:text="${goods.getGoods().getDiscountPrice()}"> </h5>
-                                        <form action="http://www.templatesy.com/demo/423/single.html#"
-                                              method="post">
-                                            <input type="hidden" name="cmd" value="_cart">
-                                            <input type="hidden" name="add" value="1">
-                                            <input type="hidden" name="w3ls_item" value="Wall Clock">
-                                            <input type="hidden" name="amount" value="80.00">
-                                            <button type="submit" class="w3ls-cart"><i class="fa fa-cart-plus"
-                                                                                       aria-hidden="true"></i> Add to cart</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-
-
-                <div class="owl-controls clickable">
-                    <div class="owl-pagination">
-                        <div class="owl-page active"><span class=""></span></div>
-                        <div class="owl-page"><span class=""></span></div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <main id="mainContent" class="main-content">
-                <div class="page-container ptb-60">
-                    <div class="container">
-                        <div class="row row-rl-10 row-tb-20">
-                            <div class="page-content col-sm-8 col-md-9">
-                                <div class="section store-tabs-area">
-                                    <div class="tabs tabs-v1">
-                                        <ul class="nav nav-tabs panel" role="tablist">
-                                            <li role="presentation" class="active">
-                                                <a href="http://www.templatesy.com/demo/617/store_single_01.html#deals"
-                                                   aria-controls="deals" role="tab" data-toggle="tab"
-                                                   aria-expanded="false"><i
-                                                        class="fa fa-comment mr-10"></i>宝贝详情</a>
-                                            </li>
-                                            <li role="presentation" class="">
-<!-- href="http://www.templatesy.com/demo/617/store_single_01.html#reviews"                                               -->
-                                                <a th:href="${goods.getGoods().getUid()}"
-                                                   aria-controls="reviews" role="tab" data-toggle="tab"
-                                                   aria-expanded="true"
-                                                onclick=""><i
-                                                        class="fa fa-user mr-10"></i>评价</a>
-                                            </li>
-                                        </ul>
-                                        <div class="tab-content">
-                                            <div role="tabpanel" class="tab-pane ptb-20" id="deals">
-                                            </div>
-<!--                                            show Review -->
-                                            <div role="tabpanel" class="tab-pane ptb-20 " id="reviews">
-                                                <div class="posted-review panel p-30">
-<!--                                                    <h3 class="h-title" > Review</h3>-->
-                                                    <div class="review-single pt-30">
-                                                        <div class="media">
-                                                            <div class="media-left">
-                                                                <img class="media-object mr-10 radius-4"
-                                                                     th:src="${images/logo.png}" width="90" alt="">
-                                                            </div>
-                                                            <div class="media-body">
-                                                                <div class="review-wrapper clearfix">
-                                                                    <ul class="list-inline">
-                                                                        <li>
-																				<span
-                                                                                        class="review-holder-name h5">John
-																					Doe</span>
-                                                                        </li>
-                                                                        <li>
-                                                                            <div class="rating">
-																					<span class="rating-stars"
-                                                                                          data-rating="5">
-																						<i
-                                                                                                class="fa fa-star-o star-active"></i>
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																					</span>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                    <p class="review-date mb-5">September 9,
-                                                                        2016</p>
-                                                                    <p class="copy">Ut velit mauris, egestas
-                                                                        sed, gravida nec, ornare ut, mi.
-                                                                        Aenean ut orci vel massa suscipit
-                                                                        pulvinar. Nulla sollicitudin. Fusce
-                                                                        varius, ligula non tempus aliquam.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="review-single pt-30">
-                                                        <div class="media">
-                                                            <div class="media-left">
-                                                                <img class="media-object mr-10 radius-4"
-                                                                     th:src="@{/images/avatar_02.jpg}" width="90" alt="">
-                                                            </div>
-                                                            <div class="media-body">
-                                                                <div class="review-wrapper clearfix">
-                                                                    <ul class="list-inline">
-                                                                        <li>
-																				<span
-                                                                                        class="review-holder-name h5">John
-																					Doe</span>
-                                                                        </li>
-                                                                        <li>
-                                                                            <div class="rating">
-																					<span class="rating-stars"
-                                                                                          data-rating="2">
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																						<i
-                                                                                                class="fa fa-star-o star-active"></i>
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																					</span>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                    <p class="review-date mb-5">September 9,
-                                                                        2016</p>
-                                                                    <p class="copy">Ut velit mauris, egestas
-                                                                        sed, gravida nec, ornare ut, mi.
-                                                                        Aenean ut orci vel massa suscipit
-                                                                        pulvinar. Nulla sollicitudin. Fusce
-                                                                        varius, ligula non tempus aliquam.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="review-single pt-30">
-                                                        <div class="media">
-                                                            <div class="media-left">
-                                                                <img class="media-object mr-10 radius-4"
-                                                                     th:src="@{/images/avatar_03.jpg}" width="90" alt="">
-                                                            </div>
-                                                            <div class="media-body">
-                                                                <div class="review-wrapper clearfix">
-                                                                    <ul class="list-inline">
-                                                                        <li>
-																				<span
-                                                                                        class="review-holder-name h5">John
-																					Doe</span>
-                                                                        </li>
-                                                                        <li>
-                                                                            <div class="rating">
-																					<span class="rating-stars"
-                                                                                          data-rating="3">
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																						<i
-                                                                                                class="fa fa-star-o star-active"></i>
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																					</span>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                    <p class="review-date mb-5">September 9,
-                                                                        2016</p>
-                                                                    <p class="copy">Ut velit mauris, egestas
-                                                                        sed, gravida nec, ornare ut, mi.
-                                                                        Aenean ut orci vel massa suscipit
-                                                                        pulvinar. Nulla sollicitudin. Fusce
-                                                                        varius, ligula non tempus aliquam.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="review-single pt-30">
-                                                        <div class="media">
-                                                            <div class="media-left">
-                                                                <img class="media-object mr-10 radius-4"
-                                                                     th:src="@{/images/avatar_04.jpg}" width="90" alt="">
-                                                            </div>
-                                                            <div class="media-body">
-                                                                <div class="review-wrapper clearfix">
-                                                                    <ul class="list-inline">
-                                                                        <li>
-																				<span
-                                                                                        class="review-holder-name h5">John
-																					Doe</span>
-                                                                        </li>
-                                                                        <li>
-                                                                            <div class="rating">
-																					<span class="rating-stars"
-                                                                                          data-rating="4">
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																						<i
-                                                                                                class="fa fa-star-o star-active"></i>
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																					</span>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                    <p class="review-date mb-5">September 9,
-                                                                        2016</p>
-                                                                    <p class="copy">Ut velit mauris, egestas
-                                                                        sed, gravida nec, ornare ut, mi.
-                                                                        Aenean ut orci vel massa suscipit
-                                                                        pulvinar. Nulla sollicitudin. Fusce
-                                                                        varius, ligula non tempus aliquam.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="review-single pt-30">
-                                                        <div class="media">
-                                                            <div class="media-left">
-                                                                <img class="media-object mr-10 radius-4"
-                                                                     th:src="@{/images/avatar_05.jpg}" width="90" alt="">
-                                                            </div>
-                                                            <div class="media-body">
-                                                                <div class="review-wrapper clearfix">
-                                                                    <ul class="list-inline">
-                                                                        <li>
-																				<span
-                                                                                        class="review-holder-name h5">John
-																					Doe</span>
-                                                                        </li>
-                                                                        <li>
-                                                                            <div class="rating">
-																					<span class="rating-stars"
-                                                                                          data-rating="5">
-																						<i
-                                                                                                class="fa fa-star-o star-active"></i>
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																						<i
-                                                                                                class="fa fa-star-o"></i>
-																					</span>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                    <p class="review-date mb-5">September 9,
-                                                                        2016</p>
-                                                                    <p class="copy">Ut velit mauris, egestas
-                                                                        sed, gravida nec, ornare ut, mi.
-                                                                        Aenean ut orci vel massa suscipit
-                                                                        pulvinar. Nulla sollicitudin. Fusce
-                                                                        varius, ligula non tempus aliquam.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="page-pagination text-center mt-30 p-10 panel">
-                                                        <nav>
-                                                            <ul class="page-pagination">
-                                                                <li><a class="page-numbers previous" href="#">Previous</a>
-                                                                </li>
-                                                                <li><span class="page-numbers current">1</span>
-                                                                </li>
-                                                                <li><a href="#" class="page-numbers">2</a>
-                                                                </li>
-                                                                <li><a href="#" class="page-numbers">3</a>
-                                                                </li>
-                                                                <li><a href="#" class="page-numbers">4</a>
-                                                                </li>
-                                                                <li><span class="page-numbers dots">...</span>
-                                                                </li>
-                                                                <li><a href="#" class="page-numbers">20</a>
-                                                                </li>
-                                                                <li><a href="#" class="page-numbers next">Next</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
+                    <div class="header-search col-md-9">
+                        <div class="row row-tb-10 ">
+                            <div class="col-sm-8">
+                                <form class="search-form">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-lg search-input" placeholder="Enter Keywork Here ..." required="required">
+                                        <div class="input-group-btn">
+                                            <div class="input-group">
+                                                <select class="form-control input-lg search-select">
+                                                    <option>Select Your Category</option>
+                                                    <option>Deals</option>
+                                                    <option>Coupons</option>
+                                                    <option>Discounts</option>
+                                                </select>
+                                                <div class="input-group-btn">
+                                                    <button type="submit" class="btn btn-lg btn-search btn-block">
+                                                        <i class="fa fa-search font-16"></i>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </form>
+                            </div>
+                            <div class="col-sm-4 t-xs-center t-md-right">
+                                <div class="header-cart">
+                                    <a th:href="@{/Cart}">
+                                        <span class="icon lnr lnr-cart"></span>
+                                        <!--<div><span class="cart-number">0</span>-->
+                                        <!--</div>-->
+                                        <span class="title">Cart</span>
+                                    </a>
+                                </div>
+                                <div class="header-wishlist ml-20">
+                                    <a href="wishlist.html">
+                                        <span class="icon lnr lnr-heart font-30"></span>
+                                        <span class="title">Wish List</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
         </div>
+        <!-- End Header Header -->
 
-    </div>
+        <!-- Header Menu -->
+
+        <!-- End Header Menu -->
+
+    </header>
+    <!-- –––––––––––––––[ HEADER ]––––––––––––––– -->
+
+    <!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
+    <main id="mainContent" class="main-content">
+        <div class="page-container ptb-60 hm_woo_page clearfix">
+            <div class="internal_post_con clearfix">
+                <div class="hm_shop_page clearfix entry-content">
+                    <div class="shop_product_wrapper clearfix">
+                        <div class="product">
+                            <div class="content">
+                                <span class="onsale">Sale!</span>
+                                <div class="single_product_slider">
+                                    <span class="sale_new"><span class="text">Sale!</span></span>
+                                    <div class="thumbs_gall_slider_con content_thumbs_gall gall_arrow2">
+                                        <div class="thumbs_gall_slider_larg owl_abs_arr">
+                                            <div class="item">
+                                                <a class="feature_inner_ling hm_commerce_slider" th:href="@{/images/shop/product5-a-870x1110.jpg}">
+                                                    <img th:src="@{/images/shop/product5-a-500x600.jpg}" alt="Main Product Image">
+                                                </a>
+                                            </div>
+                                            <div class="item">
+                                                <a class="feature_inner_ling hm_commerce_slider" th:href="@{/images/shop/product5-b-870x1110.jpg}">
+                                                    <img th:src="@{/images/shop/product5-b-500x600.jpg}" alt="1">
+                                                </a>
+                                            </div>
+                                            <div class="item">
+                                                <a class="feature_inner_ling hm_commerce_slider" th:href="@{/images/shop/product5-d-870x1110.jpg}">
+                                                    <img th:src="@{/images/shop/product5-d-500x600.jpg}" alt="2">
+                                                </a>
+                                            </div>
+                                            <div class="item">
+                                                <a class="feature_inner_ling hm_commerce_slider" th:href="@{/images/shop/product5-e-870x1110.jpg}">
+                                                    <img th:src="@{/images/shop/product5-e-500x600.jpg}" alt="3">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="gall_thumbs">
+                                            <div class="item">
+                                                <a class="gall_thumb_i" th:href="@{/images/shop/product5-a-870x1110.jpg}">
+                                                    <img th:src="@{/images/shop/product5-a-150x150.jpg}" alt="Main Product Image">
+                                                </a>
+                                            </div>
+                                            <div class="item">
+                                                <a class="gall_thumb_i" th:href="@{/images/shop/product5-b-870x1110.jpg}">
+                                                    <img th:src="@{/images/shop/product5-b-150x150.jpg}" alt="1">
+                                                </a>
+                                            </div>
+                                            <div class="item">
+                                                <a class="gall_thumb_i" th:href="@{/images/shop/product5-d-870x1110.jpg}">
+                                                    <img th:src="@{/images/shop/product5-d-150x150.jpg}" alt="2">
+                                                </a>
+                                            </div>
+                                            <div class="item">
+                                                <a class="gall_thumb_i" th:href="@{/images/shop/product5-e-870x1110.jpg}">
+                                                    <img th:src="@{/images/shop/product5-e-150x150.jpg}" alt="3">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- End single_product_slider -->
+
+                                <div class="single_product_details">
+                                    <h1 class="product_title single_product_title">Tee Jeans</h1>
+                                    <div class="shopping-commerce-product-rating">
+                                        <div class="star-rating" title="Rated 5 out of 5">
+                                            <span style="width:100%"></span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="single_product_price_con clearfix">
+                                            <del><span class="amount"><span>$</span>240.00</span></del>
+                                            <ins><span class="amount"><span>$</span>220.00</span></ins>
+                                        </div>
+                                    </div>
+                                    <div class="single_product_desc">
+                                        <p>There are many variations of passages of Lorem Ipsum text available, but the majority have suffered alteration in some form, by injected humour of this randomised words which don’t look even slightly believable There are many variations of passages of Lorem Ipsum available.</p>
+                                        <ul class="list_icon check_arrows clearfix">
+                                            <li><span class="list-arr"><i class="ico-arrow-right5"></i></span>High Quality Screen Print</li>
+                                            <li><span class="list-arr"><i class="ico-arrow-right5"></i></span>Print Between Shoulders</li>
+                                            <li><span class="list-arr"><i class="ico-arrow-right5"></i></span>Printed Internal Label Detail</li>
+                                            <li><span class="list-arr"><i class="ico-arrow-right5"></i></span>Crew Neck Collar</li>
+                                        </ul>
+                                    </div>
+
+                                    <form class="cart" method="post" enctype='multipart/form-data'>
+                                        <div class="quantity buttons_added clearfix">
+                                            <div class="quantity_controll_con">
+                                                <input type="button" class="quantity_controll minus" value="-">
+                                                <input type="number" step="1" min="1" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" />
+                                                <input type="button" class="quantity_controll plus" value="+">
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="add-to-cart" value="2549" />
+                                        <button type="submit" class="single_add_to_cart_button button alt">Add to cart</button>
+                                    </form>
+                                    <!-- End Form -->
+
+                                    <div class="product_meta">
+                                        <div class="sku_wrapper">
+                                            <b>SKU:</b>
+                                            <span class="sku">002</span>
+                                        </div>
+                                        <div class="tags_con">
+                                            <span class="post_tag_t2">Categories</span>
+                                            <a href="#" rel="tag">Jeans</a>
+                                            <a href="#" rel="tag">Men</a>
+                                            <a href="#" rel="tag">T-Shirts</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- End single_product_details -->
+                                <div class="clear"></div>
+
+                            </div>
+                            <!-- End Content -->
+
+                            <!-- Content -->
+                            <div class="content">
+                                <div class="hm-tabs tabs2">
+
+                                    <nav>
+                                        <ul class="tabs-navi">
+                                            <li class="description_tab">
+                                                <a href="#" data-content="tab-description">Description</a>
+                                            </li>
+                                            <li class="additional_information_tab">
+                                                <a href="#" data-content="tab-additional_information">Additional Information</a>
+                                            </li>
+                                            <li class="reviews_tab">
+                                                <a href="#" data-content="tab-reviews">Reviews (1)</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+
+                                    <ul class="tabs-body">
+                                        <li data-content="tab-description">
+                                            <h2>Product Description</h2>
+                                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour of this randomised words which don’t look even slightly believable There are many variations of passages of Lorem Ipsum available.</p>
+                                        </li>
+
+                                        <li data-content="tab-additional_information">
+                                            <h2>Additional Information</h2>
+                                            <table class="shop_attributes">
+                                                <tr>
+                                                    <th>Weight</th>
+                                                    <td class="product_weight">100 lbs</td>
+                                                </tr>
+                                                <tr class="alt">
+                                                    <th>Dimensions</th>
+                                                    <td class="product_dimensions">110 x 56 x 70 in</td>
+                                                </tr>
+                                            </table>
+                                        </li>
+
+                                        <li data-content="tab-reviews">
+                                            <div id="reviews">
+
+                                                <div id="comments">
+                                                    <h2>1 Review For <span>Tee Jeans</span></h2>
+                                                    <ol class="commentlist">
+                                                        <li>
+                                                            <div id="comment-1" class="comment_container">
+                                                                <img alt='' th:src='@{/images/shop/avatar1-60x60.jpg}' class='avatar' height='60' width='60' />
+                                                                <div class="comment-text">
+
+                                                                    <div class="star-rating" title="Rated 5 out of 5">
+                                                                        <span style="width:100%"></span>
+                                                                    </div>
+
+                                                                    <p class="meta"> <strong>John Doe</strong> &ndash;
+                                                                        <time datetime="2017-01-31T09:28:13+00:00">January 31, 2017</time>
+                                                                        : </p>
+                                                                    <div class="description">
+                                                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour of this randomised words which don’t look even slightly believable There are many variations of passages of Lorem Ipsum available.</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                                <div class="clear"></div>
+
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- End Content -->
+
+                            <!-- Related Products -->
+                            <div class="content_section hm_woo_related bg_gray2">
+                                <div class="content content_spacer clearfix">
+                                    <div class="container shop_related_title">
+                                        <h2>Related Products</h2>
+                                    </div>
+                                    <div class="related products">
+                                        <ul class="products">
+
+                                            <li class="product">
+                                                <div class="add2cart_slide">
+                                                    <div class="add2cart_image">
+                                                        <a href="#" class="add2cart_img">
+                                                            <span class="sale_new"><span class="text">Sale!</span></span>
+                                                            <span class="add2cart_zoom"><i class="ico-plus10"></i></span>
+                                                            <img th:src="@{/images/shop/product8-a-500x600.jpg}" alt="Vintage Jeans">
+                                                        </a>
+                                                    </div>
+                                                    <div class="add2cart_details">
+                                                        <div class="con_cont">
+                                                            <a class="add2cart_prod_name" href="#">Vintage Jeans</a>
+                                                            <span class="price add2cart_prod_price">
+                                                            <del><span class="amount"><span>$</span>39.00</span></del>
+                                                            <ins><span class="amount"><span>$</span>30.00</span></ins>
+                                                        </span>
+                                                            <div class="hm_rating_con clearfix">
+                                                                <div class="star-rating" title="Rated 2 out of 5">
+                                                                    <span style="width:40%"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="add2cart_buttons clearfix">
+                                                            <a href="#" class="pro_add2cart_add add2cart_btn_ajax">
+                                                                <i class="refresh_loader ico-refresh4"></i>
+                                                                <i class="hm_cart_icon ico-heart4"></i>
+                                                                <i class="hm_cart_added ico-check3"></i>
+                                                                <span>Add to cart</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="product">
+                                                <div class="add2cart_slide">
+                                                    <div class="add2cart_image">
+                                                        <a href="#" class="add2cart_img">
+                                                            <span class="hm_new_prod">New</span>
+                                                            <span class="add2cart_zoom"><i class="ico-plus10"></i></span>
+                                                            <img th:src="@{/images/shop/product2-a-500x600.jpg}" alt="Adidas Hoodie">
+                                                        </a>
+                                                    </div>
+                                                    <div class="add2cart_details">
+                                                        <div class="con_cont">
+                                                            <a class="add2cart_prod_name" href="#">Adidas Hoodie</a>
+                                                            <span class="price add2cart_prod_price">
+                                                            <span class="amount"><span>$</span>156.00</span>
+                                                        </span>
+                                                            <div class="hm_rating_con clearfix">
+                                                                <div class="star-rating" title="Rated 5 out of 5">
+                                                                    <span style="width:100%"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="add2cart_buttons clearfix">
+                                                            <a href="#" class="pro_add2cart_add add2cart_btn_ajax">
+                                                                <i class="refresh_loader ico-refresh4"></i>
+                                                                <i class="hm_cart_icon ico-heart4"></i>
+                                                                <i class="hm_cart_added ico-check3"></i>
+                                                                <span>Add to cart</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="product">
+                                                <div class="add2cart_slide">
+                                                    <div class="add2cart_image">
+                                                        <a href="#" class="add2cart_img">
+                                                            <span class="add2cart_zoom"><i class="ico-plus10"></i></span>
+                                                            <img th:src="@{/images/shop/product4-a-500x600.jpg}" alt="Caterpillar Shoes">
+                                                        </a>
+                                                    </div>
+                                                    <div class="add2cart_details">
+                                                        <div class="con_cont">
+                                                            <a class="add2cart_prod_name" href="#">Caterpillar Shoes</a>
+                                                            <span class="price add2cart_prod_price">
+                                                            <span class="amount"><span>$</span>370.00</span>
+                                                        </span>
+                                                            <div class="hm_rating_con clearfix">
+                                                                <div class="star-rating" title="Rated 5 out of 5">
+                                                                    <span style="width:100%"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="add2cart_buttons clearfix">
+                                                            <a href="#" class="pro_add2cart_add add2cart_btn_ajax">
+                                                                <i class="refresh_loader ico-refresh4"></i>
+                                                                <i class="hm_cart_icon ico-heart4"></i>
+                                                                <i class="hm_cart_added ico-check3"></i>
+                                                                <span>Add to cart</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="product">
+                                                <div class="add2cart_slide">
+                                                    <div class="add2cart_image">
+                                                        <a href="#" class="add2cart_img">
+                                                            <span class="add2cart_zoom"><i class="ico-plus10"></i></span>
+                                                            <img th:src="@{/images/shop/product1-a-500x600.jpg}" alt="Nanamica Graphic Tee"> </a>
+                                                    </div>
+                                                    <div class="add2cart_details">
+                                                        <div class="con_cont">
+                                                            <a class="add2cart_prod_name" href="#">Nanamica Graphic Tee</a>
+                                                            <span class="price add2cart_prod_price">
+                                                            <span class="amount"><span>$</span>58.00</span>
+                                                        </span>
+                                                            <div class="hm_rating_con clearfix">
+                                                                <div class="star-rating" title="Rated 1 out of 5">
+                                                                    <span style="width:20%"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="add2cart_buttons clearfix">
+                                                            <a href="#" class="pro_add2cart_add add2cart_btn_ajax">
+                                                                <i class="refresh_loader ico-refresh4"></i>
+                                                                <i class="hm_cart_icon ico-heart4"></i>
+                                                                <i class="hm_cart_added ico-check3"></i>
+                                                                <span>Add to cart</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Related Products -->
+
+                        </div>
+                        <!-- End product -->
+                    </div>
+                    <!-- End shop_product_wrapper -->
+
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- –––––––––––––––[ END PAGE CONTENT ]––––––––––––––– -->
+    <section class="footer-top-area pt-70 pb-30 pos-r bg-blue">
+        <div class="container">
+            <div class="row row-tb-20">
+                <div class="col-sm-12 col-md-7">
+                    <div class="row row-tb-20">
+                        <div class="footer-col col-sm-6">
+                            <div class="footer-about">
+                                <img class="mb-40" th:src="@{/images/logo_light.png}" width="250" alt="">
+                                <p class="color-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam dolores quidem mollitia id ipsa nisi necessitatibus iure repudiandae aperiam, odit ipsam dolor fugiat corporis nesciunt illo nemo minus.</p>
+                            </div>
+                        </div>
+                        <div class="footer-col col-sm-6">
+                            <div class="footer-top-twitter">
+                                <h2 class="color-lighter">Twitter Feed</h2>
+                                <ul class="twitter-list">
+                                    <li class="single-twitter">
+                                        <p class="color-light"><i class="ico fa fa-twitter"></i><a href="#">@masum_rana :</a> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore in reprehenderit.</p>
+                                    </li>
+                                    <li class="single-twitter">
+                                        <p class="color-light"><i class="ico fa fa-twitter"></i><a href="#">@masum_rana :</a> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione id corrupti iusto cupiditate omnis.</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-5">
+                    <div class="row row-tb-20">
+                        <div class="footer-col col-sm-6">
+                            <div class="footer-links">
+                                <h2 class="color-lighter">Quick Links</h2>
+                                <ul>
+                                    <li><a href="deals_grid.html">Latest Deals</a>
+                                    </li>
+                                    <li><a href="coupons_grid.html">Newest Coupons</a>
+                                    </li>
+                                    <li><a href="contact_us_02.html">Contact Us</a>
+                                    </li>
+                                    <li><a href="404.html">Error 404</a>
+                                    </li>
+                                    <li><a href="terms_conditions.html">Terms of Use</a>
+                                    </li>
+                                    <li><a href="faq.html">FAQs</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="footer-col col-sm-6">
+                            <div class="footer-top-instagram instagram-widget">
+                                <h2>Instagram Widget</h2>
+                                <div class="row row-tb-5 row-rl-5">
+
+
+                                    <div class="instagram-widget__item col-xs-4">
+                                        <img th:src="@{/images/instagram/instagram_01.jpg}" alt="">
+                                    </div>
+
+
+                                    <div class="instagram-widget__item col-xs-4">
+                                        <img th:src="@{/images/instagram/instagram_02.jpg}" alt="">
+                                    </div>
+
+
+                                    <div class="instagram-widget__item col-xs-4">
+                                        <img th:src="@{/images/instagram/instagram_03.jpg}" alt="">
+                                    </div>
+
+
+                                    <div class="instagram-widget__item col-xs-4">
+                                        <img th:src="@{/images/instagram/instagram_04.jpg}" alt="">
+                                    </div>
+
+
+                                    <div class="instagram-widget__item col-xs-4">
+                                        <img th:src="@{/images/instagram/instagram_05.jpg}" alt="">
+                                    </div>
+
+
+                                    <div class="instagram-widget__item col-xs-4">
+                                        <img th:src="@{/images/instagram/instagram_06.jpg}" alt="">
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="payment-methods t-center">
+                        <span><img th:src="@{/images/icons/payment/paypal.jpg}" alt=""></span>
+                        <span><img th:src="@{/images/icons/payment/visa.jpg}" alt=""></span>
+                        <span><img th:src="@{/images/icons/payment/mastercard.jpg}" alt=""></span>
+                        <span><img th:src="@{/images/icons/payment/discover.jpg}" alt=""></span>
+                        <span><img th:src="@{/images/icons/payment/american.jpg}" alt=""></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- –––––––––––––––[ FOOTER ]––––––––––––––– -->
+    <footer id="mainFooter" class="main-footer">
+        <div class="container">
+            <div class="row">
+                <p>Copyright &copy; 2016 . All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- –––––––––––––––[ END FOOTER ]––––––––––––––– -->
+
+</div>
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<!-- END WRAPPER                               -->
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+
+
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<!-- BACK TO TOP                               -->
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<div id="backTop" class="back-top is-hidden-sm-down">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
 </div>
 
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<!-- SCRIPTS                                   -->
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+
+<!-- (!) Placed at the end of the document so the pages load faster -->
+
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<!-- Initialize jQuery library                 -->
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<script th:src="@{/js/jquery-1.12.3.min.js}"></script>
+
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<!-- Latest compiled and minified Bootstrap    -->
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<!-- JavaScript Plugins                        -->
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<!-- (!) Include all compiled plugins (below), or include individual files as needed -->
+
+<!-- Modernizer JS -->
+<script th:src="@{/vendors/modernizr/modernizr-2.6.2.min.js}"></script>
+
+<!-- Owl Carousel -->
+<script type="text/javascript" th:src="@{/vendors/owl-carousel/owl.carousel.min.js}"></script>
+
+<!-- FlexSlider -->
+<script type="text/javascript" th:src="@{/vendors/flexslider/jquery.flexslider-min.js}"></script>
+
+<!-- Coutdown -->
+<script type="text/javascript" th:src="@{/vendors/countdown/jquery.countdown.js}"></script>
+
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<!-- Custom Template JavaScript                   -->
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
 
 
-<div class="copy-right">
-    <div class="container">
-        <p>Copyright © 2016.Company name All rights reserved.</p>
-    </div>
-</div>
-
-<script>
-    w3ls.render();
-
-    w3ls.cart.on('w3sb_checkout', function (evt) {
-        var items, len, i;
-
-        if (this.subtotal() > 0) {
-            items = this.items();
-
-            for (i = 0, len = items.length; i < len; i++) {
-                items[i].set('shipping', 0);
-                items[i].set('shipping2', 0);
-            }
-        }
-    });
-</script>
-<div id="PPsbmincart">
-    <form method="post" class="sbmincart-empty" action="https://www.paypal.com/cgi-bin/webscr" target=""> <button
-            type="button" class="sbmincart-closer">×</button>
-        <ul> </ul>
-        <div class="sbmincart-footer">
-            <p class="sbmincart-empty-text">Your shopping cart is empty</p>
-        </div> <input type="hidden" name="cmd" value="_cart"> <input type="hidden" name="upload" value="1"> <input
-                type="hidden" name="bn" value="sbmincart_AddToCart_WPS_US">
-    </form>
-</div>
-
-    <script th:src="@{/DetailsGoods/jquery-1.12.4.min.js}"></script>
-<script th:src="@{/DetailsGoods/bootstrap_review.min.js}"></script>
-
-
-
-<a href="http://www.templatesy.com/demo/423/single.html#" id="toTop" style="display: none;"><span
-        id="toTopHover"></span>To Top</a>
+<script type="text/javascript" th:src="@{/js/jquery-migrate-1.4.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/plugins.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/functions.js}"></script>
 </body>
 
 </html>
