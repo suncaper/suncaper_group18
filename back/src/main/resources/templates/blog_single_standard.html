@@ -120,44 +120,22 @@
                             </ul>
                         </div>
                         <div class="col-sm-12 col-md-8">
-                            <ul class="nav-top nav-top-right list-inline t-xs-center t-md-right">
-                                <li>
-                                    <a href="#"><i class="fa fa-flag-usa"></i>English <i class="fa fa-caret-down"></i></a>
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-flag-usa"></i>English</a>
-                                        </li>
-                                        <li><a href="#"><i class="fa fa-flag-fra"></i>France</a>
-                                        </li>
-                                        <li><a href="#"><i class="fa fa-flag-ger"></i>Germany</a>
-                                        </li>
-                                        <li><a href="#"><i class="fa fa-flag-rus"></i>Russia</a>
-                                        </li>
-                                    </ul>
+                            <ul class="nav-top nav-top-right list-inline  t-xs-center t-md-right ">
+                                <li th:if="${!isSignin}"><a th:href="@{/signin_page}"><i class="fa fa-lock"></i>登陆</a></li>
+                                <li th:if="${!isSignin}"><a th:href="@{/signup_page}"><i class="fa fa-user"></i>注册</a></li>
+                                <li th:if="${!user.getIsSeller()}">
+                                    <a href="#"><i class="fa fa-usd"></i>申请店铺</a>
                                 </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-usd"></i>USD <i class="fa fa-caret-down"></i></a>
-                                    <ul>
-                                        <li><a href="#">USD - US Dollar</a>
-                                        </li>
-                                        <li><a href="#">EUR - Euro</a>
-                                        </li>
-                                        <li><a href="#">CNY - Chinese Yuan</a>
-                                        </li>
-                                        <li><a href="#">RUB - Russian Ruble</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li th:if="${!isSignin}"><a th:href="@{/signin_page}"><i class="fa fa-lock"></i>Sign In</a></li>
-                                <li th:if="${!isSignin}"><a th:href="@{/signup_page}"><i class="fa fa-user"></i>Sign Up</a></li>
                                 <li th:if="${isSignin}">
-                                    <a href="#"><i class="fa fa-user"></i>你好,<span th:text="${user.getUserName()}"></span></a>
-                                    <ul>
-                                        <li><a th:href="@{/myinfo}">我的信息</a></li>
-                                        <li><a th:href="@{/Cart}">我的购物车</a></li>
-                                        <li th:if="${!user.getIsSeller()}"><a href="#">申请店铺</a></li>
-                                        <li th:if="${user.getIsSeller()}"><a href="#">我的店铺</a></li>
-                                        <li><a th:href="@{/signout}">退出登陆</a></li>
-                                    </ul>
+                                    <span th:text="'你好，'+${user.getUserName()}"></span>
+                                </li>
+                                <li th:if="${user.getIsSeller()} and ${isSignin}">
+                                    <a href="#"><i class="fa fa-usd"></i>我的店铺</a>
+                                </li>
+                                <li th:if="${isSignin}">
+                                    <a th:href="@{/myinfo}"><i class="fa fa-user"></i>我的信息</a>
+                                </li>
+                                <li><a th:if="${isSignin}" th:href="@{/signout}">退出登陆</a></li>
                                 </li>
                             </ul>
                         </div>
