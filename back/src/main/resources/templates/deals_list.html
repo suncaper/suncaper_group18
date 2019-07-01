@@ -153,7 +153,7 @@
                                         <li><a th:href="@{/myinfo}">我的信息</a></li>
                                         <li><a th:href="@{/Cart}">我的购物车</a></li>
                                         <li th:if="${!user.getIsSeller()}"><a href="#">申请店铺</a></li>
-                                        <li th:if="${user.getIsSeller()}"><a href="#">我的店铺</a></li>
+                                        <li th:if="${user.getIsSeller()}"><a th:href="@{/mystore}">我的店铺</a></li>
                                         <li><a th:href="@{/signout}">退出登陆</a></li>
                                     </ul>
                                 </li>
