@@ -3,6 +3,7 @@ package org.group18.back.Controller;
 import org.group18.back.Entity.User;
 import org.group18.back.Entity.UserAddress;
 import org.group18.back.Model.CartListModel;
+import org.group18.back.Model.OrderPageModel;
 import org.group18.back.Service.CartService;
 import org.group18.back.Service.CheckoutService;
 import org.group18.back.Service.LoginRegisterService;
@@ -99,6 +100,15 @@ public class CheckoutController {
                 model.addAttribute("addressList", result);
                 model.addAttribute("editAddress", new UserAddress());
             }
+            List<UserAddress> userAddressList = myInfoService.getUserAddressList(user.getUid());
+            if(userAddressList == null || userAddressList.isEmpty()){
+                model.addAttribute("isAddressEmpty", true);
+            }
+            else {
+                model.addAttribute("isAddressEmpty", false);
+
+            }
+            model.addAttribute("userAddressList", userAddressList);
             return "checkout_billing";
         }
     }
@@ -127,13 +137,12 @@ public class CheckoutController {
             Integer points = checkoutService.getUserPoints(user.getUid());//账户积分
             model.addAttribute("points", points);
             addressId = address_id;//存储地址信息
-            System.out.println(addressId);
             return "checkout_method";
         }
     }
 
     @RequestMapping("/checkout_commit")
-    public String checkoutCommit(Model model, HttpServletRequest request){
+    public String checkoutCommit(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page){
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if (user == null) {
@@ -163,15 +172,40 @@ public class CheckoutController {
             checkout_method = request.getParameter("checkout_method");
             if (result != 2){
                 checkoutService.generateOrder(user.getUid(), request.getParameter("checkout_method"), shopCartList, addressId, result);
+
+                //获取请求页数
+                //设置每页显示数量为5
+                int pageSize = 5;
+                if (page == null) page = 1;//若未接受到页面请求，则设置为1
+                //生成页面列表
+                List<Integer> pagesNumberList = new ArrayList<>();
+                long count = myInfoService.getUserOrderCount(user.getUid());
+                for (int i = 1; i <= (count % pageSize == 0 ? count / pageSize : (count / pageSize + 1)); i++) {
+                    pagesNumberList.add(i);
+                }
+                List<OrderPageModel> orderPageModels = myInfoService.getOrderPageInfo(user.getUid(), pageSize, page);
+                model.addAttribute("pageNumberList", pagesNumberList);
+                model.addAttribute("currentPage", page);
+                model.addAttribute("pageAmount", pagesNumberList.size());
+                model.addAttribute("orderPageList", orderPageModels);
+
                 return "myorder";
             }
             else{
                 System.out.println(result);
+
                 List<CartListModel> cartList = cartService.getCarts(user.getUid());
                 shopCartList = cartService.getShopCarts(cartList);
                 model.addAttribute("shopCartList", shopCartList);
                 return "cart";
+
             }
         }
+    }
+
+    @RequestMapping("/editAddress")
+    public String editUserAddress(UserAddress userAddress){
+        myInfoService.editUserAddress(userAddress);
+        return "redirect:/chekout_billing";
     }
 }

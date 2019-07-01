@@ -15,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.Cookie;
 import java.math.BigDecimal;
 import java.sql.Array;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -36,6 +39,8 @@ public class MyInfoServiceImpl implements MyInfoService {
     GoodsSpecificationMapper goodsSpecificationMapper;
     @Autowired
     UserHistoryMapper userHistoryMapper;
+    @Autowired
+    GoodsReviewMapper goodsReviewMapper;
 
     @Override
     public boolean isSameDate(Date date1, Date date2) {
@@ -57,110 +62,45 @@ public class MyInfoServiceImpl implements MyInfoService {
     }
 
     @Override
-    public  ArrayList<HistroyGoodsModel> getHistoryGoods(String uid) {
+    public  ArrayList<HistroyGoodsModel> getHistoryGoods(String uid){
+        ArrayList<HistroyGoodsModel> result = new ArrayList<>();
         UserHistoryExample userHistoryExample = new UserHistoryExample();
-        UserHistoryExample.Criteria criteria1 = userHistoryExample.createCriteria();
-        criteria1.andUserUidEqualTo(uid);
-        List<UserHistory> userHistory1 = userHistoryMapper.selectByExample(userHistoryExample);//从userhistory表中取出uid为当前用户的记录
-        ArrayList<UserHistory> userHistory2 = new ArrayList<UserHistory>();
-        for(int i=0;i<userHistory1.size();i++) //去掉uid重复的记录,并保留最新的createDate值
-        {
-            if(userHistory2.isEmpty())
-            {
-                userHistory2.add(userHistory1.get(i));
-            }
-            else
-            {
-                boolean addinto=true;
-                for(int j=0;j<userHistory2.size();j++)
-                {
-                    if(userHistory2.get(j).getGoodsUid()==userHistory1.get(i).getGoodsUid())
-                    {
-                        addinto=false;
-                        if(userHistory2.get(j).getCreateDate().before(userHistory1.get(i).getCreateDate()))
-                            userHistory2.get(j).setCreateDate(userHistory1.get(i).getCreateDate());//更新createDate
-                        break;
-                    }
+        userHistoryExample.setOrderByClause("create_date desc");//降序排列
+        //查询最近10天的用户历史信息
+        userHistoryExample.or().andCreateDateGreaterThan(new Date(System.currentTimeMillis() - 10*24*60*60*1000)).andUserUidEqualTo(uid);
+        List<UserHistory> userHistoryList =  userHistoryMapper.selectByExample(userHistoryExample);
+        //去除重复值（key为goodsUid）
+        HashMap<Integer,UserHistory> cleanUserHistoy = new HashMap<>();
+        //按天进行分类
+        HashMap<LocalDate, List<Goods>> tempResult = new HashMap<>();
+        for(UserHistory u : userHistoryList){
+            if(!cleanUserHistoy.containsKey(u.getGoodsUid())) {
+                LocalDate keyDate = u.getCreateDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                GoodsExample goodsExample = new GoodsExample();
+                goodsExample.or().andUidEqualTo(u.getGoodsUid());
+                Goods goods = goodsMapper.selectByExample(goodsExample).get(0);
+                if(!tempResult.containsKey(keyDate)){
+                    List<Goods> t = new ArrayList<>();
+                    t.add(goods);
+                    tempResult.put(u.getCreateDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), t);
                 }
-                if(addinto==true)
-                {
-                    userHistory2.add(userHistory1.get(i));
+                else {
+                    tempResult.get(keyDate).add(goods);
                 }
+                cleanUserHistoy.put(u.getGoodsUid(), u);
             }
         }
-        ArrayList<Goods> goodsinfo1 = new ArrayList<Goods>();
-        for(int i=0;i<userHistory2.size();i++)
-        {
-            GoodsExample goodsExample = new GoodsExample();
-            GoodsExample.Criteria criteria2 = goodsExample.createCriteria();
-            criteria2.andUidEqualTo(userHistory2.get(i).getGoodsUid());
-            goodsinfo1.addAll(goodsMapper.selectByExample(goodsExample));
+        //对天进行排序
+        List<HashMap.Entry<LocalDate, List<Goods>>> sort = new ArrayList<>(tempResult.entrySet());
+        Collections.sort(sort, Comparator.comparing(o -> o.getKey().toString()));
+        for(int i = sort.size()-1; i >=0; i--){
+            HistroyGoodsModel histroyGoodsModel = new HistroyGoodsModel();
+            histroyGoodsModel.setDate(Date.from(sort.get(i).getKey().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            histroyGoodsModel.setGoodsList(sort.get(i).getValue());
+            result.add(histroyGoodsModel);
         }
-
-        ArrayList<HistroyGoodsModel> histroyGoodsModelList = new ArrayList<HistroyGoodsModel>();
-        if(!(goodsinfo1.isEmpty()&&userHistory2.isEmpty()))
-        {
-            int size = goodsinfo1.size();
-            if(size==userHistory2.size());
-            {
-                Date date1 = new Date();
-                Date date2 = new Date();
-                HistroyGoodsModel histroyGoodsModel=new HistroyGoodsModel();
-                ArrayList<Goods> goodsinfo2 = new ArrayList<>();
-                goodsinfo2.add(goodsinfo1.get(size-1));
-                histroyGoodsModel.setDate(userHistory2.get(size-1).getCreateDate());
-                for(int i = size -1;i>0;i--)
-                {
-                    date1=userHistory2.get(i).getCreateDate();
-                    date2=userHistory2.get(i-1).getCreateDate();
-                    if(isSameDate(date1,date2))
-                    {
-                        if(i==1)
-                        {
-                            ArrayList<Goods> tempGL = new ArrayList<>();//****************
-                            tempGL = goodsinfo1;                        //**解决list.add覆盖问题
-                            goodsinfo2.add(tempGL.get(i-1));            //****************
-                            histroyGoodsModel.setGoodsList(goodsinfo2);
-                            HistroyGoodsModel tempHGM = new HistroyGoodsModel();        //****************
-                            tempHGM.setDate(histroyGoodsModel.getDate());               //**解决list.add覆盖问题
-                            tempHGM.setGoodsList(histroyGoodsModel.getGoodsList());     //****************
-                            histroyGoodsModelList.add(tempHGM);
-                        }
-                        else
-                        {
-                            ArrayList<Goods> tempGL = new ArrayList<>();//****************
-                            tempGL = goodsinfo1;                        //**解决list.add覆盖问题
-                            goodsinfo2.add(tempGL.get(i-1));            //****************
-                        }
-                    }
-                    else
-                    {
-                        histroyGoodsModel.setGoodsList(goodsinfo2);
-                        HistroyGoodsModel tempHGM = new HistroyGoodsModel();        //****************
-                        tempHGM.setDate(histroyGoodsModel.getDate());               //**解决list.add覆盖问题
-                        tempHGM.setGoodsList(histroyGoodsModel.getGoodsList());     //****************
-                        histroyGoodsModelList.add(tempHGM);
-                        histroyGoodsModel.setDate(date2);
-                        goodsinfo2.clear();
-                        ArrayList<Goods> tempGL = new ArrayList<>();//****************
-                        tempGL = goodsinfo1;                        //**解决list.add覆盖问题
-                        goodsinfo2.add(tempGL.get(i-1));            //****************
-                        if(i==1)
-                        {
-                            HistroyGoodsModel tempHGM1 = new HistroyGoodsModel();        //****************
-                            tempHGM1.setDate(histroyGoodsModel.getDate());               //**解决list.add覆盖问题
-                            tempHGM1.setGoodsList(histroyGoodsModel.getGoodsList());     //****************
-                            histroyGoodsModelList.add(tempHGM1);
-                        }
-                    }
-                }
-            }
-
-        }
-        return histroyGoodsModelList;
+        return result;
     }
-
-    GoodsReviewMapper goodsReviewMapper;
 
     @Override
     public List<UserAddress> myaddress(String uid){

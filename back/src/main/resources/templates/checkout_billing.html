@@ -170,7 +170,7 @@
                 <div class="container">
                     <div class="row row-rl-0 row-tb-20 row-md-cell">
                         <div class="brand col-md-3 t-xs-center t-md-left valign-middle">
-                            <a href="#" class="logo">
+                            <a th:href="@{/index}" class="logo">
                                 <img th:src="@{/images/logo.png}" alt="" width="250">
                             </a>
                         </div>
@@ -242,8 +242,7 @@
                                                 <th>详细信息</th>
                                                 <th></th>
                                                 <th></th>
-                                                <th></th>
-                                                <th></th>
+                                                <th><button class="btn btn-rounded btn-sm mt-15" style="background-color: rgb(255,102,102);">添加收货信息</button></th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -255,8 +254,9 @@
                                                         <h5 class="title mb-5 t-uppercase" th:text="${address.getProvince()} + · + ${address.getCity()}+ （ + ${address.getDetailAddress()} + ）"></h5>
                                                     </div>
                                                 </td>
+                                                <td></td>
                                                 <td class="col-sm-3 col-md-2 is-hidden-xs-down" style="display: table-cell; vertical-align: middle;">
-                                                    <button class="btn btn-rounded btn-sm" style="background-color: rgb(255,102,102);">编辑</button>
+                                                    <button class="btn btn-rounded btn-sm" style="background-color: rgb(255,102,102);" th:onclick="tryEditAddress([[${address}]])">编辑</button>
                                                 </td>
                                                 <td class="col-sm-1" style="display: table-cell; vertical-align: middle">
                                                     <a th:href="@{/checkout_method(address_id=${address.getId()})}" class="btn btn-lg btn-rounded mr-10">提交支付</a>
@@ -318,7 +318,89 @@
                 </div>
             </div>
             <!-- End Page Container -->
-
+            <div class="modal fade" id="editAddressModal" tabindex="-1" role="dialog" aria-labelledby="editAddressLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                编辑收货地址
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="editReceiverName" class="col-sm-2 control-label">收货人名字</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="editReceiverName"
+                                               placeholder="请输入收货人名字">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editProvince" class="col-sm-2 control-label">省份</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="editProvince" name="province"
+                                               placeholder="请输入收货人所在省份">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editCity" class="col-sm-2 control-label">城市</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="editCity" name="city"
+                                               placeholder="请输入收货人所在城市">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editDetailAddress" class="col-sm-2 control-label">详细地址</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="editDetailAddress" name="detailAddress"
+                                               placeholder="请输入收货人所在详细地址">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editReceiverPhone" class="col-sm-2 control-label">手机/电话</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="editReceiverPhone" name="receiverName"
+                                               placeholder="请输入收货人电话号码">
+                                    </div>
+                                </div>
+                                <div>
+                                    <input type="hidden" id="editAddressId" name="id">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="confirmEditAddress()">
+                                确认修改
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+            <div class="modal fade" id="askResultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                请求结果
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="askResult"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
 
         </main>
         <!-- –––––––––––––––[ END PAGE CONTENT ]––––––––––––––– -->
@@ -482,6 +564,42 @@
     <!-- Custom Template JavaScript                   -->
     <!-- ––––––––––––––––––––––––––––––––––––––––– -->
     <script type="text/javascript" th:src="@{/js/main.js}"></script>
+    <script th:inline="javascript">
+        //编辑地址请求
+        var editAddressInfo;
+        function tryEditAddress(addressInfo) {
+            editAddressInfo = addressInfo;
+            //显示默认的值
+            $("#editReceiverName").val(editAddressInfo.receiverName);
+            $("#editProvince").val(editAddressInfo.province);
+            $("#editCity").val(editAddressInfo.city);
+            $("#editDetailAddress").val(editAddressInfo.detailAddress);
+            $("#editReceiverPhone").val(editAddressInfo.receiverPhone);
+            $("#editAddressModal").modal("show");
+        }
+        function confirmEditAddress() {
+            //判断输入是否为空
+            var str1 = $("#editReceiverName").val().replace(/(^\s*)|(\s*$)/g, '');
+            var str2 = $("#editProvince").val().replace(/(^\s*)|(\s*$)/g, '');
+            var str3 = $("#editCity").val().replace(/(^\s*)|(\s*$)/g, '');
+            var str4 = $("#editDetailAddress").val().replace(/(^\s*)|(\s*$)/g, '');
+            var str5 = $("#editReceiverPhone").val().replace(/(^\s*)|(\s*$)/g, '');
+            if (str1 == '' || str1 == undefined || str1 == null || str2 == '' || str2 == undefined || str2 == null || str3 == '' || str3 == undefined || str3 == null || str4 == '' || str4 == undefined || str4 == null || str5 == '' || str5 == undefined || str5 == null) {
+                alert("输入不能为空");
+            }else{
+                //获取输入框的值
+                editAddressInfo.receiverName = $("#editReceiverName").val();
+                editAddressInfo.province = $("#editProvince").val();
+                editAddressInfo.city = $("#editCity").val();
+                editAddressInfo.detailAddress = $("#editDetailAddress").val();
+                editAddressInfo.receiverPhone = $("#editReceiverPhone").val();
+                $.post("/editAddress", editAddressInfo);
+                $("#askResultModal").modal("show");
+                document.getElementById("askResult").innerText = "修改成功";
+            }
+        }
+    </script>
+
 </body>
 
 </html>

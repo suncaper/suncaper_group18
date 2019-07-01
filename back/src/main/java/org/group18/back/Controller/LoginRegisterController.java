@@ -2,6 +2,8 @@ package org.group18.back.Controller;
 
 
 import org.group18.back.Entity.User;
+import org.group18.back.Model.CartListModel;
+import org.group18.back.Service.CartService;
 import org.group18.back.Service.LoginRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,12 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 public class LoginRegisterController {
     @Autowired
     LoginRegisterService loginRegisterService;
+    @Autowired
+    CartService cartService;
 
     @RequestMapping("/index")
     public String index(Model model, HttpServletRequest request){

@@ -71,237 +71,227 @@
 
 <body id="body" class="wide-layout preloader-active">
 
-     
 
 
 
-    <!--[if lt IE 9]>
-        <p class="browserupgrade alert-error">
-        	You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
-        </p>
-    <![endif]-->
 
-    <noscript>
-        <div class="noscript alert-error">
-            For full functionality of this site it is necessary to enable JavaScript. Here are the <a href="http://www.enable-javascript.com/" target="_blank">
-		 instructions how to enable JavaScript in your web browser</a>.
-        </div>
-    </noscript>
+<!--[if lt IE 9]>
+<p class="browserupgrade alert-error">
+    You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
+</p>
+<![endif]-->
 
-    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
-    <!-- PRELOADER                                 -->
-    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
-    <!-- Preloader -->
-    <div id="preloader" class="preloader">
-        <div class="loader-cube">
-            <div class="loader-cube__item1 loader-cube__item"></div>
-            <div class="loader-cube__item2 loader-cube__item"></div>
-            <div class="loader-cube__item4 loader-cube__item"></div>
-            <div class="loader-cube__item3 loader-cube__item"></div>
-        </div>
+<noscript>
+    <div class="noscript alert-error">
+        For full functionality of this site it is necessary to enable JavaScript. Here are the <a href="http://www.enable-javascript.com/" target="_blank">
+        instructions how to enable JavaScript in your web browser</a>.
     </div>
-    <!-- End Preloader -->
-    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
-    <!-- WRAPPER                                   -->
-    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
-    <div id="pageWrapper" class="page-wrapper">
-        <!-- –––––––––––––––[ HEADER ]––––––––––––––– -->
-        <header id="mainHeader" class="main-header">
+</noscript>
 
-            <!-- Top Bar -->
-            <div class="top-bar bg-gray">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-4 is-hidden-sm-down">
-                            <ul class="nav-top nav-top-left list-inline t-left">
-                                <li><a href="terms_conditions.html"><i class="fa fa-question-circle"></i>Discounts Guide</a>
-                                </li>
-                                <li><a href="faq.html"><i class="fa fa-support"></i>Customer Assistance</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-12 col-md-8">
-                            <ul class="nav-top nav-top-right list-inline t-xs-center t-md-right">
-                                <li>
-                                    <a href="#"><i class="fa fa-flag-usa"></i>English <i class="fa fa-caret-down"></i></a>
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-flag-usa"></i>English</a>
-                                        </li>
-                                        <li><a href="#"><i class="fa fa-flag-fra"></i>France</a>
-                                        </li>
-                                        <li><a href="#"><i class="fa fa-flag-ger"></i>Germany</a>
-                                        </li>
-                                        <li><a href="#"><i class="fa fa-flag-rus"></i>Russia</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-usd"></i>USD <i class="fa fa-caret-down"></i></a>
-                                    <ul>
-                                        <li><a href="#">USD - US Dollar</a>
-                                        </li>
-                                        <li><a href="#">EUR - Euro</a>
-                                        </li>
-                                        <li><a href="#">CNY - Chinese Yuan</a>
-                                        </li>
-                                        <li><a href="#">RUB - Russian Ruble</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li th:if="${!isSignin}"><a th:href="@{/signin_page}"><i class="fa fa-lock"></i>Sign In</a></li>
-                                <li th:if="${!isSignin}"><a th:href="@{/signup_page}"><i class="fa fa-user"></i>Sign Up</a></li>
-                                <li th:if="${isSignin}">
-                                    <a href="#"><i class="fa fa-user"></i>你好,<span th:text="${user.getUserName()}"></span></a>
-                                    <ul>
-                                        <li><a th:href="@{/myinfo}">我的信息</a></li>
-                                        <li><a th:href="@{/Cart}">我的购物车</a></li>
-                                        <li th:if="${!user.getIsSeller()}"><a href="#">申请店铺</a></li>
-                                        <li th:if="${user.getIsSeller()}"><a href="#">我的店铺</a></li>
-                                        <li><a th:href="@{/signout}">退出登陆</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<!-- PRELOADER                                 -->
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<!-- Preloader -->
+<div id="preloader" class="preloader">
+    <div class="loader-cube">
+        <div class="loader-cube__item1 loader-cube__item"></div>
+        <div class="loader-cube__item2 loader-cube__item"></div>
+        <div class="loader-cube__item4 loader-cube__item"></div>
+        <div class="loader-cube__item3 loader-cube__item"></div>
+    </div>
+</div>
+<!-- End Preloader -->
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<!-- WRAPPER                                   -->
+<!-- ––––––––––––––––––––––––––––––––––––––––– -->
+<div id="pageWrapper" class="page-wrapper">
+    <!-- –––––––––––––––[ HEADER ]––––––––––––––– -->
+    <header id="mainHeader" class="main-header">
+        <!-- Top Bar -->
+        <div class="top-bar bg-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4 is-hidden-sm-down">
+                        <ul class="nav-top nav-top-left list-inline t-left">
+                            <li><a href="terms_conditions.html"><i class="fa fa-question-circle"></i>Discounts Guide</a>
+                            </li>
+                            <li><a href="faq.html"><i class="fa fa-support"></i>Customer Assistance</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-12 col-md-8">
+                        <ul class="nav-top nav-top-right list-inline t-xs-center t-md-right">
+                            <li>
+                                <a href="#"><i class="fa fa-flag-usa"></i>English <i class="fa fa-caret-down"></i></a>
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-flag-usa"></i>English</a>
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-flag-fra"></i>France</a>
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-flag-ger"></i>Germany</a>
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-flag-rus"></i>Russia</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-usd"></i>USD <i class="fa fa-caret-down"></i></a>
+                                <ul>
+                                    <li><a href="#">USD - US Dollar</a>
+                                    </li>
+                                    <li><a href="#">EUR - Euro</a>
+                                    </li>
+                                    <li><a href="#">CNY - Chinese Yuan</a>
+                                    </li>
+                                    <li><a href="#">RUB - Russian Ruble</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li th:if="${!isSignin}"><a th:href="@{/signin_page}"><i class="fa fa-lock"></i>Sign In</a></li>
+                            <li th:if="${!isSignin}"><a th:href="@{/signup_page}"><i class="fa fa-user"></i>Sign Up</a></li>
+                            <li th:if="${isSignin}">
+                                <a href="#"><i class="fa fa-user"></i>你好,<span th:text="${user.getUserName()}"></span></a>
+                                <ul>
+                                    <li><a th:href="@{/myinfo}">我的信息</a></li>
+                                    <li><a th:href="@{/Cart}">我的购物车</a></li>
+                                    <li th:if="${!user.getIsSeller()}"><a href="#">申请店铺</a></li>
+                                    <li th:if="${user.getIsSeller()}"><a href="#">我的店铺</a></li>
+                                    <li><a th:href="@{/signout}">退出登陆</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
-            <!-- End Top Bar -->
+        </div>
+        <!-- End Top Bar -->
 
-            <!-- Header Header -->
-            <div class="header-header bg-white">
-                <div class="container">
-                    <div class="row row-rl-0 row-tb-20 row-md-cell">
-                        <div class="brand col-md-3 t-xs-center t-md-left valign-middle">
-
-                            <a th:href="@{/index}" class="logo">
-                                <img th:src="@{/images/logo.png}" alt="" width="250">
-                            </a>
-                        </div>
-                        <div class="header-search col-md-9">
-                            <div class="row row-tb-10 ">
-                                <div class="col-sm-8">
-                                    <form class="search-form">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control input-lg search-input" placeholder="Enter Keywork Here ..." required="required">
-                                            <div class="input-group-btn">
-                                                <div class="input-group">
-                                                    <select class="form-control input-lg search-select">
-                                                        <option>Select Your Category</option>
-                                                        <option>Deals</option>
-                                                        <option>Coupons</option>
-                                                        <option>Discounts</option>
-                                                    </select>
-                                                    <div class="input-group-btn">
-                                                        <button type="submit" class="btn btn-lg btn-search btn-block">
-                                                            <i class="fa fa-search font-16"></i>
-                                                        </button>
-                                                    </div>
+        <!-- Header Header -->
+        <div class="header-header bg-white">
+            <div class="container">
+                <div class="row row-rl-0 row-tb-20 row-md-cell">
+                    <div class="brand col-md-3 t-xs-center t-md-left valign-middle">
+                        <a th:href="@{/index}" class="logo">
+                            <img th:src="@{/images/logo.png}" alt="" width="250">
+                        </a>
+                    </div>
+                    <div class="header-search col-md-9">
+                        <div class="row row-tb-10 ">
+                            <div class="col-sm-8">
+                                <form class="search-form">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-lg search-input" placeholder="Enter Keywork Here ..." required="required">
+                                        <div class="input-group-btn">
+                                            <div class="input-group">
+                                                <select class="form-control input-lg search-select">
+                                                    <option>Select Your Category</option>
+                                                    <option>Deals</option>
+                                                    <option>Coupons</option>
+                                                    <option>Discounts</option>
+                                                </select>
+                                                <div class="input-group-btn">
+                                                    <button type="submit" class="btn btn-lg btn-search btn-block">
+                                                        <i class="fa fa-search font-16"></i>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
-                                <div class="col-sm-4 t-xs-center t-md-right">
-                                    <div class="header-cart">
-                                        <a th:href="@{/Cart}">
-                                            <span class="icon lnr lnr-cart"></span>
-                                            <div><span class="cart-number">0</span>
-                                            </div>
-                                            <span class="title">Cart</span>
-                                        </a>
                                     </div>
+                                </form>
+                            </div>
+                            <div class="col-sm-4 t-xs-center t-md-right">
+                                <div class="header-cart">
+                                    <a th:href="@{/Cart}">
+                                        <span class="icon lnr lnr-cart"></span>
+                                        <!--<div><span class="cart-number">0</span>-->
+                                        <!--</div>-->
+                                        <span class="title">Cart</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- End Header Header -->
+        </div>
+        <!-- End Header Header -->
 
-            <!-- Header Menu -->
-            <div class="header-menu bg-blue">
-                <div class="container">
-                    <nav class="nav-bar">
-                        <div class="nav-header">
+        <!-- Header Menu -->
+        <div class="header-menu bg-blue">
+            <div class="container">
+                <nav class="nav-bar">
+                    <div class="nav-header">
                             <span class="nav-toggle" data-toggle="#header-navbar">
 		                        <i></i>
 		                        <i></i>
 		                        <i></i>
 		                    </span>
-                        </div>
-                        <div id="header-navbar" class="nav-collapse">
-                            <ul class="nav-menu">
-                                <li>
-                                    <a th:href="index">首页</a>
-                                </li>
-                                <li>
-                                    <a th:href="myinfo">我的信息</a>
-                                </li>
-                                <li>
-                                    <a th:href="myorder">我的订单</a>
-                                </li>
-                                <li class="active">
-                                    <a th:href="myhistory">我的足迹</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/points}">积分商城</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
+                    </div>
+                    <div id="header-navbar" class="nav-collapse">
+                        <ul class="nav-menu">
+                            <li>
+                                <a th:href="@{/index}">首页</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/myinfo}">我的信息</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/myorder}">我的订单</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/myhistory}">我的足迹</a>
+                            </li>
+                            <li class="active">
+                                <a th:href="@{/points}">积分商城</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
             </div>
-            <!-- End Header Menu -->
+        </div>
+        <!-- End Header Menu -->
 
-        </header>
+    </header>
         <!-- –––––––––––––––[ HEADER ]––––––––––––––– -->
 
         <!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
         <main id="mainContent" class="main-content">
-            <!-- Page Container -->
-            <div class="page-container ptb-60">
+            <div class="page-container ptb-10">
                 <div class="container">
-                    <section class="stores-area stores-area-v1">
-                        <h3 class="h-title mb-40 t-uppercase">我的历史</h3>
-                        <li th:if="${isEmpty}"><h3>您还没有浏览过商品！</h3></li>
-                        <div th:if="${!isEmpty}">
-                            <div th:each="each1,each1Stat:${list}" class="row row-rl-15 row-tb-15 t-center">
-                                <p th:text="${#dates.format(each1.getDate(),'MM月dd日')}" class="col-xs-12"></p>
-                                <div th:each="each2:${list.get(each1Stat.index).getGoodsList()}" class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                                    <a href="#" class="panel is-block">
-                                        <div class="embed-responsive embed-responsive-4by3">
-                                            <div class="store-logo">
-                                                <img th:src="${each2.getImgUrl()}" alt="">
+                    <section class="section latest-deals-area ptb-30">
+                        <h3 class="h-title mb-40 t-uppercase">积分商城</h3>
+                        <div th:each="list1:${list}">
+                            <header th:if="!${list1.getGoodsList().isEmpty()}" class="panel ptb-15 prl-20 pos-r mb-30">
+                                <h3 class="section-title font-18" th:text="${list1.getShop().getShopName()}"></h3>
+                                <a class="btn btn-o btn-xs pos-a right-10 pos-tb-center" th:href="@{/store/shop(shopUid=${list1.getShop().getUid()})}">进入店铺</a>
+                            </header>
+                            <div class="row row-masnory row-tb-20">
+                                <div th:each="list2:${list1.getGoodsList()}" class="col-sm-6 col-lg-4">
+                                    <div class="deal-single panel">
+                                        <div align="center">
+                                            <img th:src="${list2.getImgUrl()}" alt="">
+                                        </div>
+                                        <div class="bg-white pt-20 pl-20 pr-15">
+                                            <div class="pr-md-10">
+                                                <h3 class="deal-title mb-10">
+                                                    <a href="#" th:text="${list2.getGoodsName()}" >商品名</a>
+                                                </h3>
+                                                <p class="text-muted mb-20" th:text="${list2.getDescriptions()}">描述</p>
+                                            </div>
+                                            <div class="deal-price pos-r mb-15">
+                                                <h3 class="price ptb-5 text-right" th:text="${list2.getPoints()}+'Points'"></h3>
                                             </div>
                                         </div>
-                                        <h6 class="store-name ptb-10" th:text="${each2.getGoodsName()}"></h6>
-                                        <h5 class="price-sale"th:text="${each2.getDiscountPrice()}"></h5>
-                                        <h5 class="price color-green"th:text="${each2.getPrice()}"></h5>
-                                    </a>
-                                    <br>
+                                    </div>
                                 </div>
                             </div>
+                            <br>
                         </div>
-                        <!--<div class="page-pagination text-center mt-30 p-10 panel">-->
-                            <!--<nav>-->
-                                <!--&lt;!&ndash; Page Pagination &ndash;&gt;-->
-                                <!--<ul class="page-pagination">-->
-                                    <!--<li><a class="page-numbers previous" th:if="${currentPage} ne 1" th:href="@{/store/getStoreList(page=${currentPage}-1)}">Previous</a>-->
-                                    <!--</li>-->
-                                    <!--<li th:each="number:${pageNumberList}">-->
-                                        <!--<a class="page-numbers" th:if="${number} ne ${currentPage}" th:text="${number}" th:href="@{/store/getStoreList(page=${number})}"></a>-->
-                                        <!--<span th:if="${number} eq ${currentPage}" class="page-numbers current" th:text="${number}"></span>-->
-                                    <!--</li>-->
-                                    <!--<li><a class="page-numbers next" th:if="(${currentPage} ne ${pageAmount}) and (${currentPage} ne 1)" th:href="@{/store/getStoreList(page=${currentPage}+1)}">Next</a>-->
-                                    <!--</li>-->
-                                <!--</ul>-->
-                                <!--&lt;!&ndash; End Page Pagination &ndash;&gt;-->
-                            <!--</nav>-->
-                        <!--</div>-->
                     </section>
                 </div>
             </div>
-            <!-- End Page Container -->
+
+
         </main>
         <!-- –––––––––––––––[ END PAGE CONTENT ]––––––––––––––– -->
         <section class="footer-top-area pt-70 pb-30 pos-r bg-blue">

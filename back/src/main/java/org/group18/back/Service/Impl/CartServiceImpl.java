@@ -104,11 +104,6 @@ public class CartServiceImpl implements CartService{
         cartList.get(0).setId(cartList.get(0).getId());
         cartList.get(0).setAmount(cartList.get(0).getAmount() + 1);
         cartMapper.updateByPrimaryKey(cartList.get(0));
-//        cart.setAmount(cart.getAmount() + 1);
-//        Cart cart1 = new Cart();
-//        cart1.setId(cart.getId());
-//        cart1.setAmount(cart.getAmount());
-//        cartMapper.updateByPrimaryKey(cart1);
     }
 
     @Override
@@ -119,6 +114,7 @@ public class CartServiceImpl implements CartService{
         criteria.andUserUidEqualTo(user_uid);
         criteria.andSpecificationUidEqualTo(specification_uid);
         List<Cart> cartList = cartMapper.selectByExample(cartExample);
+
 
         cartList.get(0).setId(cartList.get(0).getId());
         cartList.get(0).setAmount(cartList.get(0).getAmount() - 1);

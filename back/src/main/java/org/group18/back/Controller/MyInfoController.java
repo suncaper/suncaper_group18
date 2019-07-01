@@ -56,6 +56,7 @@ public class  MyInfoController {
             return "myinfo";
         }
     }
+
     @RequestMapping("/myorder")
     public String myOrder(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page) {
         //检查是否已经登陆
@@ -98,7 +99,6 @@ public class  MyInfoController {
         } else {
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
-
             //1从页面拿到查看天数days,然后拉取user_history表找对应uid且date.now-create_date<days的数据
             //2用得到的goods_uid去goods表中拉取数据。
             List<HistroyGoodsModel> historygoodslist = myInfoService.getHistoryGoods(user.getUid());
@@ -140,5 +140,4 @@ public class  MyInfoController {
         myInfoService.editUserAddress(userAddress);
         return "redirect:/myinfo";
     }
-
 }
