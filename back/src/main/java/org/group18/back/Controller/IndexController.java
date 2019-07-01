@@ -2,6 +2,7 @@ package org.group18.back.Controller;
 
 import org.group18.back.Entity.Category;
 import org.group18.back.Entity.Goods;
+import org.group18.back.Entity.Shop;
 import org.group18.back.Entity.User;
 import org.group18.back.Model.GoodsDeatilInfoModel;
 import org.group18.back.Service.CartService;
@@ -9,6 +10,7 @@ import org.group18.back.Service.GoodsService;
 
 import org.group18.back.Service.Impl.CategoryService;
 import org.group18.back.Service.LoginRegisterService;
+import org.group18.back.Service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +34,9 @@ public class IndexController {
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    StoreService storeService;
 
     @Resource
     private GoodsService goodsService;
@@ -66,9 +71,11 @@ public class IndexController {
         List<Category> categoryList = categoryService.getCategorys(category_uid);
         model.addAttribute("CategoryList",categoryList);
 
-        List<Goods> indexGoods = goodsService.getIndexGoods();
-        model.addAttribute("indexGoods",indexGoods);
+        List<Goods> indexGoods = goodsService.selectAllGoodsByClausedesc();
+        model.addAttribute("indexgoods",indexGoods);
 
+        List<Shop> indexShops = storeService.selectAllShop();
+        model.addAttribute("indexshops",indexShops);
         return "index";
     }
 

@@ -413,4 +413,7 @@
       points = #{points,jdbcType=INTEGER}
     where uid = #{uid,jdbcType=INTEGER}
   </update>
+  <select id="selectAllGoodsByClause" resultMap="BaseResultMap">
+    select * from t_goods order by sales_volume desc ;
+  </select>
 </mapper>

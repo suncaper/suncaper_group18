@@ -100,23 +100,11 @@ public class GoodsServiceImpl implements GoodsService {
         }
     }
 
+
     @Override
-    public List<Goods> getIndexGoods() {
-        Shop shop = new Shop();
-        Goods goods = new Goods();
-        List<Shop> ShopResult = shopMapper.selectAllShop();
-        for (int i=1;i<shopMapper.getAllShopCount();i++)
-        {
-            shop.setUid(ShopResult.get(i).getUid());
-            goods.setUid(ShopResult.get(i).getUid());
-        }
-
-        GoodsExample goodsExample = new GoodsExample();
-        goodsExample.createCriteria().andUidEqualTo(shop.getUid()).andUidEqualTo(goods.getUid());
-        goodsExample.setOrderByClause("sales_volume desc");
-
-        List<Goods> result = goodsMapper.selectByExample(goodsExample);
-        return result;
+    public List<Goods> selectAllGoodsByClausedesc() {
+        List<Goods> getAllgoods = goodsMapper.selectAllGoodsByClause();
+        return getAllgoods;
     }
 
 

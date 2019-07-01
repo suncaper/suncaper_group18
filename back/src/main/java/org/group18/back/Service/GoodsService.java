@@ -14,5 +14,5 @@ import java.util.List;
 public interface GoodsService {
     public GoodsDeatilInfoModel getGoods(int goods_uid);
     public void addCart(Cart cart, String user_uid, Integer goods_uid, Integer specification_uid, Integer counts);
-    public List<Goods> getIndexGoods ();
+    public List<Goods> selectAllGoodsByClausedesc();
 }
