@@ -1,10 +1,7 @@
 package org.group18.back.Controller;
 
 import org.apache.ibatis.annotations.Param;
-import org.group18.back.Entity.Cart;
-import org.group18.back.Entity.Goods;
-import org.group18.back.Entity.GoodsSpecification;
-import org.group18.back.Entity.User;
+import org.group18.back.Entity.*;
 import org.group18.back.Model.CartListModel;
 import org.group18.back.Model.GoodsDeatilInfoModel;
 import org.group18.back.Service.CartService;
@@ -21,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -49,10 +47,9 @@ public class GoodsController {
 
         }
 
-//        Goods goods = goodsService.getGood(goods_uid);
-//        model.addAttribute("goods",goods);
 
-        GoodsDeatilInfoModel goodsDeatilInfoModel = goodsService.getGoods(goods_uid);
+
+        /*GoodsDeatilInfoModel goodsDeatilInfoModel = goodsService.getGoods(goods_uid);
         model.addAttribute("shop",goodsDeatilInfoModel);
         model.addAttribute("goodsReview",goodsDeatilInfoModel);
         model.addAttribute("goods",goodsDeatilInfoModel);
@@ -61,7 +58,7 @@ public class GoodsController {
         model.addAttribute("recommendGoods",recommendGoods);
 
         List<GoodsSpecification> specifications = goodsDeatilInfoModel.getGoodsSpecification();
-        model.addAttribute("specifiCation",specifications);
+        model.addAttribute("specifiCation",specifications);*/
 
         return "goods";
     }
@@ -69,11 +66,15 @@ public class GoodsController {
 
 //    @RequestMapping(value = "/GoodsaddCart", method = RequestMethod.POST)
 //    @ResponseBody
-//    public String addCart(String user_uid, int goods_uid, int specification_uid, int counts){
-//        Cart cart = cartService.getCart(user_uid, specification_uid);
-//        cartService.addAndUpdateCart(cart, user_uid, goods_uid, specification_uid, counts);
-//        return "goods";
-//    }
+    @RequestMapping(value = "/GoodsAddCart", method = RequestMethod.POST)
+    public String addCart(Model model, HttpServletRequest request,Cart cart, String user_uid, Integer goods_uid, Integer specification_uid, Integer counts){
+        GoodsDeatilInfoModel goodsDeatilInfoModel = goodsService.getGoods(goods_uid);
+        model.addAttribute("counts",goodsDeatilInfoModel);
+        model.addAttribute("specification_uid",goodsDeatilInfoModel);
+
+        return "goods";
+    }
+
 
 
 }
