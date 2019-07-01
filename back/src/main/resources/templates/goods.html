@@ -217,55 +217,36 @@
         <div class="page-container ptb-60 hm_woo_page clearfix">
             <div class="internal_post_con clearfix">
                 <div class="hm_shop_page clearfix entry-content">
-                    <div class="shop_product_wrapper clearfix">
+                    <div class="shop_product_wrapper clearfix" style="padding: 0;">
                         <div class="product">
-                            <div class="content">
+                            <div class="content container">
+                                <div><h3 class="h-title mb-40 t-uppercase"><i class="fa fa-home"></i><a th:href="@{/store/shop(shopUid=${goodsInfo.getShop().getUid()})}" th:text="${goodsInfo.getShop().getShopName()}"></a></h3></div>
                                 <span class="onsale">Sale!</span>
                                 <div class="single_product_slider">
-                                    <span class="sale_new"><span class="text">Sale!</span></span>
+                                    <span class="sale_new" th:if="${goodsInfo.getGoods().getPrice() gt goodsInfo.getGoods().getDiscountPrice()}"><span class="text">Sale!</span></span>
                                     <div class="thumbs_gall_slider_con content_thumbs_gall gall_arrow2">
                                         <div class="thumbs_gall_slider_larg owl_abs_arr">
                                             <div class="item">
-                                                <a class="feature_inner_ling hm_commerce_slider" th:href="@{/images/shop/product5-a-870x1110.jpg}">
-                                                    <img th:src="@{/images/shop/product5-a-500x600.jpg}" alt="Main Product Image">
+                                                <a class="feature_inner_ling hm_commerce_slider" th:href="${goodsInfo.getGoods().getImgUrl()}">
+                                                    <img th:src="${goodsInfo.getGoods().getImgUrl()}">
                                                 </a>
                                             </div>
-                                            <div class="item">
-                                                <a class="feature_inner_ling hm_commerce_slider" th:href="@{/images/shop/product5-b-870x1110.jpg}">
-                                                    <img th:src="@{/images/shop/product5-b-500x600.jpg}" alt="1">
-                                                </a>
-                                            </div>
-                                            <div class="item">
-                                                <a class="feature_inner_ling hm_commerce_slider" th:href="@{/images/shop/product5-d-870x1110.jpg}">
-                                                    <img th:src="@{/images/shop/product5-d-500x600.jpg}" alt="2">
-                                                </a>
-                                            </div>
-                                            <div class="item">
-                                                <a class="feature_inner_ling hm_commerce_slider" th:href="@{/images/shop/product5-e-870x1110.jpg}">
-                                                    <img th:src="@{/images/shop/product5-e-500x600.jpg}" alt="3">
+                                            <div class="item" th:each="goodsDetailImg : ${goodsInfo.getGoodsDetailImg()}">
+                                                <a class="feature_inner_ling hm_commerce_slider" th:href="${goodsDetailImg}">
+                                                    <img th:src="${goodsDetailImg}">
                                                 </a>
                                             </div>
                                         </div>
 
                                         <div class="gall_thumbs">
                                             <div class="item">
-                                                <a class="gall_thumb_i" th:href="@{/images/shop/product5-a-870x1110.jpg}">
-                                                    <img th:src="@{/images/shop/product5-a-150x150.jpg}" alt="Main Product Image">
+                                                <a class="gall_thumb_i" th:href="${goodsInfo.getGoods().getImgUrl()}">
+                                                    <img th:src="${goodsInfo.getGoods().getImgUrl()}">
                                                 </a>
                                             </div>
-                                            <div class="item">
-                                                <a class="gall_thumb_i" th:href="@{/images/shop/product5-b-870x1110.jpg}">
-                                                    <img th:src="@{/images/shop/product5-b-150x150.jpg}" alt="1">
-                                                </a>
-                                            </div>
-                                            <div class="item">
-                                                <a class="gall_thumb_i" th:href="@{/images/shop/product5-d-870x1110.jpg}">
-                                                    <img th:src="@{/images/shop/product5-d-150x150.jpg}" alt="2">
-                                                </a>
-                                            </div>
-                                            <div class="item">
-                                                <a class="gall_thumb_i" th:href="@{/images/shop/product5-e-870x1110.jpg}">
-                                                    <img th:src="@{/images/shop/product5-e-150x150.jpg}" alt="3">
+                                            <div class="item" th:each="goodsDetailImg : ${goodsInfo.getGoodsDetailImg()}">
+                                                <a class="gall_thumb_i" th:href="${goodsDetailImg}">
+                                                    <img th:src="${goodsDetailImg}">
                                                 </a>
                                             </div>
                                         </div>
@@ -275,38 +256,38 @@
                                 <!-- End single_product_slider -->
 
                                 <div class="single_product_details">
-                                    <h1 class="product_title single_product_title">Tee Jeans</h1>
+                                    <h1 class="product_title single_product_title" th:text="${goodsInfo.getGoods().getGoodsName()}">商品名称</h1>
                                     <div class="shopping-commerce-product-rating">
                                         <div class="star-rating" title="Rated 5 out of 5">
                                             <span style="width:100%"></span>
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="single_product_price_con clearfix">
-                                            <del><span class="amount"><span>$</span>240.00</span></del>
-                                            <ins><span class="amount"><span>$</span>220.00</span></ins>
+                                        <div th:if="${payWay} eq 'money'" class="single_product_price_con clearfix">
+                                            <del th:if="${goodsInfo.getGoods().getPrice() gt goodsInfo.getGoods().getDiscountPrice()}" th:text="'¥'+${goodsInfo.getGoods().getPrice()}"></del>
+                                            <ins th:if="(${goodsInfo.getGoods().getPrice() gt goodsInfo.getGoods().getDiscountPrice()}) or (${goodsInfo.getGoods().getPrice() eq goodsInfo.getGoods().getDiscountPrice()})" th:text="'¥'+${goodsInfo.getGoods().getDiscountPrice()}"></ins>
+                                        </div>
+                                        <div th:if="${payWay} eq 'points'" class="single_product_price_con clearfix">
+                                            <ins th:text="'积分兑换：@'+${goodsInfo.getGoods().getPoints()}"></ins>
                                         </div>
                                     </div>
                                     <div class="single_product_desc">
-                                        <p>There are many variations of passages of Lorem Ipsum text available, but the majority have suffered alteration in some form, by injected humour of this randomised words which don’t look even slightly believable There are many variations of passages of Lorem Ipsum available.</p>
-                                        <ul class="list_icon check_arrows clearfix">
-                                            <li><span class="list-arr"><i class="ico-arrow-right5"></i></span>High Quality Screen Print</li>
-                                            <li><span class="list-arr"><i class="ico-arrow-right5"></i></span>Print Between Shoulders</li>
-                                            <li><span class="list-arr"><i class="ico-arrow-right5"></i></span>Printed Internal Label Detail</li>
-                                            <li><span class="list-arr"><i class="ico-arrow-right5"></i></span>Crew Neck Collar</li>
-                                        </ul>
+                                        <p th:text="${goodsInfo.getGoods().getDescriptions()}"></p>
+                                        <p>商品规格选择：</p>
+                                        <form>
+                                            <input th:onclick="chooseSpecification([[${(specification.getUid())}]])" th:each="specification : ${goodsInfo.getGoodsSpecification()}" type="radio" th:name="${goodsInfo.getGoods().getUid()}" th:value="${specification.getUid()}" th:text="${specification.getSpecificationName()}+' '"/>
+                                        </form>
                                     </div>
 
                                     <form class="cart" method="post" enctype='multipart/form-data'>
                                         <div class="quantity buttons_added clearfix">
                                             <div class="quantity_controll_con">
                                                 <input type="button" class="quantity_controll minus" value="-">
-                                                <input type="number" step="1" min="1" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" />
+                                                <input type="number" step="1" min="1" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" id="goodsAmount"/>
                                                 <input type="button" class="quantity_controll plus" value="+">
                                             </div>
                                         </div>
-                                        <input type="hidden" name="add-to-cart" value="2549" />
-                                        <button type="submit" class="single_add_to_cart_button button alt">Add to cart</button>
+                                        <button class="single_add_to_cart_button button alt" th:onclick="addToCart([[${goodsInfo.getGoods().getUid()}]], [[${payWay}]])">添加到购物车</button>
                                     </form>
                                     <!-- End Form -->
 
@@ -337,57 +318,38 @@
                                     <nav>
                                         <ul class="tabs-navi">
                                             <li class="description_tab">
-                                                <a href="#" data-content="tab-description">Description</a>
-                                            </li>
-                                            <li class="additional_information_tab">
-                                                <a href="#" data-content="tab-additional_information">Additional Information</a>
+                                                <a href="#" data-content="tab-description">商品详情</a>
                                             </li>
                                             <li class="reviews_tab">
-                                                <a href="#" data-content="tab-reviews">Reviews (1)</a>
+                                                <a href="#" data-content="tab-reviews">商品评论<span th:text="'('+${goodsInfo.getGoodsReviewList().size()}+')'"></span></a>
                                             </li>
                                         </ul>
                                     </nav>
 
                                     <ul class="tabs-body">
                                         <li data-content="tab-description">
-                                            <h2>Product Description</h2>
-                                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour of this randomised words which don’t look even slightly believable There are many variations of passages of Lorem Ipsum available.</p>
+                                            <h2>商品详情</h2>
+                                            <p th:text="${goodsInfo.getGoods().getDescriptions()}"></p>
                                         </li>
-
-                                        <li data-content="tab-additional_information">
-                                            <h2>Additional Information</h2>
-                                            <table class="shop_attributes">
-                                                <tr>
-                                                    <th>Weight</th>
-                                                    <td class="product_weight">100 lbs</td>
-                                                </tr>
-                                                <tr class="alt">
-                                                    <th>Dimensions</th>
-                                                    <td class="product_dimensions">110 x 56 x 70 in</td>
-                                                </tr>
-                                            </table>
-                                        </li>
-
                                         <li data-content="tab-reviews">
                                             <div id="reviews">
-
                                                 <div id="comments">
-                                                    <h2>1 Review For <span>Tee Jeans</span></h2>
+                                                    <h2><span th:text="${goodsInfo.getGoodsReviewList().size()}"></span> 条评论</h2>
                                                     <ol class="commentlist">
-                                                        <li>
+                                                        <div th:if="${goodsInfo.getGoodsReviewList().size() eq 0}"><p>暂时还没有评论</p></div>
+                                                        <li th:if="${goodsInfo.getGoodsReviewList().size() ne 0}" th:each="review:${goodsInfo.getGoodsReviewList()}">
                                                             <div id="comment-1" class="comment_container">
-                                                                <img alt='' th:src='@{/images/shop/avatar1-60x60.jpg}' class='avatar' height='60' width='60' />
                                                                 <div class="comment-text">
 
                                                                     <div class="star-rating" title="Rated 5 out of 5">
                                                                         <span style="width:100%"></span>
                                                                     </div>
 
-                                                                    <p class="meta"> <strong>John Doe</strong> &ndash;
-                                                                        <time datetime="2017-01-31T09:28:13+00:00">January 31, 2017</time>
+                                                                    <p class="meta"> <strong th:text="'用户'+${review.getUserUid()}"></strong> &nbsp;
+                                                                        <time th:text="${#dates.format(review.getCreateDate(),'MM月dd日')}">评论日期</time>
                                                                         : </p>
                                                                     <div class="description">
-                                                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour of this randomised words which don’t look even slightly believable There are many variations of passages of Lorem Ipsum available.</p>
+                                                                        <p th:text="${review.getReview()}">商品评论</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -407,62 +369,29 @@
                             <div class="content_section hm_woo_related bg_gray2">
                                 <div class="content content_spacer clearfix">
                                     <div class="container shop_related_title">
-                                        <h2>Related Products</h2>
+                                        <h2>相似商品</h2>
                                     </div>
                                     <div class="related products">
-                                        <ul class="products">
-
-                                            <li class="product">
+                                        <div th:if="${goodsInfo.getRecommendGoods().size()==0}"><p>暂时没有推荐的商品，期待店家上新吧</p></div>
+                                        <ul class="products" th:if="${goodsInfo.getRecommendGoods().size()!=0}">
+                                            <li class="product" th:each="recommendsGoods : ${goodsInfo.getRecommendGoods()}">
                                                 <div class="add2cart_slide">
                                                     <div class="add2cart_image">
                                                         <a href="#" class="add2cart_img">
-                                                            <span class="sale_new"><span class="text">Sale!</span></span>
+                                                            <span class="sale_new" th:if="${recommendsGoods.getPrice() gt recommendsGoods.getDiscountPrice()}"><span class="text">Sale!</span></span>
                                                             <span class="add2cart_zoom"><i class="ico-plus10"></i></span>
-                                                            <img th:src="@{/images/shop/product8-a-500x600.jpg}" alt="Vintage Jeans">
+                                                            <img th:src="${recommendsGoods.getImgUrl()}" alt="Vintage Jeans">
                                                         </a>
                                                     </div>
                                                     <div class="add2cart_details">
                                                         <div class="con_cont">
-                                                            <a class="add2cart_prod_name" href="#">Vintage Jeans</a>
+                                                            <a class="add2cart_prod_name" href="#" th:text="${recommendsGoods.getGoodsName()}">商品名称</a>
                                                             <span class="price add2cart_prod_price">
-                                                            <del><span class="amount"><span>$</span>39.00</span></del>
-                                                            <ins><span class="amount"><span>$</span>30.00</span></ins>
-                                                        </span>
+                                                                <del th:if="${recommendsGoods.getPrice() gt recommendsGoods.getDiscountPrice()}" th:text="'¥'+${recommendsGoods.getPrice()}"></del>
+                                                                <ins th:if="(${recommendsGoods.getPrice() gt recommendsGoods.getDiscountPrice()}) or (${recommendsGoods.getPrice() eq recommendsGoods.getDiscountPrice()})" th:text="'¥'+${recommendsGoods.getDiscountPrice()}"></ins>
+                                                            </span>
                                                             <div class="hm_rating_con clearfix">
                                                                 <div class="star-rating" title="Rated 2 out of 5">
-                                                                    <span style="width:40%"></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="add2cart_buttons clearfix">
-                                                            <a href="#" class="pro_add2cart_add add2cart_btn_ajax">
-                                                                <i class="refresh_loader ico-refresh4"></i>
-                                                                <i class="hm_cart_icon ico-heart4"></i>
-                                                                <i class="hm_cart_added ico-check3"></i>
-                                                                <span>Add to cart</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-
-                                            <li class="product">
-                                                <div class="add2cart_slide">
-                                                    <div class="add2cart_image">
-                                                        <a href="#" class="add2cart_img">
-                                                            <span class="hm_new_prod">New</span>
-                                                            <span class="add2cart_zoom"><i class="ico-plus10"></i></span>
-                                                            <img th:src="@{/images/shop/product2-a-500x600.jpg}" alt="Adidas Hoodie">
-                                                        </a>
-                                                    </div>
-                                                    <div class="add2cart_details">
-                                                        <div class="con_cont">
-                                                            <a class="add2cart_prod_name" href="#">Adidas Hoodie</a>
-                                                            <span class="price add2cart_prod_price">
-                                                            <span class="amount"><span>$</span>156.00</span>
-                                                        </span>
-                                                            <div class="hm_rating_con clearfix">
-                                                                <div class="star-rating" title="Rated 5 out of 5">
                                                                     <span style="width:100%"></span>
                                                                 </div>
                                                             </div>
@@ -472,76 +401,12 @@
                                                                 <i class="refresh_loader ico-refresh4"></i>
                                                                 <i class="hm_cart_icon ico-heart4"></i>
                                                                 <i class="hm_cart_added ico-check3"></i>
-                                                                <span>Add to cart</span>
+                                                                <span>添加到购物车</span>
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </li>
-
-                                            <li class="product">
-                                                <div class="add2cart_slide">
-                                                    <div class="add2cart_image">
-                                                        <a href="#" class="add2cart_img">
-                                                            <span class="add2cart_zoom"><i class="ico-plus10"></i></span>
-                                                            <img th:src="@{/images/shop/product4-a-500x600.jpg}" alt="Caterpillar Shoes">
-                                                        </a>
-                                                    </div>
-                                                    <div class="add2cart_details">
-                                                        <div class="con_cont">
-                                                            <a class="add2cart_prod_name" href="#">Caterpillar Shoes</a>
-                                                            <span class="price add2cart_prod_price">
-                                                            <span class="amount"><span>$</span>370.00</span>
-                                                        </span>
-                                                            <div class="hm_rating_con clearfix">
-                                                                <div class="star-rating" title="Rated 5 out of 5">
-                                                                    <span style="width:100%"></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="add2cart_buttons clearfix">
-                                                            <a href="#" class="pro_add2cart_add add2cart_btn_ajax">
-                                                                <i class="refresh_loader ico-refresh4"></i>
-                                                                <i class="hm_cart_icon ico-heart4"></i>
-                                                                <i class="hm_cart_added ico-check3"></i>
-                                                                <span>Add to cart</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-
-                                            <li class="product">
-                                                <div class="add2cart_slide">
-                                                    <div class="add2cart_image">
-                                                        <a href="#" class="add2cart_img">
-                                                            <span class="add2cart_zoom"><i class="ico-plus10"></i></span>
-                                                            <img th:src="@{/images/shop/product1-a-500x600.jpg}" alt="Nanamica Graphic Tee"> </a>
-                                                    </div>
-                                                    <div class="add2cart_details">
-                                                        <div class="con_cont">
-                                                            <a class="add2cart_prod_name" href="#">Nanamica Graphic Tee</a>
-                                                            <span class="price add2cart_prod_price">
-                                                            <span class="amount"><span>$</span>58.00</span>
-                                                        </span>
-                                                            <div class="hm_rating_con clearfix">
-                                                                <div class="star-rating" title="Rated 1 out of 5">
-                                                                    <span style="width:20%"></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="add2cart_buttons clearfix">
-                                                            <a href="#" class="pro_add2cart_add add2cart_btn_ajax">
-                                                                <i class="refresh_loader ico-refresh4"></i>
-                                                                <i class="hm_cart_icon ico-heart4"></i>
-                                                                <i class="hm_cart_added ico-check3"></i>
-                                                                <span>Add to cart</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-
                                         </ul>
                                     </div>
                                 </div>
@@ -723,6 +588,19 @@
 <script type="text/javascript" th:src="@{/js/jquery-migrate-1.4.1.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/plugins.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/functions.js}"></script>
+<script th:inline="javascript">
+    var chooseSpecificationId = -1;//选择的商品的规格uid
+    function chooseSpecification(specification){
+        chooseSpecificationId = specification;
+    }
+    function addToCart(goodsUid, payWay) {
+        if(chooseSpecificationId == -1){
+            alert("未选择商品规格");
+        }else{
+            $.get("/addGoodsToCart?goodsUid="+goodsUid+"&specificationUid="+chooseSpecificationId+"&counts="+$("#goodsAmount").val()+"&payWay="+payWay);
+        }
+    }
+</script>
 </body>
 
 </html>

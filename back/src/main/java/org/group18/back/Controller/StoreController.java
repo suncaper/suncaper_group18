@@ -78,26 +78,11 @@ public class StoreController {
             for(int i = 1; i <= (shopPageModel.getShopGoodsList().size()%pageSize == 0?shopPageModel.getShopGoodsList().size()/pageSize:shopPageModel.getShopGoodsList().size()/pageSize+1); i++){
                 pagesNumberList.add(i);
             }
+            model.addAttribute("payWay", "money");//生成店铺页面时的商品信息为money支付
             model.addAttribute("pageNumberList", pagesNumberList);
             model.addAttribute("currentPage", page);
             model.addAttribute("pageAmount", pagesNumberList.size());
             return "store_single_01";
         }
-    }
-
-    @RequestMapping("/test")
-    public String test(Model model, HttpServletRequest request){
-        System.out.println("执行此步");
-        //检查是否已经登陆
-        User user = loginRegisterService.checkLoginStatus(request.getCookies());
-        if(user == null) {
-            model.addAttribute("user", new User());
-            model.addAttribute("isSignin", false);
-        }
-        else {
-            model.addAttribute("user", user);
-            model.addAttribute("isSignin", true);
-        }
-        return "index";
     }
 }

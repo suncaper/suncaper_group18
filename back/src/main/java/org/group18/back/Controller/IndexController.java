@@ -38,7 +38,7 @@ public class IndexController {
 
 
 //    测试index
-    @RequestMapping("/index_test")
+    @RequestMapping("/index")
     public String index(Model model, HttpServletRequest request){
         Integer goods_uid = 1;
         Integer category_uid = 1;

@@ -326,7 +326,7 @@
                                                                         </span>
                                                                     </div>
                                                                     <h3 class="deal-title mb-10">
-                                                        <a href="#" th:text="${goods.getGoodsName()}"></a>
+                                                        <a th:href="@{/getGoods(goodsUid=${goods.getUid()}, payWay=${payWay})}" th:text="${goods.getGoodsName()}"></a>
                                                     </h3>
                                                                     <ul class="deal-meta list-inline mb-10 color-mid">
                                                                         <li><i class="ico fa fa-map-marker mr-10"></i><span th:text="${shopPageModel.getShopBaseInfo().getAddress()}"></span></li>
