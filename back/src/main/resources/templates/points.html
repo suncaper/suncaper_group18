@@ -268,15 +268,50 @@
                             <div class="row row-masnory row-tb-20">
                                 <div th:each="list2:${list1.getGoodsList()}" class="col-sm-6 col-lg-4">
                                     <div class="deal-single panel">
-                                        <div align="center">
-                                            <img th:src="${list2.getImgUrl()}" alt="">
-                                        </div>
+                                        <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" th:data-bg-img="${list2.getImgUrl()}">
+                                            <ul class="deal-actions top-15 right-20">
+                                                <li class="like-deal">
+                                                    <span><i class="fa fa-heart"></i></span>
+                                                </li>
+                                                <li class="share-btn">
+                                                    <div class="share-tooltip fade">
+                                                        <a target="_blank" href="#"><i class="fa fa-facebook"></i></a>
+                                                        <a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
+                                                        <a target="_blank" href="#"><i class="fa fa-google-plus"></i></a>
+                                                        <a target="_blank" href="#"><i class="fa fa-pinterest"></i></a>
+                                                    </div>
+                                                    <span><i class="fa fa-share-alt"></i></span>
+                                                </li>
+                                                <li>
+                                                    <span><i class="fa fa-camera"></i></span>
+                                                </li>
+                                            </ul>
+                                            <div class="deal-store-logo">
+                                                <img th:src="${list1.getShop().getImgUrl()}" alt="">
+                                            </div>
+                                        </figure>
                                         <div class="bg-white pt-20 pl-20 pr-15">
                                             <div class="pr-md-10">
+                                                <div class="rating mb-10">
+                                                    <span class="rating-stars rate-allow" data-rating="5">
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                    </span>
+                                                    <span class="rating-reviews">
+                                                            ( <span class="rating-count">241</span> rates )
+                                                    </span>
+                                                </div>
                                                 <h3 class="deal-title mb-10">
-                                                    <a href="#" th:text="${list2.getGoodsName()}" >商品名</a>
+                                                    <a href="#" th:text="${list2.getGoodsName()}"></a>
                                                 </h3>
-                                                <p class="text-muted mb-20" th:text="${list2.getDescriptions()}">描述</p>
+                                                <ul class="deal-meta list-inline mb-10 color-mid">
+                                                    <li><i class="ico fa fa-map-marker mr-10"></i><span th:text="${list1.getShop().getAddress()}"></span></li>
+                                                    <li><i class="ico fa fa-shopping-basket mr-10"></i><span th:text="${list2.getSalesVolume()}"></span>&nbsp;&nbsp;已售卖</li>
+                                                </ul>
+                                                <p class="text-muted mb-20" th:text="${list2.getDescriptions()}"></p>
                                             </div>
                                             <div class="deal-price pos-r mb-15">
                                                 <h3 class="price ptb-5 text-right" th:text="${list2.getPoints()}+'Points'"></h3>
