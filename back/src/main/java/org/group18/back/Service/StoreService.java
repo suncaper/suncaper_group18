@@ -9,4 +9,5 @@ public interface StoreService {
     ShopPageModel getShopPageModel(Integer shopUid,int pageSize, int page);
     List<Shop> getShopList(int pageSize, int page);
     Integer getAllShopCount();
+    List<Shop> selectAllShop();
 }

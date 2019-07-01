@@ -25,21 +25,6 @@ public class LoginRegisterController {
     @Autowired
     CartService cartService;
 
-    @RequestMapping("/index")
-    public String index(Model model, HttpServletRequest request){
-        //检查是否已经登陆
-        User user = loginRegisterService.checkLoginStatus(request.getCookies());
-        if(user == null) {
-            model.addAttribute("user", new User());
-            model.addAttribute("isSignin", false);
-        }
-        else {
-            model.addAttribute("isSignin", true);
-            model.addAttribute("user", user);
-        }
-        return "index";
-    }
-
     //登陆请求
     @RequestMapping("/signin_page")
     public String signinPage(Model model, HttpServletRequest request){
