@@ -94,4 +94,6 @@ public interface GoodsMapper {
      * @mbg.generated Tue Jun 25 15:29:07 CST 2019
      */
     int updateByPrimaryKey(Goods record);
+
+    List<Goods> selectAllGoodsByClause();
 }

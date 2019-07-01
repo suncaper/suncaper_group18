@@ -14,5 +14,4 @@ import java.util.List;
 public interface GoodsService {
     GoodsDeatilInfoModel getGoods(int goods_uid);
     void addGoodsToCart(String userUid, Integer goodsUid, Integer specificationUid, Integer counts, String payWay);
-
 }

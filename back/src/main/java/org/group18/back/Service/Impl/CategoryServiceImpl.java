@@ -1,4 +1,4 @@
-package org.group18.back.Service;
+package org.group18.back.Service.Impl;
 
 import org.group18.back.Dao.CategoryMapper;
 import org.group18.back.Dao.GoodsMapper;

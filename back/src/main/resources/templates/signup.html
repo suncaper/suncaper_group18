@@ -129,9 +129,20 @@
                                     <a href="#"><i class="fa fa-usd"></i>我的店铺</a>
                                 </li>
                                 <li th:if="${isSignin}">
+<<<<<<< HEAD
+                                    <a href="#"><i class="fa fa-user"></i>你好,<span th:text="${user.getUserName()}"></span></a>
+                                    <ul>
+                                        <li><a th:href="@{/myinfo}">我的信息</a></li>
+                                        <li><a th:href="@{/Cart}">我的购物车</a></li>
+                                        <li th:if="${!user.getIsSeller()}"><a href="#">申请店铺</a></li>
+                                        <li th:if="${user.getIsSeller()}"><a th:href="@{/mystore}">我的店铺</a></li>
+                                        <li><a th:href="@{/signout}">退出登陆</a></li>
+                                    </ul>
+=======
                                     <a th:href="@{/myinfo}"><i class="fa fa-user"></i>我的信息</a>
                                 </li>
                                 <li><a th:if="${isSignin}" th:href="@{/signout}">退出登陆</a></li>
+>>>>>>> aae3928cfae13790de176020c005c03b37924d83
                                 </li>
                             </ul>
                         </div>

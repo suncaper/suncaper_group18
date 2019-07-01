@@ -213,6 +213,9 @@
                                 <li class="active">
                                     <a th:href="@{/myinfo}">我的信息</a>
                                 </li>
+                                <li th:if="${user.getIsSeller()} eq true">
+                                    <a th:href="@{/MyStore/mystore}">我的店铺</a>
+                                </li>
                                 <li>
                                     <a th:href="@{/myorder}">我的订单</a>
                                 </li>
