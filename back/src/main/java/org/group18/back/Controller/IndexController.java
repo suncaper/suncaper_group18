@@ -7,7 +7,7 @@ import org.group18.back.Model.GoodsDeatilInfoModel;
 import org.group18.back.Service.CartService;
 import org.group18.back.Service.GoodsService;
 
-import org.group18.back.Service.Impl.CategoryService;
+import org.group18.back.Service.CategoryService;
 import org.group18.back.Service.LoginRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
