@@ -56,16 +56,19 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public List<Shop> getShopList(int pageSize, int page) {
+    public List<Shop> getShopList(int pageSize, int page, String searchKey) {
         ShopExample shopExample = new ShopExample();
+        if(searchKey != null) shopExample.or().andShopNameLike("%"+searchKey+"%");//如果搜索关键词不为空，则添加搜索关键词
         shopExample.setStartRow((page-1)*pageSize);
         shopExample.setPageSize(pageSize);
         return shopMapper.selectByExample(shopExample);
     }
 
     @Override
-    public Integer getAllShopCount() {
-        return shopMapper.getAllShopCount();
+    public Integer getAllShopCount(String searchKey) {
+        ShopExample shopExample = new ShopExample();
+        if(searchKey != null) shopExample.or().andShopNameLike("%"+searchKey+"%");//如果搜索关键词不为空，则添加搜索关键词
+        return shopMapper.selectByExample(shopExample).size();
     }
 
 

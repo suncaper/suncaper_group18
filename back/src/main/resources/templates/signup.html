@@ -129,20 +129,9 @@
                                     <a href="#"><i class="fa fa-usd"></i>我的店铺</a>
                                 </li>
                                 <li th:if="${isSignin}">
-<<<<<<< HEAD
-                                    <a href="#"><i class="fa fa-user"></i>你好,<span th:text="${user.getUserName()}"></span></a>
-                                    <ul>
-                                        <li><a th:href="@{/myinfo}">我的信息</a></li>
-                                        <li><a th:href="@{/Cart}">我的购物车</a></li>
-                                        <li th:if="${!user.getIsSeller()}"><a href="#">申请店铺</a></li>
-                                        <li th:if="${user.getIsSeller()}"><a th:href="@{/mystore}">我的店铺</a></li>
-                                        <li><a th:href="@{/signout}">退出登陆</a></li>
-                                    </ul>
-=======
                                     <a th:href="@{/myinfo}"><i class="fa fa-user"></i>我的信息</a>
                                 </li>
                                 <li><a th:if="${isSignin}" th:href="@{/signout}">退出登陆</a></li>
->>>>>>> aae3928cfae13790de176020c005c03b37924d83
                                 </li>
                             </ul>
                         </div>
@@ -163,40 +152,30 @@
                         <div class="header-search col-md-9">
                             <div class="row row-tb-10 ">
                                 <div class="col-sm-8">
-                                    <form class="search-form">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control input-lg search-input" placeholder="Enter Keywork Here ..." required="required">
-                                            <div class="input-group-btn">
-                                                <div class="input-group">
-                                                    <select class="form-control input-lg search-select">
-                                                        <option>Select Your Category</option>
-                                                        <option>Deals</option>
-                                                        <option>Coupons</option>
-                                                        <option>Discounts</option>
-                                                    </select>
-                                                    <div class="input-group-btn">
-                                                        <button type="submit" class="btn btn-lg btn-search btn-block">
-                                                            <i class="fa fa-search font-16"></i>
-                                                        </button>
-                                                    </div>
+                                    <div class="input-group">
+                                        <input id="inputSearchKey" type="text" class="form-control input-lg search-input" placeholder="在此输入搜索关键词..." required="required">
+                                        <div class="input-group-btn">
+                                            <div class="input-group">
+                                                <select id="chooseSearch" class="form-control input-lg search-select">
+                                                    <option value="goods">商品</option>
+                                                    <option  value="stores">店铺</option>
+                                                </select>
+                                                <div class="input-group-btn">
+                                                    <button onclick="search()" class="btn btn-lg btn-search btn-block">
+                                                        <i class="fa fa-search font-16"></i>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                                 <div class="col-sm-4 t-xs-center t-md-right">
                                     <div class="header-cart">
                                         <a th:href="@{/Cart}">
                                             <span class="icon lnr lnr-cart"></span>
-                                            <!--<div><span class="cart-number">0</span>-->
+                                            <!--<div><span class="cart-number" th:text="${cart.totalAmount}"></span>-->
                                             <!--</div>-->
                                             <span class="title">Cart</span>
-                                        </a>
-                                    </div>
-                                    <div class="header-wishlist ml-20">
-                                        <a href="wishlist.html">
-                                            <span class="icon lnr lnr-heart font-30"></span>
-                                            <span class="title">Wish List</span>
                                         </a>
                                     </div>
                                 </div>
@@ -215,7 +194,7 @@
             <div class="page-container ptb-60">
                 <div class="container">
                     <section class="sign-area panel p-40">
-                        <h3 class="sign-title">Sign Up <small>Or <a th:href="@{/signin_page}" class="color-green">Sign In</a></small></h3>
+                        <h3 class="sign-title">注册 <small>或 <a th:href="@{/signin_page}" class="color-green">登陆</a></small></h3>
                         <div th:if="${isError}"><div class="alert alert-danger alert-dismissible" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <strong>错误!</strong> <span th:text="${errorMsg}"></span>
@@ -224,46 +203,46 @@
                             <div class="col-sm-6 col-md-7 col-left">
                                 <form class="p-40" action="#" th:action="@{/register}" th:object="${user}" method="post">
                                     <div class="form-group">
-                                        <label class="sr-only">Full Name</label>
+                                        <label class="sr-only">名称</label>
                                         <input th:field="*{userName}" id="name" type="text" name="name" class="form-control input-lg" placeholder="Full Name">
                                     </div>
                                     <div class="form-group">
-                                        <label class="sr-only">Email</label>
+                                        <label class="sr-only">电子邮件</label>
                                         <input th:field="*{email}" id="email" name="email" type="email" class="form-control input-lg" placeholder="Email">
                                     </div>
                                     <div class="form-group">
-                                        <label class="sr-only">Password</label>
+                                        <label class="sr-only">密码</label>
                                         <input th:field="*{passWord}" id="password" name="password" type="password" class="form-control input-lg" placeholder="Password">
                                     </div>
                                     <div class="form-group">
-                                        <label class="sr-only">Confirm Password</label>
+                                        <label class="sr-only">核实密码</label>
                                         <input id="confirm_password" name="confirm_password" type="password" class="form-control input-lg" placeholder="Confirm Password">
                                     </div>
                                     <div class="custom-checkbox mb-20">
                                         <input type="checkbox" id="agree_terms">
-                                        <label class="color-mid" for="agree_terms">I agree to the <a href="terms_conditions.html" class="color-green">Terms of Use</a> and <a href="terms_conditions.html" class="color-green">Privacy Statement</a>.</label>
+                                        <label class="color-mid" for="agree_terms">我同意 <a href="#" class="color-green">使用准则</a> 和 <a href="#" class="color-green">隐私协议</a>.</label>
                                     </div>
-                                    <button type="submit" class="btn btn-block btn-lg">Sign Up</button>
+                                    <button type="submit" class="btn btn-block btn-lg">注册</button>
                                 </form>
                                 <span class="or">Or</span>
                             </div>
                             <div class="col-sm-6 col-md-5 col-right">
                                 <div class="social-login p-40">
                                     <div class="mb-20">
-                                        <button class="btn btn-lg btn-block btn-social btn-facebook"><i class="fa fa-facebook-square"></i>Sign Up with Facebook</button>
+                                        <button class="btn btn-lg btn-block btn-social btn-facebook"><i class="fa fa-facebook-square"></i>使用Facebook账号注册</button>
                                     </div>
                                     <div class="mb-20">
-                                        <button class="btn btn-lg btn-block btn-social btn-twitter"><i class="fa fa-twitter"></i>Sign Up with Twitter</button>
+                                        <button class="btn btn-lg btn-block btn-social btn-twitter"><i class="fa fa-twitter"></i>使用Twitter账号注册</button>
                                     </div>
                                     <div class="mb-20">
-                                        <button class="btn btn-lg btn-block btn-social btn-google-plus"><i class="fa fa-google-plus"></i>Sign Up with Google</button>
+                                        <button class="btn btn-lg btn-block btn-social btn-google-plus"><i class="fa fa-google-plus"></i>使用Google账号注册</button>
                                     </div>
                                     <div class="custom-checkbox mb-20">
                                         <input type="checkbox" id="remember_social" checked>
-                                        <label class="color-mid" for="remember_social">Keep me signed in on this computer.</label>
+                                        <label class="color-mid" for="remember_social">让这台电脑记住我</label>
                                     </div>
                                     <div class="text-center color-mid">
-                                        Already have an Account ? <a th:href="@{/signin_page}" class="color-green">Login</a>
+                                        已经有一个新账户了？<a th:href="@{/signin_page}" class="color-green">登陆</a>
                                     </div>
                                 </div>
                             </div>
@@ -435,6 +414,11 @@
     <!-- Custom Template JavaScript                   -->
     <!-- ––––––––––––––––––––––––––––––––––––––––– -->
     <script type="text/javascript" th:src="@{/js/main.js}"></script>
+    <script>
+        function search() {
+            window.location.href="/search?searchKey="+$("#inputSearchKey").val()+"&searchCategory="+$("#chooseSearch option:selected").val();
+        }
+    </script>
 </body>
 
 </html>
