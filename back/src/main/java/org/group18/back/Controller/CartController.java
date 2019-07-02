@@ -98,7 +98,7 @@ public class CartController {
             model.addAttribute("totalPoints", totalPoints);
             Map<String, List<CartListModel>> shopCartList = cartService.getShopCarts(cartList);
             model.addAttribute("shopCartList", shopCartList);
-            return  "cart";
+            return  "redirect:/Cart";
         }
     }
 
@@ -125,7 +125,7 @@ public class CartController {
             model.addAttribute("totalPoints", totalPoints);
             Map<String, List<CartListModel>> shopCartList = cartService.getShopCarts(cartList);
             model.addAttribute("shopCartList", shopCartList);
-            return  "cart";
+            return  "redirect:/Cart";
         }
     }
 
@@ -152,7 +152,7 @@ public class CartController {
             model.addAttribute("totalAmount", totalAmount);
             Map<String, List<CartListModel>> shopCartList = cartService.getShopCarts(cartList);
             model.addAttribute("shopCartList", shopCartList);
-            return  "cart";
+            return  "redirect:/Cart";
         }
     }
 
@@ -179,7 +179,7 @@ public class CartController {
             model.addAttribute("totalAmount", totalAmount);
             Map<String, List<CartListModel>> shopCartList = cartService.getShopCarts(cartList);
             model.addAttribute("shopCartList", shopCartList);
-            return "cart";
+            return "redirect:/Cart";
         }
     }
 }

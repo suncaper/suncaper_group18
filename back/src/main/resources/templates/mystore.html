@@ -299,7 +299,7 @@
                                                                             <a class="btn btn-rounded btn-sm" th:href="@{/MyStore/editGoods(goods_uid=${goods.getUid()})}">编辑商品</a>
                                                                         </li>
                                                                         <li class="deal-title mb-10">
-                                                                            <a class="btn btn-rounded btn-sm" style="background-color: rgb(255,102,102);">删除商品</a>
+                                                                            <a class="btn btn-rounded btn-sm" style="background-color: rgb(255,102,102);" th:href="@{/MyStore/addGoods}">删除商品</a>
                                                                         </li>
                                                                     </ul>
                                                                     <p class="text-muted mb-20" th:text="${goods.getDescriptions()}"></p>

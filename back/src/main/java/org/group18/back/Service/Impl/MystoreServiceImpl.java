@@ -113,8 +113,8 @@ public class MystoreServiceImpl implements MystoreService{
             goods.setSellerUid(seller_uid);
             goods.setIsExchange(goodsManagementModel.getIs_exchange());
             goods.setPoints(goodsManagementModel.getPoints());
-//        goods.setImgUrl(goodsManagementModel.getImg_url());
-//        goods.setDetailImgUrl(goodsManagementModel.getDetail_img_url());
+            goods.setImgUrl(goodsManagementModel.getImg_url());
+            goods.setDetailImgUrl(goodsManagementModel.getDetail_img_url());
             goodsMapper.insert(goods);
             //插入t_goods_specification
             GoodsSpecification goodsSpecification = new GoodsSpecification();

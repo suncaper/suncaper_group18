@@ -12,8 +12,8 @@ public class GoodsManagementModel {
     private Integer points = 0;//积分，不能积分交换的商品默认为0
     private String specification_name;//规格名
     private Integer amount;//规格数量
-//    private String img_url;
-//    private String detail_img_url;
+    private String img_url = "https://suncaper-group18-1256197408.cos.ap-chengdu.myqcloud.com/shop_img/brand_02.jpg";
+    private String detail_img_url = "https://suncaper-group18-1256197408.cos.ap-chengdu.myqcloud.com/shop_img/brand_02.jpg";
 
     public Integer getCategory_uid() {
         return category_uid;
@@ -87,19 +87,19 @@ public class GoodsManagementModel {
         this.specification_name = specification_name;
     }
 
-//    public String getImg_url() {
-//        return img_url;
-//    }
-//
-//    public void setImg_url(String img_url) {
-//        this.img_url = img_url;
-//    }
+    public String getImg_url() {
+        return img_url;
+    }
 
-//    public String getDetail_img_url() {
-//        return detail_img_url;
-//    }
-//
-//    public void setDetail_img_url(String detail_img_url) {
-//        this.detail_img_url = detail_img_url;
-//    }
+    public void setImg_url(String img_url) {
+        this.img_url = img_url;
+    }
+
+    public String getDetail_img_url() {
+        return detail_img_url;
+    }
+
+    public void setDetail_img_url(String detail_img_url) {
+        this.detail_img_url = detail_img_url;
+    }
 }
