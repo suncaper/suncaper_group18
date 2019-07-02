@@ -65,7 +65,7 @@ public class CartServiceImpl implements CartService{
             //查goods_specification表
             GoodsSpecificationExample goodsSpecificationExample = new GoodsSpecificationExample();
             GoodsSpecificationExample.Criteria criteria2 = goodsSpecificationExample.createCriteria();
-            criteria2.andUidEqualTo(cartList.get(0).getSpecificationUid());
+            criteria2.andUidEqualTo(cartList.get(i).getSpecificationUid());
             List<GoodsSpecification> goodsSpecifications = goodsSpecificationMapper.selectByExample(goodsSpecificationExample);
             cartListModel.setSpecification_name(goodsSpecifications.get(0).getSpecificationName());
 //            System.out.println(goodsSpecifications.get(0).getSpecificationName());//规格名
@@ -173,7 +173,7 @@ public class CartServiceImpl implements CartService{
             //查goods_specification表
             GoodsSpecificationExample goodsSpecificationExample = new GoodsSpecificationExample();
             GoodsSpecificationExample.Criteria criteria2 = goodsSpecificationExample.createCriteria();
-            criteria2.andUidEqualTo(cartList.get(0).getSpecificationUid());
+            criteria2.andUidEqualTo(cartList.get(i).getSpecificationUid());
             List<GoodsSpecification> goodsSpecifications = goodsSpecificationMapper.selectByExample(goodsSpecificationExample);
             cartListModel.setSpecification_name(goodsSpecifications.get(0).getSpecificationName());
 //            System.out.println(goodsSpecifications.get(0).getSpecificationName());//规格名

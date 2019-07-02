@@ -130,7 +130,7 @@
                                     <span th:text="'你好，'+${user.getUserName()}"></span>
                                 </li>
                                 <li th:if="${user.getIsSeller()} and ${isSignin}">
-                                    <a href="#"><i class="fa fa-usd"></i>我的店铺</a>
+                                    <a th:href="@{/MyStore/mystore}"><i class="fa fa-usd"></i>我的店铺</a>
                                 </li>
                                 <li th:if="${isSignin}">
                                     <a th:href="@{/myinfo}"><i class="fa fa-user"></i>我的信息</a>
@@ -208,9 +208,6 @@
                                 </li>
                                 <li class="active">
                                     <a th:href="@{/myinfo}">我的信息</a>
-                                </li>
-                                <li th:if="${user.getIsSeller()} eq true">
-                                    <a th:href="@{/MyStore/mystore}">我的店铺</a>
                                 </li>
                                 <li>
                                     <a th:href="@{/myorder}">我的订单</a>
