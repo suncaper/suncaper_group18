@@ -150,7 +150,6 @@
                 <div class="container">
                     <div class="row row-rl-0 row-tb-20 row-md-cell">
                         <div class="brand col-md-3 t-xs-center t-md-left valign-middle">
-
                             <a th:href="@{/index}" class="logo">
                                 <img th:src="@{/images/logo.png}" alt="" width="250">
                             </a>
@@ -158,33 +157,29 @@
                         <div class="header-search col-md-9">
                             <div class="row row-tb-10 ">
                                 <div class="col-sm-8">
-                                    <form class="search-form">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control input-lg search-input" placeholder="Enter Keywork Here ..." required="required">
-                                            <div class="input-group-btn">
-                                                <div class="input-group">
-                                                    <select class="form-control input-lg search-select">
-                                                        <option>Select Your Category</option>
-                                                        <option>Deals</option>
-                                                        <option>Coupons</option>
-                                                        <option>Discounts</option>
-                                                    </select>
-                                                    <div class="input-group-btn">
-                                                        <button type="submit" class="btn btn-lg btn-search btn-block">
-                                                            <i class="fa fa-search font-16"></i>
-                                                        </button>
-                                                    </div>
+                                    <div class="input-group">
+                                        <input id="inputSearchKey" type="text" class="form-control input-lg search-input" placeholder="在此输入搜索关键词..." required="required">
+                                        <div class="input-group-btn">
+                                            <div class="input-group">
+                                                <select id="chooseSearch" class="form-control input-lg search-select">
+                                                    <option value="goods">商品</option>
+                                                    <option  value="stores">店铺</option>
+                                                </select>
+                                                <div class="input-group-btn">
+                                                    <button onclick="search()" class="btn btn-lg btn-search btn-block">
+                                                        <i class="fa fa-search font-16"></i>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                                 <div class="col-sm-4 t-xs-center t-md-right">
                                     <div class="header-cart">
                                         <a th:href="@{/Cart}">
                                             <span class="icon lnr lnr-cart"></span>
-                                            <div><span class="cart-number">0</span>
-                                            </div>
+                                            <!--<div><span class="cart-number" th:text="${cart.totalAmount}"></span>-->
+                                            <!--</div>-->
                                             <span class="title">Cart</span>
                                         </a>
                                     </div>
@@ -245,37 +240,35 @@
                         <div th:if="${!isEmpty}">
                             <div th:each="each1,each1Stat:${list}" class="row row-rl-15 row-tb-15 t-center">
                                 <p th:text="${#dates.format(each1.getDate(),'MM月dd日')}" class="col-xs-12"></p>
-                                <div th:each="each2:${list.get(each1Stat.index).getGoodsList()}" class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                                    <a href="#" class="panel is-block">
-                                        <div class="embed-responsive embed-responsive-4by3">
-                                            <div class="store-logo">
-                                                <img th:src="${each2.getImgUrl()}" alt="">
+                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2" th:each="goods:${list.get(each1Stat.index).getGoodsList()}">
+                                        <div class="deal-single panel">
+                                            <figure class="deal-thumbnail embed-responsive embed-responsive-16by9"
+                                                    th:data-bg-img="${goods.getImgUrl()}">
+                                            </figure>
+                                            <div class="bg-white pt-20 pl-20 pr-15">
+                                                <div class="pr-md-10">
+                                                    <h6 class="deal-title mb-10">
+                                                        <a th:href="@{/getGoods(goodsUid=${goods.getUid()}, payWay='money')}"
+                                                           th:text="${goods.getGoodsName()}"></a>
+                                                    </h6>
+                                                </div>
+                                                <div class="deal-price pos-r mb-15">
+                                                    <h3 class="price ptb-5 text-right"
+                                                        th:if="${goods.getPrice() gt goods.getDiscountPrice()}">
+                                                                        <span class="price-sale"
+                                                                              th:text="'¥'+${goods.getPrice()}"></span><span
+                                                            th:text="'¥'+${goods.getDiscountPrice()}"></span>
+                                                    </h3>
+                                                    <h3 class="price ptb-5 text-right"
+                                                        th:if="(${goods.getPrice() lt goods.getDiscountPrice()}) or (${goods.getPrice() eq goods.getDiscountPrice()})">
+                                                        <span th:text="'¥'+${goods.getPrice()}"></span>
+                                                    </h3>
+                                                </div>
                                             </div>
                                         </div>
-                                        <h6 class="store-name ptb-10" th:text="${each2.getGoodsName()}"></h6>
-                                        <h5 class="price-sale"th:text="${each2.getDiscountPrice()}"></h5>
-                                        <h5 class="price color-green"th:text="${each2.getPrice()}"></h5>
-                                    </a>
-                                    <br>
-                                </div>
+                                    </div>
                             </div>
                         </div>
-                        <!--<div class="page-pagination text-center mt-30 p-10 panel">-->
-                            <!--<nav>-->
-                                <!--&lt;!&ndash; Page Pagination &ndash;&gt;-->
-                                <!--<ul class="page-pagination">-->
-                                    <!--<li><a class="page-numbers previous" th:if="${currentPage} ne 1" th:href="@{/store/getStoreList(page=${currentPage}-1)}">Previous</a>-->
-                                    <!--</li>-->
-                                    <!--<li th:each="number:${pageNumberList}">-->
-                                        <!--<a class="page-numbers" th:if="${number} ne ${currentPage}" th:text="${number}" th:href="@{/store/getStoreList(page=${number})}"></a>-->
-                                        <!--<span th:if="${number} eq ${currentPage}" class="page-numbers current" th:text="${number}"></span>-->
-                                    <!--</li>-->
-                                    <!--<li><a class="page-numbers next" th:if="(${currentPage} ne ${pageAmount}) and (${currentPage} ne 1)" th:href="@{/store/getStoreList(page=${currentPage}+1)}">Next</a>-->
-                                    <!--</li>-->
-                                <!--</ul>-->
-                                <!--&lt;!&ndash; End Page Pagination &ndash;&gt;-->
-                            <!--</nav>-->
-                        <!--</div>-->
                     </section>
                 </div>
             </div>
@@ -442,6 +435,11 @@
     <!-- Custom Template JavaScript                   -->
     <!-- ––––––––––––––––––––––––––––––––––––––––– -->
     <script type="text/javascript" th:src="@{/js/main.js}"></script>
+    <script>
+        function search() {
+            window.location.href="/search?searchKey="+$("#inputSearchKey").val()+"&searchCategory="+$("#chooseSearch option:selected").val();
+        }
+    </script>
 </body>
 
 </html>

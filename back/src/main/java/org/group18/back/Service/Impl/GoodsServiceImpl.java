@@ -95,6 +95,22 @@ public class GoodsServiceImpl implements GoodsService {
         }
     }
 
+    @Override
+    public Integer getGoodsSearchAmount(String searchKey) {
+        GoodsExample goodsExample = new GoodsExample();
+        if(searchKey!=null) goodsExample.or().andGoodsNameLike("%"+searchKey+"%");
+        return goodsMapper.selectByExample(goodsExample).size();
+    }
+
+    @Override
+    public List<Goods> getGoodsSearchList(int pageSize, int page, String searchKey) {
+        GoodsExample goodsExample = new GoodsExample();
+        if(searchKey!=null) goodsExample.or().andGoodsNameLike("%"+searchKey+"%");
+        goodsExample.setStartRow((page-1)*pageSize);
+        goodsExample.setPageSize(pageSize);
+        return goodsMapper.selectByExample(goodsExample);
+    }
+
 
     public User judgeUserLoginStatus(String ticket) {
         TicketExample ticketExample = new TicketExample();

@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/store")
 public class StoreController {
     @Autowired
     LoginRegisterService loginRegisterService;
@@ -24,7 +23,7 @@ public class StoreController {
     StoreService storeService;
 
     @RequestMapping("/getStoreList")
-    public String getStoreList(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page){
+    public String getStoreList(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "searchKey", required = false) String searchKey){
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if(user == null) {
@@ -41,10 +40,18 @@ public class StoreController {
         if(page == null) page = 1;//若未接受到页面请求，则设置为1
         //生成页面列表
         List<Integer> pagesNumberList = new ArrayList<>();
-        for(int i = 1; i <= (storeService.getAllShopCount()%pageSize==0?storeService.getAllShopCount()/pageSize:(storeService.getAllShopCount()/pageSize+1)); i++){
+        int shopCount = storeService.getAllShopCount(searchKey);
+        for(int i = 1; i <= (shopCount%pageSize==0?shopCount/pageSize:(shopCount/pageSize+1)); i++){
             pagesNumberList.add(i);
         }
-        model.addAttribute("shopList", storeService.getShopList(pageSize, page));
+        //设置搜索参数
+        if(searchKey == null){
+            model.addAttribute("searchKey", null);
+        }
+        else {
+            model.addAttribute("searchKey", searchKey);
+        }
+        model.addAttribute("shopList", storeService.getShopList(pageSize, page, searchKey));
         model.addAttribute("pageNumberList", pagesNumberList);
         model.addAttribute("currentPage", page);
         model.addAttribute("pageAmount", pagesNumberList.size());
