@@ -10,9 +10,18 @@ import java.util.List;
 public class GoodsDeatilInfoModel {
     private Goods goods;
     private Shop shop;
-    private GoodsReview goodsReview;
+    private List<GoodsReview> goodsReviewList;
     private List<Goods> recommendGoods;
     private List<GoodsSpecification> goodsSpecification;
+    private String [] goodsDetailImg;
+
+    public String[] getGoodsDetailImg() {
+        return goodsDetailImg;
+    }
+
+    public void setGoodsDetailImg(String[] goodsDetailImg) {
+        this.goodsDetailImg = goodsDetailImg;
+    }
 
     public List<GoodsSpecification> getGoodsSpecification() {
         return goodsSpecification;
@@ -46,11 +55,11 @@ public class GoodsDeatilInfoModel {
         this.shop = shop;
     }
 
-    public GoodsReview getGoodsReview() {
-        return goodsReview;
+    public List<GoodsReview> getGoodsReviewList() {
+        return goodsReviewList;
     }
 
-    public void setGoodsReview(GoodsReview goodsReview) {
-        this.goodsReview = goodsReview;
+    public void setGoodsReviewList(List<GoodsReview> goodsReviewList) {
+        this.goodsReviewList = goodsReviewList;
     }
 }

@@ -7,6 +7,7 @@ import org.group18.back.Model.GoodsDeatilInfoModel;
 import org.group18.back.Service.CartService;
 import org.group18.back.Service.GoodsService;
 import org.group18.back.Service.LoginRegisterService;
+import org.group18.back.Service.MyInfoService;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,13 +30,14 @@ public class GoodsController {
     @Autowired
     CartService cartService;
 
+    @Autowired
+    MyInfoService myInfoService;
+
     @Resource
     private GoodsService goodsService;
 
-    @RequestMapping("/goods_uid")
-    public String getGoods(Model model, HttpServletRequest request ){
-        Integer goods_uid = 1;
-
+    @RequestMapping("/getGoods")
+    public String getGoods(Model model, HttpServletRequest request, @RequestParam("goodsUid") Integer goodsUid, @RequestParam("payWay") String payWay){
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if(user == null) {
             model.addAttribute("user", new User());
@@ -44,37 +46,37 @@ public class GoodsController {
         else {
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
-
+            //添加足迹信息
+            myInfoService.addUserHistory(user.getUid(), goodsUid);
         }
 
-
-
-        /*GoodsDeatilInfoModel goodsDeatilInfoModel = goodsService.getGoods(goods_uid);
-        model.addAttribute("shop",goodsDeatilInfoModel);
-        model.addAttribute("goodsReview",goodsDeatilInfoModel);
-        model.addAttribute("goods",goodsDeatilInfoModel);
-
-        List<Goods> recommendGoods = goodsDeatilInfoModel.getRecommendGoods();
-        model.addAttribute("recommendGoods",recommendGoods);
-
-        List<GoodsSpecification> specifications = goodsDeatilInfoModel.getGoodsSpecification();
-        model.addAttribute("specifiCation",specifications);*/
-
+        GoodsDeatilInfoModel goodsDeatilInfoModel = goodsService.getGoods(goodsUid);
+        if(goodsDeatilInfoModel == null) {
+            model.addAttribute("isEmpty", true);
+        }
+        else {
+            if(!goodsDeatilInfoModel.getGoods().getIsExchange()){
+                model.addAttribute("payWay", "money");//由于商品不支持积分兑换，故默认返回人名币支付页面
+            }
+            else {
+                model.addAttribute("payWay", payWay);
+            }
+            model.addAttribute("isEmpty", false);
+            model.addAttribute("goodsInfo", goodsDeatilInfoModel);
+        }
         return "goods";
     }
 
-
-//    @RequestMapping(value = "/GoodsaddCart", method = RequestMethod.POST)
-//    @ResponseBody
-    @RequestMapping(value = "/GoodsAddCart", method = RequestMethod.POST)
-    public String addCart(Model model, HttpServletRequest request,Cart cart, String user_uid, Integer goods_uid, Integer specification_uid, Integer counts){
-        GoodsDeatilInfoModel goodsDeatilInfoModel = goodsService.getGoods(goods_uid);
-        model.addAttribute("counts",goodsDeatilInfoModel);
-        model.addAttribute("specification_uid",goodsDeatilInfoModel);
-
-        return "goods";
+    @RequestMapping(value = "/addGoodsToCart")
+    public String addCart(HttpServletRequest request, @RequestParam("goodsUid") Integer goodsUid, @RequestParam("specificationUid") Integer specificationUid, @RequestParam("counts") Integer counts, @RequestParam("payWay") String payWay){
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user != null){
+            goodsService.addGoodsToCart(user.getUid(), goodsUid, specificationUid, counts, payWay);
+            return "redirect:/getGoods?goodsUid="+goodsUid+"&payWay="+payWay;
+        }
+        else {
+            return "redirect:/signin_page";
+        }
     }
-
-
 
 }

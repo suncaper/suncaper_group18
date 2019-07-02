@@ -230,6 +230,16 @@ public class MyInfoServiceImpl implements MyInfoService {
     }
 
 
+    @Override
+    public void addUserHistory(String userUid, Integer goodsUid){
+        UserHistory userHistory = new UserHistory();
+        userHistory.setCreateDate(new Date(System.currentTimeMillis()));
+        userHistory.setGoodsUid(goodsUid);
+        userHistory.setSpecification(1);//默认为一，后面需要删除
+        userHistory.setUserUid(userUid);
+        userHistoryMapper.insert(userHistory);
+    }
+
     private List<GoodsSpecificationModel> getGoodsSpecificationY(Order order){
         List<GoodsSpecificationModel> goodsSpecificationModels = new ArrayList<>();
         OrderGoodsSpecificationYExample orderGoodsSpecificationYExample = new OrderGoodsSpecificationYExample();

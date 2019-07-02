@@ -1,5 +1,6 @@
 package org.group18.back.Controller;
 
+import com.sun.org.apache.bcel.internal.generic.MULTIANEWARRAY;
 import org.apache.ibatis.annotations.Param;
 import org.group18.back.Dao.*;
 import org.group18.back.Entity.*;
@@ -22,8 +23,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.text.EditorKit;
+import java.io.File;
 import java.util.*;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class SellerController {
@@ -59,7 +62,7 @@ public class SellerController {
     }
 
     @RequestMapping("/seller_submit")
-    public String sellerSubmit(Model model, @ModelAttribute Shop shop, HttpServletRequest request) //还差图片上传
+    public String sellerSubmit(Model model, @ModelAttribute Shop shop, HttpServletRequest request, @RequestParam("file")MultipartFile file) //还差图片上传
     {
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if (user == null) {
@@ -69,28 +72,26 @@ public class SellerController {
         }
         else
         {
-            String rtn = new String();
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
 
             shop.setSellerUid(user.getUid());
             shop.setType(2);
             shop.setImgUrl("111");                  //暂时没有imgurl，随便设置的测试用。
-            Map<String,String> result = sellerService.newSellerShop(shop);
+            Map<String,String> result = sellerService.newSellerShop(shop, file);
             user.setIsSeller(true);
 
             if(result.containsKey("error"))
             {
                 model.addAttribute("isError",true);
                 model.addAttribute("errorMsg",result.get("error"));
-                rtn = "become_seller";
+                return "become_seller";
             }
-            if(result.containsKey("success"))
+            else
             {
                 model.addAttribute("isSuccess",true);
-                rtn = "index";
+                return "redirect:/index";
             }
-            return rtn;
         }
     }
 }

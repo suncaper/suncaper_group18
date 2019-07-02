@@ -25,21 +25,6 @@ public class LoginRegisterController {
     @Autowired
     CartService cartService;
 
-    @RequestMapping("/index")
-    public String index(Model model, HttpServletRequest request){
-        //检查是否已经登陆
-        User user = loginRegisterService.checkLoginStatus(request.getCookies());
-        if(user == null) {
-            model.addAttribute("user", new User());
-            model.addAttribute("isSignin", false);
-        }
-        else {
-            model.addAttribute("isSignin", true);
-            model.addAttribute("user", user);
-        }
-        return "index";
-    }
-
     //登陆请求
     @RequestMapping("/signin_page")
     public String signinPage(Model model, HttpServletRequest request){
@@ -70,7 +55,7 @@ public class LoginRegisterController {
             //设置登陆状态为false
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
-            return "index";
+            return "redirect:/index";
         }
     }
 
@@ -90,7 +75,7 @@ public class LoginRegisterController {
             httpServletResponse.addCookie(cookie);
             model.addAttribute("isSignin", true);
             model.addAttribute("user", loginRegisterService.getUserInfoByTicket(result.get("ticket")));
-            return "index";
+            return "redirect:/index";
         }
     }
 
@@ -110,7 +95,7 @@ public class LoginRegisterController {
             httpServletResponse.addCookie(cookie);
             model.addAttribute("isSignin", true);
             model.addAttribute("user", loginRegisterService.getUserInfoByTicket(result.get("ticket")));
-            return "index";
+            return "redirect:/index";
         }
     }
 
@@ -122,6 +107,6 @@ public class LoginRegisterController {
         httpServletResponse.addCookie(cookie);
         model.addAttribute("user", new User());//设置User信息为空
         model.addAttribute("isSignin", false);//设置登陆信息为false
-        return "index";
+        return "redirect:/index";
     }
 }

@@ -41,68 +41,59 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public GoodsDeatilInfoModel getGoods(int goods_uid) {
-
         GoodsDeatilInfoModel goodsDeatilInfoModel = new GoodsDeatilInfoModel();
-
+        //查询商品
         GoodsExample goodsExample1 = new GoodsExample();
         goodsExample1.createCriteria().andUidEqualTo(goods_uid);
-        Goods goods = goodsMapper.selectByExample(goodsExample1).get(0);
+        List<Goods> goodsList = goodsMapper.selectByExample(goodsExample1);
+        if(goodsList == null) return null;
+        Goods goods = goodsList.get(0);
         goodsDeatilInfoModel.setGoods(goods);
-
-
+        //查询商品规格
+        GoodsSpecificationExample goodsSpecificationExample = new GoodsSpecificationExample();
+        goodsSpecificationExample.or().andGoodsUidEqualTo(goods.getUid());
+        goodsDeatilInfoModel.setGoodsSpecification(goodsSpecificationMapper.selectByExample(goodsSpecificationExample));
+        //查询店铺
         ShopExample shopExample = new ShopExample();
         shopExample.createCriteria().andSellerUidEqualTo(goods.getSellerUid());
         goodsDeatilInfoModel.setShop(shopMapper.selectByExample(shopExample).get(0));
-
-
-
+        //查询评论
         GoodsReviewExample goodsReviewExample = new GoodsReviewExample();
-        GoodsReviewExample.Criteria criteria = goodsReviewExample.createCriteria();
-        criteria.andGoodsUidEqualTo(goods_uid);
-       /* List <GoodsReview> goodsReview =goodsReviewMapper.selectByExample(goodsReviewExample);
-        if ((goodsReview!=null))
-        {
-            goodsDeatilInfoModel.setGoodsReview(goodsReview.get(0));
-        }*/
-
-        CategoryExample categoryExample = new CategoryExample();
-        categoryExample.createCriteria().andUidEqualTo(goods.getCategoryUid());
-        Category category = categoryMapper.selectByExample(categoryExample).get(0);
+        goodsReviewExample.or().andGoodsUidEqualTo(goods_uid);
+        goodsDeatilInfoModel.setGoodsReviewList(goodsReviewMapper.selectByExample(goodsReviewExample));
+        //查询推荐商品
         GoodsExample goodsExample2 = new GoodsExample();
-        goodsExample2.createCriteria().andCategoryUidEqualTo(category.getUid()).andSellerUidEqualTo(goods.getSellerUid());
+        goodsExample2.or().andSellerUidEqualTo(goods.getSellerUid()).andCategoryUidEqualTo(goods.getCategoryUid());
         goodsExample2.setOrderByClause("sales_volume desc");
         goodsDeatilInfoModel.setRecommendGoods(goodsMapper.selectByExample(goodsExample2));
-
-        GoodsSpecificationExample goodsSpecificationExample = new GoodsSpecificationExample();
-        goodsSpecificationExample.createCriteria().andUidEqualTo(goods_uid);
-        goodsDeatilInfoModel.setGoodsSpecification(goodsSpecificationMapper.selectByExample(goodsSpecificationExample));
-
-
+        //添加商品详细信息图片
+        goodsDeatilInfoModel.setGoodsDetailImg(goods.getDetailImgUrl().split(","));
         return goodsDeatilInfoModel;
     }
 
-    public void addCart(Cart cart, String user_uid, Integer goods_uid, Integer specification_uid, Integer counts){
-        if (cart == null){    //购物车中没有此规格的商品
-            Cart cart1 = new Cart();
-            cart1.setUserUid(user_uid);
-            cart1.setGoodsUid(goods_uid);
-            cart1.setSpecificationUid(specification_uid);
-            cart1.setCreateDate(new Date(System.currentTimeMillis()));
-            cart1.setAmount(counts);
+    @Override
+
+    public void addGoodsToCart(String userUid, Integer goodsUid, Integer specificationUid, Integer counts, String payWay) {
+        //判断购物车中是否已经存在相应商品
+        CartExample cartExample = new CartExample();
+        //根据payWay是"points"还是"money"判断isExchange的值
+        cartExample.or().andUserUidEqualTo(userUid).andGoodsUidEqualTo(goodsUid).andSpecificationUidEqualTo(specificationUid).andIsExchangeEqualTo(payWay.equals("points"));
+        List<Cart> cartList = cartMapper.selectByExample(cartExample);
+        if(cartList.isEmpty()){
+            Cart cart = new Cart();
+            cart.setAmount(counts);
+            cart.setCreateDate(new Date(System.currentTimeMillis()));
+            cart.setGoodsUid(goodsUid);
+            cart.setSpecificationUid(specificationUid);
+            cart.setUserUid(userUid);
+            cart.setIsExchange(payWay.endsWith("points"));
             cartMapper.insert(cart);
-        }else{
-            cart.setAmount(cart.getAmount() + counts);
-            Cart cart1 = new Cart();
-            cart1.setId(cart.getId());
-            cart1.setAmount(cart.getAmount());
-            cartMapper.updateByPrimaryKey(cart1);
+        }
+        else {
+            cartList.get(0).setAmount(cartList.get(0).getAmount()+counts);
+            cartMapper.updateByPrimaryKeySelective(cartList.get(0));
         }
     }
-
-
-
-
-
 
 
     public User judgeUserLoginStatus(String ticket) {

@@ -45,7 +45,6 @@
     <!-- ––––––––––––––––––––––––––––––––––––––––– -->
     <!-- Include CSS Filess                        -->
     <!-- ––––––––––––––––––––––––––––––––––––––––– -->
-
     <!-- Bootstrap -->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 
@@ -66,11 +65,16 @@
     <link th:href="@{/css/base.css}" rel="stylesheet">
     <link th:href="@{/css/style.css}" rel="stylesheet">
 
+    <!--引入fileinput插件-->
+    <!--<link th:href="@{/css/fileinput.min.css}" rel="stylesheet"media="all" type="text/css"/>-->
+    <!--<script th:src="@{/js/fileinput.min.js}"type="text/javascript" ></script>-->
+    <!--<script th:src="@{/js/locales/zh.js}"type="text/javascript"></script>-->
+
 </head>
 
 <body id="body" class="wide-layout preloader-active">
 
-     
+
 
 
 
@@ -120,44 +124,24 @@
                             </ul>
                         </div>
                         <div class="col-sm-12 col-md-8">
-                            <ul class="nav-top nav-top-right list-inline t-xs-center t-md-right">
-                                <li>
-                                    <a href="#"><i class="fa fa-flag-usa"></i>English <i class="fa fa-caret-down"></i></a>
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-flag-usa"></i>English</a>
-                                        </li>
-                                        <li><a href="#"><i class="fa fa-flag-fra"></i>France</a>
-                                        </li>
-                                        <li><a href="#"><i class="fa fa-flag-ger"></i>Germany</a>
-                                        </li>
-                                        <li><a href="#"><i class="fa fa-flag-rus"></i>Russia</a>
-                                        </li>
-                                    </ul>
+                            <ul class="nav-top nav-top-right list-inline  t-xs-center t-md-right ">
+                                <li th:if="${!isSignin}"><a th:href="@{/signin_page}"><i class="fa fa-lock"></i>登陆</a></li>
+                                <li th:if="${!isSignin}"><a th:href="@{/signup_page}"><i class="fa fa-user"></i>注册</a></li>
+                                <li th:if="${!user.getIsSeller()}">
+                                    <a th:href="@{/become_seller}"><i class="fa fa-usd"></i>申请店铺</a>
                                 </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-usd"></i>USD <i class="fa fa-caret-down"></i></a>
-                                    <ul>
-                                        <li><a href="#">USD - US Dollar</a>
-                                        </li>
-                                        <li><a href="#">EUR - Euro</a>
-                                        </li>
-                                        <li><a href="#">CNY - Chinese Yuan</a>
-                                        </li>
-                                        <li><a href="#">RUB - Russian Ruble</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li th:if="${!isSignin}"><a th:href="@{/signin_page}"><i class="fa fa-lock"></i>Sign In</a></li>
-                                <li th:if="${!isSignin}"><a th:href="@{/signup_page}"><i class="fa fa-user"></i>Sign Up</a></li>
                                 <li th:if="${isSignin}">
-                                    <a href="#"><i class="fa fa-user"></i>你好,<span th:text="${user.getUserName()}"></span></a>
-                                    <ul>
-                                        <li><a th:href="@{/myinfo}">我的信息</a></li>
-                                        <li><a th:href="@{/Cart}">我的购物车</a></li>
-                                        <li th:if="${!user.getIsSeller()}"><a th:href="@{/become_seller}">申请店铺</a></li>
-                                        <li th:if="${user.getIsSeller()}"><a href="#">我的店铺</a></li>
-                                        <li><a th:href="@{/signout}">退出登陆</a></li>
-                                    </ul>
+                                    <span th:text="'你好，'+${user.getUserName()}"></span>
+                                </li>
+                                <li th:if="${user.getIsSeller()} and ${isSignin}">
+                                    <a href="#"><i class="fa fa-usd"></i>我的店铺</a>
+                                </li>
+                                <li th:if="${isSignin}">
+                                <li>
+                                    <a href="http://www.templatesy.com/demo/617/signin.html">
+                                        <i class="fa fa-lock"></i>登录</a>
+                                </li>
+                                <li><a th:if="${isSignin}" th:href="@{/signout}">退出登陆</a></li>
                                 </li>
                             </ul>
                         </div>
@@ -232,7 +216,7 @@
                             </div>
                         </div>
                         <div class="row row-rl-0">
-                            <form class="p-40" action="#" th:action="@{/seller_submit}" th:object="${shop}" method="post">
+                            <form class="p-40" th:action="@{/seller_submit}" th:object="${shop}" method="post">
                                 <div class="col-sm-6 col-md-7 col-left">
                                     <div class="form-group">
                                         <label for="shopname">店铺名称</label>
@@ -248,16 +232,17 @@
                                         <textarea class="form-control" rows="3" id="address" name="address" th:field="*{address}" placeholder="address">
                                     </textarea>
                                     </div>
-                                    <div align="right">
+                                    <div>
                                         <button type="submit" class="btn btn-default">提交申请</button>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-5 col-right">
-                                    这里是上传ShopImg的部分
+                                    <div class="form-group">
+                                        <input id="file" name="file" type="file" enctype="multipart/form-data">
+                                    </div>
                                 </div>
                             </form>
                         </div>
-
                     </section>
                 </div>
             </div>
