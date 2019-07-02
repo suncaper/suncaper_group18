@@ -129,7 +129,7 @@
                                     <span th:text="'你好，'+${user.getUserName()}"></span>
                                 </li>
                                 <li th:if="${user.getIsSeller()} and ${isSignin}">
-                                    <a href="#"><i class="fa fa-usd"></i>我的店铺</a>
+                                    <a th:href="@{/MyStore/mystore}"><i class="fa fa-usd"></i>我的店铺</a>
                                 </li>
                                 <li th:if="${isSignin}">
                                     <a th:href="@{/myinfo}"><i class="fa fa-user"></i>我的信息</a>
@@ -190,7 +190,35 @@
             <!-- End Header Header -->
 
             <!-- Header Menu -->
-
+            <div class="header-menu bg-blue">
+                <div class="container">
+                    <nav class="nav-bar">
+                        <div class="nav-header">
+                            <span class="nav-toggle" data-toggle="#header-navbar">
+		                        <i></i>
+		                        <i></i>
+		                        <i></i>
+		                    </span>
+                        </div>
+                        <div id="header-navbar" class="nav-collapse">
+                            <ul class="nav-menu">
+                                <li>
+                                    <a th:href="@{/index}">首页</a>
+                                </li>
+                                <li>
+                                    <a href="#">基本信息管理</a>
+                                </li>
+                                <li class="active">
+                                    <a th:href="@{/MyStore/mystore}">商品管理</a>
+                                </li>
+                                <li>
+                                    <a href="#">订单管理</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
             <!-- End Header Menu -->
 
         </header>
@@ -202,61 +230,6 @@
             <div class="page-container ptb-60">
                 <div class="container">
                     <div class="row row-rl-10 row-tb-20">
-                        <div class="page-sidebar col-sm-4 col-md-3">
-                            <aside class="store-header-area panel t-center">
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <figure class="pt-10 pl-10">
-                                            <img th:src="${shopPageModel.getShopBaseInfo().getImgUrl()}" alt="">
-                                        </figure>
-                                    </div>
-                                    <div class="col-xs-12">
-                                        <div class="store-about ptb-30 prl-10">
-                                            <h3 class="mb-10" th:text="${shopPageModel.getShopBaseInfo().getShopName()}"></h3>
-                                            <div class="rating mb-10">
-                                                <span class="rating-stars rate-allow" data-rating="3">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o star-active"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </span>
-                                                <span class="rating-reviews">
-                                        ( <span class="rating-count">205</span> rates )
-                                                </span>
-                                            </div>
-                                            <p class="mb-15" th:text="${shopPageModel.getShopBaseInfo().getDescribes()}"></p>
-                                            <a class="btn btn-info" href="#">基本信息修改</a>
-                                            <a th:href="@{/MyStore/addGoods}" class="btn btn-rounded btn-sm" style="background-color: rgb(255,102,102);">添加商品</a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12">
-                                        <div class="store-splitter-left">
-                                            <header class="left-splitter-header prl-10 ptb-20 bg-lighter">
-                                                <div class="row">
-                                                    <div class="col-xs-6">
-                                                        <h2 th:text="${shopPageModel.getShopGoodsList().size()}"></h2>
-                                                        <p>在售商品</p>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <h2 th:text="${shopPageModel.getSalesVolumeCount()}"></h2>
-                                                        <p>已售商品</p>
-                                                    </div>
-                                                </div>
-                                            </header>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12">
-                                        <aside class="t-left">
-                                            <ul class="nav-coupon-category panel">
-                                                <li th:each="category : ${shopPageModel.getShopCategories()}"><a href="#"><i class="fa fa-cutlery"></i><span th:text="${category.getDescriptions()}"></span></a>
-                                                </li>
-                                            </ul>
-                                        </aside>
-                                    </div>
-                                </div>
-                            </aside>
-                        </div>
                         <div class="page-content col-sm-8 col-md-9">
 
                             <!-- Store Tabs Area -->
