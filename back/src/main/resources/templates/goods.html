@@ -263,12 +263,9 @@
                                     <div class="single_product_desc">
                                         <p th:text="${goodsInfo.getGoods().getDescriptions()}"></p>
                                         <p>商品规格选择：</p>
-                                        <form>
-                                            <input th:onclick="chooseSpecification([[${(specification.getUid())}]])" th:each="specification : ${goodsInfo.getGoodsSpecification()}" type="radio" th:name="${goodsInfo.getGoods().getUid()}" th:value="${specification.getUid()}" th:text="${specification.getSpecificationName()}+' '"/>
-                                        </form>
+                                        <input th:onclick="chooseSpecification([[${(specification.getUid())}]])" th:each="specification : ${goodsInfo.getGoodsSpecification()}" type="radio" th:name="${goodsInfo.getGoods().getUid()}" th:value="${specification.getUid()}" th:text="${specification.getSpecificationName()}+' '"/>
                                     </div>
-
-                                    <form class="cart" method="post" enctype='multipart/form-data'>
+                                    <div class="cart">
                                         <div class="quantity buttons_added clearfix">
                                             <div class="quantity_controll_con">
                                                 <input type="button" class="quantity_controll minus" value="-">
@@ -277,7 +274,7 @@
                                             </div>
                                         </div>
                                         <button class="single_add_to_cart_button button alt" th:onclick="addToCart([[${goodsInfo.getGoods().getUid()}]], [[${payWay}]])">添加到购物车</button>
-                                    </form>
+                                    </div>
                                     <!-- End Form -->
 
                                     <div class="product_meta">
@@ -586,7 +583,7 @@
         if(chooseSpecificationId == -1){
             alert("未选择商品规格");
         }else{
-            $.get("/addGoodsToCart?goodsUid="+goodsUid+"&specificationUid="+chooseSpecificationId+"&counts="+$("#goodsAmount").val()+"&payWay="+payWay);
+            window.location.href="/addGoodsToCart?goodsUid="+goodsUid+"&specificationUid="+chooseSpecificationId+"&counts="+$("#goodsAmount").val()+"&payWay="+payWay;
         }
     }
 </script>

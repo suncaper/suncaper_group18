@@ -71,10 +71,11 @@ public class GoodsController {
 
     @RequestMapping(value = "/addGoodsToCart")
     public String addCart(HttpServletRequest request, @RequestParam("goodsUid") Integer goodsUid, @RequestParam("specificationUid") Integer specificationUid, @RequestParam("counts") Integer counts, @RequestParam("payWay") String payWay){
+        System.out.println("添加商品");
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if(user != null){
             goodsService.addGoodsToCart(user.getUid(), goodsUid, specificationUid, counts, payWay);
-            return "redirect:/getGoods?goodsUid="+goodsUid+"&payWay="+payWay;
+            return "redirect:/Cart";
         }
         else {
             return "redirect:/signin_page";

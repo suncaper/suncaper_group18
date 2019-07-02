@@ -38,7 +38,7 @@ public class LoginRegisterController {
         else {
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
-            return "index";
+            return "redirect:/index";
         }
     }
     //注册请求
@@ -55,7 +55,7 @@ public class LoginRegisterController {
             //设置登陆状态为false
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
-            return "index";
+            return "redirect:/index";
         }
     }
 
@@ -75,7 +75,7 @@ public class LoginRegisterController {
             httpServletResponse.addCookie(cookie);
             model.addAttribute("isSignin", true);
             model.addAttribute("user", loginRegisterService.getUserInfoByTicket(result.get("ticket")));
-            return "index";
+            return "redirect:/index";
         }
     }
 
@@ -95,7 +95,7 @@ public class LoginRegisterController {
             httpServletResponse.addCookie(cookie);
             model.addAttribute("isSignin", true);
             model.addAttribute("user", loginRegisterService.getUserInfoByTicket(result.get("ticket")));
-            return "index";
+            return "redirect:/index";
         }
     }
 
@@ -107,6 +107,6 @@ public class LoginRegisterController {
         httpServletResponse.addCookie(cookie);
         model.addAttribute("user", new User());//设置User信息为空
         model.addAttribute("isSignin", false);//设置登陆信息为false
-        return "index";
+        return "redirect:/index";
     }
 }

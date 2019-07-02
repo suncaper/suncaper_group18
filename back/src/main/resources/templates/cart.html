@@ -223,10 +223,13 @@
                                                             </figure>
                                                         </div>
                                                         <div class="media-body valign-middle" >
-                                                            <h5 class="title mb-5 t-uppercase"><a href="#" th:text="${cart.goods_name}">商品名字</a></h5>
+                                                            <h5 class="title mb-5 t-uppercase">
+                                                                <a th:if="${!cart.is_exchange}" th:href="@{/getGoods(goodsUid=${cart.goods_uid}, payWay='money')}" th:text="${cart.goods_name}">商品名字</a>
+                                                                <a th:if="${cart.is_exchange}" th:href="@{/getGoods(goodsUid=${cart.goods_uid}, payWay='points')}" th:text="${cart.goods_name}">商品名字</a>
+                                                            </h5>
                                                             <h4 class="price color-green" th:if="${!cart.is_exchange}">
-                                                                <span class="price-sale" th:text=" ￥ +${cart.price}">原始价格</span>
-                                                                <span th:text="￥+${cart.discount_price}">优惠价格/原始价格</span>
+                                                                <span class="price-sale" th:text="'￥'+${cart.price}">原始价格</span>
+                                                                <span th:text="'￥'+${cart.discount_price}">优惠价格/原始价格</span>
                                                             </h4>
                                                             <h4 class="price color-green" th:if="${cart.is_exchange}">
                                                                 <span class="price-sale" th:text=" '@' +${cart.points} + '（积分）'">原始价格</span>
@@ -242,7 +245,7 @@
                                                         <a class="btn btn-rounded btn-sm" th:href="@{/increaseCarts(specification_uid=${cart.specification_uid})}">+</a>
                                                     </td>
                                                     <td class="col-sm-2 col-md-2" th:if="${!cart.is_exchange}">
-                                                        <span style="font-size:20px;" th:text="￥+${cart.discount_price}*${cart.amount}">单件商品总价</span>
+                                                        <span style="font-size:20px;" th:text="'￥'+${cart.discount_price}*${cart.amount}">单件商品总价</span>
                                                     </td>
                                                     <td class="col-sm-2 col-md-2" th:if="${cart.is_exchange}">
                                                         <span style="font-size:20px;" th:text="'@'+${cart.points}*${cart.amount} + '（积分）'">单件商品总价</span>
