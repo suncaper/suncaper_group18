@@ -28,5 +28,6 @@ public interface MyInfoService {
     List<UserAddress> getUserAddressList(String userUid);
     void deleteUserAddress(Integer addressId);
     void editUserAddress(UserAddress userAddress);
+    void addUserAddress(UserAddress userAddress);
     void addUserHistory(String userUid, Integer goodsUid);
 }

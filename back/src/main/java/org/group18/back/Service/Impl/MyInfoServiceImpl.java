@@ -229,6 +229,11 @@ public class MyInfoServiceImpl implements MyInfoService {
         useraddressMapper.updateByPrimaryKeySelective(userAddress);
     }
 
+    @Override
+    public void addUserAddress(UserAddress userAddress) {
+        useraddressMapper.insert(userAddress);
+    }
+
 
     @Override
     public void addUserHistory(String userUid, Integer goodsUid){

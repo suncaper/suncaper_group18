@@ -52,6 +52,7 @@ public class  MyInfoController {
                 model.addAttribute("isAddressEmpty", false);
 
             }
+            model.addAttribute("newAddress", new UserAddress());
             model.addAttribute("userAddressList", userAddressList);
             return "myinfo";
         }
@@ -140,4 +141,13 @@ public class  MyInfoController {
         myInfoService.editUserAddress(userAddress);
         return "redirect:/myinfo";
     }
+
+    @RequestMapping("/addUserAddress")
+    public String addUserAddress(HttpServletRequest request, UserAddress userAddress){
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        userAddress.setUserUid(user.getUid());
+        myInfoService.addUserAddress(userAddress);
+        return "redirect:/myinfo";
+    }
+
 }
