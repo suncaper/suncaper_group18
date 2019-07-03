@@ -207,7 +207,11 @@
                             <!-- Checkout Area -->
                             <section class="section checkout-area panel prl-30 pt-20 pb-40">
                                 <h2 class="h2 mb-20 h-title" style="font-size: 20px">添加商品详细信息</h2>
-                                <form class="mb-30" method="post" th:action="@{/MyStore/comfirmAdd}" th:object="${GoodsManagementModel}">
+                                <div th:if="${isError}"><div class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <strong>错误!</strong> <span th:text="${errorMsg}"></span>
+                                </div></div>
+                                <form class="mb-30" method="post" th:action="@{/MyStore/comfirmAdd}" th:object="${GoodsManagementModel}" onsubmit="return beforeSubmit(this);">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -466,6 +470,62 @@
     <script>
         function search() {
             window.location.href="/search?searchKey="+$("#inputSearchKey").val()+"&searchCategory="+$("#chooseSearch option:selected").val();
+        }
+    </script>
+
+    <script type="text/javascript">
+        function beforeSubmit(form){
+            if(form.goods_name.value == ''){
+                alert('请输入商品名称！');
+                form.goods_name.focus();
+                return false;
+            }
+            if(form.category_uid.value <= 0){
+                alert('请选择类型！');
+                form.category_uid.focus();
+                return false;
+            }
+            if(form.price.value == ''){
+                alert('请输入价格！');
+                form.price.focus();
+                return false;
+            }
+            if(form.price.value < 0){
+                alert('价格必须为非负数！');
+                form.price.focus();
+                return false;
+            }
+            if(form.discount_price.value == ''){
+                alert('请输入优惠价格！');
+                form.discount_price.focus();
+                return false;
+            }
+            if(form.discount_price.value < 0){
+                alert('价格必须为非负数！');
+                form.discount_price.focus();
+                return false;
+            }
+            if(form.discount_price.value > form.price.value) {
+                alert('优惠价格必须小于等于价格！');
+                form.discount_price.focus();
+                return false;
+            }
+            if(form.specification_name.value == '') {
+                alert('请输入商品规格！');
+                form.specification_name.focus();
+                return false;
+            }
+            if(form.amount.value == '') {
+                alert('请输入商品数量！');
+                form.amount.focus();
+                return false;
+            }
+            if(form.descriptions.value == '') {
+                alert('请输入商品描述！');
+                form.descriptions.focus();
+                return false;
+            }
+            return true;
         }
     </script>
 </body>

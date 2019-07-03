@@ -137,7 +137,17 @@ public class MyStoreController {
             model.addAttribute("pageNumberList", pagesNumberList);
             model.addAttribute("currentPage", page);
             model.addAttribute("pageAmount", pagesNumberList.size());
-            return "mystore";
+            if(result.get("msg").equals("该商品已存在，且规格名称不能重复")){
+                model.addAttribute("errorMsg", result.get("msg"));
+                model.addAttribute("isError", true);
+                List<Category> categoryList = mystoreService.getAllCategory();
+                System.out.println(categoryList);
+                model.addAttribute("categoryList", categoryList);
+                return "checkout_payment";
+            }
+            else{
+                return "mystore";
+            }
         }
     }
 }

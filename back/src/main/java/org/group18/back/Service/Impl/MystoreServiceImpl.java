@@ -61,7 +61,7 @@ public class MystoreServiceImpl implements MystoreService{
         //相同商店goods_name不能重复
         Integer i;
         for(i = 0; i < goodsList.size(); i++){
-            if (goodsList.get(i).getGoodsName() == goodsManagementModel.getGoods_name()){//goods_name相同
+            if (goodsList.get(i).getGoodsName().equals(goodsManagementModel.getGoods_name())){//goods_name相同
                 GoodsSpecificationExample goodsSpecificationExample = new GoodsSpecificationExample();
                 GoodsSpecificationExample.Criteria criteria1 = goodsSpecificationExample.createCriteria();
                 criteria1.andGoodsUidEqualTo(goodsList.get(i).getUid());
@@ -69,15 +69,16 @@ public class MystoreServiceImpl implements MystoreService{
                 //某一商品的specification_name不能重复
                 Integer j;
                 for (j = 0; j < goodsSpecificationList.size(); j++){
-                    if(goodsSpecificationList.get(j).getSpecificationName() == goodsManagementModel.getSpecification_name()){//specification_name相同
+                    if(goodsSpecificationList.get(j).getSpecificationName().equals(goodsManagementModel.getSpecification_name())){//specification_name相同
                         result.put("msg","该商品已存在，且规格名称不能重复");
                         return result;
                     }
                 }
-                if (j == goodsSpecificationList.size()){
+                if (j == goodsSpecificationList.size()){//规格不重复
                     //更新goods表
                     goodsList.get(i).setUid(goodsList.get(i).getUid());
                     goodsList.get(i).setAmount(goodsList.get(i).getAmount() + goodsManagementModel.getAmount());
+                    goodsMapper.updateByPrimaryKey(goodsList.get(i));
                     //插入t_goods_specification
                     GoodsSpecification goodsSpecification = new GoodsSpecification();
                     goodsSpecification.setSpecificationName(goodsManagementModel.getSpecification_name());
@@ -99,8 +100,16 @@ public class MystoreServiceImpl implements MystoreService{
             ShopExample.Criteria criteria1 = shopExample.createCriteria();
             criteria1.andSellerUidEqualTo(seller_uid);
             List<Shop> shops = shopMapper.selectByExample(shopExample);
-            categoryShop.setShopUid(shops.get(0).getUid());
-            categoryShopMapper.insert(categoryShop);
+            //判断唯一性
+            CategoryShopExample categoryShopExample = new CategoryShopExample();
+            CategoryShopExample.Criteria criteria2 = categoryShopExample.createCriteria();
+            criteria2.andCategoryUidEqualTo(goodsManagementModel.getCategory_uid());
+            criteria2.andShopUidEqualTo(shops.get(0).getUid());
+            List<CategoryShop> categoryShops = categoryShopMapper.selectByExample(categoryShopExample);
+            if(categoryShops.isEmpty()){
+                categoryShop.setShopUid(shops.get(0).getUid());
+                categoryShopMapper.insert(categoryShop);
+            }
             //insert t_goods
             Goods goods = new Goods();
             goods.setCategoryUid(goodsManagementModel.getCategory_uid());
@@ -123,9 +132,9 @@ public class MystoreServiceImpl implements MystoreService{
             goodsSpecification.setSaleAmount(0);
                 //通过goods_name和seller_uid找到goods_uid
             GoodsExample goodsExample1 = new GoodsExample();
-            GoodsExample.Criteria criteria2 = goodsExample1.createCriteria();
-            criteria2.andSellerUidEqualTo(seller_uid);
-            criteria2.andGoodsNameEqualTo(goodsManagementModel.getGoods_name());
+            GoodsExample.Criteria criteria3 = goodsExample1.createCriteria();
+            criteria3.andSellerUidEqualTo(seller_uid);
+            criteria3.andGoodsNameEqualTo(goodsManagementModel.getGoods_name());
             List<Goods> goodsList1 = goodsMapper.selectByExample(goodsExample1);
             goodsSpecification.setGoodsUid(goodsList1.get(0).getUid());
             goodsSpecificationMapper.insert(goodsSpecification);
