@@ -14,4 +14,7 @@ public interface MystoreService {
     public Goods getGoods(Integer goods_uid);
     public Map<String, String> addGoods(GoodsManagementModel goodsManagementModel, String seller_uid, MultipartFile file, MultipartFile detail_img_file);
     Integer getSellerOrderCount(String sellerUid);
+    boolean deleteGoods(Goods goods);
+    GoodsManagementModel getGoodsDetails(Goods goods);
+    void editGoods(GoodsManagementModel goodsManagementModel, Integer goods_uid, MultipartFile file, MultipartFile detail_img_file);
 }

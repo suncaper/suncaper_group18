@@ -250,7 +250,7 @@
                                         <div role="tabpanel" class="tab-pane ptb-20 active" id="deals">
                                             <section class="section deals-area">
                                                 <div class="row row-masnory row-tb-20">
-                                                    <div class="col-sm-3 col-lg-3" th:each="goods : ${shopPageModel.getShopGoodsList()}">
+                                                    <div class="col-sm-3 col-lg-3" th:each="goods : ${shopPageModel.getShopGoodsList()}" th:if="${!goods.getDeleteState()}">
                                                         <div class="deal-single panel">
                                                             <figure
                                                                     class="deal-thumbnail embed-responsive embed-responsive-16by9"
@@ -308,6 +308,9 @@
                                                                                 class="ico fa fa-shopping-basket mr-10"></i><span
                                                                                 th:text="${goods.getSalesVolume()}"></span>&nbsp;&nbsp;已售卖
                                                                         </li>
+                                                                        <li th:align="right">
+                                                                            <a class="btn btn-rounded btn-sm" style="background-color: rgb(255,102,102);" th:href="@{/MyStore/deleteGoods(goods_uid=${goods.getUid()})}">删除</a>
+                                                                        </li>
                                                                     </ul>
                                                                     <p class="text-muted mb-20"
                                                                        th:text="${goods.getDescriptions()}"></p>
@@ -319,16 +322,16 @@
                                                                               th:text="'¥'+${goods.getPrice()}"></span><span
                                                                             th:text="'¥'+${goods.getDiscountPrice()}"></span>
                                                                     </h3>
+                                                                    <ul th:align="center">
+                                                                        <li class="deal-title mb-10">
+                                                                            <a class="btn btn-rounded btn-sm" th:href="@{/MyStore/editGoods(goods_uid=${goods.getUid()})}">编辑商品</a>
+                                                                            <a class="btn btn-rounded btn-sm" th:href="@{/MyStore/editGoods(goods_uid=${goods.getUid()})}">编辑规格</a>
+                                                                        </li>
+                                                                    </ul>
                                                                     <h3 class="price ptb-5 text-right"
                                                                         th:if="(${goods.getPrice() lt goods.getDiscountPrice()}) or (${goods.getPrice() eq goods.getDiscountPrice()})">
                                                                         <span th:text="'¥'+${goods.getPrice()}"></span>
                                                                     </h3>
-                                                                    <ul>
-                                                                        <li class="deal-title mb-10">
-                                                                            <a class="btn btn-rounded btn-sm" th:href="@{/MyStore/editGoods(goods_uid=${goods.getUid()})}">编辑商品</a>
-                                                                            <a class="btn btn-rounded btn-sm" style="background-color: rgb(255,102,102);" th:href="@{/MyStore/addGoods}">删除商品</a>
-                                                                        </li>
-                                                                    </ul>
                                                                 </div>
                                                             </div>
                                                         </div>

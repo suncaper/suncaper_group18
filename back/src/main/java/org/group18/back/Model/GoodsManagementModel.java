@@ -1,9 +1,14 @@
 package org.group18.back.Model;
 
+import org.group18.back.Entity.GoodsSpecification;
+
 import java.math.BigDecimal;
+import java.util.Map;
 
 public class GoodsManagementModel {
+    private Integer goods_uid;//商品id
     private Integer category_uid; //种类id
+    private String category_description;//种类描述
     private String goods_name;//商品名
     private BigDecimal price;//原价
     private BigDecimal discount_price;//优惠价格
@@ -14,6 +19,15 @@ public class GoodsManagementModel {
     private Integer amount;//规格数量
     private String img_url = "https://suncaper-group18-1256197408.cos.ap-chengdu.myqcloud.com/shop_img/brand_02.jpg";
     private String detail_img_url = "https://suncaper-group18-1256197408.cos.ap-chengdu.myqcloud.com/shop_img/brand_02.jpg";
+    private Map<GoodsSpecification, Integer> goodsSpecifications;
+
+    public Integer getGoods_uid() {
+        return goods_uid;
+    }
+
+    public void setGoods_uid(Integer goods_uid) {
+        this.goods_uid = goods_uid;
+    }
 
     public Integer getCategory_uid() {
         return category_uid;
@@ -21,6 +35,14 @@ public class GoodsManagementModel {
 
     public void setCategory_uid(Integer category_uid) {
         this.category_uid = category_uid;
+    }
+
+    public String getCategory_description() {
+        return category_description;
+    }
+
+    public void setCategory_description(String category_description) {
+        this.category_description = category_description;
     }
 
     public String getGoods_name() {
@@ -101,5 +123,13 @@ public class GoodsManagementModel {
 
     public void setDetail_img_url(String detail_img_url) {
         this.detail_img_url = detail_img_url;
+    }
+
+    public Map<GoodsSpecification, Integer> getGoodsSpecifications() {
+        return goodsSpecifications;
+    }
+
+    public void setGoodsSpecifications(Map<GoodsSpecification, Integer> goodsSpecifications) {
+        this.goodsSpecifications = goodsSpecifications;
     }
 }

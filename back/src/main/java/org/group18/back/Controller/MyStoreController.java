@@ -69,7 +69,7 @@ public class MyStoreController {
         return "mystore";
     }
 
-    @RequestMapping("/editGoods")
+    @GetMapping("/editGoods")
     public String editGoods(Model model, HttpServletRequest request, @RequestParam("goods_uid") Integer goods_uid){
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
@@ -83,11 +83,67 @@ public class MyStoreController {
         }
         model.addAttribute("goods_uid", goods_uid);
         Goods goods = mystoreService.getGoods(goods_uid);
-        model.addAttribute("goods", goods);
-        List<Category> categoryList = mystoreService.getAllCategory();
-        System.out.println(categoryList);
-        model.addAttribute("categoryList", categoryList);
-        return "checkout_payment";
+        GoodsManagementModel goodsManagementModel = mystoreService.getGoodsDetails(goods);
+        goodsManagementModel.setGoods_uid(goods_uid);
+        System.out.println(goodsManagementModel.getGoods_uid());
+        model.addAttribute("goodsManagementModel", goodsManagementModel);
+        return "edit_goods";
+    }
+
+    @PostMapping("/comfirmEdit")
+    public String comfirmEdit(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page, GoodsManagementModel goodsManagementModel, @RequestParam("imgfile")MultipartFile file, @RequestParam("detail_img_file")MultipartFile detail_img_file){
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+        }
+        else {
+            model.addAttribute("user", user);
+            model.addAttribute("isSignin", true);
+        }
+        System.out.println("aaaa"+goodsManagementModel.getGoods_uid());
+        mystoreService.editGoods(goodsManagementModel, goodsManagementModel.getGoods_uid(), file, detail_img_file);
+        //进行逻辑处理
+        //设置翻页
+        //设置每页显示数量为8
+        int pageSize = 8;
+        if(page == null) page = 1;//若未接受到页面请求，则设置为1
+        Integer shopUid = mystoreService.getShopUid(user.getUid());
+        ShopPageModel shopPageModel = storeService.getShopPageModel(shopUid, pageSize, page);
+        if(shopPageModel == null) return "404";
+        else {
+            //设置页面主要内容
+            model.addAttribute("shopPageModel", shopPageModel);
+            //生成页面列表
+            List<Integer> pagesNumberList = new ArrayList<>();
+            for (int i = 1; i <= (shopPageModel.getShopGoodsList().size() % pageSize == 0 ? shopPageModel.getShopGoodsList().size() / pageSize : shopPageModel.getShopGoodsList().size() / pageSize + 1); i++) {
+                pagesNumberList.add(i);
+            }
+            model.addAttribute("pageNumberList", pagesNumberList);
+            model.addAttribute("currentPage", page);
+            model.addAttribute("pageAmount", pagesNumberList.size());
+                return "redirect:/MyStore/mystore";
+        }
+    }
+
+    @RequestMapping("/deleteGoods")
+    public String deleteGoods(Model model, HttpServletRequest request, @RequestParam("goods_uid") Integer goods_uid){
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+        }
+        else {
+            model.addAttribute("user", user);
+            model.addAttribute("isSignin", true);
+        }
+        model.addAttribute("goods_uid", goods_uid);
+        Goods goods = mystoreService.getGoods(goods_uid);
+        boolean success = mystoreService.deleteGoods(goods);
+
+        return "redirect:/MyStore/mystore";
     }
 
     @GetMapping("/addGoods")
@@ -105,7 +161,7 @@ public class MyStoreController {
         List<Category> categoryList = mystoreService.getAllCategory();
         System.out.println(categoryList);
         model.addAttribute("categoryList", categoryList);
-        return "checkout_payment";
+        return "add_goods";
     }
 
     @PostMapping("/comfirmAdd")
@@ -124,7 +180,7 @@ public class MyStoreController {
         //进行逻辑处理
         //设置翻页
         //设置每页显示数量为8
-        int pageSize = 6;
+        int pageSize = 8;
         if(page == null) page = 1;//若未接受到页面请求，则设置为1
         Integer shopUid = mystoreService.getShopUid(user.getUid());
         ShopPageModel shopPageModel = storeService.getShopPageModel(shopUid, pageSize, page);
@@ -146,7 +202,7 @@ public class MyStoreController {
                 List<Category> categoryList = mystoreService.getAllCategory();
                 System.out.println(categoryList);
                 model.addAttribute("categoryList", categoryList);
-                return "checkout_payment";
+                return "add_goods";
             }
             else{
                 return "redirect:/MyStore/mystore";

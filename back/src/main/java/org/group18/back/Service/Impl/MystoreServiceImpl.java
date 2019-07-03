@@ -7,6 +7,7 @@ import org.group18.back.Service.MystoreService;
 import org.group18.back.Service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -172,5 +173,67 @@ public class MystoreServiceImpl implements MystoreService{
         OrderExample orderExample = new OrderExample();
         orderExample.or().andSellerUidEqualTo(sellerUid).andSellerDeleteStateEqualTo(false);
         return orderMapper.selectByExample(orderExample).size();
+    }
+
+    @Override
+    public boolean deleteGoods(Goods goods) {
+        goods.setUid(goods.getUid());
+        goods.setDeleteState(true);
+        Integer result = goodsMapper.updateByPrimaryKey(goods);
+        if (result > 0)
+            return true;
+        return false;
+    }
+
+    @Override
+    public GoodsManagementModel getGoodsDetails(Goods goods) {
+        GoodsManagementModel goodsManagementModel = new GoodsManagementModel();
+        goodsManagementModel.setCategory_uid(goods.getCategoryUid());
+        //查找种类描述
+        CategoryExample categoryExample = new CategoryExample();
+        CategoryExample.Criteria criteria = categoryExample.createCriteria();
+        criteria.andUidEqualTo(goods.getCategoryUid());
+        List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
+        goodsManagementModel.setCategory_description(categoryList.get(0).getDescriptions());
+
+        goodsManagementModel.setGoods_name(goods.getGoodsName());
+        goodsManagementModel.setPrice(goods.getPrice());
+        goodsManagementModel.setDiscount_price(goods.getDiscountPrice());
+        goodsManagementModel.setDescriptions(goods.getDescriptions());
+        goodsManagementModel.setIs_exchange(goods.getIsExchange());
+        goodsManagementModel.setPoints(goods.getPoints());
+        //查找商品对应规格列表
+        GoodsSpecificationExample goodsSpecificationExample = new GoodsSpecificationExample();
+        GoodsSpecificationExample.Criteria criteria1 = goodsSpecificationExample.createCriteria();
+        criteria1.andGoodsUidEqualTo(goods.getUid());
+        List<GoodsSpecification> goodsSpecificationList = goodsSpecificationMapper.selectByExample(goodsSpecificationExample);
+        Map<GoodsSpecification, Integer> goodsSpecifications = new HashMap<>();
+        for(Integer i = 0; i < goodsSpecifications.size(); i++){
+            goodsSpecifications.put(goodsSpecificationList.get(i), goodsSpecificationList.get(i).getAmount());
+        }
+        goodsManagementModel.setGoodsSpecifications(goodsSpecifications);
+
+        return goodsManagementModel;
+    }
+
+    @Override
+    public void editGoods(GoodsManagementModel goodsManagementModel, Integer goods_uid, MultipartFile file, MultipartFile detail_img_file) {
+        GoodsExample goodsExample = new GoodsExample();
+        GoodsExample.Criteria criteria = goodsExample.createCriteria();
+        criteria.andUidEqualTo(goods_uid);
+        List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
+        goodsList.get(0).setUid(goods_uid);
+        goodsList.get(0).setPrice(goodsManagementModel.getPrice());
+        goodsList.get(0).setDiscountPrice(goodsManagementModel.getDiscount_price());
+        goodsList.get(0).setGoodsName(goodsManagementModel.getGoods_name());
+        goodsList.get(0).setDescriptions(goodsManagementModel.getDescriptions());
+        try {
+            goodsList.get(0).setImgUrl(sellerService.fileupload(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //找到detial_img_url
+        goodsList.get(0).setDetailImgUrl(goodsList.get(0).getDetailImgUrl() + "," + goodsManagementModel.getDetail_img_url());
+        goodsMapper.updateByPrimaryKey(goodsList.get(0));
     }
 }
