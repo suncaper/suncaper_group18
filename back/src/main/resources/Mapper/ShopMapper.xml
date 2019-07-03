@@ -320,7 +320,7 @@
   </update>
   
   <select id="selectAllShop" resultMap="BaseResultMap">
-    select * from t_shop
+    select * from t_shop;
   </select>
 
   <select id="getAllShopCount" resultType="java.lang.Integer">

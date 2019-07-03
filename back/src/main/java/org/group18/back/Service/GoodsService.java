@@ -8,6 +8,7 @@ import org.group18.back.Model.GoodsDeatilInfoModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -16,4 +17,5 @@ public interface GoodsService {
     void addGoodsToCart(String userUid, Integer goodsUid, Integer specificationUid, Integer counts, String payWay);
     Integer getGoodsSearchAmount(String searchKey);
     List<Goods> getGoodsSearchList(int pageSize, int page, String searchKey);
+    List<Goods> selectAllGoodsByClausedesc();
 }
