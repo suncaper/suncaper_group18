@@ -223,7 +223,7 @@ public class MyInfoServiceImpl implements MyInfoService {
     @Override
     public List<UserAddress> getUserAddressList(String userUid) {
         UserAddressExample addressExample = new UserAddressExample();
-        addressExample.createCriteria().andUserUidEqualTo(userUid);
+        addressExample.createCriteria().andUserUidEqualTo(userUid).andDeleteStateEqualTo(false);
         return useraddressMapper.selectByExample(addressExample);
     }
 
@@ -231,16 +231,21 @@ public class MyInfoServiceImpl implements MyInfoService {
     public void deleteUserAddress(Integer addressId) {
         UserAddressExample userAddressExample = new UserAddressExample();
         userAddressExample.createCriteria().andIdEqualTo(addressId);
-        useraddressMapper.deleteByExample(userAddressExample);
+        UserAddress userAddress = useraddressMapper.selectByExample(userAddressExample).get(0);
+        userAddress.setDeleteState(true);
+        useraddressMapper.updateByExample(userAddress, userAddressExample);
     }
 
     @Override
+    @Transactional
     public void editUserAddress(UserAddress userAddress) {
         useraddressMapper.updateByPrimaryKeySelective(userAddress);
     }
 
     @Override
+    @Transactional
     public void addUserAddress(UserAddress userAddress) {
+        userAddress.setDeleteState(false);
         useraddressMapper.insert(userAddress);
     }
 

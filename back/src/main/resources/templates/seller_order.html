@@ -234,9 +234,10 @@
                                     <td>
                                         <table id = "storeOrder1">
                                             <tr>
-                                                <th>收件人：<span th:text="${orderPage.getUserAddress().getReceiverName()}"></span></th>
                                                 <th>收件地址：<span th:text="${orderPage.getUserAddress().getProvince()} + ${orderPage.getUserAddress().getCity()} + ${orderPage.getUserAddress().getDetailAddress()}"></span></th>
+                                                <th>收件人：<span th:text="${orderPage.getUserAddress().getReceiverName()}"></span></th>
                                                 <th>手机：<span th:text="${orderPage.getUserAddress().getReceiverPhone()}"></span></th>
+                                                <th></th>
                                                 <th th:if="!${orderPage.getOrderInfo().getIsPaid()}" th:text="未支付" style="font-size: 18px;"></th>
                                                 <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state01' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="未发货">订单状态</th>
                                                 <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state02' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="已发货">订单状态</th>
@@ -244,7 +245,6 @@
                                                 <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state04' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="退款中">订单状态</th>
                                                 <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state05' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="已退款">订单状态</th>
                                                 <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state06' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="拒绝退款">订单状态</th>
-                                                <th></th>
                                             </tr>
                                             <!--人名币购买样式-->
                                             <tr th:if="${orderPage.getOrderInfo().getTypeUid()} eq 'type01'" class="panel alert" th:each="goodsInfo:${orderPage.getGSN()}">
@@ -325,15 +325,16 @@
                                                 </td>
                                                 <td></td>
                                             </tr>
+                                            <!--商品信息核算-->
                                             <tr>
                                                 <td></td>
                                                 <td></td>
                                                 <td align="right">
-                                                    <button th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state02'" class="btn btn-rounded btn-sm mt-15">确认收货</button>
+                                                    <button th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state01'" class="btn btn-rounded btn-sm mt-15">发货</button>
                                                 </td>
                                                 <td align="right">
-                                                    <button th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state02'" style="background-color: yellowgreen" class="btn btn-rounded btn-sm mt-15">申请退款</button>
-                                                    <button th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state03'" style="background-color: red;" class="btn btn-rounded btn-sm mt-15" th:onclick="tryToDeleteOrder([[${orderPage.getOrderInfo().getId()}]])">删除订单</button>
+                                                    <button th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state04'" style="background-color: yellowgreen" class="btn btn-rounded btn-sm mt-15">同意退款</button>
+                                                    <button th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state04'" style="background-color: red;" class="btn btn-rounded btn-sm mt-15">拒绝退款</button>
 
                                                 </td>
                                                 <td>
@@ -346,18 +347,18 @@
                                     </td>
                                 </tr>
                             </table>
-                            <div class="page-pagination text-center mt-30 p-10 panel"   th:if="${orderPageList.size()} eq 0"><p>暂时没有订单呢，快去买买买吧～！</p></div>
+                            <div class="page-pagination text-center mt-30 p-10 panel"   th:if="${orderPageList.size()} eq 0"><p>暂时没有订单呢，请多加宣传店铺～！</p></div>
                             <div th:if="${orderPageList.size()} ne 0" class="page-pagination text-center mt-30 p-10 panel">
                                 <nav>
                                     <!-- Page Pagination -->
                                     <ul class="page-pagination">
-                                        <li><a class="page-numbers previous" th:if="${currentPage} ne 1" th:href="@{/myorder(page=${currentPage}-1)}">Previous</a>
+                                        <li><a class="page-numbers previous" th:if="${currentPage} ne 1" th:href="@{/MyStore/myorder(page=${currentPage}-1)}">Previous</a>
                                         </li>
                                         <li th:each="number:${pageNumberList}">
-                                            <a class="page-numbers" th:if="${number} ne ${currentPage}" th:text="${number}" th:href="@{/myorder(page=${number})}"></a>
+                                            <a class="page-numbers" th:if="${number} ne ${currentPage}" th:text="${number}" th:href="@{/MyStore/myorder(page=${number})}"></a>
                                             <span th:if="${number} eq ${currentPage}" class="page-numbers current" th:text="${number}"></span>
                                         </li>
-                                        <li><a class="page-numbers next" th:if="(${currentPage} ne ${pageAmount}) and (${currentPage} ne 1)" th:href="@{/myorder(page=${currentPage}+1)}">Next</a>
+                                        <li><a class="page-numbers next" th:if="(${currentPage} ne ${pageAmount}) and (${currentPage} ne 1)" th:href="@{/MyStore/myorder(page=${currentPage}+1)}">Next</a>
                                         </li>
                                     </ul>
                                     <!-- End Page Pagination -->
