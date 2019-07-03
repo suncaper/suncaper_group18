@@ -23,6 +23,8 @@ public class MystoreServiceImpl implements MystoreService{
     CategoryShopMapper categoryShopMapper;
     @Autowired
     GoodsSpecificationMapper goodsSpecificationMapper;
+    @Autowired
+    OrderMapper orderMapper;
 
     @Override
     public Integer getShopUid(String user_uid){
@@ -132,5 +134,12 @@ public class MystoreServiceImpl implements MystoreService{
         }
         result.put("msg","商品添加成功");
         return result;
+    }
+
+    @Override
+    public Integer getSellerOrderCount(String sellerUid) {
+        OrderExample orderExample = new OrderExample();
+        orderExample.or().andSellerUidEqualTo(sellerUid).andSellerDeleteStateEqualTo(false);
+        return orderMapper.selectByExample(orderExample).size();
     }
 }

@@ -80,7 +80,7 @@ public class  MyInfoController {
             for (int i = 1; i <= (count % pageSize == 0 ? count / pageSize : (count / pageSize + 1)); i++) {
                 pagesNumberList.add(i);
             }
-            List<OrderPageModel> orderPageModels = myInfoService.getOrderPageInfo(user.getUid(), pageSize, page);
+            List<OrderPageModel> orderPageModels = myInfoService.getOrderPageInfo(user.getUid(),null, pageSize, page);
             model.addAttribute("pageNumberList", pagesNumberList);
             model.addAttribute("currentPage", page);
             model.addAttribute("pageAmount", pagesNumberList.size());
