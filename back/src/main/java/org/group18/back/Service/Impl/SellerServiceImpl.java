@@ -109,6 +109,7 @@ public class SellerServiceImpl implements SellerService{
         }
         if(file.exists())
             file.delete();
+        cosClient.shutdown();
         return "https://suncaper-group18-1256197408.cos.ap-chengdu.myqcloud.com/shop_img/"+file.getName();
     }
 
