@@ -75,21 +75,18 @@ public class StoreController {
         //设置每页显示数量为6
         int pageSize = 6;
         if(page == null) page = 1;//若未接受到页面请求，则设置为1
-        ShopPageModel shopPageModel = storeService.getShopPageModel(Integer.valueOf(shopUid), pageSize, page);
-        if(shopPageModel == null) return "404";
-        else {
-            //设置页面主要内容
-            model.addAttribute("shopPageModel",shopPageModel);
-            //生成页面列表
-            List<Integer> pagesNumberList = new ArrayList<>();
-            for(int i = 1; i <= (shopPageModel.getShopGoodsList().size()%pageSize == 0?shopPageModel.getShopGoodsList().size()/pageSize:shopPageModel.getShopGoodsList().size()/pageSize+1); i++){
-                pagesNumberList.add(i);
-            }
-            model.addAttribute("payWay", "money");//生成店铺页面时的商品信息为money支付
-            model.addAttribute("pageNumberList", pagesNumberList);
-            model.addAttribute("currentPage", page);
-            model.addAttribute("pageAmount", pagesNumberList.size());
-            return "store_single_01";
+        int goodsCount = storeService.getShopGoodsAmount(shopUid);
+        //生成页面列表
+        List<Integer> pagesNumberList = new ArrayList<>();
+        for(int i = 1; i <= (goodsCount%pageSize == 0?goodsCount/pageSize:goodsCount/pageSize+1); i++){
+            pagesNumberList.add(i);
         }
+        //设置页面主要内容
+        model.addAttribute("shopPageModel",storeService.getShopPageModel(Integer.valueOf(shopUid), pageSize, page));
+        model.addAttribute("payWay", "money");//生成店铺页面时的商品信息为money支付
+        model.addAttribute("pageNumberList", pagesNumberList);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageAmount", pagesNumberList.size());
+        return "store_single_01";
     }
 }

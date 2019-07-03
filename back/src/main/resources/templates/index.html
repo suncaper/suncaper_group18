@@ -26,8 +26,10 @@
     <!-- ––––––––––––––––––––––––––––––––––––––––– -->
     <!-- SEO METAS                                 -->
     <!-- ––––––––––––––––––––––––––––––––––––––––– -->
-    <meta name="description" content="FRIDAY is a responsive multipurpose-ecommerce site template allows you to store coupons and promo codes from different brands and create store for deals, discounts, It can be used as coupon website such as groupon.com and also as online store">
-    <meta name="	black friday, coupon, coupon codes, coupon theme, coupons, deal news, deals, discounts, ecommerce, friday deals, groupon, promo codes, responsive, shop, store coupons">
+    <meta name="description"
+          content="FRIDAY is a responsive multipurpose-ecommerce site template allows you to store coupons and promo codes from different brands and create store for deals, discounts, It can be used as coupon website such as groupon.com and also as online store">
+    <meta
+            name="	black friday, coupon, coupon codes, coupon theme, coupons, deal news, deals, discounts, ecommerce, friday deals, groupon, promo codes, responsive, shop, store coupons">
     <meta name="robots" content="index, follow">
     <meta name="author" content="CODASTROID">
 
@@ -47,7 +49,7 @@
     <!-- ––––––––––––––––––––––––––––––––––––––––– -->
 
     <!-- Bootstrap -->
-    <link th:href="@{/css/bootstrap.min.css}"  rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
@@ -77,7 +79,8 @@
 
 <noscript>
     <div class="noscript alert-error">
-        For full functionality of this site it is necessary to enable JavaScript. Here are the <a href="http://www.enable-javascript.com/" target="_blank">
+        For full functionality of this site it is necessary to enable JavaScript. Here are the <a
+            href="http://www.enable-javascript.com/" target="_blank">
         instructions how to enable JavaScript in your web browser</a>.
     </div>
 </noscript>
@@ -108,7 +111,8 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-4 is-hidden-sm-down">
                         <ul class="nav-top nav-top-left list-inline t-left">
-                            <li><a href="terms_conditions.html"><i class="fa fa-question-circle"></i>Discounts Guide</a>
+                            <li><a href="terms_conditions.html"><i class="fa fa-question-circle"></i>Discounts
+                                Guide</a>
                             </li>
                             <li><a href="faq.html"><i class="fa fa-support"></i>Customer Assistance</a>
                             </li>
@@ -116,11 +120,13 @@
                     </div>
                     <div class="col-sm-12 col-md-8">
                         <ul class="nav-top nav-top-right list-inline  t-xs-center t-md-right ">
-                            <li th:if="${!isSignin}"><a th:href="@{/signin_page}"><i class="fa fa-lock"></i>登陆</a></li>
-                            <li th:if="${!isSignin}"><a th:href="@{/signup_page}"><i class="fa fa-user"></i>注册</a></li>
+                            <li th:if="${!isSignin}"><a th:href="@{/signin_page}"><i class="fa fa-lock"></i>登陆</a>
+                            </li>
+                            <li th:if="${!isSignin}"><a th:href="@{/signup_page}"><i class="fa fa-user"></i>注册</a>
+                            </li>
                             <li th:if="${!user.getIsSeller()}">
                                 <a th:href="@{/become_seller}"><i class="fa fa-usd"></i>申请店铺</a>
-                           </li>
+                            </li>
                             <li th:if="${isSignin}">
                                 <span th:text="'你好，'+${user.getUserName()}"></span>
                             </li>
@@ -152,12 +158,14 @@
                         <div class="row row-tb-10 ">
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <input id="inputSearchKey" type="text" class="form-control input-lg search-input" placeholder="在此输入搜索关键词..." required="required">
+                                    <input id="inputSearchKey" type="text"
+                                           class="form-control input-lg search-input" placeholder="在此输入搜索关键词..."
+                                           required="required">
                                     <div class="input-group-btn">
                                         <div class="input-group">
                                             <select id="chooseSearch" class="form-control input-lg search-select">
                                                 <option value="goods">商品</option>
-                                                <option  value="stores">店铺</option>
+                                                <option value="stores">店铺</option>
                                             </select>
                                             <div class="input-group-btn">
                                                 <button onclick="search()" class="btn btn-lg btn-search btn-block">
@@ -194,254 +202,340 @@
 
     <!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
     <main id="mainContent" class="main-content">
-            <div class="container">
-                <div class="page-container ptb-10">
+        <div class="container">
+            <div class="page-container ptb-10">
                 <div class="section deals-header-area ptb-30">
                     <div class="row row-tb-20">
                         <div class="col-xs-12 col-md-4 col-lg-3">
                             <aside>
                                 <ul class="nav-coupon-category panel" th:each="categorylist:${CategoryList}">
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}" class="fa fa-cutlery"><span th:text="${categorylist.getDescriptions()}"></span></a>
+                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
+                                           class="fa fa-cutlery"><span
+                                            th:text="${categorylist.getDescriptions()}"></span></a>
                                     </li>
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}" class="fa fa-calendar"><span th:text="${categorylist.getDescriptions()}"></span></a>
+                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
+                                           class="fa fa-calendar"><span
+                                            th:text="${categorylist.getDescriptions()}"></span></a>
                                     </li>
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}" class="fa fa-female"><span th:text="${categorylist.getDescriptions()}"></span></a>
+                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
+                                           class="fa fa-female"><span
+                                            th:text="${categorylist.getDescriptions()}"></span></a>
                                     </li>
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}" class="fa fa-bolt"><span th:text="${categorylist.getDescriptions()}"></span></a>
+                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
+                                           class="fa fa-bolt"><span
+                                            th:text="${categorylist.getDescriptions()}"></span></a>
                                     </li>
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}" class="fa fa-image"><span th:text="${categorylist.getDescriptions()}"></span></a>
+                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
+                                           class="fa fa-image"><span
+                                            th:text="${categorylist.getDescriptions()}"></span></a>
                                     </li>
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}" class="fa fa-umbrella"><span th:text="${categorylist.getDescriptions()}"></span></a>
+                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
+                                           class="fa fa-umbrella"><span
+                                            th:text="${categorylist.getDescriptions()}"></span></a>
                                     </li>
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}" class="fa fa-shopping-cart"><span th:text="${categorylist.getDescriptions()}"></span></a>
+                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
+                                           class="fa fa-shopping-cart"><span
+                                            th:text="${categorylist.getDescriptions()}"></span></a>
                                     </li>
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}" class="fa fa-home"><span th:text="${categorylist.getDescriptions()}"></span></a>
+                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
+                                           class="fa fa-home"><span
+                                            th:text="${categorylist.getDescriptions()}"></span></a>
                                     </li>
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}" class="fa fa-plane"><span th:text="${categorylist.getDescriptions()}"></span></a>
+                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
+                                           class="fa fa-plane"><span
+                                            th:text="${categorylist.getDescriptions()}"></span></a>
                                     </li>
                                     <li class="all-cat">
-                                        <a class="font-14" th:href="@{/StoreCategory}">All Categories</a>
+                                        <a class="font-14" th:href="@{/StoreCategory}">所 有 种 类</a>
                                     </li>
                                 </ul>
                             </aside>
                         </div>
                         <div class="col-xs-12 col-md-8 col-lg-9">
-                            <div class="header-deals-slider owl-slider owl-carousel owl-theme owl-responsive-1199 owl-loaded"
-                                 data-loop="true" data-autoplay="true" data-autoplay-timeout="10000"
-                                 data-smart-speed="1000" data-nav-speed="false" data-nav="true" data-xxs-items="1"
-                                 data-xxs-nav="true" data-xs-items="1" data-xs-nav="true" data-sm-items="1"
-                                 data-sm-nav="true" data-md-items="1" data-md-nav="true" data-lg-items="1"
-                                 data-lg-nav="true">
-                                <div class="owl-stage-outer">
-                                    <div class="owl-stage" style="  transition: all 1s ease 0s; width: 5936px;">
-                                        <div class="owl-item cloned" style="width: 848px; margin-right: 0px;">
-                                            <div class="deal-single panel item">
-                                                <figure class="deal-thumbnail embed-responsive embed-responsive-16by9"
-                                                        th:attr="data-bg-img=@{/images/deals/deal_03.jpg}"
-                                                        th:style="'background-image: url('+@{/images/deals/deal_03.jpg}+')'">
-                                                    <div class="label-discount top-10 right-10">-30%</div>
-                                                    <div class="deal-about p-20 pos-a bottom-0 left-0">
-                                                        <div class="rating mb-10">
-                        <span class="rating-stars" data-rating="5">
-                            <i class="fa fa-star-o star-active"></i>
-                            <i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i>
-                        </span>
-                                                        </div>
-                                                        <h3 class="deal-title mb-10 ">
-                                                            <a href="deal_single.html" class="color-light color-h-lighter">Western Digital USB 3.0 Hard
-                                                                Drives</a>
-                                                        </h3>
-                                                    </div>
-                                                </figure>
-                                            </div>
-                                        </div>
-                                        <div class="owl-item active" style="width: 848px; margin-right: 0px;">
-                                            <div class="deal-single panel item">
-                                                <figure class="deal-thumbnail embed-responsive embed-responsive-16by9"
-                                                        th:attr="data-bg-img=@{/images/deals/deal_03.jpg}"
-                                                        th:style="'background-image: url('+@{/images/deals/deal_03.jpg}+')'">
-                                                    <div class="label-discount top-10 right-10">-30%</div>
-                                                    <ul class="deal-actions top-10 left-10">
-                                                        <li class="like-deal">
+                            <div class="header-deals-slider owl-slider" data-loop="true" data-autoplay="true"
+                                 data-autoplay-timeout="10000" data-smart-speed="1000" data-nav-speed="false"
+                                 data-nav="false" data-xxs-items="1" data-xxs-nav="false" data-xs-items="1"
+                                 data-xs-nav="false" data-sm-items="1" data-sm-nav="false" data-md-items="1"
+                                 data-md-nav="false" data-lg-items="1" data-lg-nav="false">
 
-                                                        </li>
-                                                        <li class="share-btn">
-                                                            <div class="share-tooltip fade">
-                                                                <a target="_blank" href="#"><i class="fa fa-facebook"></i></a>
-                                                                <a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
-                                                                <a target="_blank" href="#"><i class="fa fa-google-plus"></i></a>
-                                                                <a target="_blank" href="#"><i class="fa fa-pinterest"></i></a>
-                                                            </div>
-                                                            <span><i class="fa fa-share-alt"></i></span>
-                                                        </li>
-                                                        <li>
-                                                        </li>
-                                                    </ul>
-                                                    <div class="deal-about p-20 pos-a bottom-0 left-0">
-                                                        <h3 class="deal-title mb-10 ">
-                                                            <a href="deal_single.html" class="color-light color-h-lighter">Hampton Bay LED Light Ceiling
-                                                                Exhaust Fan</a>
-                                                        </h3>
-                                                    </div>
-                                                </figure>
-                                            </div>
-                                        </div>
-                                        <div class="owl-item cloned" style="width: 848px; margin-right: 0px;">
-                                            <div class="deal-single panel item">
-                                                <figure class="deal-thumbnail embed-responsive embed-responsive-16by9"
-                                                        th:attr="data-bg-img=@{/images/deals/deal_02.jpg}"
-                                                       th:style="'background-image: url('+@{/images/deals/deal_02.jpg}+')'">
-                                                    <div class="label-discount top-10 right-10">-30%</div>
-                                                    <ul class="deal-actions top-10 left-10">
-                                                        <li class="like-deal">
-
-                                                        </li>
-                                                        <li class="share-btn">
-                                                            <div class="share-tooltip fade">
-                                                                <a target="_blank" href="#"><i class="fa fa-facebook"></i></a>
-                                                                <a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
-                                                                <a target="_blank" href="#"><i class="fa fa-google-plus"></i></a>
-                                                                <a target="_blank" href="#"><i class="fa fa-pinterest"></i></a>
-                                                            </div>
-                                                            <span><i class="fa fa-share-alt"></i></span>
-                                                        </li>
-                                                        <li>
-
-                                                        </li>
-                                                    </ul>
-                                                    <div class="deal-about p-20 pos-a bottom-0 left-0">
-                                                        <div class="rating mb-10">
-                        <span class="rating-stars" data-rating="5">
-                            <i class="fa fa-star-o star-active"></i>
-                            <i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i>
-                        </span>
-                                                            <span class="rating-reviews color-light">
-                            ( <span class="rating-count">132</span> Reviews )
-                        </span>
-                                                        </div>
-                                                        <h3 class="deal-title mb-10 ">
-                                                            <a href="deal_single.html" class="color-light color-h-lighter">Western Digital USB 3.0 Hard
-                                                                Drives</a>
-                                                        </h3>
-                                                    </div>
-                                                </figure>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="owl-controls">
-                                    <div class="owl-nav">
-                                        <div class="owl-prev" style=""><i class="fa fa-angle-left"
-                                                                          aria-hidden="true"></i></div>
-                                        <div class="owl-next" style=""><i class="fa fa-angle-right"
-                                                                          aria-hidden="true"></i></div>
-                                    </div>
-                                    <div class="owl-dots" style="display: none;"></div>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-                <div class="section explain-process-area ptb-30">
-                    <div class="row row-rl-10">
-                        <div class="col-md-4">
-                            <div class="item panel prl-15 ptb-20">
-                                <div class="row row-rl-5 row-xs-cell">
-                                    <div class="col-xs-4 valign-middle">
-                                        <img class="pr-10" th:src="@{/images/icons/tablet.png}" alt="">
-                                    </div>
-                                    <div class="col-xs-8">
-                                        <h5 class="mb-10 pt-5">Deals & Coupons</h5>
-                                        <p class="color-mid">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aspernatur.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="item panel prl-15 ptb-20">
-                                <div class="row row-rl-5 row-xs-cell">
-                                    <div class="col-xs-4 valign-middle">
-                                        <img class="pr-10" th:src="@{/images/icons/online-shop-6.png}" alt="">
-                                    </div>
-                                    <div class="col-xs-8">
-                                        <h5 class="mb-10 pt-5">Find Best Offers</h5>
-                                        <p class="color-mid">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aspernatur.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="item panel prl-15 ptb-20">
-                                <div class="row row-rl-5 row-xs-cell">
-                                    <div class="col-xs-4 valign-middle">
-                                        <img class="pr-10" th:src="@{/images/icons/money.png}" alt="">
-                                    </div>
-                                    <div class="col-xs-8">
-                                        <h5 class="mb-10 pt-5">Save Money</h5>
-                                        <p class="color-mid">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aspernatur.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <section class="section latest-deals-area ptb-30">
-                    <header class="panel ptb-15 prl-20 pos-r mb-30">
-                        <h3 class="section-title font-18">热销商品</h3>
-                        <a class="btn btn-o btn-xs pos-a right-10 pos-tb-center">View All</a>
-                    </header>
-                    <div class="row row-masnory row-tb-20">
-                        <div class="col-sm-6 col-lg-4" th:each="indexgoods:${indexgoods}">
-                            <div class="deal-single panel" >
-                                <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" th:attr="data-bg-img=${indexgoods.getImgUrl()}"></figure>
-                                <div class="bg-white pt-20 pl-20 pr-15">
-                                    <div class="pr-md-10">
-                                        <h3 class="deal-title mb-10">
-                                            <a th:href="@{/getGoods(goodsUid=${indexgoods.getUid()}, payWay='money')}" th:text="${indexgoods.getGoodsName()}"> </a>
-                                        </h3>
-                                        <ul class="deal-meta list-inline mb-10 color-mid">
-                                            <li><i class="ico fa fa-shopping-basket mr-10"></i><a th:text="${indexgoods.getSalesVolume()}"></a></li>
+                                <div class="deal-single panel item">
+                                    <figure class="deal-thumbnail embed-responsive embed-responsive-16by9"
+                                            th:attr="data-bg-img=@{/images/deals/deal_01.jpg}">
+                                        <div class="label-discount top-10 right-10">-50%</div>
+                                        <ul class="deal-actions top-10 left-10">
+                                            <li class="like-deal">
+                                                    <span>
+                                                        <i class="fa fa-heart"></i>
+                                                    </span>
+                                            </li>
+                                            <li class="share-btn">
+                                                <div class="share-tooltip fade">
+                                                    <a target="_blank" href="#"><i class="fa fa-facebook"></i></a>
+                                                    <a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
+                                                    <a target="_blank" href="#"><i
+                                                            class="fa fa-google-plus"></i></a>
+                                                    <a target="_blank" href="#"><i class="fa fa-pinterest"></i></a>
+                                                </div>
+                                                <span><i class="fa fa-share-alt"></i></span>
+                                            </li>
+                                            <li>
+                                                    <span>
+                                                        <i class="fa fa-camera"></i>
+                                                    </span>
+                                            </li>
                                         </ul>
-                                        <p class="text-muted mb-20" th:text="${indexgoods.getDescriptions()}"> </p>
+                                        <div class="deal-about p-20 pos-a bottom-0 left-0">
+                                            <div class="rating mb-10">
+                                                    <span class="rating-stars" data-rating="5">
+                                                        <i class="fa fa-star-o star-active"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </span>
+                                                <span class="rating-reviews color-light">
+                                                        ( <span class="rating-count">241</span> Reviews )
+                                                    </span>
+                                            </div>
+                                            <h3 class="deal-title mb-10 ">
+                                                <a href="deal_single.html" class="color-light color-h-lighter">The
+                                                    Crash Bad Instant Folding Twin Bed</a>
+                                            </h3>
+                                        </div>
+                                    </figure>
+                                </div>
+                                <div class="deal-single panel item">
+                                    <figure class="deal-thumbnail embed-responsive embed-responsive-16by9"
+                                            th:attr="data-bg-img=@{/images/deals/deal_02.jpg}">
+                                        <div class="label-discount top-10 right-10">-30%</div>
+                                        <ul class="deal-actions top-10 left-10">
+                                            <li class="like-deal">
+                                                    <span>
+                                                        <i class="fa fa-heart"></i>
+                                                    </span>
+                                            </li>
+                                            <li class="share-btn">
+                                                <div class="share-tooltip fade">
+                                                    <a target="_blank" href="#"><i class="fa fa-facebook"></i></a>
+                                                    <a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
+                                                    <a target="_blank" href="#"><i
+                                                            class="fa fa-google-plus"></i></a>
+                                                    <a target="_blank" href="#"><i class="fa fa-pinterest"></i></a>
+                                                </div>
+                                                <span><i class="fa fa-share-alt"></i></span>
+                                            </li>
+                                            <li>
+                                                    <span>
+                                                        <i class="fa fa-camera"></i>
+                                                    </span>
+                                            </li>
+                                        </ul>
+                                        <div class="deal-about p-20 pos-a bottom-0 left-0">
+                                            <div class="rating mb-10">
+                                                    <span class="rating-stars" data-rating="5">
+                                                        <i class="fa fa-star-o star-active"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </span>
+                                                <span class="rating-reviews color-light">
+                                                        ( <span class="rating-count">132</span> Reviews )
+                                                    </span>
+                                            </div>
+                                            <h3 class="deal-title mb-10 ">
+                                                <a href="deal_single.html"
+                                                   class="color-light color-h-lighter">Western Digital USB 3.0 Hard
+                                                    Drives</a>
+                                            </h3>
+                                        </div>
+                                    </figure>
+                                </div>
+                                <div class="deal-single panel item">
+                                    <figure class="deal-thumbnail embed-responsive embed-responsive-16by9"
+                                            th:attr="data-bg-img=@{/images/deals/deal_03.jpg}">
+                                        <div class="label-discount top-10 right-10">-30%</div>
+                                        <ul class="deal-actions top-10 left-10">
+                                            <li class="like-deal">
+                                                    <span>
+                                                        <i class="fa fa-heart"></i>
+                                                    </span>
+                                            </li>
+                                            <li class="share-btn">
+                                                <div class="share-tooltip fade">
+                                                    <a target="_blank" href="#"><i class="fa fa-facebook"></i></a>
+                                                    <a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
+                                                    <a target="_blank" href="#"><i
+                                                            class="fa fa-google-plus"></i></a>
+                                                    <a target="_blank" href="#"><i class="fa fa-pinterest"></i></a>
+                                                </div>
+                                                <span><i class="fa fa-share-alt"></i></span>
+                                            </li>
+                                            <li>
+                                                    <span>
+                                                        <i class="fa fa-camera"></i>
+                                                    </span>
+                                            </li>
+                                        </ul>
+                                        <div class="deal-about p-20 pos-a bottom-0 left-0">
+                                            <div class="rating mb-10">
+                                                    <span class="rating-stars" data-rating="5">
+                                                        <i class="fa fa-star-o star-active"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </span>
+                                                <span class="rating-reviews color-light">
+                                                        ( <span class="rating-count">160</span> Reviews )
+                                                    </span>
+                                            </div>
+                                            <h3 class="deal-title mb-10 ">
+                                                <a href="deal_single.html"
+                                                   class="color-light color-h-lighter">Hampton Bay LED Light
+                                                    Ceiling Exhaust Fan</a>
+                                            </h3>
+                                        </div>
+                                    </figure>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section explain-process-area ptb-30">
+                        <div class="row row-rl-10">
+                            <div class="col-md-4">
+                                <div class="item panel prl-15 ptb-20">
+                                    <div class="row row-rl-5 row-xs-cell">
+                                        <div class="col-xs-4 valign-middle">
+                                            <img class="pr-10" th:src="@{/images/icons/tablet.png}" alt="">
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <h5 class="mb-10 pt-5">Deals & Coupons</h5>
+                                            <p class="color-mid">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                                elit. Iure aspernatur.</p>
+                                        </div>
                                     </div>
-                                    <div class="deal-price pos-r mb-15">
-                                        <h3 class="price ptb-5 text-right"><span class="price-sale" th:text="${indexgoods.getPrice()}"> </span><a th:text="${indexgoods.getDiscountPrice()}"></a> </h3>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="item panel prl-15 ptb-20">
+                                    <div class="row row-rl-5 row-xs-cell">
+                                        <div class="col-xs-4 valign-middle">
+                                            <img class="pr-10" th:src="@{/images/icons/online-shop-6.png}" alt="">
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <h5 class="mb-10 pt-5">Find Best Offers</h5>
+                                            <p class="color-mid">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                                elit. Iure aspernatur.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="item panel prl-15 ptb-20">
+                                    <div class="row row-rl-5 row-xs-cell">
+                                        <div class="col-xs-4 valign-middle">
+                                            <img class="pr-10" th:src="@{/images/icons/money.png}" alt="">
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <h5 class="mb-10 pt-5">Save Money</h5>
+                                            <p class="color-mid">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                                elit. Iure aspernatur.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
 
-                <section class="section stores-area stores-area-v1 ptb-30">
-                    <header class="panel ptb-15 prl-20 pos-r mb-30">
-                        <h3 class="section-title font-18">流行好店</h3>
-                        <a href="stores_01.html" class="btn btn-o btn-xs pos-a right-10 pos-tb-center">全部店铺</a>
-                    </header>
-                    <div class="popular-stores-slider owl-slider"
-                         data-loop="true" data-autoplay="true" data-smart-speed="1000" data-autoplay-timeout="10000" data-margin="20" data-items="2" data-xxs-items="2" data-xs-items="2" data-sm-items="3" data-md-items="5" data-lg-items="6">
-                        <div class="store-item t-center" th:each="indexshops:${indexshops}">
-                            <a th:href="@{/shop(shopUid = ${indexshops.getUid()})}" class="panel is-block">
-                                <div class="embed-responsive embed-responsive-4by3">
-                                    <div class="store-logo">
-                                        <img th:src="${indexshops.getImgUrl()}" alt="">
+                    <section class="section stores-area stores-area-v1 ptb-30">
+                        <header class="panel ptb-15 prl-20 pos-r mb-30">
+                            <h3 class="section-title font-18">流行好店</h3>
+                            <a th:href="@{/getStoreList}" class="btn btn-o btn-xs pos-a right-10 pos-tb-center">全部店铺</a>
+                        </header>
+                        <div class="popular-stores-slider owl-slider" data-loop="true" data-autoplay="true"
+                             data-smart-speed="1000" data-autoplay-timeout="10000" data-margin="20" data-items="2"
+                             data-xxs-items="2" data-xs-items="2" data-sm-items="3" data-md-items="5"
+                             data-lg-items="6">
+                            <div class="store-item t-center" th:each="indexshops:${indexshops}">
+                                <a th:href="@{/shop(shopUid = ${indexshops.getUid()})}" class="panel is-block">
+                                    <div class="embed-responsive embed-responsive-4by3">
+                                        <div class="store-logo">
+                                            <img th:src="${indexshops.getImgUrl()}" alt="">
+                                        </div>
+                                    </div>
+                                    <h6 class="store-name ptb-10" th:text="${indexshops.getShopName()}"> </h6>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="section latest-deals-area ptb-30">
+                        <header class="panel ptb-15 prl-20 pos-r mb-30">
+                            <h3 class="section-title font-18">热销商品</h3>
+                            <a th:href="@{/getGoodsList}" class="btn btn-o btn-xs pos-a right-10 pos-tb-center">查看所有商品</a>
+                        </header>
+                        <div class="row row-masnory row-tb-20">
+                            <div class="col-sm-4 col-lg-4" th:each="goods : ${indexgoods}">
+                                    <div class="deal-single panel">
+                                        <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" th:data-bg-img="${goods.getImgUrl()}">
+                                            <ul class="deal-actions top-15 right-20">
+                                                <li class="like-deal">
+                                                    <span>
+                                                        <i class="fa fa-heart"></i>
+                                                    </span>
+                                                </li>
+                                                <li class="share-btn">
+                                                    <div class="share-tooltip fade">
+                                                        <a target="_blank" href="#"><i class="fa fa-facebook"></i></a>
+                                                        <a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
+                                                        <a target="_blank" href="#"><i class="fa fa-google-plus"></i></a>
+                                                        <a target="_blank" href="#"><i class="fa fa-pinterest"></i></a>
+                                                    </div>
+                                                    <span><i class="fa fa-share-alt"></i></span>
+                                                </li>
+                                                <li>
+                                                    <span>
+                                                        <i class="fa fa-camera"></i>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </figure>
+                                        <div class="bg-white pt-20 pl-20 pr-15">
+                                            <div class="pr-md-10">
+                                                <div class="rating mb-10">
+                                                                        <span class="rating-stars rate-allow" data-rating="5">
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        </span>
+                                                    <span class="rating-reviews">
+                                                            ( <span class="rating-count">241</span> rates )
+                                                                        </span>
+                                                </div>
+                                                <h5 class="deal-title mb-10">
+                                                    <a th:href="@{/getGoods(goodsUid=${goods.getUid()}, payWay=${payWay})}" th:text="${goods.getGoodsName()}"></a>
+                                                </h5>
+                                                <ul class="deal-meta list-inline mb-10 color-mid">
+                                                    <li><i class="ico fa fa-shopping-basket mr-10"></i><span th:text="${goods.getSalesVolume()}"></span>&nbsp;&nbsp;已售卖</li>
+                                                </ul>
+                                                <p class="text-muted mb-20" th:text="${goods.getDescriptions()}"></p>
+                                            </div>
+                                            <div class="deal-price pos-r mb-15">
+                                                <h3 class="price ptb-5 text-right" th:if="${goods.getPrice() gt goods.getDiscountPrice()}"><span class="price-sale" th:text="'¥'+${goods.getPrice()}"></span><span th:text="'¥'+${goods.getDiscountPrice()}"></span></h3>
+                                                <h3 class="price ptb-5 text-right" th:if="(${goods.getPrice() lt goods.getDiscountPrice()}) or (${goods.getPrice() eq goods.getDiscountPrice()})"><span th:text="'¥'+${goods.getPrice()}"></span></h3>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <h6 class="store-name ptb-10" th:text="${indexshops.getShopName()}"> </h6>
-                            </a>
                         </div>
-                    </div>
-                </section>
+                    </section>
 
+                </div>
             </div>
-        </div>
 
         </div>
     </main>
@@ -454,7 +548,9 @@
                         <div class="footer-col col-sm-6">
                             <div class="footer-about">
                                 <img class="mb-40" th:src="@{/images/logo_light.png}" width="250" alt="">
-                                <p class="color-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam dolores quidem mollitia id ipsa nisi necessitatibus iure repudiandae aperiam, odit ipsam dolor fugiat corporis nesciunt illo nemo minus.</p>
+                                <p class="color-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                    Laboriosam dolores quidem mollitia id ipsa nisi necessitatibus iure repudiandae
+                                    aperiam, odit ipsam dolor fugiat corporis nesciunt illo nemo minus.</p>
                             </div>
                         </div>
                         <div class="footer-col col-sm-6">
@@ -462,10 +558,14 @@
                                 <h2 class="color-lighter">Twitter Feed</h2>
                                 <ul class="twitter-list">
                                     <li class="single-twitter">
-                                        <p class="color-light"><i class="ico fa fa-twitter"></i><a href="#">@masum_rana :</a> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore in reprehenderit.</p>
+                                        <p class="color-light"><i class="ico fa fa-twitter"></i><a
+                                                href="#">@masum_rana :</a> Duis aute irure dolor in reprehenderit in
+                                            voluptate velit esse cillum dolore in reprehenderit.</p>
                                     </li>
                                     <li class="single-twitter">
-                                        <p class="color-light"><i class="ico fa fa-twitter"></i><a href="#">@masum_rana :</a> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione id corrupti iusto cupiditate omnis.</p>
+                                        <p class="color-light"><i class="ico fa fa-twitter"></i><a
+                                                href="#">@masum_rana :</a> Lorem ipsum dolor sit amet, consectetur
+                                            adipisicing elit. Ratione id corrupti iusto cupiditate omnis.</p>
                                     </li>
                                 </ul>
                             </div>
@@ -609,7 +709,7 @@
 </body>
 <script>
     function search() {
-        window.location.href="/search?searchKey="+$("#inputSearchKey").val()+"&searchCategory="+$("#chooseSearch option:selected").val();
+        window.location.href = "/search?searchKey=" + $("#inputSearchKey").val() + "&searchCategory=" + $("#chooseSearch option:selected").val();
     }
 </script>
 
