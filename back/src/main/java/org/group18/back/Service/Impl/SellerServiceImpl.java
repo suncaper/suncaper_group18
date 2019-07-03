@@ -1,26 +1,26 @@
 package org.group18.back.Service.Impl;
 
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import org.group18.back.Dao.UserMapper;
-import org.group18.back.Entity.*;
-import org.group18.back.Service.SellerService;
+import com.qcloud.cos.*;
+import com.qcloud.cos.auth.*;
+import com.qcloud.cos.exception.*;
+import com.qcloud.cos.model.*;
+import com.qcloud.cos.region.*;
 import org.group18.back.Dao.ShopMapper;
+import org.group18.back.Dao.UserMapper;
+import org.group18.back.Entity.Shop;
+import org.group18.back.Entity.ShopExample;
+import org.group18.back.Entity.User;
+import org.group18.back.Entity.UserExample;
+import org.group18.back.Service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-
-import org.springframework.web.multipart.MultipartFile;
-import com.qcloud.cos.*;
-import com.qcloud.cos.auth.*;
-import com.qcloud.cos.region.*;
-import com.qcloud.cos.exception.*;
-import com.qcloud.cos.model.*;
 
 @Service
 public class SellerServiceImpl implements SellerService{
