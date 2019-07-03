@@ -134,7 +134,7 @@
                                 <span th:text="'你好，'+${user.getUserName()}"></span>
                             </li>
                             <li th:if="${user.getIsSeller()} and ${isSignin}">
-                                <a href="#"><i class="fa fa-usd"></i>我的店铺</a>
+                                <a th:href="@{/MyStore/mystore}"><i class="fa fa-usd"></i>我的店铺</a>
                             </li>
                             <li th:if="${isSignin}">
                             <li>
@@ -152,7 +152,6 @@
 
         <!-- Header Header -->
         <div class="header-header bg-white">
-
             <div class="container">
                 <div class="row row-rl-0 row-tb-20 row-md-cell">
                     <div class="brand col-md-3 t-xs-center t-md-left valign-middle">
@@ -163,40 +162,30 @@
                     <div class="header-search col-md-9">
                         <div class="row row-tb-10 ">
                             <div class="col-sm-8">
-                                <form class="search-form">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control input-lg search-input" placeholder="Enter Keywork Here ..." required="required">
-                                        <div class="input-group-btn">
-                                            <div class="input-group">
-                                                <select class="form-control input-lg search-select">
-                                                    <option>Select Your Category</option>
-                                                    <option>Deals</option>
-                                                    <option>Coupons</option>
-                                                    <option>Discounts</option>
-                                                </select>
-                                                <div class="input-group-btn">
-                                                    <button type="submit" class="btn btn-lg btn-search btn-block">
-                                                        <i class="fa fa-search font-16"></i>
-                                                    </button>
-                                                </div>
+                                <div class="input-group">
+                                    <input id="inputSearchKey" type="text" class="form-control input-lg search-input" placeholder="在此输入搜索关键词..." required="required">
+                                    <div class="input-group-btn">
+                                        <div class="input-group">
+                                            <select id="chooseSearch" class="form-control input-lg search-select">
+                                                <option value="goods">商品</option>
+                                                <option  value="stores">店铺</option>
+                                            </select>
+                                            <div class="input-group-btn">
+                                                <button onclick="search()" class="btn btn-lg btn-search btn-block">
+                                                    <i class="fa fa-search font-16"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                             <div class="col-sm-4 t-xs-center t-md-right">
                                 <div class="header-cart">
                                     <a th:href="@{/Cart}">
                                         <span class="icon lnr lnr-cart"></span>
-                                        <!--<div><span class="cart-number">0</span>-->
+                                        <!--<div><span class="cart-number" th:text="${cart.totalAmount}"></span>-->
                                         <!--</div>-->
                                         <span class="title">Cart</span>
-                                    </a>
-                                </div>
-                                <div class="header-wishlist ml-20">
-                                    <a href="wishlist.html">
-                                        <span class="icon lnr lnr-heart font-30"></span>
-                                        <span class="title">Wish List</span>
                                     </a>
                                 </div>
                             </div>
@@ -222,7 +211,7 @@
                     <div class="shop_product_wrapper clearfix" style="padding: 0;">
                         <div class="product">
                             <div class="content container">
-                                <div><h3 class="h-title mb-40 t-uppercase"><i class="fa fa-home"></i><a th:href="@{/store/shop(shopUid=${goodsInfo.getShop().getUid()})}" th:text="${goodsInfo.getShop().getShopName()}"></a></h3></div>
+                                <div><h3 class="h-title mb-40 t-uppercase"><i class="fa fa-home"></i><a th:href="@{/shop(shopUid=${goodsInfo.getShop().getUid()})}" th:text="${goodsInfo.getShop().getShopName()}"></a></h3></div>
                                 <span class="onsale">Sale!</span>
                                 <div class="single_product_slider">
                                     <span class="sale_new" th:if="${goodsInfo.getGoods().getPrice() gt goodsInfo.getGoods().getDiscountPrice()}"><span class="text">Sale!</span></span>
@@ -276,12 +265,9 @@
                                     <div class="single_product_desc">
                                         <p th:text="${goodsInfo.getGoods().getDescriptions()}"></p>
                                         <p>商品规格选择：</p>
-                                        <form>
-                                            <input th:onclick="chooseSpecification([[${(specification.getUid())}]])" th:each="specification : ${goodsInfo.getGoodsSpecification()}" type="radio" th:name="${goodsInfo.getGoods().getUid()}" th:value="${specification.getUid()}" th:text="${specification.getSpecificationName()}+' '"/>
-                                        </form>
+                                        <input th:onclick="chooseSpecification([[${(specification.getUid())}]])" th:each="specification : ${goodsInfo.getGoodsSpecification()}" type="radio" th:name="${goodsInfo.getGoods().getUid()}" th:value="${specification.getUid()}" th:text="${specification.getSpecificationName()}+' '"/>
                                     </div>
-
-                                    <form class="cart" method="post" enctype='multipart/form-data'>
+                                    <div class="cart">
                                         <div class="quantity buttons_added clearfix">
                                             <div class="quantity_controll_con">
                                                 <input type="button" class="quantity_controll minus" value="-">
@@ -290,7 +276,7 @@
                                             </div>
                                         </div>
                                         <button class="single_add_to_cart_button button alt" th:onclick="addToCart([[${goodsInfo.getGoods().getUid()}]], [[${payWay}]])">添加到购物车</button>
-                                    </form>
+                                    </div>
                                     <!-- End Form -->
 
                                     <div class="product_meta">
@@ -599,8 +585,13 @@
         if(chooseSpecificationId == -1){
             alert("未选择商品规格");
         }else{
-            $.get("/addGoodsToCart?goodsUid="+goodsUid+"&specificationUid="+chooseSpecificationId+"&counts="+$("#goodsAmount").val()+"&payWay="+payWay);
+            window.location.href="/addGoodsToCart?goodsUid="+goodsUid+"&specificationUid="+chooseSpecificationId+"&counts="+$("#goodsAmount").val()+"&payWay="+payWay;
         }
+    }
+</script>
+<script>
+    function search() {
+        window.location.href="/search?searchKey="+$("#inputSearchKey").val()+"&searchCategory="+$("#chooseSearch option:selected").val();
     }
 </script>
 </body>

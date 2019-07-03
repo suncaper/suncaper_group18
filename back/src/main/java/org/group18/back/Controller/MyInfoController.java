@@ -52,6 +52,7 @@ public class  MyInfoController {
                 model.addAttribute("isAddressEmpty", false);
 
             }
+            model.addAttribute("newAddress", new UserAddress());
             model.addAttribute("userAddressList", userAddressList);
             return "myinfo";
         }
@@ -79,7 +80,7 @@ public class  MyInfoController {
             for (int i = 1; i <= (count % pageSize == 0 ? count / pageSize : (count / pageSize + 1)); i++) {
                 pagesNumberList.add(i);
             }
-            List<OrderPageModel> orderPageModels = myInfoService.getOrderPageInfo(user.getUid(), pageSize, page);
+            List<OrderPageModel> orderPageModels = myInfoService.getOrderPageInfo(user.getUid(),null, pageSize, page);
             model.addAttribute("pageNumberList", pagesNumberList);
             model.addAttribute("currentPage", page);
             model.addAttribute("pageAmount", pagesNumberList.size());
@@ -140,4 +141,13 @@ public class  MyInfoController {
         myInfoService.editUserAddress(userAddress);
         return "redirect:/myinfo";
     }
+
+    @RequestMapping("/addUserAddress")
+    public String addUserAddress(HttpServletRequest request, UserAddress userAddress){
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        userAddress.setUserUid(user.getUid());
+        myInfoService.addUserAddress(userAddress);
+        return "redirect:/myinfo";
+    }
+
 }

@@ -129,7 +129,7 @@
                                     <span th:text="'你好，'+${user.getUserName()}"></span>
                                 </li>
                                 <li th:if="${user.getIsSeller()} and ${isSignin}">
-                                    <a href="#"><i class="fa fa-usd"></i>我的店铺</a>
+                                    <a th:href="@{/MyStore/mystore}"><i class="fa fa-usd"></i>我的店铺</a>
                                 </li>
                                 <li th:if="${isSignin}">
                                     <a th:href="@{/myinfo}"><i class="fa fa-user"></i>我的信息</a>
@@ -155,40 +155,30 @@
                         <div class="header-search col-md-9">
                             <div class="row row-tb-10 ">
                                 <div class="col-sm-8">
-                                    <form class="search-form">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control input-lg search-input" placeholder="Enter Keywork Here ..." required="required">
-                                            <div class="input-group-btn">
-                                                <div class="input-group">
-                                                    <select class="form-control input-lg search-select">
-                                                        <option>Select Your Category</option>
-                                                        <option>Deals</option>
-                                                        <option>Coupons</option>
-                                                        <option>Discounts</option>
-                                                    </select>
-                                                    <div class="input-group-btn">
-                                                        <button type="submit" class="btn btn-lg btn-search btn-block">
-                                                            <i class="fa fa-search font-16"></i>
-                                                        </button>
-                                                    </div>
+                                    <div class="input-group">
+                                        <input id="inputSearchKey" type="text" class="form-control input-lg search-input" placeholder="在此输入搜索关键词..." required="required">
+                                        <div class="input-group-btn">
+                                            <div class="input-group">
+                                                <select id="chooseSearch" class="form-control input-lg search-select">
+                                                    <option value="goods">商品</option>
+                                                    <option  value="stores">店铺</option>
+                                                </select>
+                                                <div class="input-group-btn">
+                                                    <button onclick="search()" class="btn btn-lg btn-search btn-block">
+                                                        <i class="fa fa-search font-16"></i>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                                 <div class="col-sm-4 t-xs-center t-md-right">
                                     <div class="header-cart">
                                         <a th:href="@{/Cart}">
                                             <span class="icon lnr lnr-cart"></span>
-                                            <!--<div><span class="cart-number">0</span>-->
+                                            <!--<div><span class="cart-number" th:text="${cart.totalAmount}"></span>-->
                                             <!--</div>-->
                                             <span class="title">Cart</span>
-                                        </a>
-                                    </div>
-                                    <div class="header-wishlist ml-20">
-                                        <a href="wishlist.html">
-                                            <span class="icon lnr lnr-heart font-30"></span>
-                                            <span class="title">Wish List</span>
                                         </a>
                                     </div>
                                 </div>
@@ -283,7 +273,7 @@
                                         <div role="tabpanel" class="tab-pane ptb-20 active" id="deals">
                                             <section class="section deals-area">
                                                 <div class="row row-masnory row-tb-20">
-                                                    <div class="col-sm-12 col-lg-6" th:each="goods : ${shopPageModel.getShopGoodsList()}">
+                                                    <div class="col-sm-4 col-lg-4" th:each="goods : ${shopPageModel.getShopGoodsList()}">
                                                         <div class="deal-single panel">
                                                             <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" th:data-bg-img="${goods.getImgUrl()}">
                                                                 <ul class="deal-actions top-15 right-20">
@@ -325,9 +315,9 @@
                                                             ( <span class="rating-count">241</span> rates )
                                                                         </span>
                                                                     </div>
-                                                                    <h3 class="deal-title mb-10">
+                                                                    <h5 class="deal-title mb-10">
                                                         <a th:href="@{/getGoods(goodsUid=${goods.getUid()}, payWay=${payWay})}" th:text="${goods.getGoodsName()}"></a>
-                                                    </h3>
+                                                    </h5>
                                                                     <ul class="deal-meta list-inline mb-10 color-mid">
                                                                         <li><i class="ico fa fa-map-marker mr-10"></i><span th:text="${shopPageModel.getShopBaseInfo().getAddress()}"></span></li>
                                                                         <li><i class="ico fa fa-shopping-basket mr-10"></i><span th:text="${goods.getSalesVolume()}"></span>&nbsp;&nbsp;已售卖</li>
@@ -347,734 +337,17 @@
                                                 <nav>
                                                     <!-- Page Pagination -->
                                                     <ul class="page-pagination">
-                                                        <li><a class="page-numbers previous" th:if="${currentPage} ne 1" th:href="@{/store/getStoreList(page=${currentPage}-1)}">Previous</a>
+                                                        <li><a class="page-numbers previous" th:if="${currentPage} ne 1" th:href="@{/getStoreList(page=${currentPage}-1)}">Previous</a>
                                                         </li>
                                                         <li th:each="number:${pageNumberList}">
-                                                            <a class="page-numbers" th:if="${number} ne ${currentPage}" th:text="${number}" th:href="@{/store/getStoreList(page=${number})}"></a>
+                                                            <a class="page-numbers" th:if="${number} ne ${currentPage}" th:text="${number}" th:href="@{/getStoreList(page=${number})}"></a>
                                                             <span th:if="${number} eq ${currentPage}" class="page-numbers current" th:text="${number}"></span>
                                                         </li>
-                                                        <li><a class="page-numbers next" th:if="(${currentPage} ne ${pageAmount}) and (${currentPage} ne 1)" th:href="@{/store/getStoreList(page=${currentPage}+1)}">Next</a>
+                                                        <li><a class="page-numbers next" th:if="(${currentPage} ne ${pageAmount}) and (${currentPage} ne 1)" th:href="@{/getStoreList(page=${currentPage}+1)}">Next</a>
                                                         </li>
                                                     </ul>
                                                     <!-- End Page Pagination -->
                                                 </nav>
-                                            </div>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane ptb-20" id="coupons">
-                                            <section class="section coupons-area coupons-area-grid">
-                                                <div class="row row-masnory row-tb-20">
-                                                    <div class="col-sm-6">
-                                                        <div class="coupon-single panel t-center">
-                                                            <div class="row">
-                                                                <div class="col-xs-12">
-                                                                    <div class="text-center p-20">
-                                                                        <img class="store-logo" th:src="${shopPageModel.getShopBaseInfo().getImgUrl()}" alt="">
-                                                                    </div>
-                                                                    <!-- end media -->
-                                                                </div>
-                                                                <!-- end col -->
-
-                                                                <div class="col-xs-12">
-                                                                    <div class="panel-body">
-                                                                        <ul class="deal-meta list-inline mb-10">
-                                                                            <li class="color-green"><i class="ico lnr lnr-smile mr-5"></i>Verifed</li>
-                                                                            <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>125 Used</li>
-                                                                        </ul>
-                                                                        <h4 class="color-green mb-10 t-uppercase">10% OFF</h4>
-                                                                        <h5 class="deal-title mb-10">
-                                                            <a href="#">10% off select XPS & Alienware laptops</a>
-                                                        </h5>
-                                                                        <p class="mb-15 color-muted mb-20 font-12"><i class="lnr lnr-clock mr-10"></i>Expires On 01/01/2018</p>
-                                                                        <div class="showcode">
-                                                                            <button class="show-code btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_07">Get Coupon Code</button>
-                                                                            <div class="coupon-hide">X455-17GT-OL58</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- end col -->
-                                                            </div>
-                                                            <!-- end row -->
-                                                        </div>
-
-                                                        <div class="modal fade get-coupon-area" tabindex="-1" role="dialog" id="coupon_07">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content panel">
-                                                                    <div class="modal-body">
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                        <div class="row row-v-10">
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <img th:src="@{/images/brands/store_logo.jpg}" alt="">
-                                                                                <h3 class="mb-20">Save 30% off New Domains Names</h3>
-                                                                                <p class="color-mid">Not applicable to ICANN fees, taxes, transfers,or gift cards. Cannot be used in conjunction with any other offer, sale, discount or promotion. After the initial purchase term.</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <a href="#" class="btn btn-link">Visit Our Store</a>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <h6 class="color-mid t-uppercase">Click below to get your coupon code</h6>
-                                                                                <a href="#" target="_blank" class="coupon-code">X455-17GT-OL58</a>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <div class="like-report mb-10">
-                                                                                    <span>Share this coupon :</span>
-                                                                                    <ul class="list-inline social-icons social-icons--colored mt-10">
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-facebook"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-twitter"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-google-plus"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer footer-info t-center ptb-40 prl-30">
-                                                                        <h4 class="mb-15">Subscribe to Mail</h4>
-                                                                        <p class="color-mid mb-20">Get our Daily email newsletter with Special Services, Updates, Offers and more!</p>
-                                                                        <form method="post" action="#">
-                                                                            <div class="input-group">
-                                                                                <input type="text" class="form-control bg-white" placeholder="Your Email Address" required="required">
-                                                                                <span class="input-group-btn">
-                    <button class="btn" type="submit">Sign Up</button>
-                </span>
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="coupon-single panel t-center">
-                                                            <div class="row">
-                                                                <div class="col-xs-12">
-                                                                    <div class="text-center p-20">
-                                                                        <img class="store-logo" th:src="@{/images/coupons/coupon_08.jpg}" alt="">
-                                                                    </div>
-                                                                    <!-- end media -->
-                                                                </div>
-                                                                <!-- end col -->
-
-                                                                <div class="col-xs-12">
-                                                                    <div class="panel-body">
-                                                                        <ul class="deal-meta list-inline mb-10">
-                                                                            <li class="color-muted"><i class="ico fa fa-map-marker mr-5"></i>California</li>
-                                                                            <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>13 Used</li>
-                                                                        </ul>
-                                                                        <h4 class="color-green mb-10 t-uppercase">15% OFF</h4>
-                                                                        <h5 class="deal-title mb-10">
-                                                            <a href="#">15% off 2 select Amazon Fire cases</a>
-                                                        </h5>
-                                                                        <p class="mb-15 color-muted mb-20 font-12"><i class="lnr lnr-clock mr-10"></i>Expires On 05/02/2018</p>
-                                                                        <div class="showcode">
-                                                                            <button class="show-code btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_08">Show Code</button>
-                                                                            <div class="coupon-hide">X455-17GT-OL58</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- end col -->
-                                                            </div>
-                                                            <!-- end row -->
-                                                        </div>
-
-                                                        <div class="modal fade get-coupon-area" tabindex="-1" role="dialog" id="coupon_08">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content panel">
-                                                                    <div class="modal-body">
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                        <div class="row row-v-10">
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <img th:src="@{/images/brands/store_logo.jpg}" alt="">
-                                                                                <h3 class="mb-20">Save 30% off New Domains Names</h3>
-                                                                                <p class="color-mid">Not applicable to ICANN fees, taxes, transfers,or gift cards. Cannot be used in conjunction with any other offer, sale, discount or promotion. After the initial purchase term.</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <a href="#" class="btn btn-link">Visit Our Store</a>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <h6 class="color-mid t-uppercase">Click below to get your coupon code</h6>
-                                                                                <a href="#" target="_blank" class="coupon-code">X455-17GT-OL58</a>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <div class="like-report mb-10">
-                                                                                    <span>Share this coupon :</span>
-                                                                                    <ul class="list-inline social-icons social-icons--colored mt-10">
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-facebook"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-twitter"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-google-plus"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer footer-info t-center ptb-40 prl-30">
-                                                                        <h4 class="mb-15">Subscribe to Mail</h4>
-                                                                        <p class="color-mid mb-20">Get our Daily email newsletter with Special Services, Updates, Offers and more!</p>
-                                                                        <form method="post" action="#">
-                                                                            <div class="input-group">
-                                                                                <input type="text" class="form-control bg-white" placeholder="Your Email Address" required="required">
-                                                                                <span class="input-group-btn">
-                    <button class="btn" type="submit">Sign Up</button>
-                </span>
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="coupon-single panel t-center">
-                                                            <div class="row">
-                                                                <div class="col-xs-12">
-                                                                    <div class="text-center p-20">
-                                                                        <img class="store-logo" th:src="@{/images/coupons/coupon_09.jpg}" alt="">
-                                                                    </div>
-                                                                    <!-- end media -->
-                                                                </div>
-                                                                <!-- end col -->
-
-                                                                <div class="col-xs-12">
-                                                                    <div class="panel-body">
-                                                                        <ul class="deal-meta list-inline mb-10">
-                                                                            <li class="color-muted"><i class="ico fa fa-tag mr-5"></i>Coupon</li>
-                                                                            <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>425 Used</li>
-                                                                        </ul>
-                                                                        <h4 class="color-green mb-10 t-uppercase">20% OFF</h4>
-                                                                        <h5 class="deal-title mb-10">
-                                                            <a href="#">Flat 40% off hotel bookings in 10 cities</a>
-                                                        </h5>
-                                                                        <p class="mb-15 color-muted mb-20 font-12"><i class="lnr lnr-clock mr-10"></i>Expires On 15/01/2018</p>
-                                                                        <div class="showcode">
-                                                                            <button class="show-code btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_09">See Sale</button>
-                                                                            <div class="coupon-hide">X455-17GT-OL58</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- end col -->
-                                                            </div>
-                                                            <!-- end row -->
-                                                        </div>
-
-                                                        <div class="modal fade get-coupon-area" tabindex="-1" role="dialog" id="coupon_09">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content panel">
-                                                                    <div class="modal-body">
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                        <div class="row row-v-10">
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <img th:src="@{/images/brands/store_logo.jpg}" alt="">
-                                                                                <h3 class="mb-20">Save 30% off New Domains Names</h3>
-                                                                                <p class="color-mid">Not applicable to ICANN fees, taxes, transfers,or gift cards. Cannot be used in conjunction with any other offer, sale, discount or promotion. After the initial purchase term.</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <a href="#" class="btn btn-link">Visit Our Store</a>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <h6 class="color-mid t-uppercase">Click below to get your coupon code</h6>
-                                                                                <a href="#" target="_blank" class="coupon-code">X455-17GT-OL58</a>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <div class="like-report mb-10">
-                                                                                    <span>Share this coupon :</span>
-                                                                                    <ul class="list-inline social-icons social-icons--colored mt-10">
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-facebook"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-twitter"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-google-plus"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer footer-info t-center ptb-40 prl-30">
-                                                                        <h4 class="mb-15">Subscribe to Mail</h4>
-                                                                        <p class="color-mid mb-20">Get our Daily email newsletter with Special Services, Updates, Offers and more!</p>
-                                                                        <form method="post" action="#">
-                                                                            <div class="input-group">
-                                                                                <input type="text" class="form-control bg-white" placeholder="Your Email Address" required="required">
-                                                                                <span class="input-group-btn">
-                    <button class="btn" type="submit">Sign Up</button>
-                </span>
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="coupon-single panel t-center">
-                                                            <div class="row">
-                                                                <div class="col-xs-12">
-                                                                    <div class="text-center p-20">
-                                                                        <img class="store-logo" th:src="@{/images/coupons/coupon_10.jpg}" alt="">
-                                                                    </div>
-                                                                    <!-- end media -->
-                                                                </div>
-                                                                <!-- end col -->
-
-                                                                <div class="col-xs-12">
-                                                                    <div class="panel-body">
-                                                                        <ul class="deal-meta list-inline mb-10">
-                                                                            <li class="color-green"><i class="ico lnr lnr-smile mr-5"></i>Verifed</li>
-                                                                            <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>230 Used</li>
-                                                                        </ul>
-                                                                        <h4 class="color-green mb-10 t-uppercase">30% OFF</h4>
-                                                                        <h5 class="deal-title mb-10">
-                                                            <a href="#">There is no place like home 25% off</a>
-                                                        </h5>
-                                                                        <p class="mb-15 color-muted mb-20 font-12"><i class="lnr lnr-clock mr-10"></i>Expires On 02/03/2018</p>
-                                                                        <div class="showcode">
-                                                                            <button class="show-code btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_10">Print Code</button>
-                                                                            <div class="coupon-hide">X455-17GT-OL58</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- end col -->
-                                                            </div>
-                                                            <!-- end row -->
-                                                        </div>
-
-                                                        <div class="modal fade get-coupon-area" tabindex="-1" role="dialog" id="coupon_10">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content panel">
-                                                                    <div class="modal-body">
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                        <div class="row row-v-10">
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <img th:src="@{/images/brands/store_logo.jpg}" alt="">
-                                                                                <h3 class="mb-20">Save 30% off New Domains Names</h3>
-                                                                                <p class="color-mid">Not applicable to ICANN fees, taxes, transfers,or gift cards. Cannot be used in conjunction with any other offer, sale, discount or promotion. After the initial purchase term.</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <a href="#" class="btn btn-link">Visit Our Store</a>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <h6 class="color-mid t-uppercase">Click below to get your coupon code</h6>
-                                                                                <a href="#" target="_blank" class="coupon-code">X455-17GT-OL58</a>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <div class="like-report mb-10">
-                                                                                    <span>Share this coupon :</span>
-                                                                                    <ul class="list-inline social-icons social-icons--colored mt-10">
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-facebook"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-twitter"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-google-plus"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer footer-info t-center ptb-40 prl-30">
-                                                                        <h4 class="mb-15">Subscribe to Mail</h4>
-                                                                        <p class="color-mid mb-20">Get our Daily email newsletter with Special Services, Updates, Offers and more!</p>
-                                                                        <form method="post" action="#">
-                                                                            <div class="input-group">
-                                                                                <input type="text" class="form-control bg-white" placeholder="Your Email Address" required="required">
-                                                                                <span class="input-group-btn">
-                    <button class="btn" type="submit">Sign Up</button>
-                </span>
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="coupon-single panel t-center">
-                                                            <div class="row">
-                                                                <div class="col-xs-12">
-                                                                    <div class="text-center p-20">
-                                                                        <img class="store-logo" th:src="@{/images/coupons/coupon_11.jpg}" alt="">
-                                                                    </div>
-                                                                    <!-- end media -->
-                                                                </div>
-                                                                <!-- end col -->
-
-                                                                <div class="col-xs-12">
-                                                                    <div class="panel-body">
-                                                                        <ul class="deal-meta list-inline mb-10">
-                                                                            <li class="color-muted"><i class="ico fa fa-tag mr-5"></i>Coupon</li>
-                                                                            <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>86 Used</li>
-                                                                        </ul>
-                                                                        <h4 class="color-green mb-10 t-uppercase">10% OFF</h4>
-                                                                        <h5 class="deal-title mb-10">
-                                                            <a href="#">10% off $399+ refurbished laptops</a>
-                                                        </h5>
-                                                                        <p class="mb-15 color-muted mb-20 font-12"><i class="lnr lnr-clock mr-10"></i>Expires On 20/02/2018</p>
-                                                                        <div class="showcode">
-                                                                            <button class="show-code btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_11">Show Code</button>
-                                                                            <div class="coupon-hide">X455-17GT-OL58</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- end col -->
-                                                            </div>
-                                                            <!-- end row -->
-                                                        </div>
-
-                                                        <div class="modal fade get-coupon-area" tabindex="-1" role="dialog" id="coupon_11">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content panel">
-                                                                    <div class="modal-body">
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                        <div class="row row-v-10">
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <img th:src="@{/images/brands/store_logo.jpg}" alt="">
-                                                                                <h3 class="mb-20">Save 30% off New Domains Names</h3>
-                                                                                <p class="color-mid">Not applicable to ICANN fees, taxes, transfers,or gift cards. Cannot be used in conjunction with any other offer, sale, discount or promotion. After the initial purchase term.</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <a href="#" class="btn btn-link">Visit Our Store</a>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <h6 class="color-mid t-uppercase">Click below to get your coupon code</h6>
-                                                                                <a href="#" target="_blank" class="coupon-code">X455-17GT-OL58</a>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <div class="like-report mb-10">
-                                                                                    <span>Share this coupon :</span>
-                                                                                    <ul class="list-inline social-icons social-icons--colored mt-10">
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-facebook"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-twitter"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-google-plus"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer footer-info t-center ptb-40 prl-30">
-                                                                        <h4 class="mb-15">Subscribe to Mail</h4>
-                                                                        <p class="color-mid mb-20">Get our Daily email newsletter with Special Services, Updates, Offers and more!</p>
-                                                                        <form method="post" action="#">
-                                                                            <div class="input-group">
-                                                                                <input type="text" class="form-control bg-white" placeholder="Your Email Address" required="required">
-                                                                                <span class="input-group-btn">
-                    <button class="btn" type="submit">Sign Up</button>
-                </span>
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="coupon-single panel t-center">
-                                                            <div class="row">
-                                                                <div class="col-xs-12">
-                                                                    <div class="text-center p-20">
-                                                                        <img class="store-logo" th:src="@{/images/coupons/coupon_12.jpg}" alt="">
-                                                                    </div>
-                                                                    <!-- end media -->
-                                                                </div>
-                                                                <!-- end col -->
-
-                                                                <div class="col-xs-12">
-                                                                    <div class="panel-body">
-                                                                        <ul class="deal-meta list-inline mb-10">
-                                                                            <li class="color-green"><i class="ico lnr lnr-smile mr-5"></i>Verifed</li>
-                                                                            <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>24 Used</li>
-                                                                        </ul>
-                                                                        <h4 class="color-green mb-10 t-uppercase">25% OFF</h4>
-                                                                        <h5 class="deal-title mb-10">
-                                                            <a href="#">There is no place like home 25% off</a>
-                                                        </h5>
-                                                                        <p class="mb-15 color-muted mb-20 font-12"><i class="lnr lnr-clock mr-10"></i>Expires On 14/01/2018</p>
-                                                                        <div class="showcode">
-                                                                            <button class="show-code btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_12">Show Coupon</button>
-                                                                            <div class="coupon-hide">X455-17GT-OL58</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- end col -->
-                                                            </div>
-                                                            <!-- end row -->
-                                                        </div>
-
-                                                        <div class="modal fade get-coupon-area" tabindex="-1" role="dialog" id="coupon_12">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content panel">
-                                                                    <div class="modal-body">
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                        <div class="row row-v-10">
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <img th:src="@{/images/brands/store_logo.jpg}" alt="">
-                                                                                <h3 class="mb-20">Save 30% off New Domains Names</h3>
-                                                                                <p class="color-mid">Not applicable to ICANN fees, taxes, transfers,or gift cards. Cannot be used in conjunction with any other offer, sale, discount or promotion. After the initial purchase term.</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <a href="#" class="btn btn-link">Visit Our Store</a>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <h6 class="color-mid t-uppercase">Click below to get your coupon code</h6>
-                                                                                <a href="#" target="_blank" class="coupon-code">X455-17GT-OL58</a>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-md-offset-1">
-                                                                                <div class="like-report mb-10">
-                                                                                    <span>Share this coupon :</span>
-                                                                                    <ul class="list-inline social-icons social-icons--colored mt-10">
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-facebook"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-twitter"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-google-plus"></i></a>
-                                                                                        </li>
-                                                                                        <li class="social-icons__item">
-                                                                                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer footer-info t-center ptb-40 prl-30">
-                                                                        <h4 class="mb-15">Subscribe to Mail</h4>
-                                                                        <p class="color-mid mb-20">Get our Daily email newsletter with Special Services, Updates, Offers and more!</p>
-                                                                        <form method="post" action="#">
-                                                                            <div class="input-group">
-                                                                                <input type="text" class="form-control bg-white" placeholder="Your Email Address" required="required">
-                                                                                <span class="input-group-btn">
-                    <button class="btn" type="submit">Sign Up</button>
-                </span>
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Page Pagination -->
-                                                <div class="page-pagination text-center mt-30 p-10 panel">
-                                                    <nav>
-                                                        <!-- Page Pagination -->
-                                                        <ul class="page-pagination">
-                                                            <li><a class="page-numbers previous" href="#">Previous</a>
-                                                            </li>
-                                                            <li><a href="#" class="page-numbers">1</a>
-                                                            </li>
-                                                            <li><span class="page-numbers current">2</span>
-                                                            </li>
-                                                            <li><a href="#" class="page-numbers">3</a>
-                                                            </li>
-                                                            <li><a href="#" class="page-numbers">4</a>
-                                                            </li>
-                                                            <li><span class="page-numbers dots">...</span>
-                                                            </li>
-                                                            <li><a href="#" class="page-numbers">20</a>
-                                                            </li>
-                                                            <li><a href="#" class="page-numbers next">Next</a>
-                                                            </li>
-                                                        </ul>
-                                                        <!-- End Page Pagination -->
-                                                    </nav>
-                                                </div>
-                                                <!-- End Page Pagination -->
-                                            </section>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane ptb-20" id="reviews">
-                                            <div class="posted-review panel p-30">
-                                                <h3 class="h-title">16 Review</h3>
-                                                <div class="review-single pt-30">
-                                                    <div class="media">
-                                                        <div class="media-left">
-                                                            <img class="media-object mr-10 radius-4" th:src="@{/images/avatars/avatar_01.jpg}" width="90" alt="">
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <div class="review-wrapper clearfix">
-                                                                <ul class="list-inline">
-                                                                    <li>
-                                                                        <span class="review-holder-name h5">John Doe</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <div class="rating">
-                                                                            <span class="rating-stars" data-rating="5">
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                </span>
-                                                                        </div>
-                                                                    </li>
-                                                                </ul>
-                                                                <p class="review-date mb-5">September 9, 2016</p>
-                                                                <p class="copy">Ut velit mauris, egestas sed, gravida nec, ornare ut, mi. Aenean ut orci vel massa suscipit pulvinar. Nulla sollicitudin. Fusce varius, ligula non tempus aliquam.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="review-single pt-30">
-                                                    <div class="media">
-                                                        <div class="media-left">
-                                                            <img class="media-object mr-10 radius-4" th:src="@{/images/avatars/avatar_02.jpg}" width="90" alt="">
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <div class="review-wrapper clearfix">
-                                                                <ul class="list-inline">
-                                                                    <li>
-                                                                        <span class="review-holder-name h5">John Doe</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <div class="rating">
-                                                                            <span class="rating-stars" data-rating="2">
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                </span>
-                                                                        </div>
-                                                                    </li>
-                                                                </ul>
-                                                                <p class="review-date mb-5">September 9, 2016</p>
-                                                                <p class="copy">Ut velit mauris, egestas sed, gravida nec, ornare ut, mi. Aenean ut orci vel massa suscipit pulvinar. Nulla sollicitudin. Fusce varius, ligula non tempus aliquam.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="review-single pt-30">
-                                                    <div class="media">
-                                                        <div class="media-left">
-                                                            <img class="media-object mr-10 radius-4" th:src="@{/images/avatars/avatar_03.jpg}" width="90" alt="">
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <div class="review-wrapper clearfix">
-                                                                <ul class="list-inline">
-                                                                    <li>
-                                                                        <span class="review-holder-name h5">John Doe</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <div class="rating">
-                                                                            <span class="rating-stars" data-rating="3">
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                </span>
-                                                                        </div>
-                                                                    </li>
-                                                                </ul>
-                                                                <p class="review-date mb-5">September 9, 2016</p>
-                                                                <p class="copy">Ut velit mauris, egestas sed, gravida nec, ornare ut, mi. Aenean ut orci vel massa suscipit pulvinar. Nulla sollicitudin. Fusce varius, ligula non tempus aliquam.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="review-single pt-30">
-                                                    <div class="media">
-                                                        <div class="media-left">
-                                                            <img class="media-object mr-10 radius-4" th:src="@{/images/avatars/avatar_04.jpg}" width="90" alt="">
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <div class="review-wrapper clearfix">
-                                                                <ul class="list-inline">
-                                                                    <li>
-                                                                        <span class="review-holder-name h5">John Doe</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <div class="rating">
-                                                                            <span class="rating-stars" data-rating="4">
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                </span>
-                                                                        </div>
-                                                                    </li>
-                                                                </ul>
-                                                                <p class="review-date mb-5">September 9, 2016</p>
-                                                                <p class="copy">Ut velit mauris, egestas sed, gravida nec, ornare ut, mi. Aenean ut orci vel massa suscipit pulvinar. Nulla sollicitudin. Fusce varius, ligula non tempus aliquam.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="review-single pt-30">
-                                                    <div class="media">
-                                                        <div class="media-left">
-                                                            <img class="media-object mr-10 radius-4" th:src="@{/images/avatars/avatar_05.jpg}" width="90" alt="">
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <div class="review-wrapper clearfix">
-                                                                <ul class="list-inline">
-                                                                    <li>
-                                                                        <span class="review-holder-name h5">John Doe</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <div class="rating">
-                                                                            <span class="rating-stars" data-rating="5">
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                </span>
-                                                                        </div>
-                                                                    </li>
-                                                                </ul>
-                                                                <p class="review-date mb-5">September 9, 2016</p>
-                                                                <p class="copy">Ut velit mauris, egestas sed, gravida nec, ornare ut, mi. Aenean ut orci vel massa suscipit pulvinar. Nulla sollicitudin. Fusce varius, ligula non tempus aliquam.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1087,8 +360,6 @@
                 </div>
             </div>
             <!-- End Page Container -->
-
-
         </main>
         <!-- –––––––––––––––[ END PAGE CONTENT ]––––––––––––––– -->
         <section class="footer-top-area pt-70 pb-30 pos-r bg-blue">
@@ -1251,6 +522,11 @@
     <!-- Custom Template JavaScript                   -->
     <!-- ––––––––––––––––––––––––––––––––––––––––– -->
     <script type="text/javascript" th:src="@{/js/main.js}"></script>
+    <script>
+        function search() {
+            window.location.href="/search?searchKey="+$("#inputSearchKey").val()+"&searchCategory="+$("#chooseSearch option:selected").val();
+        }
+    </script>
 </body>
 
 </html>

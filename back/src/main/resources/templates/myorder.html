@@ -126,7 +126,7 @@
                                     <span th:text="'你好，'+${user.getUserName()}"></span>
                                 </li>
                                 <li th:if="${user.getIsSeller()} and ${isSignin}">
-                                    <a href="#"><i class="fa fa-usd"></i>我的店铺</a>
+                                    <a th:href="@{/MyStore/mystore}"><i class="fa fa-usd"></i>我的店铺</a>
                                 </li>
                                 <li th:if="${isSignin}">
                                     <a th:href="@{/myinfo}"><i class="fa fa-user"></i>我的信息</a>
@@ -152,32 +152,28 @@
                         <div class="header-search col-md-9">
                             <div class="row row-tb-10 ">
                                 <div class="col-sm-8">
-                                    <form class="search-form">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control input-lg search-input" placeholder="Enter Keywork Here ..." required="required">
-                                            <div class="input-group-btn">
-                                                <div class="input-group">
-                                                    <select class="form-control input-lg search-select">
-                                                        <option>Select Your Category</option>
-                                                        <option>Deals</option>
-                                                        <option>Coupons</option>
-                                                        <option>Discounts</option>
-                                                    </select>
-                                                    <div class="input-group-btn">
-                                                        <button type="submit" class="btn btn-lg btn-search btn-block">
-                                                            <i class="fa fa-search font-16"></i>
-                                                        </button>
-                                                    </div>
+                                    <div class="input-group">
+                                        <input id="inputSearchKey" type="text" class="form-control input-lg search-input" placeholder="在此输入搜索关键词..." required="required">
+                                        <div class="input-group-btn">
+                                            <div class="input-group">
+                                                <select id="chooseSearch" class="form-control input-lg search-select">
+                                                    <option value="goods">商品</option>
+                                                    <option  value="stores">店铺</option>
+                                                </select>
+                                                <div class="input-group-btn">
+                                                    <button onclick="search()" class="btn btn-lg btn-search btn-block">
+                                                        <i class="fa fa-search font-16"></i>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                                 <div class="col-sm-4 t-xs-center t-md-right">
                                     <div class="header-cart">
                                         <a th:href="@{/Cart}">
                                             <span class="icon lnr lnr-cart"></span>
-                                            <!--<div><span class="cart-number">0</span>-->
+                                            <!--<div><span class="cart-number" th:text="${cart.totalAmount}"></span>-->
                                             <!--</div>-->
                                             <span class="title">Cart</span>
                                         </a>
@@ -241,7 +237,7 @@
                                         <td>
                                             <table id = "storeOrder1">
                                                 <tr>
-                                                    <th style="font-size: 20px;"><i class="fa fa-home"></i>&nbsp;<a th:text="${orderPage.getShopBaseInfo().getShopName()}" th:href="@{/store/shop(shopUid=${orderPage.getShopBaseInfo().getUid()})}">店铺名</a></th>
+                                                    <th style="font-size: 20px;"><i class="fa fa-home"></i>&nbsp;<a th:text="${orderPage.getShopBaseInfo().getShopName()}" th:href="@{/shop(shopUid=${orderPage.getShopBaseInfo().getUid()})}">店铺名</a></th>
                                                     <th></th>
                                                     <th></th>
                                                     <th th:if="!${orderPage.getOrderInfo().getIsPaid()}" th:text="未支付" style="font-size: 18px;"></th>
@@ -262,7 +258,7 @@
                                                             </figure>
                                                         </div>
                                                         <div class="media-body valign-middle">
-                                                            <h5 class="title mb-5 t-uppercase"><a href="#" th:text="${goodsInfo.getGoods().getGoodsName()}">商品名字</a></h5>
+                                                            <h5 class="title mb-5 t-uppercase"><a th:href="@{/getGoods(goodsUid=${goodsInfo.getGoods().getUid()},payWay='money')}" th:text="${goodsInfo.getGoods().getGoodsName()}">商品名字</a></h5>
                                                             <h4 class="price color-green">
                                                                 <span class="price-sale" th:text="'¥'+${goodsInfo.getGoods().getPrice()}" th:if="${goodsInfo.getGoods().getDiscountPrice()} lt ${goodsInfo.getGoods().getPrice()}">原始价格</span>
                                                                 <span th:text="'¥'+${goodsInfo.getGoods().getDiscountPrice()}">优惠价格/原始价格</span>
@@ -290,7 +286,7 @@
                                                             </figure>
                                                         </div>
                                                         <div class="media-body valign-middle">
-                                                            <h5 class="title mb-5 t-uppercase"><a href="#" th:text="${goodsInfo.getGoods().getGoodsName()}">商品名字</a></h5>
+                                                            <h5 class="title mb-5 t-uppercase"><a th:href="@{/getGoods(goodsUid=${goodsInfo.getGoods().getUid()},payWay='points')}" th:text="${goodsInfo.getGoods().getGoodsName()}">商品名字</a></h5>
                                                             <h4 class="price color-green">
                                                                 <span th:text="'@'+${goodsInfo.getGoods().getPoints()}+'积分'">优惠价格/原始价格</span>
                                                             </h4>
@@ -660,6 +656,11 @@
                 reviewPayWay = null;
                 $("#askResultModal").modal("show");
             }
+        }
+    </script>
+    <script>
+        function search() {
+            window.location.href="/search?searchKey="+$("#inputSearchKey").val()+"&searchCategory="+$("#chooseSearch option:selected").val();
         }
     </script>
 </body>

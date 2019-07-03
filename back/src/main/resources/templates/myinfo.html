@@ -130,7 +130,7 @@
                                     <span th:text="'你好，'+${user.getUserName()}"></span>
                                 </li>
                                 <li th:if="${user.getIsSeller()} and ${isSignin}">
-                                    <a href="#"><i class="fa fa-usd"></i>我的店铺</a>
+                                    <a th:href="@{/MyStore/mystore}"><i class="fa fa-usd"></i>我的店铺</a>
                                 </li>
                                 <li th:if="${isSignin}">
                                     <a th:href="@{/myinfo}"><i class="fa fa-user"></i>我的信息</a>
@@ -156,32 +156,28 @@
                         <div class="header-search col-md-9">
                             <div class="row row-tb-10 ">
                                 <div class="col-sm-8">
-                                    <form class="search-form">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control input-lg search-input" placeholder="Enter Keywork Here ..." required="required">
-                                            <div class="input-group-btn">
-                                                <div class="input-group">
-                                                    <select class="form-control input-lg search-select">
-                                                        <option>Select Your Category</option>
-                                                        <option>Deals</option>
-                                                        <option>Coupons</option>
-                                                        <option>Discounts</option>
-                                                    </select>
-                                                    <div class="input-group-btn">
-                                                        <button type="submit" class="btn btn-lg btn-search btn-block">
-                                                            <i class="fa fa-search font-16"></i>
-                                                        </button>
-                                                    </div>
+                                    <div class="input-group">
+                                        <input id="inputSearchKey" type="text" class="form-control input-lg search-input" placeholder="在此输入搜索关键词..." required="required">
+                                        <div class="input-group-btn">
+                                            <div class="input-group">
+                                                <select id="chooseSearch" class="form-control input-lg search-select">
+                                                    <option value="goods">商品</option>
+                                                    <option  value="stores">店铺</option>
+                                                </select>
+                                                <div class="input-group-btn">
+                                                    <button onclick="search()" class="btn btn-lg btn-search btn-block">
+                                                        <i class="fa fa-search font-16"></i>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                                 <div class="col-sm-4 t-xs-center t-md-right">
                                     <div class="header-cart">
                                         <a th:href="@{/Cart}">
                                             <span class="icon lnr lnr-cart"></span>
-                                            <!--<div><span class="cart-number">0</span>-->
+                                            <!--<div><span class="cart-number" th:text="${cart.totalAmount}"></span>-->
                                             <!--</div>-->
                                             <span class="title">Cart</span>
                                         </a>
@@ -212,9 +208,6 @@
                                 </li>
                                 <li class="active">
                                     <a th:href="@{/myinfo}">我的信息</a>
-                                </li>
-                                <li th:if="${user.getIsSeller()} eq true">
-                                    <a th:href="@{/MyStore/mystore}">我的店铺</a>
                                 </li>
                                 <li>
                                     <a th:href="@{/myorder}">我的订单</a>
@@ -275,7 +268,7 @@
                                     </tr>
                                     <tr class="panel alert">
                                         <td class="col-sm-8 col-md-9">
-                                            <h5 class="h-title mb-40 t-uppercase">收货地址</h5>
+                                            <h5 class="h-title mb-40 t-uppercase">收货地址 <button class="btn btn-rounded btn-sm mt-15" th:onclick="tryAddAddress([[${newAddress}]])">添加收货地址</button> </h5>
                                             <div class="media-body valign-middle" th:if="${isAddressEmpty}"><p>暂无收件地址！</p></div>
                                             <div class="media-body valign-middle" th:if="${!isAddressEmpty}">
                                                 <table class="table table-condensed">
@@ -296,13 +289,6 @@
                                                             /
                                                             <a th:onclick="tryEditAddress([[${addressInfo}]])">编辑</a>
                                                         </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td><button class="btn btn-rounded btn-sm mt-15">添加个人信息</button></td>
                                                     </tr>
                                                 </table>
                                             </div>
@@ -396,6 +382,70 @@
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="confirmEditAddress()">
                                 确认修改
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+            <!-- 添加地址模态框 -->
+            <div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog" aria-labelledby="addAddressLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                添加收货地址
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="editReceiverName" class="col-sm-2 control-label">收货人名字</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="addReceiverName"
+                                               placeholder="请输入收货人名字">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editProvince" class="col-sm-2 control-label">省份</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="addProvince" name="province"
+                                               placeholder="请输入收货人所在省份">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editCity" class="col-sm-2 control-label">城市</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="addCity" name="city"
+                                               placeholder="请输入收货人所在城市">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editDetailAddress" class="col-sm-2 control-label">详细地址</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="addDetailAddress" name="detailAddress"
+                                               placeholder="请输入收货人所在详细地址">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editReceiverPhone" class="col-sm-2 control-label">手机/电话</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="addReceiverPhone" name="receiverName"
+                                               placeholder="请输入收货人电话号码">
+                                    </div>
+                                </div>
+                                <div>
+                                    <input type="hidden" id="addAddressId" name="id">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="confirmAddAddress()">
+                                确认添加
                             </button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                             </button>
@@ -634,11 +684,48 @@
                 editAddressInfo.detailAddress = $("#editDetailAddress").val();
                 editAddressInfo.receiverPhone = $("#editReceiverPhone").val();
                 $.post("/editUserAddress", editAddressInfo);
+                editAddressInfo = null;
                 $("#askResultModal").modal("show");
                 document.getElementById("askResult").innerText = "修改成功";
             }
         }
 
+        //添加地址
+        var addAddressInfo;
+        function tryAddAddress(addressInfo) {
+            addAddressInfo = addressInfo;
+            //显示添加窗口
+            $("#addAddressModal").modal("show");
+        }
+        function confirmAddAddress() {
+            //判断输入是否为空
+            var str1 = $("#addReceiverName").val().replace(/(^\s*)|(\s*$)/g, '');
+            var str2 = $("#addProvince").val().replace(/(^\s*)|(\s*$)/g, '');
+            var str3 = $("#addCity").val().replace(/(^\s*)|(\s*$)/g, '');
+            var str4 = $("#addDetailAddress").val().replace(/(^\s*)|(\s*$)/g, '');
+            var str5 = $("#addReceiverPhone").val().replace(/(^\s*)|(\s*$)/g, '');
+            if (str1 == '' || str1 == undefined || str1 == null || str2 == '' || str2 == undefined || str2 == null || str3 == '' || str3 == undefined || str3 == null || str4 == '' || str4 == undefined || str4 == null || str5 == '' || str5 == undefined || str5 == null) {
+                alert("输入不能为空");
+            }
+            else{
+                //获取输入框的值
+                addAddressInfo.receiverName = $("#addReceiverName").val();
+                addAddressInfo.province = $("#addProvince").val();
+                addAddressInfo.city = $("#addCity").val();
+                addAddressInfo.detailAddress = $("#addDetailAddress").val();
+                addAddressInfo.receiverPhone = $("#addReceiverPhone").val();
+                $.post("/addUserAddress", addAddressInfo);
+                addAddressInfo = null;
+                $("#askResultModal").modal("show");
+                document.getElementById("askResult").innerText = "添加成功";
+            }
+        }
+
+    </script>
+    <script>
+        function search() {
+            window.location.href="/search?searchKey="+$("#inputSearchKey").val()+"&searchCategory="+$("#chooseSearch option:selected").val();
+        }
     </script>
 </body>
 

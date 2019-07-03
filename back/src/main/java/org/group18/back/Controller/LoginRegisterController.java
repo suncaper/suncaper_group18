@@ -38,7 +38,7 @@ public class LoginRegisterController {
         else {
             model.addAttribute("isSignin", true);
             model.addAttribute("user", user);
-            return "index";
+            return "redirect:/index";
         }
     }
     //注册请求

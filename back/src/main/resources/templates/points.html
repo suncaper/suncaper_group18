@@ -130,7 +130,7 @@
                                 <span th:text="'你好，'+${user.getUserName()}"></span>
                             </li>
                             <li th:if="${user.getIsSeller()} and ${isSignin}">
-                                <a href="#"><i class="fa fa-usd"></i>我的店铺</a>
+                                <a th:href="@{/MyStore/mystore}"><i class="fa fa-usd"></i>我的店铺</a>
                             </li>
                             <li th:if="${isSignin}">
                                 <a th:href="@{/myinfo}"><i class="fa fa-user"></i>我的信息</a>
@@ -156,32 +156,28 @@
                     <div class="header-search col-md-9">
                         <div class="row row-tb-10 ">
                             <div class="col-sm-8">
-                                <form class="search-form">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control input-lg search-input" placeholder="Enter Keywork Here ..." required="required">
-                                        <div class="input-group-btn">
-                                            <div class="input-group">
-                                                <select class="form-control input-lg search-select">
-                                                    <option>Select Your Category</option>
-                                                    <option>Deals</option>
-                                                    <option>Coupons</option>
-                                                    <option>Discounts</option>
-                                                </select>
-                                                <div class="input-group-btn">
-                                                    <button type="submit" class="btn btn-lg btn-search btn-block">
-                                                        <i class="fa fa-search font-16"></i>
-                                                    </button>
-                                                </div>
+                                <div class="input-group">
+                                    <input id="inputSearchKey" type="text" class="form-control input-lg search-input" placeholder="在此输入搜索关键词..." required="required">
+                                    <div class="input-group-btn">
+                                        <div class="input-group">
+                                            <select id="chooseSearch" class="form-control input-lg search-select">
+                                                <option value="goods">商品</option>
+                                                <option  value="stores">店铺</option>
+                                            </select>
+                                            <div class="input-group-btn">
+                                                <button onclick="search()" class="btn btn-lg btn-search btn-block">
+                                                    <i class="fa fa-search font-16"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                             <div class="col-sm-4 t-xs-center t-md-right">
                                 <div class="header-cart">
                                     <a th:href="@{/Cart}">
                                         <span class="icon lnr lnr-cart"></span>
-                                        <!--<div><span class="cart-number">0</span>-->
+                                        <!--<div><span class="cart-number" th:text="${cart.totalAmount}"></span>-->
                                         <!--</div>-->
                                         <span class="title">Cart</span>
                                     </a>
@@ -242,8 +238,8 @@
                         <br><br>
                         <div th:each="list1:${list}">
                             <header th:if="!${list1.getGoodsList().isEmpty()}" class="panel ptb-15 prl-20 pos-r mb-30">
-                                <h3 class="section-title font-18" th:text="${list1.getShop().getShopName()}"></h3>
-                                <a class="btn btn-o btn-xs pos-a right-10 pos-tb-center" th:href="@{/store/shop(shopUid=${list1.getShop().getUid()})}">进入店铺</a>
+                                <h3 class="section-title font-18"><i class="fa fa-home"></i><span th:text="${list1.getShop().getShopName()}"></span></h3>
+                                <a class="btn btn-o btn-xs pos-a right-10 pos-tb-center" th:href="@{/shop(shopUid=${list1.getShop().getUid()})}">进入店铺</a>
                             </header>
                             <div class="row row-masnory row-tb-20">
                                 <div th:each="list2:${list1.getGoodsList()}" class="col-sm-6 col-lg-4">
@@ -285,7 +281,7 @@
                                                     </span>
                                                 </div>
                                                 <h3 class="deal-title mb-10">
-                                                    <a href="#" th:text="${list2.getGoodsName()}"></a>
+                                                    <a th:href="@{/getGoods(goodsUid=${list2.getUid()}, payWay='points')}" th:text="${list2.getGoodsName()}" >商品名</a>
                                                 </h3>
                                                 <ul class="deal-meta list-inline mb-10 color-mid">
                                                     <li><i class="ico fa fa-map-marker mr-10"></i><span th:text="${list1.getShop().getAddress()}"></span></li>
@@ -294,7 +290,7 @@
                                                 <p class="text-muted mb-20" th:text="${list2.getDescriptions()}"></p>
                                             </div>
                                             <div class="deal-price pos-r mb-15">
-                                                <h3 class="price ptb-5 text-right" th:text="${list2.getPoints()}+'Points'"></h3>
+                                                <h3 class="price ptb-5 text-right" th:text="'@'+${list2.getPoints()}+'Points'"></h3>
                                             </div>
                                         </div>
                                     </div>
@@ -469,6 +465,11 @@
     <!-- Custom Template JavaScript                   -->
     <!-- ––––––––––––––––––––––––––––––––––––––––– -->
     <script type="text/javascript" th:src="@{/js/main.js}"></script>
+    <script>
+        function search() {
+            window.location.href="/search?searchKey="+$("#inputSearchKey").val()+"&searchCategory="+$("#chooseSearch option:selected").val();
+        }
+    </script>
 </body>
 
 </html>

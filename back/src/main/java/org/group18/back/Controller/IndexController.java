@@ -71,8 +71,8 @@ public class IndexController {
         List<Category> categoryList = categoryService.getCategorys(category_uid);
         model.addAttribute("CategoryList",categoryList);
 
-       // List<Goods> indexGoods = goodsService.selectAllGoodsByClausedesc();
-        //model.addAttribute("indexgoods",indexGoods);
+//        List<Goods> indexGoods = goodsService.selectAllGoodsByClausedesc();
+//        model.addAttribute("indexgoods",indexGoods);
 
         List<Shop> indexShops = storeService.selectAllShop();
         model.addAttribute("indexshops",indexShops);

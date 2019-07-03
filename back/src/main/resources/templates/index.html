@@ -125,7 +125,7 @@
                                 <span th:text="'你好，'+${user.getUserName()}"></span>
                             </li>
                             <li th:if="${user.getIsSeller()} and ${isSignin}">
-                                <a href="#"><i class="fa fa-usd"></i>我的店铺</a>
+                                <a th:href="@{/MyStore/mystore}"><i class="fa fa-usd"></i>我的店铺</a>
                             </li>
                             <li th:if="${isSignin}">
                                 <a th:href="@{/myinfo}"><i class="fa fa-user"></i>我的信息</a>
@@ -151,25 +151,22 @@
                     <div class="header-search col-md-9">
                         <div class="row row-tb-10 ">
                             <div class="col-sm-8">
-                                <form class="search-form">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control input-lg search-input" placeholder="Enter Keyword Here ..." required="required">
-                                        <div class="input-group-btn">
-                                            <div class="input-group">
-                                                <select class="form-control input-lg search-select">
-                                                    <option>选择...</option>
-                                                    <option>商品</option>
-                                                    <option>店铺</option>
-                                                </select>
-                                                <div class="input-group-btn">
-                                                    <button type="submit" class="btn btn-lg btn-search btn-block">
-                                                        <i class="fa fa-search font-16"></i>
-                                                    </button>
-                                                </div>
+                                <div class="input-group">
+                                    <input id="inputSearchKey" type="text" class="form-control input-lg search-input" placeholder="在此输入搜索关键词..." required="required">
+                                    <div class="input-group-btn">
+                                        <div class="input-group">
+                                            <select id="chooseSearch" class="form-control input-lg search-select">
+                                                <option value="goods">商品</option>
+                                                <option  value="stores">店铺</option>
+                                            </select>
+                                            <div class="input-group-btn">
+                                                <button onclick="search()" class="btn btn-lg btn-search btn-block">
+                                                    <i class="fa fa-search font-16"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                             <div class="col-sm-4 t-xs-center t-md-right">
                                 <div class="header-cart">
@@ -558,7 +555,7 @@
                     </header>
                     <div class="popular-stores-slider owl-slider" data-loop="true" data-autoplay="true" data-smart-speed="1000" data-autoplay-timeout="10000" data-margin="20" data-items="2" data-xxs-items="2" data-xs-items="2" data-sm-items="3" data-md-items="5" data-lg-items="6">
                         <div class="store-item t-center">
-                            <a th:href="@{/store/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
+                            <a th:href="@{/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
                                 <div class="embed-responsive embed-responsive-4by3">
                                     <div class="store-logo">
                                         <img th:src="@{/images/brands/brand_01.jpg}" alt="">
@@ -568,7 +565,7 @@
                             </a>
                         </div>
                         <div class="store-item t-center">
-                            <a th:href="@{/store/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
+                            <a th:href="@{/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
                                 <div class="embed-responsive embed-responsive-4by3">
                                     <div class="store-logo">
                                         <img th:src="@{/images/brands/brand_02.jpg}" alt="">
@@ -578,7 +575,7 @@
                             </a>
                         </div>
                         <div class="store-item t-center">
-                            <a th:href="@{/store/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
+                            <a th:href="@{/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
                                 <div class="embed-responsive embed-responsive-4by3">
                                     <div class="store-logo">
                                         <img th:src="@{/images/brands/brand_03.jpg}" alt="">
@@ -588,7 +585,7 @@
                             </a>
                         </div>
                         <div class="store-item t-center">
-                            <a th:href="@{/store/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
+                            <a th:href="@{/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
                                 <div class="embed-responsive embed-responsive-4by3">
                                     <div class="store-logo">
                                         <img th:src="@{/images/brands/brand_04.jpg}" alt="">
@@ -598,7 +595,7 @@
                             </a>
                         </div>
                         <div class="store-item t-center">
-                            <a th:href="@{/store/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
+                            <a th:href="@{/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
                                 <div class="embed-responsive embed-responsive-4by3">
                                     <div class="store-logo">
                                         <img th:src="@{/images/brands/brand_05.jpg}" alt="">
@@ -608,7 +605,7 @@
                             </a>
                         </div>
                         <div class="store-item t-center">
-                            <a th:href="@{/store/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
+                            <a th:href="@{/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
                                 <div class="embed-responsive embed-responsive-4by3">
                                     <div class="store-logo">
                                         <img th:src="@{/images/brands/brand_06.jpg}" alt="">
@@ -618,7 +615,7 @@
                             </a>
                         </div>
                         <div class="store-item t-center">
-                            <a th:href="@{/store/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
+                            <a th:href="@{/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
                                 <div class="embed-responsive embed-responsive-4by3">
                                     <div class="store-logo">
                                         <img th:src="@{/images/brands/brand_07.jpg}" alt="">
@@ -628,7 +625,7 @@
                             </a>
                         </div>
                         <div class="store-item t-center">
-                            <a th:href="@{/store/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
+                            <a th:href="@{/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
                                 <div class="embed-responsive embed-responsive-4by3">
                                     <div class="store-logo">
                                         <img th:src="@{/images/brands/brand_08.jpg}" alt="">
@@ -807,5 +804,11 @@
 <!-- ––––––––––––––––––––––––––––––––––––––––– -->
 <script type="text/javascript" th:src="@{/js/main.js}"></script>
 </body>
+<script>
+    function search() {
+        window.location.href="/search?searchKey="+$("#inputSearchKey").val()+"&searchCategory="+$("#chooseSearch option:selected").val();
+    }
+</script>
+
 
 </html>

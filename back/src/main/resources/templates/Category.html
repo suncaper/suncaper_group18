@@ -125,7 +125,7 @@
                                 <span th:text="'你好，'+${user.getUserName()}"></span>
                             </li>
                             <li th:if="${user.getIsSeller()} and ${isSignin}">
-                                <a href="#"><i class="fa fa-usd"></i>我的店铺</a>
+                                <a th:href="@{/MyStore/mystore}"><i class="fa fa-usd"></i>我的店铺</a>
                             </li>
                             <li th:if="${isSignin}">
                                 <a th:href="@{/myinfo}"><i class="fa fa-user"></i>我的信息</a>
@@ -144,40 +144,36 @@
             <div class="container">
                 <div class="row row-rl-0 row-tb-20 row-md-cell">
                     <div class="brand col-md-3 t-xs-center t-md-left valign-middle">
-                        <a href="#" class="logo">
+                        <a th:href="@{/index}" class="logo">
                             <img th:src="@{/images/logo.png}" alt="" width="250">
                         </a>
                     </div>
                     <div class="header-search col-md-9">
                         <div class="row row-tb-10 ">
                             <div class="col-sm-8">
-                                <form class="search-form">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control input-lg search-input" placeholder="Enter Keywork Here ..." required="required">
-                                        <div class="input-group-btn">
-                                            <div class="input-group">
-                                                <select class="form-control input-lg search-select">
-                                                    <option>Select Your Category</option>
-                                                    <option>Deals</option>
-                                                    <option>Coupons</option>
-                                                    <option>Discounts</option>
-                                                </select>
-                                                <div class="input-group-btn">
-                                                    <button type="submit" class="btn btn-lg btn-search btn-block">
-                                                        <i class="fa fa-search font-16"></i>
-                                                    </button>
-                                                </div>
+                                <div class="input-group">
+                                    <input id="inputSearchKey" type="text" class="form-control input-lg search-input" placeholder="在此输入搜索关键词..." required="required">
+                                    <div class="input-group-btn">
+                                        <div class="input-group">
+                                            <select id="chooseSearch" class="form-control input-lg search-select">
+                                                <option value="goods">商品</option>
+                                                <option  value="stores">店铺</option>
+                                            </select>
+                                            <div class="input-group-btn">
+                                                <button onclick="search()" class="btn btn-lg btn-search btn-block">
+                                                    <i class="fa fa-search font-16"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                             <div class="col-sm-4 t-xs-center t-md-right">
                                 <div class="header-cart">
                                     <a th:href="@{/Cart}">
                                         <span class="icon lnr lnr-cart"></span>
-                                        <div><span class="cart-number">0</span>
-                                        </div>
+                                        <!--<div><span class="cart-number" th:text="${cart.totalAmount}"></span>-->
+                                        <!--</div>-->
                                         <span class="title">Cart</span>
                                     </a>
                                 </div>
@@ -584,6 +580,11 @@
 <!-- Custom Template JavaScript                   -->
 <!-- ––––––––––––––––––––––––––––––––––––––––– -->
 <script type="text/javascript" th:src="@{/js/main.js}"></script>
+<script>
+    function search() {
+        window.location.href="/search?searchKey="+$("#inputSearchKey").val()+"&searchCategory="+$("#chooseSearch option:selected").val();
+    }
+</script>
 </body>
 
 </html>
