@@ -111,6 +111,12 @@ public class GoodsServiceImpl implements GoodsService {
         return goodsMapper.selectByExample(goodsExample);
     }
 
+    @Override
+    public List<Goods> selectAllGoodsByClausedesc() {
+        List<Goods> indexList = goodsMapper.selectAllGoodsByClause();
+        return  indexList;
+    }
+
 
     public User judgeUserLoginStatus(String ticket) {
         TicketExample ticketExample = new TicketExample();

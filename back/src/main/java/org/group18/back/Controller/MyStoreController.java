@@ -5,7 +5,7 @@ import org.group18.back.Entity.Goods;
 import org.group18.back.Entity.User;
 import org.group18.back.Model.GoodsManagementModel;
 import org.group18.back.Model.ShopPageModel;
-import org.group18.back.Service.Impl.CategoryService;
+import org.group18.back.Service.CategoryService;
 import org.group18.back.Service.LoginRegisterService;
 import org.group18.back.Service.MystoreService;
 import org.group18.back.Service.StoreService;

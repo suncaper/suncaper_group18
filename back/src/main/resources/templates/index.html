@@ -397,23 +397,14 @@
                         <h3 class="section-title font-18">热销商品</h3>
                         <a class="btn btn-o btn-xs pos-a right-10 pos-tb-center">View All</a>
                     </header>
-
-                    <div class="row row-masnory row-tb-20" th:each="indexgoods:${indexGoods}">
-                        <div class="col-sm-6 col-lg-4">
+                    <div class="row row-masnory row-tb-20">
+                        <div class="col-sm-6 col-lg-4" th:each="indexgoods:${indexgoods}">
                             <div class="deal-single panel" >
-                                <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" th:attr="data-bg-img=${indexgoods.getImgUrl()}">
-                                    <ul class="deal-actions top-15 right-20">
-                                    </ul>
-                                    <div class="time-left bottom-15 right-20 font-md-14">
-                                    </div>
-                                    <div class="deal-store-logo">
-                                        <img th:src="@{/images/brands/brand_01.jpg}" alt="">
-                                    </div>
-                                </figure>
+                                <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" th:attr="data-bg-img=${indexgoods.getImgUrl()}"></figure>
                                 <div class="bg-white pt-20 pl-20 pr-15">
                                     <div class="pr-md-10">
                                         <h3 class="deal-title mb-10">
-                                            <a th:href="@{/goods_uid}" th:text="${indexgoods.getGoodsName()}"> </a>
+                                            <a th:href="@{/getGoods(goodsUid=${indexgoods.getUid()}, payWay='money')}" th:text="${indexgoods.getGoodsName()}"> </a>
                                         </h3>
                                         <ul class="deal-meta list-inline mb-10 color-mid">
                                             <li><i class="ico fa fa-shopping-basket mr-10"></i><a th:text="${indexgoods.getSalesVolume()}"></a></li>
@@ -422,125 +413,6 @@
                                     </div>
                                     <div class="deal-price pos-r mb-15">
                                         <h3 class="price ptb-5 text-right"><span class="price-sale" th:text="${indexgoods.getPrice()}"> </span><a th:text="${indexgoods.getDiscountPrice()}"></a> </h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="deal-single panel">
-                                <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" th:attr="data-bg-img=${indexgoods.getImgUrl()}">
-                                    <div class="deal-store-logo">
-                                        <img th:src="@{/images/brands/brand_02.jpg}" alt="">
-                                    </div>
-                                </figure>
-                                <div class="bg-white pt-20 pl-20 pr-15">
-                                    <div class="pr-md-10">
-                                        <h3 class="deal-title mb-10">
-                                            <a th:href="@{/goods}" th:text="${indexgoods.getGoodsName()}"> </a>
-                                        </h3>
-                                        <ul class="deal-meta list-inline mb-10 color-mid">
-                                            <li><i class="ico fa fa-shopping-basket mr-10"></i><a th:text="${indexgoods.getSalesVolume()}"></a> </li>
-                                        </ul>
-                                        <p class="text-muted mb-20" th:text="${indexgoods.getDescriptions()}"> </p>
-                                    </div>
-                                    <div class="deal-price pos-r mb-15">
-                                        <h3 class="price ptb-5 text-right"><span class="price-sale" th:text="${indexgoods.getPrice()}"> </span><a th:text="${indexgoods.getDiscountPrice()}"></a> </h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="deal-single panel">
-                                <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" th:attr="data-bg-img=${indexgoods.getImgUrl()}">
-                                    <div class="deal-store-logo">
-                                        <img th:src="@{/images/brands/brand_03.jpg}" alt="">
-                                    </div>
-                                </figure>
-                                <div class="bg-white pt-20 pl-20 pr-15">
-                                    <div class="pr-md-10">
-                                        <h3 class="deal-title mb-10">
-                                            <a href="deal_single.html" th:text="${indexgoods.getGoodsName()}"> </a>
-                                        </h3>
-                                        <ul class="deal-meta list-inline mb-10 color-mid">
-                                            <li><i class="ico fa fa-shopping-basket mr-10"></i><a th:text="${indexgoods.getSalesVolume()}"></a> </li>
-                                        </ul>
-                                        <p class="text-muted mb-20" th:text="${indexgoods.getDescriptions()}"> </p>
-                                    </div>
-                                    <div class="deal-price pos-r mb-15">
-                                        <h3 class="price ptb-5 text-right"><span class="price-sale" th:text="${indexgoods.getDiscountPrice()}"> </span><a th:text="${indexgoods.getPrice()}"></a> </h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="deal-single panel">
-                                <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" th:attr="data-bg-img=${indexgoods.getImgUrl()}">
-                                    <div class="time-left bottom-15 right-20 font-md-14">
-                                    </div>
-                                    <div class="deal-store-logo">
-                                        <img th:src="@{/images/brands/brand_04.jpg}" alt="">
-                                    </div>
-                                </figure>
-                                <div class="bg-white pt-20 pl-20 pr-15">
-                                    <div class="pr-md-10">
-                                        <h3 class="deal-title mb-10">
-                                            <a href="deal_single.html" th:text="${indexgoods.getGoodsName()}"></a>
-                                        </h3>
-                                        <ul class="deal-meta list-inline mb-10 color-mid">
-                                            <li><i class="ico fa fa-shopping-basket mr-10"></i><a th:text="${indexgoods.getSalesVolume()}"></a></li>
-                                        </ul>
-                                        <p class="text-muted mb-20" th:text="${indexgoods.getDescriptions()}"></p>
-                                    </div>
-                                    <div class="deal-price pos-r mb-15">
-                                        <h3 class="price ptb-5 text-right"><span class="price-sale" th:text="${indexgoods.getDiscountPrice()}"> </span><a th:text="${indexgoods.getPrice()}"></a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="deal-single panel">
-                                <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" th:attr="data-bg-img=${indexgoods.getImgUrl()}">
-                                    <div class="deal-store-logo">
-                                        <img th:src="@{/images/brands/brand_05.jpg}" alt="">
-                                    </div>
-                                </figure>
-                                <div class="bg-white pt-20 pl-20 pr-15">
-                                    <div class="pr-md-10">
-                                        <h3 class="deal-title mb-10">
-                                            <a href="deal_single.html" th:text="${indexgoods.getGoodsName()}"></a>
-                                        </h3>
-                                        <ul class="deal-meta list-inline mb-10 color-mid">
-                                            <li><i class="ico fa fa-shopping-basket mr-10"></i><a th:text="${indexgoods.getSalesVolume()}"></a></li>
-                                        </ul>
-                                        <p class="text-muted mb-20" th:text="${indexgoods.getDescriptions()}"></p>
-                                    </div>
-                                    <div class="deal-price pos-r mb-15">
-                                        <h3 class="price ptb-5 text-right"><span class="price-sale"th:text="${indexgoods.getDiscountPrice()}"></span><a th:text="${indexgoods.getPrice()}"></a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="deal-single panel">
-                                <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" th:attr="data-bg-img=${indexgoods.getImgUrl()}">
-                                    <div class="deal-store-logo">
-                                        <img th:src="@{/images/brands/brand_06.jpg}" alt="">
-                                    </div>
-                                </figure>
-                                <div class="bg-white pt-20 pl-20 pr-15">
-                                    <div class="pr-md-10">
-                                        <div class="rating mb-10">
-                                        </div>
-                                        <h3 class="deal-title mb-10">
-                                            <a href="deal_single.html" th:text="${indexgoods.getGoodsName()}"></a>
-                                        </h3>
-                                        <ul class="deal-meta list-inline mb-10 color-mid">
-                                            <li><i class="ico fa fa-shopping-basket mr-10"></i><a th:text="${indexgoods.getSalesVolume()}"></a></li>
-                                        </ul>
-                                        <p class="text-muted mb-20" th:text="${indexgoods.getDescriptions()}"></p>
-                                    </div>
-                                    <div class="deal-price pos-r mb-15">
-                                        <h3 class="price ptb-5 text-right"><span class="price-sale" th:text="${indexgoods.getDiscountPrice()}"></span><a th:text="${indexgoods.getPrice()}"></a></h3>
                                     </div>
                                 </div>
                             </div>
@@ -551,87 +423,18 @@
                 <section class="section stores-area stores-area-v1 ptb-30">
                     <header class="panel ptb-15 prl-20 pos-r mb-30">
                         <h3 class="section-title font-18">流行好店</h3>
-                        <a href="stores_01.html" class="btn btn-o btn-xs pos-a right-10 pos-tb-center">All Stores</a>
+                        <a href="stores_01.html" class="btn btn-o btn-xs pos-a right-10 pos-tb-center">全部店铺</a>
                     </header>
-                    <div class="popular-stores-slider owl-slider" data-loop="true" data-autoplay="true" data-smart-speed="1000" data-autoplay-timeout="10000" data-margin="20" data-items="2" data-xxs-items="2" data-xs-items="2" data-sm-items="3" data-md-items="5" data-lg-items="6">
-                        <div class="store-item t-center">
-                            <a th:href="@{/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
+                    <div class="popular-stores-slider owl-slider"
+                         data-loop="true" data-autoplay="true" data-smart-speed="1000" data-autoplay-timeout="10000" data-margin="20" data-items="2" data-xxs-items="2" data-xs-items="2" data-sm-items="3" data-md-items="5" data-lg-items="6">
+                        <div class="store-item t-center" th:each="indexshops:${indexshops}">
+                            <a th:href="@{/shop(shopUid = ${indexshops.getUid()})}" class="panel is-block">
                                 <div class="embed-responsive embed-responsive-4by3">
                                     <div class="store-logo">
-                                        <img th:src="@{/images/brands/brand_01.jpg}" alt="">
+                                        <img th:src="${indexshops.getImgUrl()}" alt="">
                                     </div>
                                 </div>
-                                <h6 class="store-name ptb-10">Amazon</h6>
-                            </a>
-                        </div>
-                        <div class="store-item t-center">
-                            <a th:href="@{/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
-                                <div class="embed-responsive embed-responsive-4by3">
-                                    <div class="store-logo">
-                                        <img th:src="@{/images/brands/brand_02.jpg}" alt="">
-                                    </div>
-                                </div>
-                                <h6 class="store-name ptb-10">Ashford</h6>
-                            </a>
-                        </div>
-                        <div class="store-item t-center">
-                            <a th:href="@{/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
-                                <div class="embed-responsive embed-responsive-4by3">
-                                    <div class="store-logo">
-                                        <img th:src="@{/images/brands/brand_03.jpg}" alt="">
-                                    </div>
-                                </div>
-                                <h6 class="store-name ptb-10" th:text="${shops.getShop().getShopName()}"></h6>
-                            </a>
-                        </div>
-                        <div class="store-item t-center">
-                            <a th:href="@{/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
-                                <div class="embed-responsive embed-responsive-4by3">
-                                    <div class="store-logo">
-                                        <img th:src="@{/images/brands/brand_04.jpg}" alt="">
-                                    </div>
-                                </div>
-                                <h6 class="store-name ptb-10" th:text="${shops.getShop().getShopName()}"></h6>
-                            </a>
-                        </div>
-                        <div class="store-item t-center">
-                            <a th:href="@{/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
-                                <div class="embed-responsive embed-responsive-4by3">
-                                    <div class="store-logo">
-                                        <img th:src="@{/images/brands/brand_05.jpg}" alt="">
-                                    </div>
-                                </div>
-                                <h6 class="store-name ptb-10" th:text="${shops.getShop().getShopName()}"></h6>
-                            </a>
-                        </div>
-                        <div class="store-item t-center">
-                            <a th:href="@{/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
-                                <div class="embed-responsive embed-responsive-4by3">
-                                    <div class="store-logo">
-                                        <img th:src="@{/images/brands/brand_06.jpg}" alt="">
-                                    </div>
-                                </div>
-                                <h6 class="store-name ptb-10" th:text="${shops.getShop().getShopName()}"></h6>
-                            </a>
-                        </div>
-                        <div class="store-item t-center">
-                            <a th:href="@{/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
-                                <div class="embed-responsive embed-responsive-4by3">
-                                    <div class="store-logo">
-                                        <img th:src="@{/images/brands/brand_07.jpg}" alt="">
-                                    </div>
-                                </div>
-                                <h6 class="store-name ptb-10" th:text="${shops.getShop().getShopName()}"></h6>
-                            </a>
-                        </div>
-                        <div class="store-item t-center">
-                            <a th:href="@{/behavior(shopUid = ${shops.getShop().getUid()})}" class="panel is-block">
-                                <div class="embed-responsive embed-responsive-4by3">
-                                    <div class="store-logo">
-                                        <img th:src="@{/images/brands/brand_08.jpg}" alt="">
-                                    </div>
-                                </div>
-                                <h6 class="store-name ptb-10" th:text="${shops.getShop().getShopName()}"></h6>
+                                <h6 class="store-name ptb-10" th:text="${indexshops.getShopName()}"> </h6>
                             </a>
                         </div>
                     </div>
