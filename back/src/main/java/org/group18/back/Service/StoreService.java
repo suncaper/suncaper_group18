@@ -11,4 +11,5 @@ public interface StoreService {
     Integer getAllShopCount(String searchKey);
     List<Shop> selectAllShop();
     int getShopGoodsAmount(String shopUid);
+
 }

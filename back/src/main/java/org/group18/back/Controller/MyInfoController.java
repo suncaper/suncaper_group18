@@ -129,6 +129,18 @@ public class  MyInfoController {
         return "redirect:/myorder";
     }
 
+    @RequestMapping("/refundOrder")
+    public String refundOrder(@RequestParam("orderId") Integer orderId){
+        myInfoService.refundOrder(orderId);
+        return "redirect:/myorder";
+    }
+
+    @RequestMapping("/receiptOrder")
+    public String receiptOrder(@RequestParam("orderId") Integer orderId){
+        myInfoService.receiptOrder(orderId);
+        return "redirect:/myorder";
+    }
+
     @RequestMapping("/deleteUserAddress")
     public String deleteUserAddress(@RequestParam("addressId") Integer addressId){
         //TODO:权限认证，核验用户id是否和请求ticket一致

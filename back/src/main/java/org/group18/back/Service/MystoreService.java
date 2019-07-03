@@ -13,4 +13,8 @@ public interface MystoreService {
     public Goods getGoods(Integer goods_uid);
     public Map<String, String> addGoods(GoodsManagementModel goodsManagementModel, String seller_uid);
     Integer getSellerOrderCount(String sellerUid);
+    void deleteSellerOrder(Integer orderId);
+    void agreeRefundOrder(Integer orderId);
+    void refuseRefundOrder(Integer orderId);
+    void mailGoods(Integer orderId);
 }

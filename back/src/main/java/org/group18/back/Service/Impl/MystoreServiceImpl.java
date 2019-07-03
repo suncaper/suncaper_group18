@@ -142,4 +142,40 @@ public class MystoreServiceImpl implements MystoreService{
         orderExample.or().andSellerUidEqualTo(sellerUid).andSellerDeleteStateEqualTo(false);
         return orderMapper.selectByExample(orderExample).size();
     }
+
+    @Override
+    public void deleteSellerOrder(Integer orderId) {
+        OrderExample orderExample = new OrderExample();
+        orderExample.or().andIdEqualTo(orderId);
+        Order order = orderMapper.selectByExample(orderExample).get(0);
+        order.setSellerDeleteState(true);
+        orderMapper.updateByExampleSelective(order, orderExample);
+    }
+
+    @Override
+    public void agreeRefundOrder(Integer orderId) {
+        OrderExample orderExample = new OrderExample();
+        orderExample.or().andIdEqualTo(orderId);
+        Order order = orderMapper.selectByExample(orderExample).get(0);
+        order.setStateUid("state05");
+        orderMapper.updateByExampleSelective(order, orderExample);
+    }
+
+    @Override
+    public void refuseRefundOrder(Integer orderId) {
+        OrderExample orderExample = new OrderExample();
+        orderExample.or().andIdEqualTo(orderId);
+        Order order = orderMapper.selectByExample(orderExample).get(0);
+        order.setStateUid("state06");
+        orderMapper.updateByExampleSelective(order, orderExample);
+    }
+
+    @Override
+    public void mailGoods(Integer orderId) {
+        OrderExample orderExample = new OrderExample();
+        orderExample.or().andIdEqualTo(orderId);
+        Order order = orderMapper.selectByExample(orderExample).get(0);
+        order.setStateUid("state02");
+        orderMapper.updateByExampleSelective(order, orderExample);
+    }
 }

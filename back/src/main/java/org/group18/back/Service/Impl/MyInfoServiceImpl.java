@@ -193,6 +193,25 @@ public class MyInfoServiceImpl implements MyInfoService {
     }
 
     @Override
+    public void refundOrder(Integer orderId) {
+        OrderExample orderExample = new OrderExample();
+        orderExample.or().andIdEqualTo(orderId);
+        Order order = orderMapper.selectByExample(orderExample).get(0);
+        order.setStateUid("state04");
+        orderMapper.updateByExampleSelective(order, orderExample);
+    }
+
+    @Override
+    @Transactional
+    public void receiptOrder(Integer orderId) {
+        OrderExample orderExample = new OrderExample();
+        orderExample.or().andIdEqualTo(orderId);
+        Order order = orderMapper.selectByExample(orderExample).get(0);
+        order.setStateUid("state03");
+        orderMapper.updateByExampleSelective(order, orderExample);
+    }
+
+    @Override
     @Transactional
     public void reviewGoods(Integer goodsUid, Integer specificationUid, String userUid, String payWay, String review) {
         GoodsReview goodsReview = new GoodsReview();

@@ -181,4 +181,26 @@ public class MyStoreController {
         }
 
     }
+
+    @RequestMapping("/deleteOrder")
+    public String deleteOrder(@RequestParam("orderId") Integer orderId){
+        System.out.println("执行到此");
+        mystoreService.deleteSellerOrder(orderId);
+        return "redirect:/MyStore/myorder";
+    }
+    @RequestMapping("/agreeRefundOrder")
+    public String agreeRefundOrder(@RequestParam("orderId") Integer orderId){
+        mystoreService.agreeRefundOrder(orderId);
+        return "redirect:/MyStore/myorder";
+    }
+    @RequestMapping("/refuseRefundOrder")
+    public String refuseRefundOrder(@RequestParam("orderId") Integer orderId){
+        mystoreService.refuseRefundOrder(orderId);
+        return "redirect:/MyStore/myorder";
+    }
+    @RequestMapping("/mailGoods")
+    public String mailGoods(@RequestParam("orderId") Integer orderId){
+        mystoreService.mailGoods(orderId);
+        return "redirect:/MyStore/myorder";
+    }
 }
