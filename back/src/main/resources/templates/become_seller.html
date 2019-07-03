@@ -216,7 +216,7 @@
                             </div>
                         </div>
                         <div class="row row-rl-0">
-                            <form class="p-40" th:action="@{/seller_submit}" th:object="${shop}" method="post">
+                            <form enctype="multipart/form-data" method="post" class="p-40" th:action="@{/seller_submit}" th:object="${shop}">
                                 <div class="col-sm-6 col-md-7 col-left">
                                     <div class="form-group">
                                         <label for="shopname">店铺名称</label>
@@ -238,7 +238,8 @@
                                 </div>
                                 <div class="col-sm-6 col-md-5 col-right">
                                     <div class="form-group">
-                                        <input id="file" name="file" type="file" enctype="multipart/form-data">
+                                        <label>请上传店铺图像：</label>
+                                        <input id="imgfile" name="imgfile" type="file">
                                     </div>
                                 </div>
                             </form>

@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.text.EditorKit;
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,7 +63,7 @@ public class SellerController {
     }
 
     @RequestMapping("/seller_submit")
-    public String sellerSubmit(Model model, @ModelAttribute Shop shop, HttpServletRequest request, @RequestParam("file")MultipartFile file) //还差图片上传
+    public String sellerSubmit(Model model, @ModelAttribute Shop shop, HttpServletRequest request, @RequestParam("imgfile")MultipartFile file)
     {
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if (user == null) {
@@ -77,7 +78,6 @@ public class SellerController {
 
             shop.setSellerUid(user.getUid());
             shop.setType(2);
-            shop.setImgUrl("111");                  //暂时没有imgurl，随便设置的测试用。
             Map<String,String> result = sellerService.newSellerShop(shop, file);
             user.setIsSeller(true);
 
