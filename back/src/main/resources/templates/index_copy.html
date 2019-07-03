@@ -123,7 +123,7 @@
                                 <li th:if="${!isSignin}"><a th:href="@{/signin_page}"><i class="fa fa-lock"></i>登陆</a></li>
                                 <li th:if="${!isSignin}"><a th:href="@{/signup_page}"><i class="fa fa-user"></i>注册</a></li>
                                 <li th:if="${!user.getIsSeller()}">
-                                    <a href="#"><i class="fa fa-usd"></i>申请店铺</a>
+                                    <a th:href="@{/become_seller}"><i class="fa fa-usd"></i>申请店铺</a>
                                 </li>
                                 <li th:if="${isSignin}">
                                     <span th:text="'你好，'+${user.getUserName()}"></span>
@@ -737,8 +737,8 @@
                                         <ul class="deal-actions top-15 right-20">
                                             <li class="like-deal">
                                                 <span>
-                                <i class="fa fa-heart"></i>
-                            </span>
+                                                <i class="fa fa-heart"></i>
+                                                </span>
                                             </li>
                                             <li class="share-btn">
                                                 <div class="share-tooltip fade">
@@ -751,15 +751,15 @@
                                             </li>
                                             <li>
                                                 <span>
-                                <i class="fa fa-camera"></i>
-                            </span>
+                                                    <i class="fa fa-camera"></i>
+                                                </span>
                                             </li>
                                         </ul>
                                         <div class="time-left bottom-15 right-20 font-md-14">
                                             <span>
-                            <i class="ico fa fa-clock-o mr-10"></i>
-                            <span class="t-uppercase" data-countdown="2020/10/10 12:25:10"></span>
-                        </span>
+                                                <i class="ico fa fa-clock-o mr-10"></i>
+                                                    <span class="t-uppercase" data-countdown="2020/10/10 12:25:10"></span>
+                                            </span>
                                         </div>
                                         <div class="deal-store-logo">
                                             <img th:src="@{/images/brands/brand_02.jpg}" alt="">
@@ -769,14 +769,14 @@
                                         <div class="pr-md-10">
                                             <div class="rating mb-10">
                                                 <span class="rating-stars rate-allow" data-rating="3">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </span>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </span>
                                                 <span class="rating-reviews">
-                                ( <span class="rating-count">132</span> rates )
+                                                    ( <span class="rating-count">132</span> rates )
                                                 </span>
                                             </div>
                                             <h3 class="deal-title mb-10">

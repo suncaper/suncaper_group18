@@ -12,4 +12,5 @@ public interface MystoreService {
     public List<Category> getAllCategory();
     public Goods getGoods(Integer goods_uid);
     public Map<String, String> addGoods(GoodsManagementModel goodsManagementModel, String seller_uid);
+    Integer getSellerOrderCount(String sellerUid);
 }

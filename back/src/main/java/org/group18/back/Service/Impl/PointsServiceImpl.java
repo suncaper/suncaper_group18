@@ -29,7 +29,6 @@ public class PointsServiceImpl implements PointsService {
         ShopExample.Criteria criteria = shopExample.createCriteria();
         criteria.andUidIsNotNull();
         List<Shop> shopList = shopMapper.selectByExample(shopExample);
-        System.out.println(shopList.size());
 
 
         List<PointsShopModel> pointsShopModelList = new ArrayList<>();
