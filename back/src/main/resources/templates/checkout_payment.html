@@ -211,7 +211,7 @@
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>错误!</strong> <span th:text="${errorMsg}"></span>
                                 </div></div>
-                                <form class="mb-30" method="post" th:action="@{/MyStore/comfirmAdd}" th:object="${GoodsManagementModel}" onsubmit="return beforeSubmit(this);">
+                                <form enctype="multipart/form-data" class="mb-30" method="post" th:action="@{/MyStore/comfirmAdd}" th:object="${GoodsManagementModel}" onsubmit="return beforeSubmit(this);">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -279,6 +279,18 @@
                                             <div class="form-group">
                                                 <label>商品描述</label>
                                                 <textarea  cols="30" rows="10" type="text" class="form-control" placeholder="请输入商品描述" name="descriptions"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-5 col-right">
+                                            <div class="form-group">
+                                                <label>请上传商品图片：</label>
+                                                <input id="imgfile" name="imgfile" type="file">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-5 col-right">
+                                            <div class="form-group">
+                                                <label>请上传商品详情图片：</label>
+                                                <input id="detail_img_file" name="detail_img_file" type="file">
                                             </div>
                                         </div>
                                     </div>
@@ -523,6 +535,14 @@
             if(form.descriptions.value == '') {
                 alert('请输入商品描述！');
                 form.descriptions.focus();
+                return false;
+            }
+            if(document.getElementById("imgfile").value.length == 0){
+                alert('请上传商品图片！');
+                return false;
+            }
+            if(document.getElementById("detail_img_file").value.length == 0){
+                alert('请上传商品详情图片！');
                 return false;
             }
             return true;

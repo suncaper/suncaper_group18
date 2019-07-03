@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -110,7 +111,7 @@ public class MyStoreController {
     }
 
     @PostMapping("/comfirmAdd")
-    public String comfirmAdd(Model model, HttpServletRequest request,  @RequestParam(value = "page", required = false) Integer page, GoodsManagementModel goodsManagementModel){
+    public String comfirmAdd(Model model, HttpServletRequest request,  @RequestParam(value = "page", required = false) Integer page, GoodsManagementModel goodsManagementModel, @RequestParam("imgfile")MultipartFile file, @RequestParam("detail_img_file")MultipartFile detail_img_file){
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if(user == null) {
@@ -121,11 +122,11 @@ public class MyStoreController {
             model.addAttribute("user", user);
             model.addAttribute("isSignin", true);
         }
-        Map<String, String> result = mystoreService.addGoods(goodsManagementModel, user.getUid());
+        Map<String, String> result = mystoreService.addGoods(goodsManagementModel, user.getUid(), file, detail_img_file);
         //进行逻辑处理
         //设置翻页
         //设置每页显示数量为6
-        int pageSize = 6;
+        int pageSize = 8;
         if(page == null) page = 1;//若未接受到页面请求，则设置为1
         Integer shopUid = mystoreService.getShopUid(user.getUid());
         ShopPageModel shopPageModel = storeService.getShopPageModel(shopUid, pageSize, page);

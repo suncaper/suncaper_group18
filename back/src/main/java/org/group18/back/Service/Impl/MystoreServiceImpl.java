@@ -4,9 +4,12 @@ import org.group18.back.Dao.*;
 import org.group18.back.Entity.*;
 import org.group18.back.Model.GoodsManagementModel;
 import org.group18.back.Service.MystoreService;
+import org.group18.back.Service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +28,8 @@ public class MystoreServiceImpl implements MystoreService{
     GoodsSpecificationMapper goodsSpecificationMapper;
     @Autowired
     OrderMapper orderMapper;
+    @Autowired
+    SellerService sellerService;
 
     @Override
     public Integer getShopUid(String user_uid){
@@ -54,7 +59,7 @@ public class MystoreServiceImpl implements MystoreService{
     }
 
     @Override
-    public Map<String, String> addGoods(GoodsManagementModel goodsManagementModel, String seller_uid) {
+    public Map<String, String> addGoods(GoodsManagementModel goodsManagementModel, String seller_uid, MultipartFile file, MultipartFile detail_img_file) {
         Map<String, String> result = new HashMap<>();
         GoodsExample goodsExample = new GoodsExample();
         GoodsExample.Criteria criteria = goodsExample.createCriteria();
@@ -87,6 +92,7 @@ public class MystoreServiceImpl implements MystoreService{
                     goodsSpecification.setAmount(goodsManagementModel.getAmount());
                     goodsSpecification.setSaleAmount(0);
                     goodsSpecification.setGoodsUid(goodsList.get(i).getUid());
+                    goodsSpecification.setDeleteState(false);
                     goodsSpecificationMapper.insert(goodsSpecification);
                     result.put("msg","规格添加成功");
                     return result;
@@ -123,9 +129,24 @@ public class MystoreServiceImpl implements MystoreService{
             goods.setDescriptions(goodsManagementModel.getDescriptions());
             goods.setSellerUid(seller_uid);
             goods.setIsExchange(goodsManagementModel.getIs_exchange());
-            goods.setPoints(goodsManagementModel.getPoints());
-            goods.setImgUrl(goodsManagementModel.getImg_url());
-            goods.setDetailImgUrl(goodsManagementModel.getDetail_img_url());
+            if(goodsManagementModel.getPoints() == null)
+                goods.setPoints(0);
+            else
+                goods.setPoints(goodsManagementModel.getPoints());
+            System.out.println(goodsManagementModel.getPoints());
+            goods.setDeleteState(false);
+            try {
+                goods.setImgUrl(sellerService.fileupload(file));
+            } catch (IOException e) {
+                e.printStackTrace();
+                goods.setImgUrl(goodsManagementModel.getImg_url());
+            }
+            try {
+                goods.setDetailImgUrl(sellerService.fileupload(detail_img_file));
+            } catch (IOException e) {
+                e.printStackTrace();
+                goods.setDetailImgUrl(goodsManagementModel.getDetail_img_url());
+            }
             goodsMapper.insert(goods);
             //插入t_goods_specification
             GoodsSpecification goodsSpecification = new GoodsSpecification();
@@ -139,6 +160,7 @@ public class MystoreServiceImpl implements MystoreService{
             criteria3.andGoodsNameEqualTo(goodsManagementModel.getGoods_name());
             List<Goods> goodsList1 = goodsMapper.selectByExample(goodsExample1);
             goodsSpecification.setGoodsUid(goodsList1.get(0).getUid());
+            goodsSpecification.setDeleteState(false);
             goodsSpecificationMapper.insert(goodsSpecification);
         }
         result.put("msg","商品添加成功");
