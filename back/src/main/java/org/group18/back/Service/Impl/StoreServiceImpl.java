@@ -77,4 +77,13 @@ public class StoreServiceImpl implements StoreService {
        List<Shop> getAllShop = shopMapper.selectAllShop();
        return getAllShop;
     }
+
+    @Override
+    public int getShopGoodsAmount(String shopUid) {
+        ShopExample shopExample = new ShopExample();
+        shopExample.or().andUidEqualTo(Integer.parseInt(shopUid));
+        GoodsExample goodsExample = new GoodsExample();
+        goodsExample.or().andSellerUidEqualTo(shopMapper.selectByExample(shopExample).get(0).getSellerUid());
+        return goodsMapper.selectByExample(goodsExample).size();
+    }
 }
