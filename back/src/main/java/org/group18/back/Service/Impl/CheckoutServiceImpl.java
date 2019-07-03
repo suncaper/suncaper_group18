@@ -114,7 +114,7 @@ public class CheckoutServiceImpl implements CheckoutService {
             goodsSpecificationMapper.updateByPrimaryKey(goodsSpecifications.get(0));
         }
 
-        if (totalPoints < points) {//优先判断积分
+        if (totalPoints <= points) {//优先判断积分
             switch (checkout_method) {
                 case "1":
                     if (totalPrice.compareTo(balance) <= 0) {
