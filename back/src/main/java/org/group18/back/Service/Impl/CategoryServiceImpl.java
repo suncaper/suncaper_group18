@@ -6,11 +6,10 @@ import org.group18.back.Entity.Category;
 import org.group18.back.Entity.CategoryExample;
 import org.group18.back.Entity.Goods;
 import org.group18.back.Entity.GoodsExample;
-import org.group18.back.Service.Impl.CategoryService;
+import org.group18.back.Service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

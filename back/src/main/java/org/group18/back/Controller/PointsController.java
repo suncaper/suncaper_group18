@@ -27,6 +27,7 @@ package org.group18.back.Controller;
         import javax.swing.text.EditorKit;
         import java.util.*;
         import java.util.List;
+
 @Controller
 public class PointsController {
     @Autowired
@@ -35,7 +36,7 @@ public class PointsController {
     PointsService pointsService;
 
     @RequestMapping("/points")
-    public String myinfo(Model model, HttpServletRequest request) {
+    public String points(Model model, HttpServletRequest request) {
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if (user == null) {

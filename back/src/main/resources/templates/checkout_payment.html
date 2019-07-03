@@ -123,7 +123,7 @@
                             <li th:if="${!isSignin}"><a th:href="@{/signin_page}"><i class="fa fa-lock"></i>登陆</a></li>
                             <li th:if="${!isSignin}"><a th:href="@{/signup_page}"><i class="fa fa-user"></i>注册</a></li>
                             <li th:if="${!user.getIsSeller()}">
-                                <a href="#"><i class="fa fa-usd"></i>申请店铺</a>
+                                <a th:href="@{/become_seller}"><i class="fa fa-usd"></i>申请店铺</a>
                             </li>
                             <li th:if="${isSignin}">
                                 <span th:text="'你好，'+${user.getUserName()}"></span>

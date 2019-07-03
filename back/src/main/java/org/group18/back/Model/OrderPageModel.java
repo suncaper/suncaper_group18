@@ -2,6 +2,7 @@ package org.group18.back.Model;
 
 import org.group18.back.Entity.Order;
 import org.group18.back.Entity.Shop;
+import org.group18.back.Entity.UserAddress;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -12,8 +13,17 @@ public class OrderPageModel {
     private int totalAmount;//总共的数量
     private BigDecimal totalPrice;//总共实付价格
     private int totalPoints;//总共的积分消费
+    private UserAddress userAddress;//收货人地址信息
     private List<GoodsSpecificationModel> GSN;//商品规格-不使用积分兑换
     private List<GoodsSpecificationModel> GSY;//商品规格-使用积分兑换
+
+    public UserAddress getUserAddress() {
+        return userAddress;
+    }
+
+    public void setUserAddress(UserAddress userAddress) {
+        this.userAddress = userAddress;
+    }
 
     public int getTotalAmount() {
         return totalAmount;

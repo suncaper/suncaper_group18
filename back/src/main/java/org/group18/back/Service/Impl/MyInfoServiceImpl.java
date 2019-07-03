@@ -123,11 +123,17 @@ public class MyInfoServiceImpl implements MyInfoService {
     }
 
     @Override
-    public List<OrderPageModel> getOrderPageInfo(String userUid,int pageSize, int page) {
+    public List<OrderPageModel> getOrderPageInfo(String userUid, String sellerUid, int pageSize, int page) {
         List<OrderPageModel> orderPageModelList = new ArrayList<>();
         //查询Order订单
         OrderExample orderExample = new OrderExample();
-        orderExample.createCriteria().andUserUidEqualTo(userUid).andUserDeleteStateEqualTo(false);
+        if(userUid != null){
+            orderExample.createCriteria().andUserUidEqualTo(userUid).andUserDeleteStateEqualTo(false);
+        }
+        else if(sellerUid != null){
+            orderExample.createCriteria().andSellerUidEqualTo(sellerUid).andSellerDeleteStateEqualTo(false);
+        }
+        else return null;
         orderExample.setStartRow((page-1)*pageSize);
         orderExample.setPageSize(pageSize);
         List<Order> orderList = orderMapper.selectByExample(orderExample);
@@ -144,6 +150,10 @@ public class MyInfoServiceImpl implements MyInfoService {
             List<GoodsSpecificationModel> goodsSpecificationModelsN = getGoodsSpecificationN(order);
             orderPageModel.setGSY(goodsSpecificationModelsY);
             orderPageModel.setGSN(goodsSpecificationModelsN);
+            //查询地址信息
+            UserAddressExample userAddressExample = new UserAddressExample();
+            userAddressExample.or().andIdEqualTo(order.getAddressId());
+            orderPageModel.setUserAddress(useraddressMapper.selectByExample(userAddressExample).get(0));
 
             //设置总共商品数量、总价、总积分
             int totalAmount = 0, totalPoints = 0;
@@ -167,7 +177,7 @@ public class MyInfoServiceImpl implements MyInfoService {
     @Override
     public Long getUserOrderCount(String userUid) {
         OrderExample orderExample = new OrderExample();
-        orderExample.createCriteria().andUserUidEqualTo(userUid);
+        orderExample.createCriteria().andUserUidEqualTo(userUid).andUserDeleteStateEqualTo(false);
         long count = orderMapper.countByExample(orderExample);
         return count;
     }

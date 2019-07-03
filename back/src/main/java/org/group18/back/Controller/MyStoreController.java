@@ -4,9 +4,11 @@ import org.group18.back.Entity.Category;
 import org.group18.back.Entity.Goods;
 import org.group18.back.Entity.User;
 import org.group18.back.Model.GoodsManagementModel;
+import org.group18.back.Model.OrderPageModel;
 import org.group18.back.Model.ShopPageModel;
-import org.group18.back.Service.Impl.CategoryService;
+import org.group18.back.Service.CategoryService;
 import org.group18.back.Service.LoginRegisterService;
+import org.group18.back.Service.MyInfoService;
 import org.group18.back.Service.MystoreService;
 import org.group18.back.Service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,8 @@ public class MyStoreController {
     StoreService storeService;
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    MyInfoService myInfoService;
 
     @RequestMapping("/mystore")
     public String mystore(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page){
@@ -149,5 +153,42 @@ public class MyStoreController {
                 return "mystore";
             }
         }
+    }
+
+    //卖家订单管理
+    @RequestMapping("/myorder")
+    public String myorder(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page){
+        //检查是否登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if (user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+            return "signin";
+
+        } else {
+            model.addAttribute("user", user);
+            model.addAttribute("isSignin", true);
+
+            if(!user.getIsSeller()) return "index";//当检测到非卖家时跳转至主页面
+            else {
+                //获取请求页数
+                //设置每页显示数量为5
+                int pageSize = 5;
+                if (page == null) page = 1;//若未接受到页面请求，则设置为1
+                //生成页面列表
+                List<Integer> pagesNumberList = new ArrayList<>();
+                long count = mystoreService.getSellerOrderCount(user.getUid());
+                for (int i = 1; i <= (count % pageSize == 0 ? count / pageSize : (count / pageSize + 1)); i++) {
+                    pagesNumberList.add(i);
+                }
+                List<OrderPageModel> orderPageModels = myInfoService.getOrderPageInfo(null, user.getUid(), pageSize, page);
+                model.addAttribute("pageNumberList", pagesNumberList);
+                model.addAttribute("currentPage", page);
+                model.addAttribute("pageAmount", pagesNumberList.size());
+                model.addAttribute("orderPageList", orderPageModels);
+                return "seller_order";
+            }
+        }
+
     }
 }
