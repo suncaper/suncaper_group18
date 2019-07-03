@@ -124,7 +124,7 @@
                             <li th:if="${!isSignin}"><a th:href="@{/signin_page}"><i class="fa fa-lock"></i>登陆</a></li>
                             <li th:if="${!isSignin}"><a th:href="@{/signup_page}"><i class="fa fa-user"></i>注册</a></li>
                             <li th:if="${!user.getIsSeller()}">
-                                <a href="#"><i class="fa fa-usd"></i>申请店铺</a>
+                                <a th:href="@{/become_seller}"><i class="fa fa-usd"></i>申请店铺</a>
                             </li>
                             <li th:if="${isSignin}">
                                 <span th:text="'你好，'+${user.getUserName()}"></span>
@@ -234,6 +234,8 @@
                 <div class="container">
                     <section class="section latest-deals-area ptb-30">
                         <h3 class="h-title mb-40 t-uppercase">积分商城</h3>
+                        <h5 th:text="'已有积分:'+${user.getPoints()}"></h5>
+                        <br><br>
                         <div th:each="list1:${list}">
                             <header th:if="!${list1.getGoodsList().isEmpty()}" class="panel ptb-15 prl-20 pos-r mb-30">
                                 <h3 class="section-title font-18"><i class="fa fa-home"></i><span th:text="${list1.getShop().getShopName()}"></span></h3>
@@ -242,15 +244,50 @@
                             <div class="row row-masnory row-tb-20">
                                 <div th:each="list2:${list1.getGoodsList()}" class="col-sm-6 col-lg-4">
                                     <div class="deal-single panel">
-                                        <div align="center">
-                                            <img th:src="${list2.getImgUrl()}" alt="">
-                                        </div>
+                                        <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" th:data-bg-img="${list2.getImgUrl()}">
+                                            <ul class="deal-actions top-15 right-20">
+                                                <li class="like-deal">
+                                                    <span><i class="fa fa-heart"></i></span>
+                                                </li>
+                                                <li class="share-btn">
+                                                    <div class="share-tooltip fade">
+                                                        <a target="_blank" href="#"><i class="fa fa-facebook"></i></a>
+                                                        <a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
+                                                        <a target="_blank" href="#"><i class="fa fa-google-plus"></i></a>
+                                                        <a target="_blank" href="#"><i class="fa fa-pinterest"></i></a>
+                                                    </div>
+                                                    <span><i class="fa fa-share-alt"></i></span>
+                                                </li>
+                                                <li>
+                                                    <span><i class="fa fa-camera"></i></span>
+                                                </li>
+                                            </ul>
+                                            <div class="deal-store-logo">
+                                                <img th:src="${list1.getShop().getImgUrl()}" alt="">
+                                            </div>
+                                        </figure>
                                         <div class="bg-white pt-20 pl-20 pr-15">
                                             <div class="pr-md-10">
+                                                <div class="rating mb-10">
+                                                    <span class="rating-stars rate-allow" data-rating="5">
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                    </span>
+                                                    <span class="rating-reviews">
+                                                            ( <span class="rating-count">241</span> rates )
+                                                    </span>
+                                                </div>
                                                 <h3 class="deal-title mb-10">
                                                     <a th:href="@{/getGoods(goodsUid=${list2.getUid()}, payWay='points')}" th:text="${list2.getGoodsName()}" >商品名</a>
                                                 </h3>
-                                                <p class="text-muted mb-20" th:text="${list2.getDescriptions()}">描述</p>
+                                                <ul class="deal-meta list-inline mb-10 color-mid">
+                                                    <li><i class="ico fa fa-map-marker mr-10"></i><span th:text="${list1.getShop().getAddress()}"></span></li>
+                                                    <li><i class="ico fa fa-shopping-basket mr-10"></i><span th:text="${list2.getSalesVolume()}"></span>&nbsp;&nbsp;已售卖</li>
+                                                </ul>
+                                                <p class="text-muted mb-20" th:text="${list2.getDescriptions()}"></p>
                                             </div>
                                             <div class="deal-price pos-r mb-15">
                                                 <h3 class="price ptb-5 text-right" th:text="'@'+${list2.getPoints()}+'Points'"></h3>
