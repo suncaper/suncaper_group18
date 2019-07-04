@@ -234,97 +234,28 @@
 
                             <!-- Checkout Area -->
                             <section class="section checkout-area panel prl-30 pt-20 pb-40">
-                                <h2 class="h2 mb-20 h-title" style="font-size: 20px">添加商品详细信息</h2>
-                                <div th:if="${isError}"><div class="alert alert-danger alert-dismissible" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <strong>错误!</strong> <span th:text="${errorMsg}"></span>
-                                </div></div>
-                                <form enctype="multipart/form-data" class="mb-30" method="post" th:action="@{/MyStore/comfirmAdd}" th:object="${GoodsManagementModel}" onsubmit="return beforeSubmit(this);">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>商品名称</label>
-                                                <input type="text" class="form-control" placeholder="输入商品名称" name="goods_name">
+                                <h2 class="h2 mb-20 h-title" style="font-size: 20px">编辑商品规格信息
+                                    <button class="btn btn-rounded btn-sm" th:onclick="tryAddgoodsSpecifications([[${newgoodsSpecifications}]])">添加</button>
+                                </h2>
+                                <table>
+                                    <tbody>
+                                    <tr class="panel alert" th:each="goodsSpecifications:${goodsSpecificationList}">
+                                        <td class="col-sm-8 col-md-9">
+                                            <div class="media-body valign-middle">
+                                                <h5 class="title mb-5 t-uppercase" th:text="${goodsSpecifications.getSpecificationName()}"></h5>
+                                                <h5 class="title mb-5 t-uppercase" th:text="'数量：'+${goodsSpecifications.getAmount()}"></h5>
                                             </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label >类型</label>
-                                                <select class="form-control" name="category_uid">
-                                                    <option>-请选择商品类型-</option>
-                                                    <option th:each="categorys:${categoryList}" th:text="${categorys.getDescriptions()}" th:value="${categorys.getUid()}"></option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>价格</label>
-                                                <input type="text" class="form-control" placeholder="请输入商品原价" name="price">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>优惠价格</label>
-                                                <input type="text" class="form-control" placeholder="请输入商品优惠价格" name="discount_price">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>商品规格</label>
-                                                <input type="text" class="form-control" placeholder="请输入商品的规格" name="specification_name">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>数量</label>
-                                                <input type="text" class="form-control" placeholder="请输入该规格商品数量" name="amount">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label >是否使用积分兑换</label>
-                                                <select class="form-control" id="is_exchange" name="is_exchange">
-                                                    <option th:value="1">是</option>
-                                                    <option th:value="0">否</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6" id="exchange" style="display: block">
-                                            <div class="form-group">
-                                                <label>所需积分</label>
-                                                <input type="text" class="form-control" placeholder="请输入商品兑换所需积分" name="points">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>商品描述</label>
-                                                <textarea  cols="30" rows="10" type="text" class="form-control" placeholder="请输入商品描述" name="descriptions"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-5 col-right">
-                                            <div class="form-group">
-                                                <label>请上传商品图片：</label>
-                                                <input id="imgfile" name="imgfile" type="file">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-5 col-right">
-                                            <div class="form-group">
-                                                <label>请上传商品详情图片：</label>
-                                                <input id="detail_img_file" name="detail_img_file" type="file">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <input type="submit" class="btn btn-lg btn-rounded mr-10" th:value="确认提交">
-                                    <input type="reset" class="btn btn-lg btn-warning btn-rounded" value="重置" />
-                                </form>
+                                        </td>
+                                        <td></td>
+                                        <td class="col-sm-3 col-md-2 is-hidden-xs-down" style="display: table-cell; vertical-align: middle;">
+                                            <button class="btn btn-rounded btn-sm" th:onclick="tryEditgoodsSpecifications([[${goodsSpecifications}]])">编辑</button>
+                                        </td>
+                                        <td class="col-sm-1" style="display: table-cell; vertical-align: middle">
+                                            <a class="btn btn-lg btn-rounded mr-10" style="background-color: rgb(255,102,102);" th:href="@{/MyStore/deleteSpecification(specification_uid=${goodsSpecifications.uid})}">删除</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                                 <a th:href="@{/MyStore/mystore}" class="btn btn-lg btn-warning btn-rounded">取消</a>
                             </section>
                             <!-- End Checkout Area -->
@@ -334,7 +265,107 @@
                 </div>
             </div>
             <!-- End Page Container -->
-
+            <!-- 编辑规格模态框 -->
+            <div class="modal fade" id="editSpecificationModal" tabindex="-1" role="dialog" aria-labelledby="editSpecificationLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                编辑规格
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="editSpecificationName" class="col-sm-2 control-label">规格名</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="editSpecificationName"
+                                               placeholder="请输入规格名" name="specificationName">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editAmount" class="col-sm-2 control-label">数量</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="editAmount" name="amount"
+                                               placeholder="请输入数量">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="confirmEditgoodsSpecifications()">
+                                确认修改
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+            <!-- 添加规格模态框 -->
+            <div class="modal fade" id="addgoodsSpecificationsModal" tabindex="-1" role="dialog" aria-labelledby="addgoodsSpecificationsLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                添加商品规格
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="addSpecificationName" class="col-sm-2 control-label">规格名</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="addSpecificationName"
+                                               placeholder="请输入规格名" name="specificationName">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="addAmount" class="col-sm-2 control-label">数量</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="addAmount" name="amount"
+                                               placeholder="请输入数量">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="confirmAddgoodsSpecifications()">
+                                确认添加
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+            <!-- 请求结果返回模态框 -->
+            <div class="modal fade" id="askResultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                请求结果
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="askResult"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
 
         </main>
         <!-- –––––––––––––––[ END PAGE CONTENT ]––––––––––––––– -->
@@ -574,6 +605,57 @@
                 return false;
             }
             return true;
+        }
+
+        //编辑地址请求
+        var editgoodsSpecifications;
+        function tryEditgoodsSpecifications(goodsSpecifications) {
+            editgoodsSpecifications = goodsSpecifications;
+            //显示默认的值
+            $("#editSpecificationName").val(editgoodsSpecifications.specificationName);
+            $("#editAmount").val(editgoodsSpecifications.amount);
+            $("#editSpecificationModal").modal("show");
+        }
+        function confirmEditgoodsSpecifications() {
+            //判断输入是否为空
+            var str1 = $("#editSpecificationName").val().replace(/(^\s*)|(\s*$)/g, '');
+            var str2 = $("#editAmount").val().replace(/(^\s*)|(\s*$)/g, '');
+            if (str1 == '' || str1 == undefined || str1 == null || str2 == '' || str2 == undefined || str2 == null) {
+                alert("输入不能为空");
+            }else{
+                //获取输入框的值
+                editgoodsSpecifications.specificationName = $("#editSpecificationName").val();
+                editgoodsSpecifications.amount = $("#editAmount").val();
+                $.post("/MyStore/editSpecification", editgoodsSpecifications);
+                window.location.href = "/MyStore/editGoodsSpecification?" + "goods_uid=" + editgoodsSpecifications.goodsUid.toString();
+                $("#askResultModal").modal("show");
+                document.getElementById("askResult").innerText = "修改成功";
+            }
+        }
+
+        //添加规格
+        var addgoodsSpecifications;
+        function tryAddgoodsSpecifications(goodsSpecifications) {
+            addgoodsSpecifications = goodsSpecifications;
+            //显示添加窗口
+            $("#addgoodsSpecificationsModal").modal("show");
+        }
+        function confirmAddgoodsSpecifications() {
+            //判断输入是否为空
+            var str1 = $("#addSpecificationName").val().replace(/(^\s*)|(\s*$)/g, '');
+            var str2 = $("#addAmount").val().replace(/(^\s*)|(\s*$)/g, '');
+            if (str1 == '' || str1 == undefined || str1 == null || str2 == '' || str2 == undefined || str2 == null) {
+                alert("输入不能为空");
+            }
+            else{
+                //获取输入框的值
+
+                addgoodsSpecifications.specificationName = $("#addSpecificationName").val();
+                addgoodsSpecifications.amount = $("#addAmount").val();
+                $.post("/MyStore/addSpecification", addgoodsSpecifications);
+                window.location.href = "/MyStore/editGoodsSpecification?" + "goods_uid=" + addgoodsSpecifications.goodsUid.toString();
+                addgoodsSpecifications = null;
+            }
         }
     </script>
 </body>

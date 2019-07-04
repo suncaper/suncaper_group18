@@ -3,7 +3,7 @@ package org.group18.back.Model;
 import org.group18.back.Entity.GoodsSpecification;
 
 import java.math.BigDecimal;
-import java.util.Map;
+import java.util.List;
 
 public class GoodsManagementModel {
     private Integer goods_uid;//商品id
@@ -19,7 +19,7 @@ public class GoodsManagementModel {
     private Integer amount;//规格数量
     private String img_url = "https://suncaper-group18-1256197408.cos.ap-chengdu.myqcloud.com/shop_img/brand_02.jpg";
     private String detail_img_url = "https://suncaper-group18-1256197408.cos.ap-chengdu.myqcloud.com/shop_img/brand_02.jpg";
-    private Map<GoodsSpecification, Integer> goodsSpecifications;
+    private List<GoodsSpecification> goodsSpecifications;
 
     public Integer getGoods_uid() {
         return goods_uid;
@@ -125,11 +125,11 @@ public class GoodsManagementModel {
         this.detail_img_url = detail_img_url;
     }
 
-    public Map<GoodsSpecification, Integer> getGoodsSpecifications() {
+    public List<GoodsSpecification> getGoodsSpecifications() {
         return goodsSpecifications;
     }
 
-    public void setGoodsSpecifications(Map<GoodsSpecification, Integer> goodsSpecifications) {
+    public void setGoodsSpecifications(List<GoodsSpecification> goodsSpecifications) {
         this.goodsSpecifications = goodsSpecifications;
     }
 }
