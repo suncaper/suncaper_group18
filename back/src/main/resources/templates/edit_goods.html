@@ -190,7 +190,35 @@
             <!-- End Header Header -->
 
             <!-- Header Menu -->
-
+            <div class="header-menu bg-blue">
+                <div class="container">
+                    <nav class="nav-bar">
+                        <div class="nav-header">
+                            <span class="nav-toggle" data-toggle="#header-navbar">
+		                        <i></i>
+		                        <i></i>
+		                        <i></i>
+		                    </span>
+                        </div>
+                        <div id="header-navbar" class="nav-collapse">
+                            <ul class="nav-menu">
+                                <li>
+                                    <a th:href="@{/index}">首页</a>
+                                </li>
+                                <li>
+                                    <a href="#">基本信息管理</a>
+                                </li>
+                                <li class="active">
+                                    <a th:href="@{/MyStore/mystore}">商品管理</a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/MyStore/myorder}">订单管理</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
             <!-- End Header Menu -->
 
         </header>
@@ -211,7 +239,7 @@
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>错误!</strong> <span th:text="${errorMsg}"></span>
                                 </div></div>
-                                <form enctype="multipart/form-data" class="mb-30" method="post" th:action="@{/MyStore/comfirmEdit}" th:object="${goodsManagementModel}" onsubmit="return beforeSubmit(this);">
+                                <form enctype="multipart/form-data" class="mb-30" method="post" th:action="@{/MyStore/comfirmEdit(goods_uid=${goods_uid})}" th:object="${goodsManagementModel}" onsubmit="return beforeSubmit(this);">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -251,38 +279,21 @@
                                             <!--</div>-->
                                         <!--</div>-->
 
-                                        <!--<div th:each="specifications:${goodsManagementModel.getGoodsSpecifications()}">-->
+                                        <!--<div th:each="specifications:${goodsManagementModel.goodsSpecifications}">-->
                                             <!--<div class="col-md-6">-->
                                                 <!--<div class="form-group">-->
                                                     <!--<label>商品规格</label>-->
-                                                    <!--<input type="text" class="form-control" placeholder="请输入商品的规格" name="specification_name" th:field="${specifications.key}">-->
+                                                    <!--<input type="text" class="form-control" placeholder="请输入商品的规格" name="specification_name" th:field="*{specifications.getSpecificationName()}">-->
                                                 <!--</div>-->
                                             <!--</div>-->
 
                                             <!--<div class="col-md-6">-->
                                                 <!--<div class="form-group">-->
                                                     <!--<label>数量</label>-->
-                                                    <!--<input type="text" class="form-control" placeholder="请输入该规格商品数量" name="amount" th:field="${specifications.value}">-->
+                                                    <!--<input type="text" class="form-control" placeholder="请输入该规格商品数量" name="amount" th:field="*{specifications.getAmount()}">-->
                                                 <!--</div>-->
                                             <!--</div>-->
                                         <!--</div>-->
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label >是否使用积分兑换</label>
-                                                <select class="form-control" id="is_exchange" name="is_exchange" th:field="*{is_exchange}">
-                                                    <option th:value="1">是</option>
-                                                    <option th:value="0">否</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6" id="exchange" style="display: block">
-                                            <div class="form-group">
-                                                <label>所需积分</label>
-                                                <input type="text" class="form-control" placeholder="请输入商品兑换所需积分" name="points" th:field="*{points}">
-                                            </div>
-                                        </div>
 
                                         <div class="col-md-6">
                                             <div class="form-group">

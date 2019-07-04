@@ -1,6 +1,6 @@
 package org.group18.back.Service.Impl;
 
-import com.sun.tools.corba.se.idl.constExpr.Or;
+//import com.sun.tools.corba.se.idl.constExpr.Or;
 import org.group18.back.Dao.CategoryMapper;
 import org.group18.back.Dao.GoodsMapper;
 import org.group18.back.Dao.OrderMapper;
@@ -43,7 +43,7 @@ public class StoreServiceImpl implements StoreService {
 
             //查找本店商品
             GoodsExample goodsExample = new GoodsExample();
-            goodsExample.createCriteria().andSellerUidEqualTo(shop.getSellerUid());
+            goodsExample.createCriteria().andSellerUidEqualTo(shop.getSellerUid()).andDeleteStateEqualTo(false);
             goodsExample.setPageSize(pageSize);
             goodsExample.setStartRow((page-1)*pageSize);
             List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);

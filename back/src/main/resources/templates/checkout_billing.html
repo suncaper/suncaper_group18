@@ -206,19 +206,19 @@
 
                             <!-- Checkout Area -->
                             <section class="section checkout-area panel prl-30 pt-20 pb-40">
-                                <h2 class="h2 mb-20 h-title">收货信息</h2>
+                                <!--<h2 class="h2 mb-20 h-title">收货信息</h2>-->
                                 <tr class="panel alert">
                                     <td class="col-sm-8 col-md-9">
                                         <table th:if="${isEmpty}" class="table table-condensed">您还没有任何收货地址！请添加！
-                                            <button class="btn btn-rounded btn-sm mt-15" style="background-color: rgb(255,102,102);">添加收货信息</button>
+                                            <button class="btn btn-rounded btn-sm mt-15" style="background-color: rgb(255,102,102);" th:onclick="tryAddAddress([[${newAddress}]])">添加收货信息</button>
                                         </table>
                                         <table th:if="!${isEmpty}" class="table table-condensed">
                                             <thead>
                                             <tr>
-                                                <th>详细信息</th>
+                                                <th style="font-size: 25px">收货信息</th>
                                                 <th></th>
                                                 <th></th>
-                                                <th><button class="btn btn-rounded btn-sm mt-15" style="background-color: rgb(255,102,102);">添加收货信息</button></th>
+                                                <th><button class="btn btn-rounded btn-sm mt-15" style="background-color: rgb(255,102,102);" th:onclick="tryAddAddress([[${newAddress}]])">添加收货信息</button></th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -373,6 +373,69 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+            <div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog" aria-labelledby="addAddressLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                添加收货地址
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="editReceiverName" class="col-sm-2 control-label">收货人名字</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="addReceiverName"
+                                               placeholder="请输入收货人名字">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editProvince" class="col-sm-2 control-label">省份</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="addProvince" name="province"
+                                               placeholder="请输入收货人所在省份">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editCity" class="col-sm-2 control-label">城市</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="addCity" name="city"
+                                               placeholder="请输入收货人所在城市">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editDetailAddress" class="col-sm-2 control-label">详细地址</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="addDetailAddress" name="detailAddress"
+                                               placeholder="请输入收货人所在详细地址">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editReceiverPhone" class="col-sm-2 control-label">手机/电话</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="addReceiverPhone" name="receiverName"
+                                               placeholder="请输入收货人电话号码">
+                                    </div>
+                                </div>
+                                <div>
+                                    <input type="hidden" id="addAddressId" name="id">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="confirmAddAddress()">
+                                确认添加
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal -->
@@ -572,6 +635,36 @@
                 $.post("/editAddress", editAddressInfo);
                 $("#askResultModal").modal("show");
                 document.getElementById("askResult").innerText = "修改成功";
+            }
+        }
+        //添加地址
+        var addAddressInfo;
+        function tryAddAddress(addressInfo) {
+            addAddressInfo = addressInfo;
+            //显示添加窗口
+            $("#addAddressModal").modal("show");
+        }
+        function confirmAddAddress() {
+            //判断输入是否为空
+            var str1 = $("#addReceiverName").val().replace(/(^\s*)|(\s*$)/g, '');
+            var str2 = $("#addProvince").val().replace(/(^\s*)|(\s*$)/g, '');
+            var str3 = $("#addCity").val().replace(/(^\s*)|(\s*$)/g, '');
+            var str4 = $("#addDetailAddress").val().replace(/(^\s*)|(\s*$)/g, '');
+            var str5 = $("#addReceiverPhone").val().replace(/(^\s*)|(\s*$)/g, '');
+            if (str1 == '' || str1 == undefined || str1 == null || str2 == '' || str2 == undefined || str2 == null || str3 == '' || str3 == undefined || str3 == null || str4 == '' || str4 == undefined || str4 == null || str5 == '' || str5 == undefined || str5 == null) {
+                alert("输入不能为空");
+            }
+            else{
+                //获取输入框的值
+                addAddressInfo.receiverName = $("#addReceiverName").val();
+                addAddressInfo.province = $("#addProvince").val();
+                addAddressInfo.city = $("#addCity").val();
+                addAddressInfo.detailAddress = $("#addDetailAddress").val();
+                addAddressInfo.receiverPhone = $("#addReceiverPhone").val();
+                $.post("/addUserAddress", addAddressInfo);
+                addAddressInfo = null;
+                $("#askResultModal").modal("show");
+                document.getElementById("askResult").innerText = "添加成功";
             }
         }
     </script>

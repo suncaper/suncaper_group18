@@ -1,8 +1,6 @@
 package org.group18.back.Controller;
 
-import org.group18.back.Entity.Category;
-import org.group18.back.Entity.Goods;
-import org.group18.back.Entity.User;
+import org.group18.back.Entity.*;
 import org.group18.back.Model.GoodsManagementModel;
 import org.group18.back.Model.OrderPageModel;
 import org.group18.back.Model.ShopPageModel;
@@ -83,6 +81,8 @@ public class MyStoreController {
         }
         model.addAttribute("goods_uid", goods_uid);
         Goods goods = mystoreService.getGoods(goods_uid);
+        model.addAttribute("goods_uid", goods_uid);
+        System.out.println(goods_uid);
         GoodsManagementModel goodsManagementModel = mystoreService.getGoodsDetails(goods);
         goodsManagementModel.setGoods_uid(goods_uid);
         System.out.println(goodsManagementModel.getGoods_uid());
@@ -91,7 +91,7 @@ public class MyStoreController {
     }
 
     @PostMapping("/comfirmEdit")
-    public String comfirmEdit(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page, GoodsManagementModel goodsManagementModel, @RequestParam("imgfile")MultipartFile file, @RequestParam("detail_img_file")MultipartFile detail_img_file){
+    public String comfirmEdit(Model model, HttpServletRequest request, @RequestParam("goods_uid") Integer goods_uid, @RequestParam(value = "page", required = false) Integer page, GoodsManagementModel goodsManagementModel, @RequestParam("imgfile")MultipartFile file, @RequestParam("detail_img_file")MultipartFile detail_img_file){
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if(user == null) {
@@ -102,8 +102,8 @@ public class MyStoreController {
             model.addAttribute("user", user);
             model.addAttribute("isSignin", true);
         }
-        System.out.println("aaaa"+goodsManagementModel.getGoods_uid());
-        mystoreService.editGoods(goodsManagementModel, goodsManagementModel.getGoods_uid(), file, detail_img_file);
+        System.out.println(goods_uid);
+        mystoreService.editGoods(goodsManagementModel, goods_uid, file, detail_img_file);
         //进行逻辑处理
         //设置翻页
         //设置每页显示数量为8
@@ -127,6 +127,35 @@ public class MyStoreController {
         }
     }
 
+    @RequestMapping("/editGoodsSpecification")
+    public String editGoodsSpecification(Model model, HttpServletRequest request, @RequestParam("goods_uid") Integer goods_uid){
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+        }
+        else {
+            model.addAttribute("user", user);
+            model.addAttribute("isSignin", true);
+        }
+        model.addAttribute("goods_uid", goods_uid);
+        Goods goods = mystoreService.getGoods(goods_uid);
+        model.addAttribute("goods_uid", goods_uid);
+        List<GoodsSpecification> goodsSpecificationList = mystoreService.getGoodsSpecification(goods_uid);
+        model.addAttribute("goodsSpecificationList", goodsSpecificationList);
+        GoodsSpecification newgoodsSpecifications = new GoodsSpecification();
+        newgoodsSpecifications.setGoodsUid(goods_uid);
+        model.addAttribute("newgoodsSpecifications", newgoodsSpecifications);
+        return "edit_goods_specification";
+    }
+
+    @RequestMapping("/editSpecification")
+    public String editSpecification(GoodsSpecification goodsSpecification){
+        mystoreService.editSpecification(goodsSpecification);
+        return "redirect:/MyStore/editGoodsSpecification?" + "goods_uid=" + goodsSpecification.getGoodsUid().toString();
+    }
+
     @RequestMapping("/deleteGoods")
     public String deleteGoods(Model model, HttpServletRequest request, @RequestParam("goods_uid") Integer goods_uid){
         //检查是否已经登陆
@@ -144,6 +173,19 @@ public class MyStoreController {
         boolean success = mystoreService.deleteGoods(goods);
 
         return "redirect:/MyStore/mystore";
+    }
+
+    @RequestMapping("/deleteSpecification")
+    public String deleteSpecification(@RequestParam("specification_uid") Integer specification_uid){
+       GoodsSpecification goodsSpecification = mystoreService.getSpecification(specification_uid);
+        mystoreService.deleteSpecification(goodsSpecification);
+        return "redirect:/MyStore/editGoodsSpecification?" + "goods_uid=" + goodsSpecification.getGoodsUid().toString();
+    }
+
+    @RequestMapping("/addSpecification")
+    public String addSpecification(GoodsSpecification newgoodsSpecification){
+       mystoreService.addSpecification(newgoodsSpecification.getGoodsUid(), newgoodsSpecification);
+       return "redirect:/MyStore/editGoodsSpecification?" + "goods_uid=" + newgoodsSpecification.getGoodsUid();
     }
 
     @GetMapping("/addGoods")
