@@ -70,6 +70,77 @@ public class SellerServiceImpl implements SellerService{
         return result;
     }
     @Override
+    public Map<String,String> updateshopinfo(Shop shop)
+    {
+        Map<String,String> result = new HashMap<>();
+        Boolean doupdate = true;
+
+        if((shop.getShopName()==null||shop.getShopName()=="")&&(shop.getDescribes()==null||shop.getDescribes()=="")&&(shop.getAddress()==null||shop.getAddress()==""))
+        {
+            result.put("error","输入字段不能为空");
+            doupdate = false;;
+        }
+        else if(shop.getShopName()!="")
+        {
+            ShopExample shopExample1 = new ShopExample();
+            ShopExample.Criteria criteria1 = shopExample1.createCriteria();
+            criteria1.andShopNameEqualTo(shop.getShopName());
+            List<Shop> shopList1 = shopMapper.selectByExample(shopExample1);
+            if(!shopList1.isEmpty())
+            {
+                result.put("error","店铺名已被占用");
+                doupdate = false;
+            }
+        }
+        if(doupdate == true)
+        {
+            ShopExample shopExample = new ShopExample();
+            ShopExample.Criteria criteria = shopExample.createCriteria();
+            criteria.andSellerUidEqualTo(shop.getSellerUid());
+
+            shopMapper.updateByExampleSelective(shop,shopExample);
+            result.put("success","修改成功");
+        }
+        return result;
+    }
+    @Override
+    public Map<String,String> updateshopimg(Shop shop,MultipartFile img){
+        boolean doupdate = true;
+        Map<String,String> result = new HashMap<>();
+        if(img==null||img.isEmpty()){
+            result.put("error","上传图片不能为空");
+        }
+        else {
+            deleteimg(shop.getImgUrl());
+            try {
+                shop.setImgUrl(fileupload(img));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            shopMapper.updateByPrimaryKeySelective(shop);
+            result.put("success","上传图片成功");
+        }
+        return result;
+    }
+    public void deleteimg(String url){
+        // 1 初始化用户身份信息（secretId, secretKey）。
+        String secretId = "AKIDXr1waf5Egy1QsJ87ZyHuHr04vcVqnqXO";
+        String secretKey = "kE0jKSMgGaGNJ1SmsvMazBB0av1rumPc";
+        COSCredentials cred = new BasicCOSCredentials(secretId, secretKey);
+        // 2 设置 bucket 的区域, COS 地域的简称请参照 https://cloud.tencent.com/document/product/436/6224
+        // clientConfig 中包含了设置 region, https(默认 http), 超时, 代理等 set 方法, 使用可参见源码或者常见问题 Java SDK 部分。
+        Region region = new Region("ap-chengdu");
+        ClientConfig clientConfig = new ClientConfig(region);
+        // 3 生成 cos 客户端。
+        COSClient cosClient = new COSClient(cred, clientConfig);
+
+        String bucketName = "suncaper-group18-1256197408";
+        String key = url.replace("https://suncaper-group18-1256197408.cos.ap-chengdu.myqcloud.com/","");
+        cosClient.deleteObject(bucketName, key);
+
+        cosClient.shutdown();
+    }
+    @Override
     public String fileupload(MultipartFile mfile) throws IOException {
         // 1 初始化用户身份信息（secretId, secretKey）。
         String secretId = "AKIDXr1waf5Egy1QsJ87ZyHuHr04vcVqnqXO";
@@ -112,5 +183,4 @@ public class SellerServiceImpl implements SellerService{
         cosClient.shutdown();
         return "https://suncaper-group18-1256197408.cos.ap-chengdu.myqcloud.com/shop_img/"+file.getName();
     }
-
 }

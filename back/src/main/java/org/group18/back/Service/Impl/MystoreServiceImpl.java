@@ -142,4 +142,16 @@ public class MystoreServiceImpl implements MystoreService{
         orderExample.or().andSellerUidEqualTo(sellerUid).andSellerDeleteStateEqualTo(false);
         return orderMapper.selectByExample(orderExample).size();
     }
+
+    @Override
+    public Shop getMyStoreInfo(String uid){
+        ShopExample shopExample = new ShopExample();
+        ShopExample.Criteria criteria = shopExample.createCriteria();
+        criteria.andSellerUidEqualTo(uid);
+        List<Shop> result = shopMapper.selectByExample(shopExample);
+
+        Shop shop = result.get(0);
+        return shop;
+    }
+
 }

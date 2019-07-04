@@ -2,6 +2,7 @@ package org.group18.back.Service;
 
 import org.group18.back.Entity.Category;
 import org.group18.back.Entity.Goods;
+import org.group18.back.Entity.Shop;
 import org.group18.back.Model.GoodsManagementModel;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface MystoreService {
     public Goods getGoods(Integer goods_uid);
     public Map<String, String> addGoods(GoodsManagementModel goodsManagementModel, String seller_uid);
     Integer getSellerOrderCount(String sellerUid);
+
+    Shop getMyStoreInfo(String uid);
 }
