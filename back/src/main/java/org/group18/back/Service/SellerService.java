@@ -10,4 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 public interface SellerService {
     Map<String,String> newSellerShop(Shop shop,MultipartFile mfile);
     String fileupload(MultipartFile mfile) throws IOException;
+    Map<String,String> updateshopinfo(Shop shop);
+    Map<String,String> updateshopimg(Shop shop,MultipartFile img);
 }

@@ -1,14 +1,15 @@
 package org.group18.back.Controller;
 
 import org.group18.back.Entity.*;
+
+import org.group18.back.Entity.Category;
+import org.group18.back.Entity.Goods;
+import org.group18.back.Entity.Shop;
+import org.group18.back.Entity.User;
 import org.group18.back.Model.GoodsManagementModel;
 import org.group18.back.Model.OrderPageModel;
 import org.group18.back.Model.ShopPageModel;
-import org.group18.back.Service.CategoryService;
-import org.group18.back.Service.LoginRegisterService;
-import org.group18.back.Service.MyInfoService;
-import org.group18.back.Service.MystoreService;
-import org.group18.back.Service.StoreService;
+import org.group18.back.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,8 @@ public class MyStoreController {
     CategoryService categoryService;
     @Autowired
     MyInfoService myInfoService;
+    @Autowired
+    SellerService sellerService;
 
     @RequestMapping("/mystore")
     public String mystore(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page){
@@ -154,6 +157,160 @@ public class MyStoreController {
     public String editSpecification(GoodsSpecification goodsSpecification){
         mystoreService.editSpecification(goodsSpecification);
         return "redirect:/MyStore/editGoodsSpecification?" + "goods_uid=" + goodsSpecification.getGoodsUid().toString();
+    }
+
+        @RequestMapping("/mystoreinfo")
+        public String shopinfo(Model model, HttpServletRequest request){
+            //检查是否已经登陆
+            User user = loginRegisterService.checkLoginStatus(request.getCookies());
+            if(user == null) {
+                model.addAttribute("user", new User());
+                model.addAttribute("isSignin", false);
+            return "signup";
+        }
+        else {
+            //设置登陆状态为false
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+
+            Shop shop = mystoreService.getMyStoreInfo(user.getUid());
+            model.addAttribute("shop",shop);
+            return "mystoreinfo";
+        }
+    }
+    @RequestMapping("/shop_name_edit")
+    public String editshopname(Model model, HttpServletRequest request,@RequestParam("name")String name)
+    {
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+            return "signup";
+        }
+        else {
+            //设置登陆状态为false
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+
+            Shop shop = new Shop();
+            shop.setSellerUid(user.getUid());
+            shop.setShopName(name);
+            Map<String,String> result = sellerService.updateshopinfo(shop);
+            shop = mystoreService.getMyStoreInfo(user.getUid());
+            model.addAttribute("shop",shop);
+            if(result.containsKey("error"))
+            {
+                model.addAttribute("isError",true);
+                model.addAttribute("msg",result.get("error"));
+            }
+            else if(result.containsKey("success")){
+                model.addAttribute("success",true);
+                model.addAttribute("msg",result.get("success"));
+            }
+            return "mystoreinfo";
+        }
+    }
+    @RequestMapping("/shop_address_edit")
+    public String editshopaddress(Model model, HttpServletRequest request,@RequestParam("address")String address)
+    {
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+            return "signup";
+        }
+        else {
+            //设置登陆状态为false
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+
+            Shop shop = new Shop();
+            shop.setSellerUid(user.getUid());
+            shop.setAddress(address);
+            Map<String,String> result = sellerService.updateshopinfo(shop);
+            shop = mystoreService.getMyStoreInfo(user.getUid());
+            model.addAttribute("shop",shop);
+            if(result.containsKey("error"))
+            {
+                model.addAttribute("isError",true);
+                model.addAttribute("msg",result.get("error"));
+            }
+            else if(result.containsKey("success")){
+                model.addAttribute("success",true);
+                model.addAttribute("msg",result.get("success"));
+            }
+            return "mystoreinfo";
+        }
+    }
+    @RequestMapping("/shop_describes_edit")
+    public String editshopdescribes(Model model, HttpServletRequest request,@RequestParam("describes")String describes)
+    {
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+            return "signup";
+        }
+        else {
+            //设置登陆状态为false
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+
+            Shop shop = new Shop();
+            shop.setSellerUid(user.getUid());
+            shop.setDescribes(describes);
+            Map<String,String> result = sellerService.updateshopinfo(shop);
+            shop = mystoreService.getMyStoreInfo(user.getUid());
+            model.addAttribute("shop",shop);
+
+            if(result.containsKey("error"))
+            {
+                model.addAttribute("isError",true);
+                model.addAttribute("msg",result.get("error"));
+            }
+            else if(result.containsKey("success")){
+                model.addAttribute("success",true);
+                model.addAttribute("msg",result.get("success"));
+            }
+            return "mystoreinfo";
+        }
+    }
+    @RequestMapping("/shop_img_edit")
+    public String editshopimg(Model model, HttpServletRequest request,@RequestParam("img")MultipartFile img)
+    {
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+            return "signup";
+        }
+        else {
+            //设置登陆状态为false
+            model.addAttribute("isSignin", true);
+            model.addAttribute("user", user);
+
+            Shop shop = mystoreService.getMyStoreInfo(user.getUid());
+
+            Map<String,String> result = sellerService.updateshopimg(shop,img);
+
+            shop = mystoreService.getMyStoreInfo(user.getUid());
+
+            model.addAttribute("shop",shop);
+            if(result.containsKey("error"))
+            {
+                model.addAttribute("isError",true);
+                model.addAttribute("msg",result.get("error"));
+            }
+            else if(result.containsKey("success")){
+                model.addAttribute("success",true);
+                model.addAttribute("msg",result.get("success"));
+            }
+            return "mystoreinfo";
+        }
     }
 
     @RequestMapping("/deleteGoods")
@@ -288,7 +445,6 @@ public class MyStoreController {
         }
 
     }
-
     @RequestMapping("/deleteOrder")
     public String deleteOrder(@RequestParam("orderId") Integer orderId){
         System.out.println("执行到此");

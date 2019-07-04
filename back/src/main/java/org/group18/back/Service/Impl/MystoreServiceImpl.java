@@ -178,6 +178,18 @@ public class MystoreServiceImpl implements MystoreService{
     }
 
     @Override
+
+    public Shop getMyStoreInfo(String uid){
+        ShopExample shopExample = new ShopExample();
+        ShopExample.Criteria criteria = shopExample.createCriteria();
+        criteria.andSellerUidEqualTo(uid);
+        List<Shop> result = shopMapper.selectByExample(shopExample);
+
+        Shop shop = result.get(0);
+        return shop;
+    }
+
+
     public void deleteSellerOrder(Integer orderId) {
         OrderExample orderExample = new OrderExample();
         orderExample.or().andIdEqualTo(orderId);
@@ -276,6 +288,7 @@ public class MystoreServiceImpl implements MystoreService{
         }
         goodsMapper.updateByPrimaryKey(goodsList.get(0));
     }
+
 
     @Override
     public List<GoodsSpecification> getGoodsSpecification(Integer goods_uid) {
