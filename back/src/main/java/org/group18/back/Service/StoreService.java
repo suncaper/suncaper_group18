@@ -10,4 +10,6 @@ public interface StoreService {
     List<Shop> getShopList(int pageSize, int page, String searchKey);
     Integer getAllShopCount(String searchKey);
     List<Shop> selectAllShop();
+    int getShopGoodsAmount(String shopUid);
+
 }

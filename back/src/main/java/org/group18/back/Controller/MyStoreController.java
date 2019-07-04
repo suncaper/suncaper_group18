@@ -49,24 +49,80 @@ public class MyStoreController {
         }
         //进行逻辑处理
         //设置翻页
-        //设置每页显示数量为6
-        int pageSize = 6;
+        //设置每页显示数量为8
+        int pageSize = 8;
+        if(page == null) page = 1;//若未接受到页面请求，则设置为1
+        Integer shopUid = mystoreService.getShopUid(user.getUid());
+        int goodsCount = storeService.getShopGoodsAmount(String.valueOf(shopUid));
+        //生成页面列表
+        List<Integer> pagesNumberList = new ArrayList<>();
+        for(int i = 1; i <= (goodsCount%pageSize == 0?goodsCount/pageSize:goodsCount/pageSize+1); i++){
+            pagesNumberList.add(i);
+        }
+        //设置页面主要内容
+        model.addAttribute("shopPageModel",storeService.getShopPageModel(Integer.valueOf(shopUid), pageSize, page));
+        model.addAttribute("payWay", "money");//生成店铺页面时的商品信息为money支付
+        model.addAttribute("pageNumberList", pagesNumberList);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageAmount", pagesNumberList.size());
+        return "mystore";
+    }
+
+    @GetMapping("/editGoods")
+    public String editGoods(Model model, HttpServletRequest request, @RequestParam("goods_uid") Integer goods_uid){
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+        }
+        else {
+            model.addAttribute("user", user);
+            model.addAttribute("isSignin", true);
+        }
+        model.addAttribute("goods_uid", goods_uid);
+        Goods goods = mystoreService.getGoods(goods_uid);
+        GoodsManagementModel goodsManagementModel = mystoreService.getGoodsDetails(goods);
+        goodsManagementModel.setGoods_uid(goods_uid);
+        System.out.println(goodsManagementModel.getGoods_uid());
+        model.addAttribute("goodsManagementModel", goodsManagementModel);
+        return "edit_goods";
+    }
+
+    @PostMapping("/comfirmEdit")
+    public String comfirmEdit(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page, GoodsManagementModel goodsManagementModel, @RequestParam("imgfile")MultipartFile file, @RequestParam("detail_img_file")MultipartFile detail_img_file){
+        //检查是否已经登陆
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        if(user == null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("isSignin", false);
+        }
+        else {
+            model.addAttribute("user", user);
+            model.addAttribute("isSignin", true);
+        }
+        System.out.println("aaaa"+goodsManagementModel.getGoods_uid());
+        mystoreService.editGoods(goodsManagementModel, goodsManagementModel.getGoods_uid(), file, detail_img_file);
+        //进行逻辑处理
+        //设置翻页
+        //设置每页显示数量为8
+        int pageSize = 8;
         if(page == null) page = 1;//若未接受到页面请求，则设置为1
         Integer shopUid = mystoreService.getShopUid(user.getUid());
         ShopPageModel shopPageModel = storeService.getShopPageModel(shopUid, pageSize, page);
         if(shopPageModel == null) return "404";
         else {
             //设置页面主要内容
-            model.addAttribute("shopPageModel",shopPageModel);
+            model.addAttribute("shopPageModel", shopPageModel);
             //生成页面列表
             List<Integer> pagesNumberList = new ArrayList<>();
-            for(int i = 1; i <= (shopPageModel.getShopGoodsList().size()%pageSize == 0?shopPageModel.getShopGoodsList().size()/pageSize:shopPageModel.getShopGoodsList().size()/pageSize+1); i++){
+            for (int i = 1; i <= (shopPageModel.getShopGoodsList().size() % pageSize == 0 ? shopPageModel.getShopGoodsList().size() / pageSize : shopPageModel.getShopGoodsList().size() / pageSize + 1); i++) {
                 pagesNumberList.add(i);
             }
             model.addAttribute("pageNumberList", pagesNumberList);
             model.addAttribute("currentPage", page);
             model.addAttribute("pageAmount", pagesNumberList.size());
-            return "mystore";
+                return "redirect:/MyStore/mystore";
         }
     }
 
@@ -224,8 +280,8 @@ public class MyStoreController {
             return "mystoreinfo";
         }
     }
-    @RequestMapping("/editGoods")
-    public String editGoods(Model model, HttpServletRequest request, @RequestParam("goods_uid") Integer goods_uid){
+    @RequestMapping("/deleteGoods")
+    public String deleteGoods(Model model, HttpServletRequest request, @RequestParam("goods_uid") Integer goods_uid){
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if(user == null) {
@@ -238,11 +294,9 @@ public class MyStoreController {
         }
         model.addAttribute("goods_uid", goods_uid);
         Goods goods = mystoreService.getGoods(goods_uid);
-        model.addAttribute("goods", goods);
-        List<Category> categoryList = mystoreService.getAllCategory();
-        System.out.println(categoryList);
-        model.addAttribute("categoryList", categoryList);
-        return "checkout_payment";
+        boolean success = mystoreService.deleteGoods(goods);
+
+        return "redirect:/MyStore/mystore";
     }
 
     @GetMapping("/addGoods")
@@ -260,11 +314,11 @@ public class MyStoreController {
         List<Category> categoryList = mystoreService.getAllCategory();
         System.out.println(categoryList);
         model.addAttribute("categoryList", categoryList);
-        return "checkout_payment";
+        return "add_goods";
     }
 
     @PostMapping("/comfirmAdd")
-    public String comfirmAdd(Model model, HttpServletRequest request,  @RequestParam(value = "page", required = false) Integer page, GoodsManagementModel goodsManagementModel){
+    public String comfirmAdd(Model model, HttpServletRequest request,  @RequestParam(value = "page", required = false) Integer page, GoodsManagementModel goodsManagementModel, @RequestParam("imgfile")MultipartFile file, @RequestParam("detail_img_file")MultipartFile detail_img_file){
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if(user == null) {
@@ -275,11 +329,11 @@ public class MyStoreController {
             model.addAttribute("user", user);
             model.addAttribute("isSignin", true);
         }
-        Map<String, String> result = mystoreService.addGoods(goodsManagementModel, user.getUid());
+        Map<String, String> result = mystoreService.addGoods(goodsManagementModel, user.getUid(), file, detail_img_file);
         //进行逻辑处理
         //设置翻页
-        //设置每页显示数量为6
-        int pageSize = 6;
+        //设置每页显示数量为8
+        int pageSize = 8;
         if(page == null) page = 1;//若未接受到页面请求，则设置为1
         Integer shopUid = mystoreService.getShopUid(user.getUid());
         ShopPageModel shopPageModel = storeService.getShopPageModel(shopUid, pageSize, page);
@@ -295,7 +349,17 @@ public class MyStoreController {
             model.addAttribute("pageNumberList", pagesNumberList);
             model.addAttribute("currentPage", page);
             model.addAttribute("pageAmount", pagesNumberList.size());
-            return "mystore";
+            if(result.get("msg").equals("该商品已存在，且规格名称不能重复")){
+                model.addAttribute("errorMsg", result.get("msg"));
+                model.addAttribute("isError", true);
+                List<Category> categoryList = mystoreService.getAllCategory();
+                System.out.println(categoryList);
+                model.addAttribute("categoryList", categoryList);
+                return "add_goods";
+            }
+            else{
+                return "redirect:/MyStore/mystore";
+            }
         }
     }
 
@@ -334,5 +398,26 @@ public class MyStoreController {
             }
         }
 
+    }
+    @RequestMapping("/deleteOrder")
+    public String deleteOrder(@RequestParam("orderId") Integer orderId){
+        System.out.println("执行到此");
+        mystoreService.deleteSellerOrder(orderId);
+        return "redirect:/MyStore/myorder";
+    }
+    @RequestMapping("/agreeRefundOrder")
+    public String agreeRefundOrder(@RequestParam("orderId") Integer orderId){
+        mystoreService.agreeRefundOrder(orderId);
+        return "redirect:/MyStore/myorder";
+    }
+    @RequestMapping("/refuseRefundOrder")
+    public String refuseRefundOrder(@RequestParam("orderId") Integer orderId){
+        mystoreService.refuseRefundOrder(orderId);
+        return "redirect:/MyStore/myorder";
+    }
+    @RequestMapping("/mailGoods")
+    public String mailGoods(@RequestParam("orderId") Integer orderId){
+        mystoreService.mailGoods(orderId);
+        return "redirect:/MyStore/myorder";
     }
 }

@@ -1,7 +1,9 @@
 package org.group18.back.Service.Impl;
 
+//import com.sun.tools.corba.se.idl.constExpr.Or;
 import org.group18.back.Dao.CategoryMapper;
 import org.group18.back.Dao.GoodsMapper;
+import org.group18.back.Dao.OrderMapper;
 import org.group18.back.Dao.ShopMapper;
 import org.group18.back.Entity.*;
 import org.group18.back.Model.ShopPageModel;
@@ -19,6 +21,8 @@ public class StoreServiceImpl implements StoreService {
     GoodsMapper goodsMapper;
     @Autowired
     CategoryMapper categoryMapper;
+    @Autowired
+    OrderMapper orderMapper;
 
     @Override
     public ShopPageModel getShopPageModel(Integer shopUid,int pageSize, int page) {
@@ -77,4 +81,14 @@ public class StoreServiceImpl implements StoreService {
        List<Shop> getAllShop = shopMapper.selectAllShop();
        return getAllShop;
     }
+
+    @Override
+    public int getShopGoodsAmount(String shopUid) {
+        ShopExample shopExample = new ShopExample();
+        shopExample.or().andUidEqualTo(Integer.parseInt(shopUid));
+        GoodsExample goodsExample = new GoodsExample();
+        goodsExample.or().andSellerUidEqualTo(shopMapper.selectByExample(shopExample).get(0).getSellerUid());
+        return goodsMapper.selectByExample(goodsExample).size();
+    }
+
 }

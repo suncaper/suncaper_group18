@@ -137,9 +137,7 @@
                                 <a th:href="@{/MyStore/mystore}"><i class="fa fa-usd"></i>我的店铺</a>
                             </li>
                             <li th:if="${isSignin}">
-                            <li>
-                                <a href="http://www.templatesy.com/demo/617/signin.html">
-                                    <i class="fa fa-lock"></i>登录</a>
+                                <a th:href="@{/myinfo}"><i class="fa fa-user"></i>我的信息</a>
                             </li>
                             <li><a th:if="${isSignin}" th:href="@{/signout}">退出登陆</a></li>
                             </li>

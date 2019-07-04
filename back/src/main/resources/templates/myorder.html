@@ -239,7 +239,7 @@
                                                 <tr>
                                                     <th style="font-size: 20px;"><i class="fa fa-home"></i>&nbsp;<a th:text="${orderPage.getShopBaseInfo().getShopName()}" th:href="@{/shop(shopUid=${orderPage.getShopBaseInfo().getUid()})}">店铺名</a></th>
                                                     <th></th>
-                                                    <th></th>
+                                                    <th th:text="${'日期：'+#dates.format(orderPage.getOrderInfo().getCreateDate(),'YY年MM月dd日')}"></th>
                                                     <th th:if="!${orderPage.getOrderInfo().getIsPaid()}" th:text="未支付" style="font-size: 18px;"></th>
                                                     <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state01' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="未发货">订单状态</th>
                                                     <th style="font-size: 18px;" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state02' and ${orderPage.getOrderInfo().getIsPaid()}" th:text="已发货">订单状态</th>
@@ -300,7 +300,8 @@
                                                         <span style="font-size:20px;" th:text="'@'+${goodsInfo.getAmount()} * ${goodsInfo.getGoods().getPoints()}+'积分'">单件商品总价</span>
                                                     </td>
                                                     <td>
-                                                        <button th:onclick="tryToReviewGoods([[${goodsInfo.getGoods().getUid()}]], [[${goodsInfo.getGoodsSpecification().getUid()}]], 'points')" th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state03' and !${goodsInfo.getReviewState()}" class="btn btn-rounded btn-sm mt-15">评价商品</button>
+                                                        <button th:onclick="tryToReviewGoods([[${goodsInfo.getGoods().getUid()}]], [[${goodsInfo.getGoodsSpecification().getUid()}]], 'points')"
+                                                                th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state03' and !${goodsInfo.getReviewState()} and ${orderPage.getOrderInfo().getIsPaid()}" class="btn btn-rounded btn-sm mt-15">评价商品</button>
                                                         <p th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state03' and ${goodsInfo.getReviewState()}">已评价</p>
                                                     </td>
                                                 </tr>
@@ -332,11 +333,15 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td align="right">
-                                                        <button th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state02'" class="btn btn-rounded btn-sm mt-15">确认收货</button>
+                                                        <button th:if="${!orderPage.getOrderInfo().getIsPaid()}" class="btn btn-rounded btn-sm mt-15">前去付款</button>
+                                                        <button th:if="${orderPage.getOrderInfo().getIsPaid()} and ${orderPage.getOrderInfo().getStateUid() eq 'state02'}" class="btn btn-rounded btn-sm mt-15" th:onclick="tryReceiptOrder([[${orderPage.getOrderInfo().getId()}]])">确认收货</button>
                                                     </td>
                                                     <td align="right">
-                                                        <button th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state02'" style="background-color: yellowgreen" class="btn btn-rounded btn-sm mt-15">申请退款</button>
-                                                        <button th:if="${orderPage.getOrderInfo().getStateUid()} eq 'state03'" style="background-color: red;" class="btn btn-rounded btn-sm mt-15" th:onclick="tryToDeleteOrder([[${orderPage.getOrderInfo().getId()}]])">删除订单</button>
+                                                        <button th:if="${orderPage.getOrderInfo().getIsPaid()} and (${orderPage.getOrderInfo().getStateUid() eq 'state01'} or ${orderPage.getOrderInfo().getStateUid() eq 'state02'} or ${orderPage.getOrderInfo().getStateUid() eq 'state03'})"
+                                                                style="background-color: yellowgreen" class="btn btn-rounded btn-sm mt-15" th:onclick="tryRefund([[${orderPage.getOrderInfo().getId()}]])">申请退款</button>
+                                                        <button th:if="${!orderPage.getOrderInfo().getIsPaid()} or ${orderPage.getOrderInfo().getStateUid() eq 'state03'}
+                                                        or ${orderPage.getOrderInfo().getStateUid() eq 'state05'} or ${orderPage.getOrderInfo().getStateUid() eq 'state06'}"
+                                                                th:onclick="tryToDeleteOrder([[${orderPage.getOrderInfo().getId()}]])" style="background-color: red;" class="btn btn-rounded btn-sm mt-15">删除订单</button>
 
                                                     </td>
                                                     <td>
@@ -350,6 +355,7 @@
                                     </tr>
                                 </table>
                                 <div class="page-pagination text-center mt-30 p-10 panel"   th:if="${orderPageList.size()} eq 0"><p>暂时没有订单呢，快去买买买吧～！</p></div>
+                                <!--分页-->
                                 <div th:if="${orderPageList.size()} ne 0" class="page-pagination text-center mt-30 p-10 panel">
                                     <nav>
                                         <!-- Page Pagination -->
@@ -366,80 +372,124 @@
                                         <!-- End Page Pagination -->
                                     </nav>
                                 </div>
-                                <!-- 删除订单模态框 -->
-                                <div class="modal fade" id="deleteOrderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="cancelReviewGoods()">
-                                                    &times;
-                                                </button>
-                                                <h4 class="modal-title" id="deleteOrderModalHead">
-                                                    删除订单
-                                                </h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                您确认要删除此订单吗？
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="cancelDeleteOrder()">关闭
-                                                </button>
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="confirmDeleteOrder()">
-                                                    提交更改
-                                                </button>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal -->
-                                </div>
-                                <!-- 请求结果返回模态框 -->
-                                <div class="modal fade" id="askResultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                                    &times;
-                                                </button>
-                                                <h4 class="modal-title">
-                                                    请求结果
-                                                </h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p id="askResult"></p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal -->
-                                </div>
-                                <!-- 评价模态框 -->
-                                <div class="modal fade" id="reviewOrderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="cancelReviewGoods()">
-                                                    &times;
-                                                </button>
-                                                <h4 class="modal-title" id="reviewgoodsModalHead">
-                                                    评价商品
-                                                </h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <input id="reviewInput">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="cancelReviewGoods()">关闭
-                                                </button>
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="confirmReview()">
-                                                    提交更改
-                                                </button>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal -->
-                                </div>
                             </div>
                         </div>
                     </section>
+                </div>
+            </div>
+            <!-- 删除订单模态框 -->
+            <div class="modal fade" id="deleteOrderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="cancelReviewGoods()">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="deleteOrderModalHead">
+                                删除订单
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            您确认要删除此订单吗？
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="cancelDeleteOrder()">关闭
+                            </button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="confirmDeleteOrder()">
+                                提交更改
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+            <!-- 请求结果返回模态框 -->
+            <div class="modal fade" id="askResultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                请求结果
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="askResult"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+            <!-- 评价模态框 -->
+            <div class="modal fade" id="reviewOrderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="cancelReviewGoods()">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="reviewgoodsModalHead">
+                                评价商品
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <input id="reviewInput">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="cancelReviewGoods()">关闭
+                            </button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="confirmReview()">
+                                提交更改
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+            <!-- 确认收货模态框 -->
+            <div class="modal fade" id="receiptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                确认收货
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>您确认要收货吗？</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="confirmReceiptOrder()">确认</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+            <!-- 申请退款模态框 -->
+            <div class="modal fade" id="refundModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                申请退款
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>您确认要申请退款吗？</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="confirmRefundOrder()">确认</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -621,7 +671,7 @@
         }
         //当用户点击确定时提交删除请求
         function confirmDeleteOrder() {
-            $.get("/deleteMyOrder?orderId="+deleteOrderId);
+            window.location.href = "/deleteMyOrder?orderId="+deleteOrderId;
             $("#askResultModal").modal("show");
             document.getElementById("askResult").innerText = "删除成功";
             deleteOrderId = null;
@@ -649,13 +699,37 @@
             if (str == '' || str == undefined || str == null) {//输入框中输入空格也为空
                 alert("输入不能为空")
             } else {
-                $.get("/reviewGoods?goodsUid="+reviewGoodsId+"&specificationUid="+reviewSpecificationId+"&review="+str+"&payWay="+reviewPayWay);
-                document.getElementById("askResult").innerText = "评价成功";
+                window.location.href = "/reviewGoods?goodsUid="+reviewGoodsId+"&specificationUid="+reviewSpecificationId+"&review="+str+"&payWay="+reviewPayWay;
                 reviewGoodsId = null;
                 reviewSpecificationId = null;
                 reviewPayWay = null;
+                document.getElementById("askResult").innerText = "评价成功";
                 $("#askResultModal").modal("show");
             }
+        }
+        //请求退款
+        var refundOrderId;
+        function tryRefund(orderId) {
+            $("#refundModal").modal("show");
+            refundOrderId = orderId;
+        }
+        function confirmRefundOrder() {
+            window.location.href = "/refundOrder?orderId="+refundOrderId;
+            document.getElementById("askResult").innerText = "申请退款成功";
+            $("#askResultModal").modal("show");
+        }
+
+        //确认收货
+        var receiptOrderId;
+        function tryReceiptOrder(orderId) {
+            $("#receiptModal").modal("show");
+            receiptOrderId = orderId;
+        }
+
+        function confirmReceiptOrder() {
+            window.location.href = "/receiptOrder?orderId="+receiptOrderId;
+            document.getElementById("askResult").innerText = "确认收货成功";
+            $("#askResultModal").modal("show");
         }
     </script>
     <script>

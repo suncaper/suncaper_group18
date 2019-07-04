@@ -95,8 +95,8 @@ public class GoodsController {
             model.addAttribute("isSignin", true);
         }
         //获取请求页数
-        //设置每页显示数量为20
-        int pageSize = 20;
+        //设置每页显示数量为12
+        int pageSize = 12;
         if(page == null) page = 1;//若未接受到页面请求，则设置为1
         //生成页面列表
         List<Integer> pagesNumberList = new ArrayList<>();

@@ -24,6 +24,8 @@ public interface MyInfoService {
     List<OrderPageModel> getOrderPageInfo(String userUid, String sellerUid, int pageSize, int page);
     Long getUserOrderCount(String userUid);
     void deleteUserOrder(Integer orderId);
+    void refundOrder(Integer orderId);
+    void receiptOrder(Integer orderId);
     void reviewGoods(Integer goodsUid, Integer specificationUid, String userUid, String payWay, String review);
     List<UserAddress> getUserAddressList(String userUid);
     void deleteUserAddress(Integer addressId);
