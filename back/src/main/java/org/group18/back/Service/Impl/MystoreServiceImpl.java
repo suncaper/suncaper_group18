@@ -362,15 +362,45 @@ public class MystoreServiceImpl implements MystoreService{
         List<GoodsSpecification> goodsSpecificationList = goodsSpecificationMapper.selectByExample(goodsSpecificationExample);
         Integer i;
         for(i = 0; i < goodsSpecificationList.size(); i++){
-            if (goodsSpecificationList.get(i).getSpecificationName().equals(newgoodsSpecification.getSpecificationName()))
+            if (goodsSpecificationList.get(i).getSpecificationName().equals(newgoodsSpecification.getSpecificationName())){
+                if(goodsSpecificationList.get(i).getDeleteState()){
+                    goodsSpecificationList.get(i).setUid(goodsSpecificationList.get(i).getUid());
+                    goodsSpecificationList.get(i).setAmount(newgoodsSpecification.getAmount());
+                    goodsSpecificationList.get(i).setDeleteState(false);
+                    goodsSpecificationMapper.updateByPrimaryKey(goodsSpecificationList.get(i));
+                    break;
+                }
                 return;
+            }
         }
         if (i == goodsSpecificationList.size()){
             newgoodsSpecification.setSaleAmount(0);
             newgoodsSpecification.setGoodsUid(goods_uid);
             newgoodsSpecification.setDeleteState(false);
             goodsSpecificationMapper.insert(newgoodsSpecification);
-            return;
+        }
+        //更新t_goods
+        GoodsSpecificationExample goodsSpecificationExample1 = new GoodsSpecificationExample();
+        GoodsSpecificationExample.Criteria criteria1 = goodsSpecificationExample1.createCriteria();
+        criteria1.andGoodsUidEqualTo(newgoodsSpecification.getGoodsUid());
+        criteria1.andDeleteStateEqualTo(false);
+        List<GoodsSpecification> newgoodsSpecificationList = goodsSpecificationMapper.selectByExample(goodsSpecificationExample1);
+        GoodsExample goodsExample = new GoodsExample();
+        GoodsExample.Criteria criteria2 = goodsExample.createCriteria();
+        criteria2.andUidEqualTo(newgoodsSpecification.getGoodsUid());
+        List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
+        if (!goodsSpecificationList.isEmpty()){
+            goodsList.get(0).setUid(goodsList.get(0).getUid());
+            Integer totalamount = 0;
+            for(Integer j = 0; j < newgoodsSpecificationList.size(); j++){
+                totalamount = totalamount + newgoodsSpecificationList.get(j).getAmount();
+            }
+            goodsList.get(0).setAmount(totalamount);
+            goodsMapper.updateByPrimaryKey(goodsList.get(0));
+        }else{
+            goodsList.get(0).setUid(goodsList.get(0).getUid());
+            goodsList.get(0).setDeleteState(true);
+            goodsMapper.updateByPrimaryKey(goodsList.get(0));
         }
     }
 }
