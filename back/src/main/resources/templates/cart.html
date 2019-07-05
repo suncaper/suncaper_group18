@@ -239,7 +239,7 @@
                                                     </td>
                                                     <td class="col-sm-2 col-md-2" th:text="${cart.specification_name}">商品规格</td>
                                                     <td class="col-sm-2 col-md-2 is-hidden-xs-down">
-                                                        <a class="btn btn-rounded btn-sm"  th:if="${cart.amount} == 1" type="button" onclick="alert('已经不能继续减少!')">-</a>
+                                                        <a class="btn btn-rounded btn-sm"  th:if="${cart.amount} eq 1" type="button" onclick="alert('已经不能继续减少!')">-</a>
                                                         <a class="btn btn-rounded btn-sm"  th:if="${cart.amount} != 1" th:href="@{/decreaseCarts(specification_uid=${cart.specification_uid})}">-</a>
                                                         <span style="font-size: 20px;" th:text="'x'+${cart.amount}">数量</span>
                                                         <a class="btn btn-rounded btn-sm" th:href="@{/increaseCarts(specification_uid=${cart.specification_uid})}">+</a>
