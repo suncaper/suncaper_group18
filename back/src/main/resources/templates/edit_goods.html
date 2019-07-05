@@ -206,7 +206,7 @@
                                     <a th:href="@{/index}">首页</a>
                                 </li>
                                 <li>
-                                    <a href="#">基本信息管理</a>
+                                    <a th:href="@{/MyStore/mystoreinfo}">基本信息管理</a>
                                 </li>
                                 <li class="active">
                                     <a th:href="@{/MyStore/mystore}">商品管理</a>
@@ -251,7 +251,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label >类型</label>
-                                                <input type="text" class="form-control" placeholder="输入商品名称" name="goods_name" th:field="*{category_description}" readonly="true">
+                                                <input type="text" class="form-control" placeholder="输入类型" name="category_description" th:field="*{category_description}" readonly="true">
                                             </div>
                                         </div>
 
@@ -269,31 +269,22 @@
                                             </div>
                                         </div>
 
-                                        <!--<div class="col-md-6">-->
-                                            <!--<div class="form-group">-->
-                                                <!--<label >规格</label>-->
-                                                <!--<select class="form-control" name="category_uid">-->
-                                                    <!--<option>-请选择要修改的规格-</option>-->
-                                                    <!--<option th:each="specifications:${goodsManagementModel.getGoodsSpecifications()}" th:text="${specifications.key.getSpecificationName()}" th:value="${specifications.key.getUid()}"></option>-->
-                                                <!--</select>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label >是否使用积分兑换</label>
+                                                <select class="form-control" id="is_exchange" name="is_exchange" th:field="*{is_exchange}">
+                                                    <option th:value="1">是</option>
+                                                    <option th:value="0">否</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
-                                        <!--<div th:each="specifications:${goodsManagementModel.goodsSpecifications}">-->
-                                            <!--<div class="col-md-6">-->
-                                                <!--<div class="form-group">-->
-                                                    <!--<label>商品规格</label>-->
-                                                    <!--<input type="text" class="form-control" placeholder="请输入商品的规格" name="specification_name" th:field="*{specifications.getSpecificationName()}">-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-
-                                            <!--<div class="col-md-6">-->
-                                                <!--<div class="form-group">-->
-                                                    <!--<label>数量</label>-->
-                                                    <!--<input type="text" class="form-control" placeholder="请输入该规格商品数量" name="amount" th:field="*{specifications.getAmount()}">-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
+                                        <div class="col-md-6" id="exchange">
+                                            <div class="form-group">
+                                                <label>所需积分</label>
+                                                <input type="text" class="form-control" placeholder="请输入商品兑换所需积分" name="points" th:field="*{points}">
+                                            </div>
+                                        </div>
 
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -500,6 +491,13 @@
         })
     </script>
     <script>
+        var is_exchange = $("#is_exchange").val()
+        if (is_exchange == 1)
+            $("#exchange").css("display", "block")
+        else
+            $("#exchange").css("display", "none")
+    </script>
+    <script>
         function search() {
             window.location.href="/search?searchKey="+$("#inputSearchKey").val()+"&searchCategory="+$("#chooseSearch option:selected").val();
         }
@@ -512,13 +510,13 @@
                 form.goods_name.focus();
                 return false;
             }
-            if(form.category_uid.value <= 0){
-                alert('请选择类型！');
-                form.category_uid.focus();
-                return false;
-            }
             if(form.price.value == ''){
                 alert('请输入价格！');
+                form.price.focus();
+                return false;
+            }
+            if(isNaN(form.price.value)){
+                alert('价格非法!必须为数字！');
                 form.price.focus();
                 return false;
             }
@@ -530,6 +528,11 @@
             if(form.discount_price.value == ''){
                 alert('请输入优惠价格！');
                 form.discount_price.focus();
+                return false;
+            }
+            if(isNaN(form.discount_price.value)){
+                alert('优惠价格非法!必须为数字！');
+                form.price.focus();
                 return false;
             }
             if(form.discount_price.value < 0){
@@ -552,17 +555,24 @@
                 form.amount.focus();
                 return false;
             }
-            if(form.descriptions.value == '') {
-                alert('请输入商品描述！');
+            if(form.amount.value <= 0){
+                alert('数量必须为非负数！');
+                form.amount.focus();
+                return false;
+            }
+            if(form.is_exchange.value == '1' && form.points.value == '') {
+                alert('请输入积分！');
                 form.descriptions.focus();
                 return false;
             }
-            if(document.getElementById("imgfile").value.length == 0){
-                alert('请上传商品图片！');
+            if(form.is_exchange.value == '1' && form.points.value < 0) {
+                alert('积分必须为正数!');
+                form.descriptions.focus();
                 return false;
             }
-            if(document.getElementById("detail_img_file").value.length == 0){
-                alert('请上传商品详情图片！');
+            if(form.descriptions.value == '') {
+                alert('请输入商品描述！');
+                form.descriptions.focus();
                 return false;
             }
             return true;

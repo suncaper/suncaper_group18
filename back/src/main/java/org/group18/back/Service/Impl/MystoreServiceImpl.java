@@ -271,6 +271,9 @@ public class MystoreServiceImpl implements MystoreService{
         goodsList.get(0).setDiscountPrice(goodsManagementModel.getDiscount_price());
         goodsList.get(0).setGoodsName(goodsManagementModel.getGoods_name());
         goodsList.get(0).setDescriptions(goodsManagementModel.getDescriptions());
+        goodsList.get(0).setIsExchange(goodsManagementModel.getIs_exchange());
+        if (goodsList.get(0).getIsExchange())
+            goodsList.get(0).setPoints(goodsManagementModel.getPoints());
         if(!file.isEmpty()){
             try {
                 goodsList.get(0).setImgUrl(sellerService.fileupload(file));

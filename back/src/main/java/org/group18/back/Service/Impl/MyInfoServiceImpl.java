@@ -106,7 +106,7 @@ public class MyInfoServiceImpl implements MyInfoService {
     public List<UserAddress> myaddress(String uid){
         UserAddressExample useraddressExample1 = new UserAddressExample();
         UserAddressExample.Criteria criteria1 = useraddressExample1.createCriteria();
-        criteria1.andUserUidEqualTo(uid);
+        criteria1.andUserUidEqualTo(uid).andDeleteStateEqualTo(false);
         List<UserAddress> result = useraddressMapper.selectByExample(useraddressExample1);
         return result;
     }

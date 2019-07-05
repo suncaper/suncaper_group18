@@ -42,6 +42,7 @@ public class CheckoutServiceImpl implements CheckoutService {
         UserAddressExample userAddressExample = new UserAddressExample();
         UserAddressExample.Criteria criteria = userAddressExample.createCriteria();
         criteria.andUserUidEqualTo(user_uid);
+        criteria.andDeleteStateEqualTo(false);
         List<UserAddress> userAddressList = userAddressMapper.selectByExample(userAddressExample);
         return userAddressList;
     }
