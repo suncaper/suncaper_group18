@@ -650,7 +650,7 @@
             deleteAddressId = null;
         }
         function confirmDeleteAddress() {
-            $.get("/deleteUserAddress?addressId="+deleteAddressId);
+            window.location.href = "/deleteUserAddress?addressId="+deleteAddressId;
             $("#askResultModal").modal("show");
             document.getElementById("askResult").innerText = "删除成功";
             deleteAddressId = null;
