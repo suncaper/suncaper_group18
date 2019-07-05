@@ -1,9 +1,8 @@
 package org.group18.back.Controller;
 
 import org.group18.back.Entity.User;
-import org.group18.back.Model.ShopPageModel;
-import org.group18.back.Service.StoreService;
 import org.group18.back.Service.LoginRegisterService;
+import org.group18.back.Service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

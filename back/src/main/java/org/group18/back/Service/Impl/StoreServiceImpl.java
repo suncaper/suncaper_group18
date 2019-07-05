@@ -43,7 +43,7 @@ public class StoreServiceImpl implements StoreService {
 
             //查找本店商品
             GoodsExample goodsExample = new GoodsExample();
-            goodsExample.createCriteria().andSellerUidEqualTo(shop.getSellerUid());
+            goodsExample.createCriteria().andSellerUidEqualTo(shop.getSellerUid()).andDeleteStateEqualTo(false);
             goodsExample.setPageSize(pageSize);
             goodsExample.setStartRow((page-1)*pageSize);
             List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);

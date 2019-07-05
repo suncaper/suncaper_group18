@@ -80,7 +80,7 @@ public class SellerServiceImpl implements SellerService{
             result.put("error","输入字段不能为空");
             doupdate = false;;
         }
-        else if(shop.getShopName()!="")
+        else if(shop.getShopName()!=""&&shop.getShopName()!=null)
         {
             ShopExample shopExample1 = new ShopExample();
             ShopExample.Criteria criteria1 = shopExample1.createCriteria();

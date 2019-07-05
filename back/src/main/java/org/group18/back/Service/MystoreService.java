@@ -2,6 +2,7 @@ package org.group18.back.Service;
 
 import org.group18.back.Entity.Category;
 import org.group18.back.Entity.Goods;
+import org.group18.back.Entity.GoodsSpecification;
 import org.group18.back.Entity.Shop;
 import org.group18.back.Model.GoodsManagementModel;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,5 +25,9 @@ public interface MystoreService {
     boolean deleteGoods(Goods goods);
     GoodsManagementModel getGoodsDetails(Goods goods);
     void editGoods(GoodsManagementModel goodsManagementModel, Integer goods_uid, MultipartFile file, MultipartFile detail_img_file);
-
+    List<GoodsSpecification> getGoodsSpecification(Integer goods_uid);
+    void editSpecification(GoodsSpecification goodsSpecification);
+    void deleteSpecification(GoodsSpecification goodsSpecification);
+    GoodsSpecification getSpecification(Integer specification_uid);
+    void addSpecification(Integer goods_uid, GoodsSpecification newgoodsSpecification);
 }
