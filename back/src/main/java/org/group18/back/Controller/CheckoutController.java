@@ -65,6 +65,7 @@ public class CheckoutController {
                 model.addAttribute("addressList", result);
                 model.addAttribute("editAddress", new UserAddress());
             }
+            model.addAttribute("newAddress", new UserAddress());
             return "checkout_billing";
         }
     }
@@ -109,6 +110,7 @@ public class CheckoutController {
 
             }
             model.addAttribute("userAddressList", userAddressList);
+            model.addAttribute("newAddress", new UserAddress());
             return "checkout_billing";
         }
     }
@@ -188,7 +190,6 @@ public class CheckoutController {
                 model.addAttribute("currentPage", page);
                 model.addAttribute("pageAmount", pagesNumberList.size());
                 model.addAttribute("orderPageList", orderPageModels);
-
                 return "myorder";
             }
             else{
@@ -206,6 +207,13 @@ public class CheckoutController {
     @RequestMapping("/editAddress")
     public String editUserAddress(UserAddress userAddress){
         myInfoService.editUserAddress(userAddress);
+        return "redirect:/chekout_billing";
+    }
+    @RequestMapping("/addAddress")
+    public String addUserAddress(HttpServletRequest request, UserAddress userAddress){
+        User user = loginRegisterService.checkLoginStatus(request.getCookies());
+        userAddress.setUserUid(user.getUid());
+        myInfoService.addUserAddress(userAddress);
         return "redirect:/chekout_billing";
     }
 }
