@@ -209,8 +209,18 @@
                                 <!--<h2 class="h2 mb-20 h-title">收货信息</h2>-->
                                 <tr class="panel alert">
                                     <td class="col-sm-8 col-md-9">
-                                        <table th:if="${isEmpty}" class="table table-condensed">您还没有任何收货地址！请添加！
-                                            <button class="btn btn-rounded btn-sm mt-15" style="background-color: rgb(255,102,102);" th:onclick="tryAddAddress([[${newAddress}]])">添加收货信息</button>
+                                        <table th:if="${isEmpty}" class="table table-condensed">
+                                            <thead>
+                                            <tr>
+                                                <th style="font-size: 25px">收货信息</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th><button class="btn btn-rounded btn-sm mt-15" style="background-color: rgb(255,102,102);" th:onclick="tryAddAddress([[${newAddress}]])">添加收货信息</button></th>
+                                            </tr>
+                                            </thead>
+                                            <tr class="panel alert">
+                                                <td class="col-sm-8 col-md-9">您还没有任何收货地址！请添加！</td>
+                                            </tr>
                                         </table>
                                         <table th:if="!${isEmpty}" class="table table-condensed">
                                             <thead>
