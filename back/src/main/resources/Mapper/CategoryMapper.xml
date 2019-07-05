@@ -259,4 +259,8 @@
                                                             and t_category_shop.shop_uid = t_shop.uid
   </select>
 
+  <select id="getCategoryListLimit10" resultMap="BaseResultMap">
+    select * from t_category limit 10;
+  </select>
+
 </mapper>

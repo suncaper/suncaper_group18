@@ -41,6 +41,11 @@ public class CategoryServiceImpl implements CategoryService {
         return result1;
     }
 
+    @Override
+    public List<Category> getIndexCategoryList() {
+        return categoryMapper.getCategoryListLimit10();
+    }
+
 
 }
 

@@ -8,6 +8,8 @@ import java.util.List;
 
 @Service
 public interface CategoryService  {
-    public List<Goods> getCategoryGoods(int category_uid);
-    public List<Category> getCategorys(int category_uid);
+    List<Goods> getCategoryGoods(int category_uid);
+    List<Category> getCategorys(int category_uid);
+    List<Category> getIndexCategoryList();
+
 }

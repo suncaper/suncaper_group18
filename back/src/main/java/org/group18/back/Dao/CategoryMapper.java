@@ -95,4 +95,5 @@ public interface CategoryMapper {
     int updateByPrimaryKey(Category record);
 
     List<Category> findCategoryByShopUid(@Param(value = "shopUid") Integer shopUid);
+    List<Category> getCategoryListLimit10();
 }

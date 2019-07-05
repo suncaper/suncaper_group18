@@ -253,16 +253,16 @@
                                                     </h6>
                                                 </div>
                                                 <div class="deal-price pos-r mb-15">
-                                                    <h3 class="price ptb-5 text-right"
+                                                    <h6 class="price ptb-5 text-right"
                                                         th:if="${goods.getPrice() gt goods.getDiscountPrice()}">
                                                                         <span class="price-sale"
                                                                               th:text="'¥'+${goods.getPrice()}"></span><span
                                                             th:text="'¥'+${goods.getDiscountPrice()}"></span>
-                                                    </h3>
-                                                    <h3 class="price ptb-5 text-right"
+                                                    </h6>
+                                                    <h6 class="price ptb-5 text-right"
                                                         th:if="(${goods.getPrice() lt goods.getDiscountPrice()}) or (${goods.getPrice() eq goods.getDiscountPrice()})">
                                                         <span th:text="'¥'+${goods.getPrice()}"></span>
-                                                    </h3>
+                                                    </h6>
                                                 </div>
                                             </div>
                                         </div>
