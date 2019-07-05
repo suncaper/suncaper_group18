@@ -206,7 +206,7 @@
                                     <a th:href="@{/index}">首页</a>
                                 </li>
                                 <li>
-                                    <a href="#">基本信息管理</a>
+                                    <a th:href="@{/MyStore/mystoreinfo}">基本信息管理</a>
                                 </li>
                                 <li class="active">
                                     <a th:href="@{/MyStore/mystore}">商品管理</a>
@@ -626,6 +626,14 @@
                 //获取输入框的值
                 editgoodsSpecifications.specificationName = $("#editSpecificationName").val();
                 editgoodsSpecifications.amount = $("#editAmount").val();
+                if(isNaN(addgoodsSpecifications.amount)){
+                    alert('数量非法!必须为数字！');
+                    return false;
+                }
+                if(addgoodsSpecifications.amount < 0){
+                    alert('数量必须为非负数！');
+                    return false;
+                }
                 $.post("/MyStore/editSpecification", editgoodsSpecifications);
                 window.location.href = "/MyStore/editGoodsSpecification?" + "goods_uid=" + editgoodsSpecifications.goodsUid.toString();
                 $("#askResultModal").modal("show");
@@ -649,9 +657,16 @@
             }
             else{
                 //获取输入框的值
-
                 addgoodsSpecifications.specificationName = $("#addSpecificationName").val();
                 addgoodsSpecifications.amount = $("#addAmount").val();
+                if(isNaN(addgoodsSpecifications.amount)){
+                    alert('数量非法!必须为数字！');
+                    return false;
+                }
+                if(addgoodsSpecifications.amount < 0){
+                    alert('数量必须为非负数！');
+                    return false;
+                }
                 $.post("/MyStore/addSpecification", addgoodsSpecifications);
                 window.location.href = "/MyStore/editGoodsSpecification?" + "goods_uid=" + addgoodsSpecifications.goodsUid.toString();
                 addgoodsSpecifications = null;
