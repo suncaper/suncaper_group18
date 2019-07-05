@@ -209,7 +209,7 @@
                         <div class="col-xs-12 col-md-4 col-lg-3">
                             <aside>
                                 <ul class="nav-coupon-category panel">
-                                    <li th:each="categorylist:${CategoryList}"><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
+                                    <li th:each="categorylist:${CategoryList}"><a th:href="@{/getGoodsList(category_uid = ${categorylist.getUid()})}"
                                            class="fa fa-cutlery"><span
                                             th:text="${categorylist.getDescriptions()}"></span></a>
                                     </li>

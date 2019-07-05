@@ -86,7 +86,7 @@ public class GoodsServiceImpl implements GoodsService {
             cart.setGoodsUid(goodsUid);
             cart.setSpecificationUid(specificationUid);
             cart.setUserUid(userUid);
-            cart.setIsExchange(payWay.endsWith("points"));
+            cart.setIsExchange(payWay.equals("points"));
             cartMapper.insert(cart);
         }
         else {
@@ -103,9 +103,10 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public List<Goods> getGoodsSearchList(int pageSize, int page, String searchKey) {
+    public List<Goods> getGoodsSearchList(int pageSize, int page, String searchKey, Integer categoryUid) {
         GoodsExample goodsExample = new GoodsExample();
         if(searchKey!=null) goodsExample.or().andGoodsNameLike("%"+searchKey+"%");
+        if(categoryUid!=null) goodsExample.or().andCategoryUidEqualTo(categoryUid);
         goodsExample.setStartRow((page-1)*pageSize);
         goodsExample.setPageSize(pageSize);
         return goodsMapper.selectByExample(goodsExample);

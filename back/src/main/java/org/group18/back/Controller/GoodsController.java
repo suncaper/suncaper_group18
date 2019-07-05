@@ -83,7 +83,7 @@ public class GoodsController {
     }
 
     @RequestMapping(value = "/getGoodsList")
-    public String getGoodsList(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "searchKey", required = false) String searchKey){
+    public String getGoodsList(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "searchKey", required = false) String searchKey, @RequestParam(value = "categoryUid", required = false) Integer categoryUid){
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if(user == null) {
@@ -111,7 +111,14 @@ public class GoodsController {
         else {
             model.addAttribute("searchKey", searchKey);
         }
-        model.addAttribute("goodsList", goodsService.getGoodsSearchList(pageSize, page, searchKey));
+        //设置种类参数
+        if(categoryUid == null){
+            model.addAttribute("categoryUid", null);
+        }
+        else {
+            model.addAttribute("categoryUid", categoryUid);
+        }
+        model.addAttribute("goodsList", goodsService.getGoodsSearchList(pageSize, page, searchKey,categoryUid));
         model.addAttribute("payWay", "money");
         model.addAttribute("pageNumberList", pagesNumberList);
         model.addAttribute("currentPage", page);

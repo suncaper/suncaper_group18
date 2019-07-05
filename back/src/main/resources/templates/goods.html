@@ -273,7 +273,7 @@
                                                 <input type="button" class="quantity_controll plus" value="+">
                                             </div>
                                         </div>
-                                        <button class="single_add_to_cart_button button alt" th:onclick="addToCart([[${goodsInfo.getGoods().getUid()}]], [[${payWay}]])">添加到购物车</button>
+                                        <button class="single_add_to_cart_button button alt" th:onclick="addToCart([[${goodsInfo.getGoods().getUid()}]], [[${payWay}]],[[${user.getUid()}]],[[${goodsInfo.getShop().getSellerUid()}]])">添加到购物车</button>
                                     </div>
                                     <!-- End Form -->
 
@@ -406,6 +406,27 @@
 
                 </div>
             </div>
+        </div>
+        <!-- 请求结果返回模态框 -->
+        <div class="modal fade" id="askResultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">
+                            添加结果
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="askResult"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
         </div>
     </main>
     <!-- –––––––––––––––[ END PAGE CONTENT ]––––––––––––––– -->
@@ -579,11 +600,17 @@
     function chooseSpecification(specification){
         chooseSpecificationId = specification;
     }
-    function addToCart(goodsUid, payWay) {
+    function addToCart(goodsUid, payWay, userId, sellerId) {
         if(chooseSpecificationId == -1){
             alert("未选择商品规格");
         }else{
-            window.location.href="/addGoodsToCart?goodsUid="+goodsUid+"&specificationUid="+chooseSpecificationId+"&counts="+$("#goodsAmount").val()+"&payWay="+payWay;
+            if(userId == sellerId){
+                $("#askResultModal").modal("show");
+                document.getElementById("askResult").innerText = "卖家无法购买自己的商品哦";
+            }
+            else {
+                window.location.href="/addGoodsToCart?goodsUid="+goodsUid+"&specificationUid="+chooseSpecificationId+"&counts="+$("#goodsAmount").val()+"&payWay="+payWay;
+            }
         }
     }
 </script>

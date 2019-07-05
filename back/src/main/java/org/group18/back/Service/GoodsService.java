@@ -16,6 +16,6 @@ public interface GoodsService {
     GoodsDeatilInfoModel getGoods(int goods_uid);
     void addGoodsToCart(String userUid, Integer goodsUid, Integer specificationUid, Integer counts, String payWay);
     Integer getGoodsSearchAmount(String searchKey);
-    List<Goods> getGoodsSearchList(int pageSize, int page, String searchKey);
+    List<Goods> getGoodsSearchList(int pageSize, int page, String searchKey, Integer categoryUid);
     List<Goods> selectAllGoodsByClausedesc();
 }
