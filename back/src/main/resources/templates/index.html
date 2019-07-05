@@ -208,41 +208,9 @@
                     <div class="row row-tb-20">
                         <div class="col-xs-12 col-md-4 col-lg-3">
                             <aside>
-                                <ul class="nav-coupon-category panel" th:each="categorylist:${CategoryList}">
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
+                                <ul class="nav-coupon-category panel">
+                                    <li th:each="categorylist:${CategoryList}"><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
                                            class="fa fa-cutlery"><span
-                                            th:text="${categorylist.getDescriptions()}"></span></a>
-                                    </li>
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
-                                           class="fa fa-calendar"><span
-                                            th:text="${categorylist.getDescriptions()}"></span></a>
-                                    </li>
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
-                                           class="fa fa-female"><span
-                                            th:text="${categorylist.getDescriptions()}"></span></a>
-                                    </li>
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
-                                           class="fa fa-bolt"><span
-                                            th:text="${categorylist.getDescriptions()}"></span></a>
-                                    </li>
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
-                                           class="fa fa-image"><span
-                                            th:text="${categorylist.getDescriptions()}"></span></a>
-                                    </li>
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
-                                           class="fa fa-umbrella"><span
-                                            th:text="${categorylist.getDescriptions()}"></span></a>
-                                    </li>
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
-                                           class="fa fa-shopping-cart"><span
-                                            th:text="${categorylist.getDescriptions()}"></span></a>
-                                    </li>
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
-                                           class="fa fa-home"><span
-                                            th:text="${categorylist.getDescriptions()}"></span></a>
-                                    </li>
-                                    <li><a th:href="@{/Category/behavior(category_uid = ${categorylist.getUid()})}"
-                                           class="fa fa-plane"><span
                                             th:text="${categorylist.getDescriptions()}"></span></a>
                                     </li>
                                     <li class="all-cat">
