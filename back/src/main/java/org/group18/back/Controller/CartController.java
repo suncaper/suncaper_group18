@@ -1,23 +1,18 @@
 package org.group18.back.Controller;
 
-import org.group18.back.Entity.Cart;
 import org.group18.back.Entity.User;
 import org.group18.back.Model.CartListModel;
 import org.group18.back.Service.CartService;
 import org.group18.back.Service.LoginRegisterService;
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

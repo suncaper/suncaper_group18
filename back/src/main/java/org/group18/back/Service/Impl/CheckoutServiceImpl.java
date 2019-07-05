@@ -126,16 +126,36 @@ public class CheckoutServiceImpl implements CheckoutService {
                         List<User> user = userMapper.selectByExample(userExample);
                         user.get(0).setUid(user.get(0).getUid());
                         user.get(0).setBalance(balance.subtract(totalPrice));//更新余额
-                        int addpoint = totalPrice.divide(new BigDecimal(0.01), 0, BigDecimal.ROUND_HALF_UP).intValue();
+                        int addpoint = totalPrice.divide(new BigDecimal(100), 0, BigDecimal.ROUND_HALF_UP).intValue();
                         user.get(0).setPoints(points - totalPoints + addpoint);//更新积分
                         userMapper.updateByPrimaryKey(user.get(0));
                         return 1;//成功
                     } else
                         return 3;//余额不足
-                case "2":
+                case "2":{
+                    UserExample userExample = new UserExample();
+                    UserExample.Criteria criteria = userExample.createCriteria();
+                    criteria.andUidEqualTo(user_uid);
+                    List<User> user = userMapper.selectByExample(userExample);
+                    user.get(0).setUid(user.get(0).getUid());
+                    int addpoint = totalPrice.divide(new BigDecimal(100), 0, BigDecimal.ROUND_HALF_UP).intValue();
+                    System.out.println("2222222"+totalPrice);
+                    user.get(0).setPoints(points - totalPoints + addpoint);//更新积分
+                    System.out.println("111111"+user.get(0).getPoints());
+                    userMapper.updateByPrimaryKey(user.get(0));
                     return 1;//成功
-                case "3":
+                }
+                case "3":{
+                    UserExample userExample = new UserExample();
+                    UserExample.Criteria criteria = userExample.createCriteria();
+                    criteria.andUidEqualTo(user_uid);
+                    List<User> user = userMapper.selectByExample(userExample);
+                    user.get(0).setUid(user.get(0).getUid());
+                    int addpoint = totalPrice.divide(new BigDecimal(100), 0, BigDecimal.ROUND_HALF_UP).intValue();
+                    user.get(0).setPoints(points - totalPoints + addpoint);//更新积分
+                    userMapper.updateByPrimaryKey(user.get(0));
                     return 1;//成功
+                }
             }
         } else {
             return 4;//积分不足

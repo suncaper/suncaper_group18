@@ -50,7 +50,7 @@ public class CartServiceImpl implements CartService{
 //            System.out.println(goods.get(0).getDiscountPrice());
             cartListModel.setImg_url(goods.get(0).getImgUrl());//图片地址
 //            System.out.println(goods.get(0).getImgUrl());
-            cartListModel.setIs_exchange(goods.get(0).getIsExchange());//是否使用积分
+            cartListModel.setIs_exchange(cartList.get(i).getIsExchange());//是否使用积分
 //            System.out.println(goods.get(0).getIsExchange());
             cartListModel.setPoints(goods.get(0).getPoints());//积分价格
 
@@ -141,7 +141,6 @@ public class CartServiceImpl implements CartService{
         for (Integer i = 0; i < cartList.size(); i++){
             CartListModel cartListModel = new CartListModel();
             cartListModel.setAmount(cartList.get(i).getAmount());//数量
-//            System.out.println(cartList.get(i).getAmount());
             cartListModel.setUser_uid(cartList.get(i).getUserUid());//user_uid
             cartListModel.setSpecification_uid(cartList.get(i).getSpecificationUid());//specification_uid
 
@@ -152,14 +151,11 @@ public class CartServiceImpl implements CartService{
             List<Goods> goods = goodsMapper.selectByExample(goodsExample);
             cartListModel.setGoods_uid(goods.get(0).getUid());//商品uid
             cartListModel.setGoods_name(goods.get(0).getGoodsName());//商品名
-//            System.out.println(goods.get(0).getGoodsName());
             cartListModel.setDiscount_price(goods.get(0).getDiscountPrice());//优惠价格
             cartListModel.setPrice(goods.get(0).getPrice());//价格
-//            System.out.println(goods.get(0).getDiscountPrice());
             cartListModel.setImg_url(goods.get(0).getImgUrl());//图片地址
-//            System.out.println(goods.get(0).getImgUrl());
-            cartListModel.setIs_exchange(goods.get(0).getIsExchange());//是否使用积分
-//            System.out.println(goods.get(0).getIsExchange());
+            cartListModel.setIs_exchange(cartList.get(i).getIsExchange());//是否使用积分
+            System.out.println(cartList.get(i).getIsExchange());
             cartListModel.setPoints(goods.get(0).getPoints());//积分价格
 
             //查shop表
