@@ -715,6 +715,7 @@
                 addAddressInfo.detailAddress = $("#addDetailAddress").val();
                 addAddressInfo.receiverPhone = $("#addReceiverPhone").val();
                 $.post("/addUserAddress", addAddressInfo);
+                window.location.href=""
                 addAddressInfo = null;
                 $("#askResultModal").modal("show");
                 document.getElementById("askResult").innerText = "添加成功";

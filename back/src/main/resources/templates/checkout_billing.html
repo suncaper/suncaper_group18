@@ -671,7 +671,7 @@
                 addAddressInfo.city = $("#addCity").val();
                 addAddressInfo.detailAddress = $("#addDetailAddress").val();
                 addAddressInfo.receiverPhone = $("#addReceiverPhone").val();
-                $.post("/addUserAddress", addAddressInfo);
+                $.post("/addAddress", addAddressInfo);
                 addAddressInfo = null;
                 $("#askResultModal").modal("show");
                 document.getElementById("askResult").innerText = "添加成功";

@@ -100,6 +100,7 @@ public class CheckoutServiceImpl implements CheckoutService {
             List<Goods> goods = goodsMapper.selectByExample(goodsExample);
             goods.get(0).setUid(goods.get(0).getUid());
             goods.get(0).setAmount(goods.get(0).getAmount()-cartList.get(i).getAmount());
+            goods.get(0).setSalesVolume(goods.get(0).getSalesVolume()+cartList.get(i).getAmount());
             goodsMapper.updateByPrimaryKey(goods.get(0));
         }
 
