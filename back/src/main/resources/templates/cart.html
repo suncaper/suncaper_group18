@@ -203,6 +203,10 @@
                         <div class="container">
                             <div class="cart-wrapper">
                                 <h3 class="h-title mb-30 t-uppercase">我的购物车</h3>
+                                <div th:if="${isError}"><div class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span th:text="${errorMsg}"></span>
+                                </div></div>
                                 <table id="cart_list" class="wishlist" th:each="shop:${shopCartList}">
                                     <tr>
                                         <td>
@@ -239,7 +243,7 @@
                                                     </td>
                                                     <td class="col-sm-2 col-md-2" th:text="${cart.specification_name}">商品规格</td>
                                                     <td class="col-sm-2 col-md-2 is-hidden-xs-down">
-                                                        <a class="btn btn-rounded btn-sm"  th:if="${cart.amount} == 1" type="button" onclick="alert('已经不能继续减少!')">-</a>
+                                                        <a class="btn btn-rounded btn-sm"  th:if="${cart.amount} lt 1" type="button" onclick="alert('已经不能继续减少!')">-</a>
                                                         <a class="btn btn-rounded btn-sm"  th:if="${cart.amount} != 1" th:href="@{/decreaseCarts(specification_uid=${cart.specification_uid})}">-</a>
                                                         <span style="font-size: 20px;" th:text="'x'+${cart.amount}">数量</span>
                                                         <a class="btn btn-rounded btn-sm" th:href="@{/increaseCarts(specification_uid=${cart.specification_uid})}">+</a>
@@ -282,7 +286,7 @@
                                         </li>
                                     </ul>
                                     <div class="t-right">
-                                        <a class="btn btn-rounded btn-lg" th:href="@{/Checkout}">提交订单</a>
+                                        <a class="btn btn-rounded btn-lg" th:href="@{/Checkout}" th:if="${totalAmount} != 0">提交订单</a>
                                     </div>
                                 </div>
                             </div>

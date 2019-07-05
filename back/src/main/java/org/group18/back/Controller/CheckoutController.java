@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -145,6 +146,7 @@ public class CheckoutController {
 
     @RequestMapping("/checkout_commit")
     public String checkoutCommit(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page){
+        Map<String, String> success = new HashMap<>();
         //检查是否已经登陆
         User user = loginRegisterService.checkLoginStatus(request.getCookies());
         if (user == null) {
@@ -174,7 +176,21 @@ public class CheckoutController {
             checkout_method = request.getParameter("checkout_method");
             if (result != 2){
                 checkoutService.generateOrder(user.getUid(), request.getParameter("checkout_method"), shopCartList, addressId, result);
-
+                if(result == 3){
+                    success.put("msg","支付失败！余额不足！");
+                    model.addAttribute("isError", true);
+                    model.addAttribute("errorMsg", success.get("msg"));
+                }
+                if(result == 4){
+                    success.put("msg","支付失败！积分不足！");
+                    model.addAttribute("isError", true);
+                    model.addAttribute("errorMsg", success.get("msg"));
+                }
+                if(result == 1){
+                    success.put("msg","下单成功！请等待发货~");
+                    model.addAttribute("isError", true);
+                    model.addAttribute("errorMsg", success.get("msg"));
+                }
                 //获取请求页数
                 //设置每页显示数量为5
                 int pageSize = 5;
@@ -194,7 +210,9 @@ public class CheckoutController {
             }
             else{
                 System.out.println(result);
-
+                success.put("msg","商品库存不足！");
+                model.addAttribute("isError", true);
+                model.addAttribute("errorMsg", success.get("msg"));
                 List<CartListModel> cartList = cartService.getCarts(user.getUid());
                 shopCartList = cartService.getShopCarts(cartList);
                 model.addAttribute("shopCartList", shopCartList);
