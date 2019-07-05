@@ -66,6 +66,7 @@ public class IndexController {
         List<Shop> indexShops = storeService.selectAllShop();
         model.addAttribute("indexshops",indexShops);
 
+        model.addAttribute("payWay", "money");
         return "index";
     }
 }
