@@ -32,3 +32,6 @@ build/
 
 ### Macbook ###
 .DS_Store
+
+
+mylogfile.log
